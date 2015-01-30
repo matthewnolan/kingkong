@@ -1,0 +1,27 @@
+{
+  "name": "testupdate",
+  "version": "0.0.0",
+  "authors": [
+    "Andy Hayes <andygoestohollywood@gmail.com>",
+    "Matt Nolan"
+  ],
+  "license": "@Copyright 2015 HighFiveGames",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "dependencies": {
+    "createjs-preloadjs": "~0.6.0",
+    "createjs-soundjs": "~0.6.0",
+    "createjs-tweenjs": "~0.6.0",
+    "easeljs-filters": "~0.2.1",
+    "easeljs": "~0.8.0"
+  }
+}

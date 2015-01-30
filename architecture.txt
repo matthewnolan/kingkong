@@ -1,0 +1,30 @@
+.
+|____GruntFile.js
+|____app.js
+|____package.json
+|____bin
+| |____www
+|____node_modules
+|____public
+| |____setup.json
+| |____index.html
+| |____assets
+| | |____sounds
+| | |____sprites
+| |____javascripts
+| | |____app
+| | | |____lib
+| | | | |___**client side dependencies eg. createjs go here
+| | | |____src
+| | | | |___**client side application .js files go here
+| | |____test
+| | | |____lib
+| | | | |___**testLib.js files here
+| | | |____spec
+| | | | |___**tests go here
+| |____stylesheets
+| | |____style.css
+|____routes
+| |____index.js
+| |____althernative node routes here
+

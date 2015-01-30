@@ -1,0 +1,22 @@
+{
+  "name": "EaselJSFilters",
+  "version": "0.2.1",
+  "homepage": "https://github.com/fabien0102/EaselJSFilters",
+  "authors": [
+    "fabien0102 <fabien0102@planee.fr>"
+  ],
+  "description": "Filters for EaselJS adds AS3 like Filters to EaselJS.",
+  "keywords": [
+    "easeljs",
+    "filters",
+    "createjs"
+  ],
+  "license": "public domain",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
