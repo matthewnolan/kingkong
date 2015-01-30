@@ -17,8 +17,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.engine('html', require('ejs').renderFile);
+// view engine setup
+
 app.set('view engine', 'html');
+app.set('view options', { layout: false });
+app.set('views', path.join(__dirname, 'views/'));
 
 var sendIndex = function (req, res) {
 	res.sendfile(__dirname + "/public/index.html");
@@ -53,7 +58,7 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error', {
 		message: err.message,
-		error: {}
+		error: err
 	});
 });
 
