@@ -8,3 +8,11 @@
 
 - init vagrant: vagrant up
 
+- add Class: grunt add
+    - choose a name
+    - choose if class extends
+    - if extends choose parent class with namespace: eg: G.GameComponent
+    - choose if class has init function
+
+
+
