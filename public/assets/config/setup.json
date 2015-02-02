@@ -1,0 +1,495 @@
+{
+  "gameTitle": "Shadow of the Panther",
+  "env": "prod",
+  "devMode": 0,
+  "spinOnLoad": 0,
+  "playWinAfterSpin": 1,
+  "useLoader": 1,
+  "soundVolume": 1,
+  "enableShadowsOnDesktop": false,
+  "winAnimDelay": 3000,
+  "stageW": 667,
+  "stageH": 375,
+  "stageScale": 1,
+  "numberOfReels": 5,
+  "bezelH": 309,
+  "bezelW": 602,
+  "bezelMarginL": 32,
+  "bezelMarginT": 49,
+  "bezelHeightTotal": "deprecated",
+  "symbolsPerReel": 3,
+  "symbolsPerReelPadding": 1,
+  "howManyReelsTallIsReel": 9,
+  "symbolW": 116,
+  "symbolH": 103,
+  "symbolMarginBottom": 0,
+  "reelMarginRight": 5,
+  "spinSpeed": 1999,
+  "spinState": "init",
+  "isMobile": "deprecated",
+  "defaultBet": 5,
+  "defaultCredits": 1337,
+  "winLines": [
+    {
+      "color": "#ff0303",
+      "data": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "color": "#1c1cfd",
+      "data": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "color": "#034b84",
+      "data": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "color": "#fc9999",
+      "data": [
+        0,
+        1,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "color": "#fe03fe",
+      "data": [
+        2,
+        1,
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "color": "#fba505",
+      "data": [
+        0,
+        0,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "color": "#80035f",
+      "data": [
+        2,
+        2,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "color": "#03aa03",
+      "data": [
+        1,
+        0,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "color": "#f5e128",
+      "data": [
+        1,
+        2,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "color": "#aa0303",
+      "data": [
+        0,
+        1,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "color": "#03ffff",
+      "data": [
+        2,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "color": "#aaaa03",
+      "data": [
+        1,
+        0,
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "color": "#03b2eb",
+      "data": [
+        1,
+        2,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "color": "#03ff03",
+      "data": [
+        1,
+        1,
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "color": "#0000ff",
+      "data": [
+        1,
+        1,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "color": "#5ba490",
+      "data": [
+        0,
+        0,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "color": "#f5035d",
+      "data": [
+        2,
+        2,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "color": "#0383d2",
+      "data": [
+        1,
+        0,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "color": "#03d96d",
+      "data": [
+        1,
+        2,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "color": "#fcffa7",
+      "data": [
+        0,
+        0,
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "color": "#80035f",
+      "data": [
+        2,
+        2,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "color": "#ffbb72",
+      "data": [
+        0,
+        1,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "color": "#b23fff",
+      "data": [
+        2,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "color": "#a5a2d9",
+      "data": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "color": "#bdff03",
+      "data": [
+        2,
+        1,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "color": "#ce77f7",
+      "data": [
+        0,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "color": "#a39005",
+      "data": [
+        2,
+        1,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "color": "#878eb9",
+      "data": [
+        1,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "color": "#7ca0e9",
+      "data": [
+        1,
+        2,
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "color": "#6c1d91",
+      "data": [
+        0,
+        1,
+        0,
+        1,
+        2
+      ]
+    }
+  ],
+  "symbolData": [
+    {
+      "img": "assets/808/symbols/ww.jpg",
+      "name": "WW",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/m1.jpg",
+      "name": "M1",
+      "type": 1,
+      "anim": {
+        "src": "assets/808/symbols/m1-sprite.jpg",
+        "frames": 72
+      }
+    },
+    {
+      "img": "assets/808/symbols/m2.jpg",
+      "name": "M2",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/m3.jpg",
+      "name": "M3",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/m4.jpg",
+      "name": "M4",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/f5.png",
+      "anim": {
+        "src": "assets/808/symbols/f5-sprite2.png",
+        "frames": 71
+      },
+      "name": "F5",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/f6.png",
+      "anim": {
+        "src": "assets/808/symbols/f6-sprite2.png",
+        "frames": 71
+      },
+      "name": "F6",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/f7.png",
+      "anim": {
+        "src": "assets/808/symbols/f7-sprite2.png",
+        "frames": 71
+      },
+      "name": "F7",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/f8.png",
+      "name": "F8",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/f9.png",
+      "name": "F9",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/f0.png",
+      "name": "F0",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/d1.jpg",
+      "anim": {
+        "src": "assets/808/symbols/d1-sprite22.jpg",
+        "frames": 71
+      },
+      "name": "D1",
+      "type": 2
+    },
+    {
+      "img": "assets/808/symbols/d2.jpg",
+      "anim": {
+        "src": "assets/808/symbols/d2-sprite1.jpg",
+        "frames": 71
+      },
+      "name": "D2",
+      "type": 2
+    },
+    {
+      "img": "assets/808/symbols/d3.jpg",
+      "anim": {
+        "src": "assets/808/symbols/d3-sprite5.jpg",
+        "frames": 71
+      },
+      "name": "D3",
+      "type": 2
+    },
+    {
+      "img": "assets/808/symbols/d4-1.jpg",
+      "anim": {
+        "src": "assets/808/symbols/d4-sprite.jpg",
+        "frames": 72
+      },
+      "name": "D4",
+      "type": 2
+    },
+    {
+      "img": "assets/808/symbols/b1.jpg",
+      "name": "B1",
+      "type": 1
+    },
+    {
+      "img": "assets/808/symbols/b2.jpg",
+      "name": "B2",
+      "type": 2
+    }
+  ],
+  "playModes": {
+    "normal": {
+      "winOnLine": true,
+      "autoWinChance": 0,
+      "doSymbolAnimationsLoop": false,
+      "winningLines": [
+        1,
+        5
+      ],
+      "enableOnMobile": true
+    },
+    "lotsOfWin": {
+      "winOnLine": false,
+      "autoWinChance": 50,
+      "doSymbolAnimationsLoop": false,
+      "winningLines": null,
+      "enableOnMobile": true
+    },
+    "gaffe_Line_M1": {
+      "winOnLine": true,
+      "autoWinChance": 50,
+      "doSymbolAnimationsLoop": false,
+      "gaffe": "Line_M1",
+      "stuffSymbol": 0,
+      "winningLines": null,
+      "enableOnMobile": true
+    },
+    "allPayLines": {
+      "winOnLine": false,
+      "autoWinChance": 0,
+      "doSymbolAnimationsLoop": false,
+      "winningLines": null,
+      "enableOnMobile": true
+    },
+    "singleSpriteSheet": {
+      "numSprites": 1
+    },
+    "compareTest": {
+      "numSprites": 1
+    }
+  },
+  "defaultPlayMode": "normal"
+}

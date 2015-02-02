@@ -34,7 +34,22 @@ var G = G || {};
 			stats.end();
 		}
 
+		//auto scroll for fullscreen hack
+		window.addEventListener('load', function(e) {
+			console.log('Window Loaded');
+			setTimeout(function() {
+				window.scrollTo(0, 1);
+			}, 0);
+		}, false);
 
+		var preloader = new G.Preloader();
+		preloader.init();
+
+		var serverInterface = new G.ServerInterface();
+		serverInterface.init();
+
+		var game = new G.Game();
+		game.init();
 
 
 
