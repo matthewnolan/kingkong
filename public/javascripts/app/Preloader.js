@@ -1,7 +1,7 @@
 /*! kingkong 0.0.1 - 2015-02-02
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
-var G = G || {};
+this.G = this.G || {};
 
 (function () {
 	"use strict";
@@ -13,7 +13,7 @@ var G = G || {};
 
 	p.game = null;
 
-	p.preloadSetup = null
+	p.preloadSetup = null;
 
 	p.setupUrl = "";
 
@@ -31,7 +31,7 @@ var G = G || {};
 	};
 
 	p.handleSetupLoaded = function(event) {
-		console.log('handle setup loaded', self, event.result);
+		console.log('handle setup loaded', this, event.result);
 		this.game.setSetup(event.result);
 	};
 

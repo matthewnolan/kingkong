@@ -22,8 +22,8 @@ module.exports = function (grunt) {
 				stripBanners: true
 			},
 			dist: {
-				src: ['lib/FILE_NAME.js'],
-				dest: 'dist/FILE_NAME.js'
+				src: ['public/javascripts/app/**/*.js'],
+				dest: 'public/javascripts/dist/<%= pkg.name %>.js'
 			}
 		},
 		uglify: {
@@ -32,7 +32,7 @@ module.exports = function (grunt) {
 			},
 			dist: {
 				src: '<%= concat.dist.dest %>',
-				dest: 'dist/FILE_NAME.min.js'
+				dest: 'public/javascripts/dist/<%= pkg.name %>.min.js'
 			}
 		},
 		jshint: {
@@ -50,18 +50,24 @@ module.exports = function (grunt) {
 				eqnull: true,
 				browser: true,
 				globals: {
-					jQuery: true
+					"G": true,
+					"createjs" : true,
+					"Stats" : true,
+					"expect"   : false,
+					"describe"   : false,
+					"it"         : false,
+					"before"     : false,
+					"beforeEach" : false,
+					"after"      : false,
+					"afterEach"  : false,
+					"require" : false,
+					"console" : false
 				}
 			},
+			all: ['public/javascripts/app/**/*.js', 'public/javascripts/test/**/*.js'],
 			gruntfile: {
 				src: 'Gruntfile.js'
-			},
-			lib_test: {
-				src: ['lib/**/*.js', 'test/**/*.js']
 			}
-		},
-		qunit: {
-			files: ['test/**/*.html']
 		},
 		watch: {
 			gruntfile: {
@@ -96,7 +102,7 @@ module.exports = function (grunt) {
 								args = {
 									includeInit: includeInit,
 									superClass: str.split('.')[1]
-								}
+								};
 							} else {
 								templateFunction = appTemplates.classSolo;
 								args = {
@@ -185,6 +191,7 @@ module.exports = function (grunt) {
 
 	// Default task.
 	grunt.registerTask('add', ['prompt:file-creator', 'file-creator']);
+	grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
 
 
 };

@@ -1,7 +1,7 @@
 /*! kingkong 0.0.1 - 2015-02-02
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
-var G = G || {};
+this.G = this.G || {};
 
 (function () {
 	"use strict";
