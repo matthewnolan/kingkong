@@ -23,21 +23,23 @@ var G = G || {};
 		stats.domElement.style.left = '0px';
 		document.body.appendChild( stats.domElement );
 
-		var update = function () {
+		var stage = new createjs.Stage("app");
 
+		createjs.Ticker.addEventListener("tick", handleTick);
+		createjs.Ticker.setFPS(60);
+
+		function handleTick() {
 			stats.begin();
-
-			// monitored code goes here
-
+			stage.update();
 			stats.end();
+		}
 
-			requestAnimationFrame( update );
 
-		};
 
-		requestAnimationFrame( update );
+
 
 	};
+
 
 	G.Main = Main;
 
