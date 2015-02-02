@@ -10,8 +10,6 @@ this.G = this.G || {};
 	var p = Main.prototype;
 	p.constructor = Main;
 
-	p.SETUP_URL = 'assets/config/setup.json';
-
 	p.stats = null;
 
 	p.stage = null;
@@ -45,12 +43,7 @@ this.G = this.G || {};
 		serverInterface.init();
 
 		var game = new G.Game();
-		game.init(serverInterface);
-
-		var preloader = new G.Preloader();
-		preloader.init(game, this.SETUP_URL);
-		preloader.startLoad();
-
+		game.init(this.stage, serverInterface);
 
 	};
 

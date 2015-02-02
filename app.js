@@ -35,7 +35,7 @@ var sendTests = function(req, res) {
 
 var sendClassStructure = function(req, res) {
 	res.sendfile(__dirname + "/src/architecture/ClassStructure.pdf");
-}
+};
 
 app.get('/', sendIndex);
 app.get('/test', sendTests);

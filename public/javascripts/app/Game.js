@@ -14,15 +14,40 @@ this.G = this.G || {};
 
 	p.serverInterface = null;
 
-	p.init = function(serverInterface) {
+	p.SETUP_URL = 'assets/config/setup.json';
+
+	p.stage = null;
+
+	p.init = function(stage, serverInterface) {
 		this.serverInterface = serverInterface;
 
+		var preloader = new G.Preloader();
+		preloader.init(this, this.SETUP_URL);
+		preloader.events.on("SETUP_LOADED", this.onSetupLoaded, this);
+		preloader.events.on("LOAD_COMPLETE", this.onAssetsLoadComplete, this);
+		preloader.startLoad();
 	};
 
 	p.setSetup = function(setup) {
 		this.setup = setup;
+	};
 
+	p.onSetupLoaded = function() {
 		console.log(this.setup.gameTitle, 'Setup Loaded');
+
+	};
+
+	p.onAssetsLoadComplete = function(e) {
+		console.log('{Game} :: onAssetsLoadComplete', e.result);
+
+		this.setupDisplay();
+
+	};
+
+	p.setupDisplay = function() {
+
+
+
 	};
 
 	G.Game = Game;

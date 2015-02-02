@@ -19,6 +19,8 @@ this.G = this.G || {};
 
 	p.preloadAssets = null;
 
+	p.events = new createjs.EventDispatcher();
+
 	p.init = function(game, setupUrl) {
 		console.log(this, 'init');
 		this.game = game;
@@ -34,17 +36,19 @@ this.G = this.G || {};
 	};
 
 	p.startLoad = function() {
+		console.log('{Preload} startLoad');
 		this.preloadSetup.loadFile(this.setupUrl);
 	};
 
 	p.handleSetupLoaded = function(event) {
 		console.log('handle setup loaded', this, event.result);
 		this.game.setSetup(event.result);
+		this.events.dispatchEvent(new createjs.Event("SETUP_LOADED"));
 		this.loadGameAssets();
 	};
 
 	p.loadGameAssets = function() {
-		//this.preloadAssets.loadFi
+		this.preloadAssets.loadFile(this.game.setup.mainUiBezel);
 	};
 
 	p.handleAssetsError = function() {
@@ -56,6 +60,9 @@ this.G = this.G || {};
 	};
 
 	p.handleAssetsComplete = function() {
+
+		this.events.dispatchEvent(new createjs.Event("LOAD_COMPLETE"));
+
 
 	};
 

@@ -13,7 +13,4 @@ describe("ServerInterface Test", function () {
 		expect(this.class).toBeDefined();
 	});
 
-	it("Failing Test", function () {
-		expect(false).toBeTruthy();
-	});
 });
