@@ -1,11 +1,11 @@
 {
-  "name": "testupdate",
-  "version": "0.0.0",
+  "name": "kingkong",
+  "version": "0.0.1",
   "authors": [
     "Andy Hayes <andygoestohollywood@gmail.com>",
     "Matt Nolan"
   ],
-  "license": "@Copyright 2015 HighFiveGames",
+  "license": "@HighFiveGame (c)2015",
   "private": true,
   "ignore": [
     "**/.*",
@@ -22,6 +22,14 @@
     "createjs-soundjs": "~0.6.0",
     "createjs-tweenjs": "~0.6.0",
     "easeljs-filters": "~0.2.1",
-    "easeljs": "~0.8.0"
+    "easeljs": "~0.8.0",
+    "jasmine": "~2.1.3"
+  },
+  "install": {
+    "path": "public/javascripts/vendor",
+    "sources": {
+      "jasmine": "bower_components/jasmine/lib/jasmine-core/jasmine.js",
+      "easeljs-filters" : "bower_components/easeljs-filters/lib/filters-for-easeljs-0.2.0.min.js"
+    }
   }
 }

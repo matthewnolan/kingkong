@@ -78,7 +78,7 @@ module.exports = function (grunt) {
 			"conditional": {
 				files: [
 					{
-						file: "public/javascripts/app/src/" + '<%= config.file %>.js',
+						file: "public/javascripts/app/" + '<%= config.file %>.js',
 						method: function (fs, fd, done) {
 							var templateFunction, args;
 							var includeInit = grunt.template.process('<%= config.includeInit %>') === 'true';
@@ -170,7 +170,6 @@ module.exports = function (grunt) {
 	// These plugins provide necessary tasks.
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-nodeunit');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-file-creator');
