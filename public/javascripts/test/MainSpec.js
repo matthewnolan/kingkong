@@ -10,13 +10,10 @@ describe("Main Test", function () {
 	});
 
 	it("Passing Test", function () {
-
 		expect(this.class).toBeDefined();
-
 	});
+
 	it("Failing Test", function () {
-
 		expect(false).toBeTruthy();
-
 	});
 });
