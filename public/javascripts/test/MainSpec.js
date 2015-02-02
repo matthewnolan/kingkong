@@ -14,7 +14,7 @@ describe("Main Test", function () {
 		expect(this.class).toBeDefined();
 
 	});
-	it("Failint Test", function () {
+	it("Failing Test", function () {
 
 		expect(false).toBeTruthy();
 

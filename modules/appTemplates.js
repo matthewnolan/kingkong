@@ -1,12 +1,5 @@
 var AppTemplates = {
 	testSpec: function() {
-		/*
-		 it("Passing Test", function() {
-
-		 expect(this.class).toBeDefined();
-
-		 });
-		 */
 		var contents = 'describe("<%= config.file %> Test", function () {\n\n';
 		contents+='\tbeforeEach(function () {\n\n';
 		contents+='\t\tthis.class = new G.<%= config.file %>();\n\n';
@@ -14,7 +7,7 @@ var AppTemplates = {
 		contents+='\tit("Passing Test", function () {\n\n';
 		contents+='\t\texpect(this.class).toBeDefined();\n\n';
 		contents+='\t});\n';
-		contents+='\tit("Failint Test", function () {\n\n';
+		contents+='\tit("Failing Test", function () {\n\n';
 		contents+='\t\texpect(false).toBeTruthy();\n\n';
 		contents+='\t});\n';
 		contents+='});';
