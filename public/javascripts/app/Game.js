@@ -10,9 +10,19 @@ var G = G || {};
 	var p = Game.prototype;
 	p.constructor = Game;
 
+	p.setup = null;
 
-	p.init = function() { 
+	p.serverInterface = null;
 
+	p.init = function(serverInterface) {
+		this.serverInterface = serverInterface;
+
+	};
+
+	p.setSetup = function(setup) {
+		this.setup = setup;
+
+		console.log(this.setup.gameTitle, 'Setup Loaded')
 	};
 
 	G.Game = Game;

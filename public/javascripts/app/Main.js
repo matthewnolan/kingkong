@@ -10,31 +10,30 @@ var G = G || {};
 	var p = Main.prototype;
 	p.constructor = Main;
 
+	p.SETUP_URL = 'assets/config/setup.json';
+
+	p.stats = null;
+
+	p.stage = null;
+
 	/**
 	 * init
 	 * Application Entry Point
 	 */
 	p.init = function() {
 
-		var stats = new Stats();
-		stats.setMode(0); // 0: fps, 1: ms
-		stats.domElement.style.position = 'absolute';
-		stats.domElement.style.bottom = '0px';
-		stats.domElement.style.left = '0px';
-		document.body.appendChild( stats.domElement );
+		this.stats = new Stats();
+		this.stats.setMode(0); // 0: fps, 1: ms
+		this.stats.domElement.style.position = 'absolute';
+		this.stats.domElement.style.bottom = '0px';
+		this.stats.domElement.style.left = '0px';
+		document.body.appendChild( this.stats.domElement );
 
-		var stage = new createjs.Stage("app");
+		this.stage = new createjs.Stage("app");
 
-		createjs.Ticker.addEventListener("tick", handleTick);
+		createjs.Ticker.on("tick", this.handleTick, this);
 		createjs.Ticker.setFPS(60);
 
-		function handleTick() {
-			stats.begin();
-			stage.update();
-			stats.end();
-		}
-
-		//auto scroll for fullscreen hack
 		window.addEventListener('load', function(e) {
 			console.log('Window Loaded');
 			setTimeout(function() {
@@ -42,17 +41,23 @@ var G = G || {};
 			}, 0);
 		}, false);
 
-		var preloader = new G.Preloader();
-		preloader.init();
-
 		var serverInterface = new G.ServerInterface();
 		serverInterface.init();
 
 		var game = new G.Game();
-		game.init();
+		game.init(serverInterface);
+
+		var preloader = new G.Preloader();
+		preloader.init(game, this.SETUP_URL);
+		preloader.startLoad();
 
 
+	};
 
+	p.handleTick = function() {
+		this.stats.begin();
+		this.stage.update();
+		this.stats.end();
 	};
 
 

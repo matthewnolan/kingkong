@@ -29,6 +29,9 @@
   "isMobile": "deprecated",
   "defaultBet": 5,
   "defaultCredits": 1337,
+
+  "mainUiBezel" : "assets/images/ui-bezel.jpg",
+
   "winLines": [
     {
       "color": "#ff0303",
