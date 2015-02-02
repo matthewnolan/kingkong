@@ -33,9 +33,14 @@ var sendTests = function(req, res) {
 	res.sendfile(__dirname + "/public/tests.html");
 };
 
+var sendClassStructure = function(req, res) {
+	res.sendfile(__dirname + "/src/architecture/ClassStructure.pdf");
+}
+
 app.get('/', sendIndex);
 app.get('/test', sendTests);
 app.get('/tests', sendTests);
+app.get('/classes', sendClassStructure);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

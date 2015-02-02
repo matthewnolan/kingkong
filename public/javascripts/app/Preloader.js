@@ -17,6 +17,8 @@ this.G = this.G || {};
 
 	p.setupUrl = "";
 
+	p.preloadAssets = null;
+
 	p.init = function(game, setupUrl) {
 		console.log(this, 'init');
 		this.game = game;
@@ -24,6 +26,11 @@ this.G = this.G || {};
 
 		this.preloadSetup = new createjs.LoadQueue();
 		this.preloadSetup.on("fileload", this.handleSetupLoaded, this);
+
+		this.preloadAssets = new createjs.LoadQueue();
+		this.preloadAssets.on("error", this.handleAssetsError);
+		this.preloadAssets.on("progress", this.handleAssetsProgress);
+		this.preloadAssets.on("comlete", this.handleAssetsComplete);
 	};
 
 	p.startLoad = function() {
@@ -33,6 +40,23 @@ this.G = this.G || {};
 	p.handleSetupLoaded = function(event) {
 		console.log('handle setup loaded', this, event.result);
 		this.game.setSetup(event.result);
+		this.loadGameAssets();
+	};
+
+	p.loadGameAssets = function() {
+		//this.preloadAssets.loadFi
+	};
+
+	p.handleAssetsError = function() {
+
+	};
+
+	p.handleAssetsProgress = function() {
+
+	};
+
+	p.handleAssetsComplete = function() {
+
 	};
 
 	G.Preloader = Preloader;
