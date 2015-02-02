@@ -1,94 +1,110 @@
 <html>
 <head>
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-    }
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
 
-    img.bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
+        img.bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
 
-    h1 {
-        margin: 0;
-    }
+        h1 {
+            margin: 0;
+        }
 
-    h2 {
-        margin: 0;
-    }
+        h2 {
+            margin: 0;
+        }
 
-    .container {
-        position: relative;
-        height: 400px;
-    }
+        .container {
+            position: relative;
+            height: 400px;
+        }
 
-    .stack-container {
-        background-color: #000066;
-        position: fixed;
-        color: white;
-        bottom: 0;
-    }
+        .stack-container {
+            background-color: #000066;
+            position: fixed;
+            color: white;
+            bottom: 0;
+        }
 
-    .bubble-position {
-        position: absolute;
-        top: 150px;
-        left: 350px;
-    }
+        .bubble-position {
+            position: absolute;
+            top: 150px;
+            left: 350px;
+        }
 
-    .bubble
-    {
-        position: relative;
-        width: 250px;
-        height: 120px;
-        padding: 10px 0 0 20px;
-        background: #FFFFFF;
-        -webkit-border-radius: 33px;
-        -moz-border-radius: 33px;
-        border-radius: 33px;
-        border: #7F7F7F solid 5px;
-    }
+        .bubble {
+            position: relative;
+            width: 250px;
+            height: 120px;
+            padding: 10px 0 0 20px;
+            background: #FFFFFF;
+            -webkit-border-radius: 33px;
+            -moz-border-radius: 33px;
+            border-radius: 33px;
+            border: #7F7F7F solid 5px;
+        }
 
-    .bubble:after
-    {
-        content: '';
-        position: absolute;
-        border-style: solid;
-        border-width: 6px 0 6px 15px;
-        border-color: transparent #FFFFFF;
-        display: block;
-        width: 0;
-        z-index: 1;
-        margin-top: -6px;
-        right: -15px;
-        top: 50%;
-    }
+        .bubble:after {
+            content: '';
+            position: absolute;
+            border-style: solid;
+            border-width: 6px 0 6px 15px;
+            border-color: transparent #FFFFFF;
+            display: block;
+            width: 0;
+            z-index: 1;
+            margin-top: -6px;
+            right: -15px;
+            top: 50%;
+        }
 
-    .bubble:before
-    {
-        content: '';
-        position: absolute;
-        border-style: solid;
-        border-width: 10px 0 10px 19px;
-        border-color: transparent #7F7F7F;
-        display: block;
-        width: 0;
-        z-index: 0;
-        margin-top: -10px;
-        right: -24px;
-        top: 50%;
-    }
-</style>
+        .bubble:before {
+            content: '';
+            position: absolute;
+            border-style: solid;
+            border-width: 10px 0 10px 19px;
+            border-color: transparent #7F7F7F;
+            display: block;
+            width: 0;
+            z-index: 0;
+            margin-top: -10px;
+            right: -24px;
+            top: 50%;
+        }
+    </style>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/android-chrome-manifest.json">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 </head>
 <body>
 
 
 <div class="container">
-    <img class="bg" src="assets/images/KingKong1.jpg" />
+    <img class="bg" src="assets/images/KingKong1.jpg"/>
+
     <div class="bubble bubble-position">
         <h1><%= message %></h1>
+
         <h2><%= error.status %></h2>
     </div>
 
@@ -97,8 +113,6 @@
     <pre><%= error.stack %></pre>
 
 </div>
-
-
 
 
 </body>

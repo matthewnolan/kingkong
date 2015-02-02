@@ -75,8 +75,16 @@ module.exports = function (grunt) {
 		},
 
 		"file-creator": {
-			"conditional": {
+			"create-class": {
 				files: [
+					{
+						file: "public/javascripts/test/" + '<%= config.file %>Spec.js',
+						method: function (fs, fd, done) {
+							var templateFunction = appTemplates.testSpec;
+							fs.writeSync(fd, grunt.template.process("<%= banner %>\n" + templateFunction.call(this)));
+							done();
+						}
+					},
 					{
 						file: "public/javascripts/app/" + '<%= config.file %>.js',
 						method: function (fs, fd, done) {

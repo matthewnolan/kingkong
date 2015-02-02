@@ -28,7 +28,11 @@
   "install": {
     "path": "public/javascripts/vendor",
     "sources": {
-      "jasmine": "bower_components/jasmine/lib/jasmine-core/jasmine.js",
+      "jasmine": [
+        "bower_components/jasmine/lib/jasmine-core/jasmine.js",
+        "bower_components/jasmine/lib/jasmine-core/jasmine-html.js",
+        "bower_components/jasmine/lib/jasmine-core/boot.js"
+      ],
       "easeljs-filters" : "bower_components/easeljs-filters/lib/filters-for-easeljs-0.2.0.min.js"
     }
   }
