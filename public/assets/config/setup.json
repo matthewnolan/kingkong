@@ -29,6 +29,27 @@
   "isMobile": "deprecated",
   "defaultBet": 5,
   "defaultCredits": 1337,
+
+  "reelSymbols": [
+    "assets/images/m1.jpg",
+    "assets/images/d1.jpg",
+    "assets/images/d2.jpg",
+    "assets/images/d3.jpg",
+    "assets/images/d4.jpg",
+    "assets/images/f0.png",
+    "assets/images/f5.png",
+    "assets/images/f6.png",
+    "assets/images/f7.png",
+    "assets/images/f8.png",
+    "assets/images/f9.png",
+    "assets/images/b1.jpg",
+    "assets/images/b2.jpg",
+    "assets/images/m2.jpg",
+    "assets/images/m3.jpg",
+    "assets/images/m4.jpg",
+    "assets/images/ww.jpg"
+  ],
+
   "mainUiBezel": "assets/images/ui-bezel.jpg",
   "winLines": [
     {

@@ -49,6 +49,7 @@ this.G = this.G || {};
 
 	p.loadGameAssets = function() {
 		this.preloadAssets.loadFile(this.game.setup.mainUiBezel);
+		//this.game.setup.reelSymbols
 	};
 
 	p.handleAssetsError = function() {
@@ -60,10 +61,7 @@ this.G = this.G || {};
 	};
 
 	p.handleAssetsComplete = function() {
-
 		this.events.dispatchEvent(new createjs.Event("LOAD_COMPLETE"));
-
-
 	};
 
 	G.Preloader = Preloader;
