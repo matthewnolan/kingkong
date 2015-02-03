@@ -1,5 +1,5 @@
 /*global module:false*/
-var appTemplates = require('./modules/appTemplates.js');
+var appTemplates = require('./modules/utils/appTemplates.js');
 var change = require('./node_modules/change-case/change-case.js');
 
 module.exports = function (grunt) {
@@ -181,6 +181,9 @@ module.exports = function (grunt) {
 		}
 	});
 
+	// Bespoke Grunt Tasks
+	grunt.loadTasks('./modules/gruntTasks/');
+
 	// These plugins provide necessary tasks.
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -192,6 +195,7 @@ module.exports = function (grunt) {
 	// Default task.
 	grunt.registerTask('add', ['prompt:file-creator', 'file-creator']);
 	grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
+	grunt.registerTask('texture', ['easel-packer']);
 
 
 };
