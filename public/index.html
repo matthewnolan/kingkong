@@ -3,8 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>King Kong</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1, user-scalable=yes, minimal-ui">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -25,30 +26,59 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
-
     <script src="javascripts/vendor/easeljs/easeljs-0.8.0.combined.js"></script>
     <script src="javascripts/vendor/createjs-preloadjs/preloadjs-0.6.0.combined.js"></script>
     <script src="javascripts/vendor/createjs-soundjs/soundjs-0.6.0.combined.js"></script>
     <script src="javascripts/vendor/createjs-tweenjs/tweenjs-0.6.0.combined.js"></script>
     <script src="javascripts/vendor/easeljs-filters/filters-for-easeljs-0.2.0.min.js"></script>
     <script src="javascripts/vendor/stats.js/stats.min.js"></script>
+    <script src="javascripts/vendor/signals/signals.js"></script>
+
+    <!-- for dev only will not be required in final app-->
+    <script src="javascripts/vendor/jquery/jquery.js"></script>
 
     <script src="javascripts/app/Main.js"></script>
     <script src="javascripts/app/Preloader.js"></script>
     <script src="javascripts/app/Game.js"></script>
     <script src="javascripts/app/ServerInterface.js"></script>
+    <script src="javascripts/app/Reel.js"></script>
+    <script src="javascripts/app/ReelsComponent.js"></script>
 
     <link rel="stylesheet" href="stylesheets/style.css">
 
 </head>
 <body>
 
-<canvas id="app"></canvas>
+<div>
+    <canvas id="app" width="667" height="375"></canvas>
+</div>
+
+<div>
+    <h4>Spin Demo</h4>
+    <label for="gasPedal">Spin Speed</label>
+    <input type="range" id="gasPedal" min="0" value="50" max="100" step="1" onchange="window.updateSpeed(value)" oninput="window.updateSpeed(value)">
+    <div class="spin-perc"></div>
+    <div class="spin-speed"></div>
+</div>
+
 
 <script>
-    (function() {
+    (function(window) {
+
+        var currentSpinSpeed = 50;
+
         var main = new G.Main();
         main.init();
+
+        window.updateSpeed = function(val) {
+            console.log('val', val);
+            currentSpinSpeed = val/100 * 4000;
+            $('div.spin-perc').html(val + '%');
+            $('div.spin-speed').html(currentSpinSpeed + 'pps');
+        };
+
+        window.updateSpeed(50);
+
     })(window);
 </script>
 </body>

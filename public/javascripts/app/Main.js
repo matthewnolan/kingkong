@@ -14,6 +14,8 @@ this.G = this.G || {};
 
 	p.stage = null;
 
+	p.game = null;
+
 	/**
 	 * init
 	 * Application Entry Point
@@ -29,6 +31,8 @@ this.G = this.G || {};
 
 		this.stage = new createjs.Stage("app");
 
+
+
 		createjs.Ticker.on("tick", this.handleTick, this);
 		createjs.Ticker.setFPS(60);
 
@@ -42,16 +46,18 @@ this.G = this.G || {};
 		var serverInterface = new G.ServerInterface();
 		serverInterface.init();
 
-		var game = new G.Game();
-		game.init(this.stage, serverInterface);
+		this.game = new G.Game();
+		this.game.init(this.stage, serverInterface);
 
 	};
 
 	p.handleTick = function() {
 		this.stats.begin();
 		this.stage.update();
+		//console.log(this.stage.getBounds());
 		this.stats.end();
 	};
+
 
 
 	G.Main = Main;

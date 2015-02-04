@@ -53,6 +53,7 @@ module.exports = function (grunt) {
 					"G": true,
 					"createjs" : true,
 					"Stats" : true,
+					"signals" : true,
 					"expect"   : false,
 					"describe"   : false,
 					"it"         : false,

@@ -7,12 +7,6 @@ body {
     width: 100%;
 }
 
-a {
-    color: #00B7FF;
-}
-
 #app {
-    width: 640px;
-    height: 320px;
     background-color: #000066;
 }

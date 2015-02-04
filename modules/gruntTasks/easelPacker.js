@@ -18,6 +18,7 @@ module.exports = function(grunt) {
 			tempName = "";
 			count = 0;
 			prevKey = "";
+
 			for (key in animations) {
 				animName = key.split('__')[0];
 
@@ -25,13 +26,12 @@ module.exports = function(grunt) {
 					tempName = animName;
 
 					if (prevKey !== "") {
+						if (count > 0) {
+							endFrame = animations[prevKey][0] + count;
+							animations[prevKey].push(endFrame);
+							count = 0;
+						}
 
-						endFrame = animations[prevKey][0] + count;
-
-						console.log('animation:', animName, 'pushing', endFrame);
-
-						animations[prevKey].push(endFrame);
-						count = 0;
 					}
 
 				} else {
@@ -45,11 +45,21 @@ module.exports = function(grunt) {
 			}
 
 			//do last item
-			endFrame = animations[prevKey][0] + count;
-			animations[prevKey].push(endFrame);
+			if (count > 0) {
+				endFrame = animations[prevKey][0] + count;
+				animations[prevKey].push(endFrame);
+			}
+
 
 			var splitPath = filePath.split('/');
 			filename = splitPath[splitPath.length - 1];
+
+			var name = filename.split('.')[0];
+
+			file['images'] = ['assets/sprites/' + name + '.png'];
+
+			grunt.file.copy('src/texturepacker/' + name + '.png', './public/assets/sprites/' + name + '.png');
+			grunt.log.write(name + '.png Exported ' ).ok();
 
 			grunt.file.write('./public/assets/sprites/' + filePath, JSON.stringify(file, null, '\t'));
 			grunt.file.copy('./public/assets/sprites/' + filePath, './public/assets/sprites/' + filename);

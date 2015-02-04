@@ -1,4 +1,4 @@
-/*! kingkong 0.0.1 - 2015-02-02
+/*! kingkong 0.0.1 - 2015-02-03
 * Copyright (c) 2015 Licensed @HighFiveGames */
 /*! kingkong 0.0.1 - 2015-02-02
 * Copyright (c) 2015 Licensed @HighFiveGames */
@@ -16,15 +16,37 @@ this.G = this.G || {};
 
 	p.serverInterface = null;
 
-	p.init = function(serverInterface) {
+	p.SETUP_URL = 'assets/config/setup.json';
+
+	p.stage = null;
+
+	p.init = function(stage, serverInterface) {
 		this.serverInterface = serverInterface;
+
+		var preloader = new G.Preloader();
+		preloader.init(this, this.SETUP_URL);
+		preloader.events.on("SETUP_LOADED", this.onSetupLoaded, this, true);
+		preloader.events.on("LOAD_COMPLETE", this.onAssetsLoadComplete, this);
+		preloader.startLoad();
+	};
+
+
+	p.onSetupLoaded = function(e, data) {
+		console.log('onSetupLoaded', e, 'data=', data);
 
 	};
 
-	p.setSetup = function(setup) {
-		this.setup = setup;
+	p.onAssetsLoadComplete = function(e) {
+		console.log('{Game} :: onAssetsLoadComplete', e.result);
 
-		console.log(this.setup.gameTitle, 'Setup Loaded');
+		this.setupDisplay();
+
+	};
+
+	p.setupDisplay = function() {
+
+
+
 	};
 
 	G.Game = Game;
@@ -41,8 +63,6 @@ this.G = this.G || {};
 	var Main = function() {};
 	var p = Main.prototype;
 	p.constructor = Main;
-
-	p.SETUP_URL = 'assets/config/setup.json';
 
 	p.stats = null;
 
@@ -77,12 +97,7 @@ this.G = this.G || {};
 		serverInterface.init();
 
 		var game = new G.Game();
-		game.init(serverInterface);
-
-		var preloader = new G.Preloader();
-		preloader.init(game, this.SETUP_URL);
-		preloader.startLoad();
-
+		game.init(this.stage, serverInterface);
 
 	};
 
@@ -115,6 +130,10 @@ this.G = this.G || {};
 
 	p.setupUrl = "";
 
+	p.preloadAssets = null;
+
+	p.setupComplete = new signals.Signal();
+
 	p.init = function(game, setupUrl) {
 		console.log(this, 'init');
 		this.game = game;
@@ -122,15 +141,40 @@ this.G = this.G || {};
 
 		this.preloadSetup = new createjs.LoadQueue();
 		this.preloadSetup.on("fileload", this.handleSetupLoaded, this);
+
+		this.preloadAssets = new createjs.LoadQueue();
+		this.preloadAssets.on("error", this.handleAssetsError);
+		this.preloadAssets.on("progress", this.handleAssetsProgress);
+		this.preloadAssets.on("comlete", this.handleAssetsComplete);
 	};
 
 	p.startLoad = function() {
+		console.log('{Preload} startLoad');
 		this.preloadSetup.loadFile(this.setupUrl);
 	};
 
 	p.handleSetupLoaded = function(event) {
 		console.log('handle setup loaded', this, event.result);
-		this.game.setSetup(event.result);
+		//this.game.setSetup(event.result);
+		this.events.dispatchEvent(new createjs.Event("SETUP_LOADED"), event.result);
+		this.loadGameAssets();
+	};
+
+	p.loadGameAssets = function() {
+		//this.preloadAssets.loadFile(this.game.setup.mainUiBezel);
+		//this.game.setup.reelSymbols
+	};
+
+	p.handleAssetsError = function() {
+
+	};
+
+	p.handleAssetsProgress = function() {
+
+	};
+
+	p.handleAssetsComplete = function() {
+		this.events.dispatchEvent(new createjs.Event("LOAD_COMPLETE"));
 	};
 
 	G.Preloader = Preloader;
