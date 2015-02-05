@@ -22,10 +22,6 @@ this.G = this.G || {};
 		this.serverInterface = serverInterface;
 		this.stage = stage;
 
-
-
-		console.log('window.document', window.document);
-
 		var preloader = new G.Preloader();
 		preloader.init(this, this.SETUP_URL);
 		preloader.setupComplete.add(this.onSetupLoaded, this);
@@ -50,6 +46,7 @@ this.G = this.G || {};
 		console.log('{Game} :: onAssetsLoadComplete', this);
 		this.assets = assets;
 		this.setupDisplay();
+		this.initUIEvents();
 	};
 
 	p.setupDisplay = function() {
@@ -63,16 +60,14 @@ this.G = this.G || {};
 
 		var spriteSheet = new createjs.SpriteSheet(this.assets.spriteSheetStatics);
 		var sprite = new createjs.Sprite(spriteSheet, 'ui-bezel');
-
 		bgLayer.addChild(sprite);
 
 		this.reelsComponent = new G.ReelsComponent();
-
 		this.reelsComponent.init(this.setup, spriteSheet);
 		this.reelsComponent.drawReels();
-		bgLayer.addChild(this.reelsComponent);
 		this.reelsComponent.x = bezelMarginL;
 		this.reelsComponent.y = bezelMarginT;
+		bgLayer.addChild(this.reelsComponent);
 
 		var sceneMask = new createjs.Shape();
 		sceneMask.graphics.setStrokeStyle(0)
@@ -81,21 +76,51 @@ this.G = this.G || {};
 		this.stage.addChild(sceneMask);
 		if (!this.setup.devMode) this.reelsComponent.mask = sceneMask;
 
+	};
 
+	p.initUIEvents = function() {
 
 		var self = this;
-
 		window.document.onkeydown = function(e) {
-
-			console.log('e', e.keyCode);
-
 			switch(e.keyCode) {
-				//space
-				case 32 :
-				self.reelsComponent.spinReels();
-				break;
+				//space //enter
+				case 32:
+				case 0:
+					self.reelsComponent.spinReels();
+					break;
 			}
 		};
+
+		createjs.Touch.enable(this.stage);
+
+		var myElement = document.querySelector('#app');
+		var mc = new Hammer(myElement);
+		mc.get('swipe').set({
+			direction: Hammer.DIRECTION_ALL
+		});
+
+		mc.get('pinch').set({
+			enable: true
+		});
+
+		mc.on('swipe', function() {
+			self.reelsComponent.spinReels();
+		});
+
+		mc.on('pinchin', function() {
+			//G.util.showGaffMenu();
+		});
+
+		mc.on('pinchout', function() {
+			//G.util.hideGaffMenu();
+		});
+
+		if (!this.setup.domHelpers) {
+			console.log('remove');
+			$('.dom-helpers').remove();
+		}
+
+
 
 	};
 

@@ -27,13 +27,41 @@ var G = G || {};
 
 	p.reels = [];
 
-	p.reelMap = ['ww','m1', 'm2', 'm3', 'm4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f0', 'd1', 'd2', 'd3', 'd4', 'b1', 'b2'];
+	p.reelMap = null;
 
 	p.init = function(setup, symbolSprites) {
 		this.setup = setup;
 		this.symbolSprites = symbolSprites;
+		this.reelsMap = setup.reelMap;
 
 		this.initDomEvents();
+
+		if (setup.reelAnimation.shuffleReels) {
+			this.shuffleReels();
+		}
+
+	};
+
+	p.shuffleReels = function() {
+		var i, len = this.reelsData.length;
+		for (i = 0; i < len; i++) {
+			this.shuffle(this.reelsData[i]);
+		}
+	};
+
+	p.shuffle = function(array) {
+		var currentIndex = array.length, temporaryValue, randomIndex ;
+		// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
+			// Pick a remaining element...
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex];
+			array[currentIndex] = array[randomIndex];
+			array[randomIndex] = temporaryValue;
+		}
+		return array;
 	};
 
 	p.drawReels = function() {
@@ -49,30 +77,39 @@ var G = G || {};
 			this.reels.push(reel);
 			reel.x = symbolW * i + reelMarginR * i;
 		}
-
-
 	};
 
 	p.spinReels = function() {
 		console.log('spinReels');
+		var self = this;
 		var i, len = this.reels.length, reel;
-		var delay = 250;
+		var maxDelay = this.setup.reelAnimation.delay.max;
+
+		var getDelay = function(i) {
+			if (self.setup.reelAnimation.delay.random === true) {
+				return Math.random() * maxDelay;
+			}
+			if (self.setup.reelAnimation.delay.sequenced === true) {
+				return maxDelay / self.reels.length * i;
+			}
+		};
+
 		for (i = 0; i < len; i++)
 		{
+			var delay = getDelay(i);
 			reel = this.reels[i];
-			reel.spinInfinite(delay * i);
+			reel.spinInfinite(delay);
+
 		}
 	};
 
 	p.updateSpinSpeed = function(val) {
-
 		var i, len = this.reels.length, reel;
 		for (i = 0; i < len; i++)
 		{
 			reel = this.reels[i];
 			reel.spinSpeedIncrement(val/100);
 		}
-
 	};
 
 	/**
@@ -83,7 +120,6 @@ var G = G || {};
 		var self = this;
 		$('#gasPedal').on('input', function(e) {
 			var newSpeed = $(e.target).val();
-			console.log('gasPedal', newSpeed);
 			self.updateSpinSpeed(newSpeed);
 		});
 	};

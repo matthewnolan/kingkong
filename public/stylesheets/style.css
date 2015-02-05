@@ -8,5 +8,7 @@ body {
 }
 
 #app {
-    background-color: #000066;
+    background-color: #000000;
 }
+
+input.vertical { -webkit-appearance: slider-vertical; writing-mode: bt-lr; }

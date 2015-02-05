@@ -62,20 +62,20 @@ this.G = this.G || {};
 	};
 
 	p.loadGameAssets = function() {
-		console.log('loadGameAssets', this.game.setup.spritesManifest);
+		//console.log('loadGameAssets', this.game.setup.spritesManifest);
 		this.preloadAssets.loadManifest(this.game.setup.spritesManifest);
 	};
 
 	p.handleAssetsError = function(e) {
-		console.warn('{Preloader} handleAssetsError', e);
+		//console.warn('{Preloader} handleAssetsError', e);
 	};
 
 	p.handleAssetsProgress = function(e) {
-		console.info('{Preloader} handleAssetsProgress', e);
+		//console.info('{Preloader} handleAssetsProgress', e);
 	};
 
 	p.handleAssetsComplete = function(e) {
-		console.log('{Preloader} handleAssetsComplete', e);
+		//console.log('{Preloader} handleAssetsComplete', e);
 		//this.events.dispatchEvent(new createjs.Event("LOAD_COMPLETE"));
 
 		var assets = {

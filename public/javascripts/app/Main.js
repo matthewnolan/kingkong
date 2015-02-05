@@ -29,9 +29,17 @@ this.G = this.G || {};
 		this.stats.domElement.style.left = '0px';
 		document.body.appendChild( this.stats.domElement );
 
+		var stageW = 667;
+		var stageH = 375;
+		var stageScale = 1;
+
 		this.stage = new createjs.Stage("app");
+		this.stage.scaleX = stageScale;
+		this.stage.scaleY = stageScale;
 
-
+		var mainCanvas = document.querySelector("#app");
+		mainCanvas.setAttribute("width", (stageW * stageScale).toString() + "px");
+		mainCanvas.setAttribute("height", (stageH * stageScale).toString() + "px");
 
 		createjs.Ticker.on("tick", this.handleTick, this);
 		createjs.Ticker.setFPS(60);
@@ -54,7 +62,6 @@ this.G = this.G || {};
 	p.handleTick = function() {
 		this.stats.begin();
 		this.stage.update();
-		//console.log(this.stage.getBounds());
 		this.stats.end();
 	};
 

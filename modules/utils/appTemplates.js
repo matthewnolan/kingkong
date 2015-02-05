@@ -4,12 +4,9 @@ var AppTemplates = {
 		contents+='\tbeforeEach(function () {\n\n';
 		contents+='\t\tthis.class = new G.<%= config.file %>();\n\n';
 		contents+='\t});\n\n';
-		contents+='\tit("Passing Test", function () {\n';
+		contents+='\tit("<%= config.file %> can be instantiated", function () {\n';
 		contents+='\t\texpect(this.class).toBeDefined();\n';
 		contents+='\t});\n\n';
-		contents+='\tit("Failing Test", function () {\n';
-		contents+='\t\texpect(false).toBeTruthy();\n';
-		contents+='\t});\n';
 		contents+='});';
 		return contents;
 	},
