@@ -45,6 +45,12 @@ var G = G || {};
 
 	p.scheduleSpeedChange = false;
 
+	p.reelSpinEnd = new signals.Signal();
+
+	p.stopTimeout = 0;
+
+	p.spinResultIndex = null;
+
 	p.init = function(setup, symbolSprites, reelData) {
 		this.setup = setup;
 		this.symbolSprites = symbolSprites;
@@ -87,13 +93,14 @@ var G = G || {};
 		}
 	};
 
-	p.spinInfinite = function(delay) {
+	p.spinInfinite = function(delay, indexToFinish) {
 
 		var self = this;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
 
+		this.spinResultIndex = indexToFinish;
 		this.scheduleSpinStop = -1;
 
 		var yPos = (symbolH * symbolsLen + symbolMarginB * symbolsLen);
@@ -105,9 +112,8 @@ var G = G || {};
 				.call(this.loopSpin)
 		);
 
-		setTimeout(function() {
-			self.scheduleSpinStop = 1;
-			//self.stopSpin(0);
+		this.stopTimeout = setTimeout(function() {
+			self.scheduleSpinStop = self.spinResultIndex || 0;
 		}, this.setup.reelAnimation.duration)
 	};
 
@@ -121,7 +127,7 @@ var G = G || {};
 		if (this.scheduleSpinStop >= 0) {
 			yPos = (symbolH * symbolsLen + symbolMarginB * symbolsLen) + (symbolH * index + symbolMarginB * index);
 			ease = createjs.Ease.getElasticOut(2, 5);
-			this.scheduleSpinStop = -2;
+			//this.scheduleSpinStop = -2;
 			this.stopSpin(this.scheduleSpinStop);
 			return;
 		} else if (this.scheduleSpinStop === -1){
@@ -140,7 +146,7 @@ var G = G || {};
 
 
 	p.stopSpin = function(index) {
-		this.scheduleSpinStop = -1;
+		this.scheduleSpinStop = -2;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
@@ -152,8 +158,17 @@ var G = G || {};
 			.call(this.handleSpinComplete);
 	};
 
+	p.fastStop = function() {
+
+		clearInterval(this.stopTimeout);
+		this.stopSpin(-2);
+
+	};
+
 	p.handleSpinComplete = function() {
 		console.log('handleSpinComplte');
+
+		this.reelSpinEnd.dispatch();
 	};
 
 

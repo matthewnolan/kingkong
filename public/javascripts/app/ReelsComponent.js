@@ -29,6 +29,8 @@ var G = G || {};
 
 	p.reelMap = null;
 
+	p.reelsSpinning = 0;
+
 	p.init = function(setup, symbolSprites) {
 		this.setup = setup;
 		this.symbolSprites = symbolSprites;
@@ -39,7 +41,6 @@ var G = G || {};
 		if (setup.reelAnimation.shuffleReels) {
 			this.shuffleReels();
 		}
-
 	};
 
 	p.shuffleReels = function() {
@@ -82,7 +83,7 @@ var G = G || {};
 	p.spinReels = function() {
 		console.log('spinReels');
 		var self = this;
-		var i, len = this.reels.length, reel;
+		var i, len = this.reels.length, reel, delay;
 		var maxDelay = this.setup.reelAnimation.delay.max;
 
 		var getDelay = function(i) {
@@ -94,13 +95,25 @@ var G = G || {};
 			}
 		};
 
-		for (i = 0; i < len; i++)
-		{
-			var delay = getDelay(i);
-			reel = this.reels[i];
-			reel.spinInfinite(delay);
-
+		if (this.reelsSpinning === 0) {
+			for (i = 0; i < len; i++)
+			{
+				delay = getDelay(i);
+				reel = this.reels[i];
+				reel.spinInfinite(delay, 10);
+				reel.reelSpinEnd.add(this.reelSpinEnd, this);
+				this.reelsSpinning++;
+			}
+		} else {
+			for (i = 0; i < len; i++)
+			{
+				reel = this.reels[i];
+				reel.fastStop();
+			}
 		}
+
+
+
 	};
 
 	p.updateSpinSpeed = function(val) {
@@ -110,6 +123,18 @@ var G = G || {};
 			reel = this.reels[i];
 			reel.spinSpeedIncrement(val/100);
 		}
+	};
+
+	p.reelSpinEnd = function() {
+		console.log('this.reelsSpinning=', this.reelsSpinning);
+
+		if (--this.reelsSpinning === 0)
+		{
+			console.log('REEL ANIM COMPLETE');
+
+		}
+
+
 	};
 
 	/**

@@ -2,7 +2,7 @@
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
 describe("Main Test", function () {
-
+	var gameObj;
 
 	beforeEach(function () {
 		this.class = new G.Main();
@@ -10,6 +10,11 @@ describe("Main Test", function () {
 		sinon.stub(document, "querySelector").returns({
 			setAttribute: function(key, val) {
 				//do nothing
+			}
+		});
+		gameObj = sinon.stub(G, "Game").returns({
+			init: function() {
+
 			}
 		});
 		sinon.stub(window, "addEventListener");
@@ -20,9 +25,11 @@ describe("Main Test", function () {
 		// tear down stubs
 		document.querySelector.restore();
 		window.addEventListener.restore();
+		G.Game.restore();
 	});
 
 	it("Main is instantiated and is correct type", function () {
+		expect(this.class).toBeDefined();
 		expect(this.class).toEqual(jasmine.any(G.Main));
 	});
 
@@ -63,20 +70,19 @@ describe("Main Test", function () {
 	});
 
 	it("Main init should create a Game", function() {
-		sinon.spy(G, "Game");
+
 		this.class.init();
 		expect(G.Game).toHaveBeenCalled();
 	});
 
 	it("Game should be initialised", function() {
-		var spiedObj, constructor = G.Game;
-		spyOn(G, "Game").and.callFake(function() {
-			spiedObj = new constructor();
-			spyOn(spiedObj, "init");
-			return spiedObj;
-		});
 		this.class.init();
-		expect(spiedObj.init).toHaveBeenCalled();
+
+		console.log(gameObj);
+
+		expect(gameObj).toBeDefined();
+
+		expect(gameObj.init).toHaveBeenCalled();
 	});
 
 	it("Ticker Handler should render the stage", function() {
