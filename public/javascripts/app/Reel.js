@@ -113,7 +113,7 @@ var G = G || {};
 		);
 
 		this.stopTimeout = setTimeout(function() {
-			self.scheduleSpinStop = self.spinResultIndex || 0;
+			self.fastStop();
 		}, this.setup.reelAnimation.duration)
 	};
 
@@ -122,15 +122,8 @@ var G = G || {};
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
 		var yPos;
-
 		var ease;
-		if (this.scheduleSpinStop >= 0) {
-			yPos = (symbolH * symbolsLen + symbolMarginB * symbolsLen) + (symbolH * index + symbolMarginB * index);
-			ease = createjs.Ease.getElasticOut(2, 5);
-			//this.scheduleSpinStop = -2;
-			this.stopSpin(this.scheduleSpinStop);
-			return;
-		} else if (this.scheduleSpinStop === -1){
+		if (this.scheduleSpinStop === -1){
 			this.y = 0;
 			yPos = (symbolH * symbolsLen + symbolMarginB * symbolsLen);
 			ease = createjs.Ease.linear();
@@ -159,10 +152,10 @@ var G = G || {};
 	};
 
 	p.fastStop = function() {
-
-		clearInterval(this.stopTimeout);
-		this.stopSpin(-2);
-
+		if (this.scheduleSpinStop > -2) {
+			clearInterval(this.stopTimeout);
+			this.stopSpin(this.spinResultIndex);
+		}
 	};
 
 	p.handleSpinComplete = function() {

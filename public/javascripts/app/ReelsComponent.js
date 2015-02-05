@@ -100,7 +100,7 @@ var G = G || {};
 			{
 				delay = getDelay(i);
 				reel = this.reels[i];
-				reel.spinInfinite(delay, 10);
+				reel.spinInfinite(delay, -2);
 				reel.reelSpinEnd.add(this.reelSpinEnd, this);
 				this.reelsSpinning++;
 			}
