@@ -1,30 +1,30 @@
 /*!
- * PreloadJS
- * Visit http://createjs.com/ for documentation, updates and examples.
- *
- * Copyright (c) 2010 gskinner.com, inc.
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- */
+* PreloadJS
+* Visit http://createjs.com/ for documentation, updates and examples.
+*
+* Copyright (c) 2010 gskinner.com, inc.
+*
+* Permission is hereby granted, free of charge, to any person
+* obtaining a copy of this software and associated documentation
+* files (the "Software"), to deal in the Software without
+* restriction, including without limitation the rights to use,
+* copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the
+* Software is furnished to do so, subject to the following
+* conditions:
+*
+* The above copyright notice and this permission notice shall be
+* included in all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+* OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+* HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+* WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+* OTHER DEALINGS IN THE SOFTWARE.
+*/
 
 
 //##############################################################################
@@ -64,7 +64,7 @@ this.createjs = this.createjs || {};
 // extend.js
 //##############################################################################
 
-this.createjs = this.createjs || {};
+this.createjs = this.createjs||{};
 
 /**
  * @class Utility Methods
@@ -75,26 +75,23 @@ this.createjs = this.createjs || {};
  *
  * This should be called right after creating the class constructor.
  *
- *    function MySubClass() {}
- *    createjs.extend(MySubClass, MySuperClass);
- *    ClassB.prototype.doSomething = function() { }
+ * 	function MySubClass() {}
+ * 	createjs.extend(MySubClass, MySuperClass);
+ * 	ClassB.prototype.doSomething = function() { }
  *
- *    var foo = new MySubClass();
- *    console.log(foo instanceof MySuperClass); // true
- *    console.log(foo.prototype.constructor === MySubClass); // true
+ * 	var foo = new MySubClass();
+ * 	console.log(foo instanceof MySuperClass); // true
+ * 	console.log(foo.prototype.constructor === MySubClass); // true
  *
  * @method extend
  * @param {Function} subclass The subclass.
  * @param {Function} superclass The superclass to extend.
  * @return {Function} Returns the subclass's new prototype.
  */
-createjs.extend = function (subclass, superclass) {
+createjs.extend = function(subclass, superclass) {
 	"use strict";
 
-	function o() {
-		this.constructor = subclass;
-	}
-
+	function o() { this.constructor = subclass; }
 	o.prototype = superclass.prototype;
 	return (subclass.prototype = new o());
 };
@@ -103,7 +100,7 @@ createjs.extend = function (subclass, superclass) {
 // promote.js
 //##############################################################################
 
-this.createjs = this.createjs || {};
+this.createjs = this.createjs||{};
 
 /**
  * @class Utility Methods
@@ -121,41 +118,39 @@ this.createjs = this.createjs || {};
  *
  * This should be called after the class's prototype is fully defined.
  *
- *    function ClassA(name) {
+ * 	function ClassA(name) {
  * 		this.name = name;
  * 	}
- *    ClassA.prototype.greet = function() {
+ * 	ClassA.prototype.greet = function() {
  * 		return "Hello "+this.name;
  * 	}
  *
- *    function ClassB(name, punctuation) {
+ * 	function ClassB(name, punctuation) {
  * 		this.ClassA_constructor(name);
  * 		this.punctuation = punctuation;
  * 	}
- *    createjs.extend(ClassB, ClassA);
- *    ClassB.prototype.greet = function() {
+ * 	createjs.extend(ClassB, ClassA);
+ * 	ClassB.prototype.greet = function() {
  * 		return this.ClassA_greet()+this.punctuation;
  * 	}
- *    createjs.promote(ClassB, "ClassA");
+ * 	createjs.promote(ClassB, "ClassA");
  *
- *    var foo = new ClassB("World", "!?!");
- *    console.log(foo.greet()); // Hello World!?!
+ * 	var foo = new ClassB("World", "!?!");
+ * 	console.log(foo.greet()); // Hello World!?!
  *
  * @method promote
  * @param {Function} subclass The class to promote super class methods on.
  * @param {String} prefix The prefix to add to the promoted method names. Usually the name of the superclass.
  * @return {Function} Returns the subclass.
  */
-createjs.promote = function (subclass, prefix) {
+createjs.promote = function(subclass, prefix) {
 	"use strict";
 
-	var subP = subclass.prototype, supP = (Object.getPrototypeOf && Object.getPrototypeOf(subP)) || subP.__proto__;
+	var subP = subclass.prototype, supP = (Object.getPrototypeOf&&Object.getPrototypeOf(subP))||subP.__proto__;
 	if (supP) {
-		subP[(prefix += "_") + "constructor"] = supP.constructor; // constructor is not always innumerable
+		subP[(prefix+="_") + "constructor"] = supP.constructor; // constructor is not always innumerable
 		for (var n in supP) {
-			if (subP.hasOwnProperty(n) && (typeof supP[n] == "function")) {
-				subP[prefix + n] = supP[n];
-			}
+			if (subP.hasOwnProperty(n) && (typeof supP[n] == "function")) { subP[prefix + n] = supP[n]; }
 		}
 	}
 	return subclass;
@@ -165,7 +160,7 @@ createjs.promote = function (subclass, prefix) {
 // indexOf.js
 //##############################################################################
 
-this.createjs = this.createjs || {};
+this.createjs = this.createjs||{};
 
 /**
  * @class Utility Methods
@@ -182,10 +177,10 @@ this.createjs = this.createjs || {};
  * @param searchElement Element to find in array.
  * @return {Number} The first index of searchElement in array.
  */
-createjs.indexOf = function (array, searchElement) {
+createjs.indexOf = function (array, searchElement){
 	"use strict";
 
-	for (var i = 0, l = array.length; i < l; i++) {
+	for (var i = 0,l=array.length; i < l; i++) {
 		if (searchElement === array[i]) {
 			return i;
 		}
@@ -197,7 +192,7 @@ createjs.indexOf = function (array, searchElement) {
 // proxy.js
 //##############################################################################
 
-this.createjs = this.createjs || {};
+this.createjs = this.createjs||{};
 
 /**
  * Various utilities that the CreateJS Suite uses. Utilities are created as separate files, and will be available on the
@@ -211,7 +206,7 @@ this.createjs = this.createjs || {};
  * @main Utility Methods
  */
 
-(function () {
+(function() {
 	"use strict";
 
 	/**
@@ -249,12 +244,12 @@ this.createjs = this.createjs || {};
 // BrowserDetect.js
 //##############################################################################
 
-this.createjs = this.createjs || {};
+this.createjs = this.createjs||{};
 
 /**
  * @class Utility Methods
  */
-(function () {
+(function() {
 	"use strict";
 
 	/**
@@ -300,16 +295,16 @@ this.createjs = this.createjs || {};
 // Event.js
 //##############################################################################
 
-this.createjs = this.createjs || {};
+this.createjs = this.createjs||{};
 
-(function () {
+(function() {
 	"use strict";
 
 // constructor:
 	/**
 	 * Contains properties and methods shared by all events for use with
 	 * {{#crossLink "EventDispatcher"}}{{/crossLink}}.
-	 *
+	 * 
 	 * Note that Event objects are often reused, so you should never
 	 * rely on an event object's state outside of the call stack it was received in.
 	 * @class Event
@@ -319,25 +314,25 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 **/
 	function Event(type, bubbles, cancelable) {
-
-
-		// public properties:
+		
+	
+	// public properties:
 		/**
 		 * The type of event.
 		 * @property type
 		 * @type String
 		 **/
 		this.type = type;
-
+	
 		/**
 		 * The object that generated an event.
 		 * @property target
 		 * @type Object
 		 * @default null
 		 * @readonly
-		 */
+		*/
 		this.target = null;
-
+	
 		/**
 		 * The current target that a bubbling event is being dispatched from. For non-bubbling events, this will
 		 * always be the same as target. For example, if childObj.parent = parentObj, and a bubbling event
@@ -347,31 +342,31 @@ this.createjs = this.createjs || {};
 		 * @type Object
 		 * @default null
 		 * @readonly
-		 */
+		*/
 		this.currentTarget = null;
-
+	
 		/**
 		 * For bubbling events, this indicates the current event phase:<OL>
-		 *    <LI> capture phase: starting from the top parent to the target</LI>
-		 *    <LI> at target phase: currently being dispatched from the target</LI>
-		 *    <LI> bubbling phase: from the target to the top parent</LI>
+		 * 	<LI> capture phase: starting from the top parent to the target</LI>
+		 * 	<LI> at target phase: currently being dispatched from the target</LI>
+		 * 	<LI> bubbling phase: from the target to the top parent</LI>
 		 * </OL>
 		 * @property eventPhase
 		 * @type Number
 		 * @default 0
 		 * @readonly
-		 */
+		*/
 		this.eventPhase = 0;
-
+	
 		/**
 		 * Indicates whether the event will bubble through the display list.
 		 * @property bubbles
 		 * @type Boolean
 		 * @default false
 		 * @readonly
-		 */
+		*/
 		this.bubbles = !!bubbles;
-
+	
 		/**
 		 * Indicates whether the default behaviour of this event can be cancelled via
 		 * {{#crossLink "Event/preventDefault"}}{{/crossLink}}. This is set via the Event constructor.
@@ -379,18 +374,18 @@ this.createjs = this.createjs || {};
 		 * @type Boolean
 		 * @default false
 		 * @readonly
-		 */
+		*/
 		this.cancelable = !!cancelable;
-
+	
 		/**
 		 * The epoch time at which this event was created.
 		 * @property timeStamp
 		 * @type Number
 		 * @default 0
 		 * @readonly
-		 */
+		*/
 		this.timeStamp = (new Date()).getTime();
-
+	
 		/**
 		 * Indicates if {{#crossLink "Event/preventDefault"}}{{/crossLink}} has been called
 		 * on this event.
@@ -398,9 +393,9 @@ this.createjs = this.createjs || {};
 		 * @type Boolean
 		 * @default false
 		 * @readonly
-		 */
+		*/
 		this.defaultPrevented = false;
-
+	
 		/**
 		 * Indicates if {{#crossLink "Event/stopPropagation"}}{{/crossLink}} or
 		 * {{#crossLink "Event/stopImmediatePropagation"}}{{/crossLink}} has been called on this event.
@@ -408,9 +403,9 @@ this.createjs = this.createjs || {};
 		 * @type Boolean
 		 * @default false
 		 * @readonly
-		 */
+		*/
 		this.propagationStopped = false;
-
+	
 		/**
 		 * Indicates if {{#crossLink "Event/stopImmediatePropagation"}}{{/crossLink}} has been called
 		 * on this event.
@@ -418,21 +413,20 @@ this.createjs = this.createjs || {};
 		 * @type Boolean
 		 * @default false
 		 * @readonly
-		 */
+		*/
 		this.immediatePropagationStopped = false;
-
+		
 		/**
 		 * Indicates if {{#crossLink "Event/remove"}}{{/crossLink}} has been called on this event.
 		 * @property removed
 		 * @type Boolean
 		 * @default false
 		 * @readonly
-		 */
+		*/
 		this.removed = false;
 	}
-
 	var p = Event.prototype;
-
+	
 
 // public methods:
 	/**
@@ -440,8 +434,8 @@ this.createjs = this.createjs || {};
 	 * Mirrors the DOM event standard.
 	 * @method preventDefault
 	 **/
-	p.preventDefault = function () {
-		this.defaultPrevented = this.cancelable && true;
+	p.preventDefault = function() {
+		this.defaultPrevented = this.cancelable&&true;
 	};
 
 	/**
@@ -449,7 +443,7 @@ this.createjs = this.createjs || {};
 	 * Mirrors the DOM event standard.
 	 * @method stopPropagation
 	 **/
-	p.stopPropagation = function () {
+	p.stopPropagation = function() {
 		this.propagationStopped = true;
 	};
 
@@ -459,33 +453,33 @@ this.createjs = this.createjs || {};
 	 * Mirrors the DOM event standard.
 	 * @method stopImmediatePropagation
 	 **/
-	p.stopImmediatePropagation = function () {
+	p.stopImmediatePropagation = function() {
 		this.immediatePropagationStopped = this.propagationStopped = true;
 	};
-
+	
 	/**
 	 * Causes the active listener to be removed via removeEventListener();
-	 *
-	 *        myBtn.addEventListener("click", function(evt) {
+	 * 
+	 * 		myBtn.addEventListener("click", function(evt) {
 	 * 			// do stuff...
 	 * 			evt.remove(); // removes this listener.
 	 * 		});
-	 *
+	 * 
 	 * @method remove
 	 **/
-	p.remove = function () {
+	p.remove = function() {
 		this.removed = true;
 	};
-
+	
 	/**
 	 * Returns a clone of the Event instance.
 	 * @method clone
 	 * @return {Event} a clone of the Event instance.
 	 **/
-	p.clone = function () {
+	p.clone = function() {
 		return new Event(this.type, this.bubbles, this.cancelable);
 	};
-
+	
 	/**
 	 * Provides a chainable shortcut method for setting a number of properties on the instance.
 	 *
@@ -493,11 +487,9 @@ this.createjs = this.createjs || {};
 	 * @param {Object} props A generic object containing properties to copy to the instance.
 	 * @return {Event} Returns the instance the method is called on (useful for chaining calls.)
 	 * @chainable
-	 */
-	p.set = function (props) {
-		for (var n in props) {
-			this[n] = props[n];
-		}
+	*/
+	p.set = function(props) {
+		for (var n in props) { this[n] = props[n]; }
 		return this;
 	};
 
@@ -506,8 +498,8 @@ this.createjs = this.createjs || {};
 	 * @method toString
 	 * @return {String} a string representation of the instance.
 	 **/
-	p.toString = function () {
-		return "[Event (type=" + this.type + ")]";
+	p.toString = function() {
+		return "[Event (type="+this.type+")]";
 	};
 
 	createjs.Event = Event;
@@ -517,9 +509,9 @@ this.createjs = this.createjs || {};
 // ErrorEvent.js
 //##############################################################################
 
-this.createjs = this.createjs || {};
+this.createjs = this.createjs||{};
 
-(function () {
+(function() {
 	"use strict";
 
 	/**
@@ -557,7 +549,7 @@ this.createjs = this.createjs || {};
 
 	var p = createjs.extend(ErrorEvent, createjs.Event);
 
-	p.clone = function () {
+	p.clone = function() {
 		return new createjs.ErrorEvent(this.title, this.message, this.data);
 	};
 
@@ -569,9 +561,9 @@ this.createjs = this.createjs || {};
 // EventDispatcher.js
 //##############################################################################
 
-this.createjs = this.createjs || {};
+this.createjs = this.createjs||{};
 
-(function () {
+(function() {
 	"use strict";
 
 
@@ -581,18 +573,18 @@ this.createjs = this.createjs || {};
 	 *
 	 * You can either extend EventDispatcher or mix its methods into an existing prototype or instance by using the
 	 * EventDispatcher {{#crossLink "EventDispatcher/initialize"}}{{/crossLink}} method.
-	 *
+	 * 
 	 * Together with the CreateJS Event class, EventDispatcher provides an extended event model that is based on the
 	 * DOM Level 2 event model, including addEventListener, removeEventListener, and dispatchEvent. It supports
 	 * bubbling / capture, preventDefault, stopPropagation, stopImmediatePropagation, and handleEvent.
-	 *
+	 * 
 	 * EventDispatcher also exposes a {{#crossLink "EventDispatcher/on"}}{{/crossLink}} method, which makes it easier
-	 * to create scoped listeners, listeners that only run once, and listeners with associated arbitrary data. The
+	 * to create scoped listeners, listeners that only run once, and listeners with associated arbitrary data. The 
 	 * {{#crossLink "EventDispatcher/off"}}{{/crossLink}} method is merely an alias to
 	 * {{#crossLink "EventDispatcher/removeEventListener"}}{{/crossLink}}.
-	 *
+	 * 
 	 * Another addition to the DOM Level 2 model is the {{#crossLink "EventDispatcher/removeAllEventListeners"}}{{/crossLink}}
-	 * method, which can be used to listeners for all events, or listeners for a specific event. The Event object also
+	 * method, which can be used to listeners for all events, or listeners for a specific event. The Event object also 
 	 * includes a {{#crossLink "Event/remove"}}{{/crossLink}} method which removes the active listener.
 	 *
 	 * <h4>Example</h4>
@@ -614,28 +606,28 @@ this.createjs = this.createjs || {};
 	 *      instance.addEventListener("click", function(event) {
 	 *          console.log(instance == this); // false, scope is ambiguous.
 	 *      });
-	 *
+	 *      
 	 *      instance.on("click", function(event) {
 	 *          console.log(instance == this); // true, "on" uses dispatcher scope by default.
 	 *      });
-	 *
+	 * 
 	 * If you want to use addEventListener instead, you may want to use function.bind() or a similar proxy to manage scope.
-	 *
+	 *      
 	 *
 	 * @class EventDispatcher
 	 * @constructor
 	 **/
 	function EventDispatcher() {
-
-
-		// private properties:
+	
+	
+	// private properties:
 		/**
 		 * @protected
 		 * @property _listeners
 		 * @type Object
 		 **/
 		this._listeners = null;
-
+		
 		/**
 		 * @protected
 		 * @property _captureListeners
@@ -643,33 +635,32 @@ this.createjs = this.createjs || {};
 		 **/
 		this._captureListeners = null;
 	}
-
 	var p = EventDispatcher.prototype;
 
 
 // static public methods:
 	/**
 	 * Static initializer to mix EventDispatcher methods into a target object or prototype.
-	 *
-	 *        EventDispatcher.initialize(MyClass.prototype); // add to the prototype of the class
-	 *        EventDispatcher.initialize(myObject); // add to a specific instance
-	 *
+	 * 
+	 * 		EventDispatcher.initialize(MyClass.prototype); // add to the prototype of the class
+	 * 		EventDispatcher.initialize(myObject); // add to a specific instance
+	 * 
 	 * @method initialize
 	 * @static
 	 * @param {Object} target The target object to inject EventDispatcher methods into. This can be an instance or a
 	 * prototype.
 	 **/
-	EventDispatcher.initialize = function (target) {
+	EventDispatcher.initialize = function(target) {
 		target.addEventListener = p.addEventListener;
 		target.on = p.on;
-		target.removeEventListener = target.off = p.removeEventListener;
+		target.removeEventListener = target.off =  p.removeEventListener;
 		target.removeAllEventListeners = p.removeAllEventListeners;
 		target.hasEventListener = p.hasEventListener;
 		target.dispatchEvent = p.dispatchEvent;
 		target._dispatchEvent = p._dispatchEvent;
 		target.willTrigger = p.willTrigger;
 	};
-
+	
 
 // public methods:
 	/**
@@ -690,38 +681,32 @@ this.createjs = this.createjs || {};
 	 * @param {Boolean} [useCapture] For events that bubble, indicates whether to listen for the event in the capture or bubbling/target phase.
 	 * @return {Function | Object} Returns the listener for chaining or assignment.
 	 **/
-	p.addEventListener = function (type, listener, useCapture) {
+	p.addEventListener = function(type, listener, useCapture) {
 		var listeners;
 		if (useCapture) {
-			listeners = this._captureListeners = this._captureListeners || {};
+			listeners = this._captureListeners = this._captureListeners||{};
 		} else {
-			listeners = this._listeners = this._listeners || {};
+			listeners = this._listeners = this._listeners||{};
 		}
 		var arr = listeners[type];
-		if (arr) {
-			this.removeEventListener(type, listener, useCapture);
-		}
+		if (arr) { this.removeEventListener(type, listener, useCapture); }
 		arr = listeners[type]; // remove may have deleted the array
-		if (!arr) {
-			listeners[type] = [listener];
-		}
-		else {
-			arr.push(listener);
-		}
+		if (!arr) { listeners[type] = [listener];  }
+		else { arr.push(listener); }
 		return listener;
 	};
-
+	
 	/**
 	 * A shortcut method for using addEventListener that makes it easier to specify an execution scope, have a listener
 	 * only run once, associate arbitrary data with the listener, and remove the listener.
-	 *
+	 * 
 	 * This method works by creating an anonymous wrapper function and subscribing it with addEventListener.
 	 * The created anonymous function is returned for use with .removeEventListener (or .off).
-	 *
+	 * 
 	 * <h4>Example</h4>
-	 *
-	 *        var listener = myBtn.on("click", handleClick, null, false, {count:3});
-	 *        function handleClick(evt, data) {
+	 * 
+	 * 		var listener = myBtn.on("click", handleClick, null, false, {count:3});
+	 * 		function handleClick(evt, data) {
 	 * 			data.count -= 1;
 	 * 			console.log(this == myBtn); // true - scope defaults to the dispatcher
 	 * 			if (data.count == 0) {
@@ -730,7 +715,7 @@ this.createjs = this.createjs || {};
 	 * 				// alternately: evt.remove();
 	 * 			}
 	 * 		}
-	 *
+	 * 
 	 * @method on
 	 * @param {String} type The string type of the event.
 	 * @param {Function | Object} listener An object with a handleEvent method, or a function that will be called when
@@ -741,16 +726,16 @@ this.createjs = this.createjs || {};
 	 * @param {Boolean} [useCapture=false] For events that bubble, indicates whether to listen for the event in the capture or bubbling/target phase.
 	 * @return {Function} Returns the anonymous function that was created and assigned as the listener. This is needed to remove the listener later using .removeEventListener.
 	 **/
-	p.on = function (type, listener, scope, once, data, useCapture) {
+	p.on = function(type, listener, scope, once, data, useCapture) {
 		if (listener.handleEvent) {
-			scope = scope || listener;
+			scope = scope||listener;
 			listener = listener.handleEvent;
 		}
-		scope = scope || this;
-		return this.addEventListener(type, function (evt) {
-			listener.call(scope, evt, data);
-			once && evt.remove();
-		}, useCapture);
+		scope = scope||this;
+		return this.addEventListener(type, function(evt) {
+				listener.call(scope, evt, data);
+				once&&evt.remove();
+			}, useCapture);
 	};
 
 	/**
@@ -769,28 +754,20 @@ this.createjs = this.createjs || {};
 	 * @param {Function | Object} listener The listener function or object.
 	 * @param {Boolean} [useCapture] For events that bubble, indicates whether to listen for the event in the capture or bubbling/target phase.
 	 **/
-	p.removeEventListener = function (type, listener, useCapture) {
+	p.removeEventListener = function(type, listener, useCapture) {
 		var listeners = useCapture ? this._captureListeners : this._listeners;
-		if (!listeners) {
-			return;
-		}
+		if (!listeners) { return; }
 		var arr = listeners[type];
-		if (!arr) {
-			return;
-		}
-		for (var i = 0, l = arr.length; i < l; i++) {
+		if (!arr) { return; }
+		for (var i=0,l=arr.length; i<l; i++) {
 			if (arr[i] == listener) {
-				if (l == 1) {
-					delete(listeners[type]);
-				} // allows for faster checks.
-				else {
-					arr.splice(i, 1);
-				}
+				if (l==1) { delete(listeners[type]); } // allows for faster checks.
+				else { arr.splice(i,1); }
 				break;
 			}
 		}
 	};
-
+	
 	/**
 	 * A shortcut to the removeEventListener method, with the same parameters and return value. This is a companion to the
 	 * .on method.
@@ -816,17 +793,11 @@ this.createjs = this.createjs || {};
 	 * @method removeAllEventListeners
 	 * @param {String} [type] The string type of the event. If omitted, all listeners for all types will be removed.
 	 **/
-	p.removeAllEventListeners = function (type) {
-		if (!type) {
-			this._listeners = this._captureListeners = null;
-		}
+	p.removeAllEventListeners = function(type) {
+		if (!type) { this._listeners = this._captureListeners = null; }
 		else {
-			if (this._listeners) {
-				delete(this._listeners[type]);
-			}
-			if (this._captureListeners) {
-				delete(this._captureListeners[type]);
-			}
+			if (this._listeners) { delete(this._listeners[type]); }
+			if (this._captureListeners) { delete(this._captureListeners[type]); }
 		}
 	};
 
@@ -848,38 +819,31 @@ this.createjs = this.createjs || {};
 	 * dispatchEvent will construct an Event instance with the specified type.
 	 * @return {Boolean} Returns the value of eventObj.defaultPrevented.
 	 **/
-	p.dispatchEvent = function (eventObj) {
+	p.dispatchEvent = function(eventObj) {
 		if (typeof eventObj == "string") {
 			// won't bubble, so skip everything if there's no listeners:
 			var listeners = this._listeners;
-			if (!listeners || !listeners[eventObj]) {
-				return false;
-			}
+			if (!listeners || !listeners[eventObj]) { return false; }
 			eventObj = new createjs.Event(eventObj);
 		} else if (eventObj.target && eventObj.clone) {
 			// redispatching an active event object, so clone it:
 			eventObj = eventObj.clone();
 		}
-		try {
-			eventObj.target = this;
-		} catch (e) {
-		} // try/catch allows redispatching of native events
+		try { eventObj.target = this; } catch (e) {} // try/catch allows redispatching of native events
 
 		if (!eventObj.bubbles || !this.parent) {
 			this._dispatchEvent(eventObj, 2);
 		} else {
-			var top = this, list = [top];
-			while (top.parent) {
-				list.push(top = top.parent);
-			}
-			var i, l = list.length;
+			var top=this, list=[top];
+			while (top.parent) { list.push(top = top.parent); }
+			var i, l=list.length;
 
 			// capture & atTarget
-			for (i = l - 1; i >= 0 && !eventObj.propagationStopped; i--) {
-				list[i]._dispatchEvent(eventObj, 1 + (i == 0));
+			for (i=l-1; i>=0 && !eventObj.propagationStopped; i--) {
+				list[i]._dispatchEvent(eventObj, 1+(i==0));
 			}
 			// bubbling
-			for (i = 1; i < l && !eventObj.propagationStopped; i++) {
+			for (i=1; i<l && !eventObj.propagationStopped; i++) {
 				list[i]._dispatchEvent(eventObj, 3);
 			}
 		}
@@ -892,28 +856,26 @@ this.createjs = this.createjs || {};
 	 * @param {String} type The string type of the event.
 	 * @return {Boolean} Returns true if there is at least one listener for the specified event.
 	 **/
-	p.hasEventListener = function (type) {
+	p.hasEventListener = function(type) {
 		var listeners = this._listeners, captureListeners = this._captureListeners;
 		return !!((listeners && listeners[type]) || (captureListeners && captureListeners[type]));
 	};
-
+	
 	/**
 	 * Indicates whether there is at least one listener for the specified event type on this object or any of its
 	 * ancestors (parent, parent's parent, etc). A return value of true indicates that if a bubbling event of the
 	 * specified type is dispatched from this object, it will trigger at least one listener.
-	 *
+	 * 
 	 * This is similar to {{#crossLink "EventDispatcher/hasEventListener"}}{{/crossLink}}, but it searches the entire
 	 * event flow for a listener, not just this object.
 	 * @method willTrigger
 	 * @param {String} type The string type of the event.
 	 * @return {Boolean} Returns `true` if there is at least one listener for the specified event.
 	 **/
-	p.willTrigger = function (type) {
+	p.willTrigger = function(type) {
 		var o = this;
 		while (o) {
-			if (o.hasEventListener(type)) {
-				return true;
-			}
+			if (o.hasEventListener(type)) { return true; }
 			o = o.parent;
 		}
 		return false;
@@ -923,7 +885,7 @@ this.createjs = this.createjs || {};
 	 * @method toString
 	 * @return {String} a string representation of the instance.
 	 **/
-	p.toString = function () {
+	p.toString = function() {
 		return "[EventDispatcher]";
 	};
 
@@ -935,34 +897,22 @@ this.createjs = this.createjs || {};
 	 * @param {Object} eventPhase
 	 * @protected
 	 **/
-	p._dispatchEvent = function (eventObj, eventPhase) {
-		var l, listeners = (eventPhase == 1) ? this._captureListeners : this._listeners;
+	p._dispatchEvent = function(eventObj, eventPhase) {
+		var l, listeners = (eventPhase==1) ? this._captureListeners : this._listeners;
 		if (eventObj && listeners) {
 			var arr = listeners[eventObj.type];
-			if (!arr || !(l = arr.length)) {
-				return;
-			}
-			try {
-				eventObj.currentTarget = this;
-			} catch (e) {
-			}
-			try {
-				eventObj.eventPhase = eventPhase;
-			} catch (e) {
-			}
+			if (!arr||!(l=arr.length)) { return; }
+			try { eventObj.currentTarget = this; } catch (e) {}
+			try { eventObj.eventPhase = eventPhase; } catch (e) {}
 			eventObj.removed = false;
-
+			
 			arr = arr.slice(); // to avoid issues with items being removed or added during the dispatch
-			for (var i = 0; i < l && !eventObj.immediatePropagationStopped; i++) {
+			for (var i=0; i<l && !eventObj.immediatePropagationStopped; i++) {
 				var o = arr[i];
-				if (o.handleEvent) {
-					o.handleEvent(eventObj);
-				}
-				else {
-					o(eventObj);
-				}
+				if (o.handleEvent) { o.handleEvent(eventObj); }
+				else { o(eventObj); }
 				if (eventObj.removed) {
-					this.off(eventObj.type, o, eventPhase == 1);
+					this.off(eventObj.type, o, eventPhase==1);
 					eventObj.removed = false;
 				}
 			}
@@ -1026,7 +976,7 @@ this.createjs = this.createjs || {};
 	 * @method clone
 	 * @return {ProgressEvent} a clone of the Event instance.
 	 **/
-	p.clone = function () {
+	p.clone = function() {
 		return new createjs.ProgressEvent(this.loaded, this.total);
 	};
 
@@ -1039,933 +989,906 @@ this.createjs = this.createjs || {};
 //##############################################################################
 
 /*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
-;
-(function () {
-	// Detect the `define` function exposed by asynchronous module loaders. The
-	// strict `define` check is necessary for compatibility with `r.js`.
-	var isLoader = typeof define === "function" && define.amd;
+;(function () {
+  // Detect the `define` function exposed by asynchronous module loaders. The
+  // strict `define` check is necessary for compatibility with `r.js`.
+  var isLoader = typeof define === "function" && define.amd;
 
-	// A set of types used to distinguish objects from primitives.
-	var objectTypes = {
-		"function": true,
-		"object": true
-	};
+  // A set of types used to distinguish objects from primitives.
+  var objectTypes = {
+    "function": true,
+    "object": true
+  };
 
-	// Detect the `exports` object exposed by CommonJS implementations.
-	var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
+  // Detect the `exports` object exposed by CommonJS implementations.
+  var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
 
-	// Use the `global` object exposed by Node (including Browserify via
-	// `insert-module-globals`), Narwhal, and Ringo as the default context,
-	// and the `window` object in browsers. Rhino exports a `global` function
-	// instead.
-	var root = objectTypes[typeof window] && window || this,
-		freeGlobal = freeExports && objectTypes[typeof module] && module && !module.nodeType && typeof global == "object" && global;
+  // Use the `global` object exposed by Node (including Browserify via
+  // `insert-module-globals`), Narwhal, and Ringo as the default context,
+  // and the `window` object in browsers. Rhino exports a `global` function
+  // instead.
+  var root = objectTypes[typeof window] && window || this,
+      freeGlobal = freeExports && objectTypes[typeof module] && module && !module.nodeType && typeof global == "object" && global;
 
-	if (freeGlobal && (freeGlobal["global"] === freeGlobal || freeGlobal["window"] === freeGlobal || freeGlobal["self"] === freeGlobal)) {
-		root = freeGlobal;
-	}
+  if (freeGlobal && (freeGlobal["global"] === freeGlobal || freeGlobal["window"] === freeGlobal || freeGlobal["self"] === freeGlobal)) {
+    root = freeGlobal;
+  }
 
-	// Public: Initializes JSON 3 using the given `context` object, attaching the
-	// `stringify` and `parse` functions to the specified `exports` object.
-	function runInContext(context, exports) {
-		context || (context = root["Object"]());
-		exports || (exports = root["Object"]());
+  // Public: Initializes JSON 3 using the given `context` object, attaching the
+  // `stringify` and `parse` functions to the specified `exports` object.
+  function runInContext(context, exports) {
+    context || (context = root["Object"]());
+    exports || (exports = root["Object"]());
 
-		// Native constructor aliases.
-		var Number = context["Number"] || root["Number"],
-			String = context["String"] || root["String"],
-			Object = context["Object"] || root["Object"],
-			Date = context["Date"] || root["Date"],
-			SyntaxError = context["SyntaxError"] || root["SyntaxError"],
-			TypeError = context["TypeError"] || root["TypeError"],
-			Math = context["Math"] || root["Math"],
-			nativeJSON = context["JSON"] || root["JSON"];
+    // Native constructor aliases.
+    var Number = context["Number"] || root["Number"],
+        String = context["String"] || root["String"],
+        Object = context["Object"] || root["Object"],
+        Date = context["Date"] || root["Date"],
+        SyntaxError = context["SyntaxError"] || root["SyntaxError"],
+        TypeError = context["TypeError"] || root["TypeError"],
+        Math = context["Math"] || root["Math"],
+        nativeJSON = context["JSON"] || root["JSON"];
 
-		// Delegate to the native `stringify` and `parse` implementations.
-		if (typeof nativeJSON == "object" && nativeJSON) {
-			exports.stringify = nativeJSON.stringify;
-			exports.parse = nativeJSON.parse;
-		}
+    // Delegate to the native `stringify` and `parse` implementations.
+    if (typeof nativeJSON == "object" && nativeJSON) {
+      exports.stringify = nativeJSON.stringify;
+      exports.parse = nativeJSON.parse;
+    }
 
-		// Convenience aliases.
-		var objectProto = Object.prototype,
-			getClass = objectProto.toString,
-			isProperty, forEach, undef;
+    // Convenience aliases.
+    var objectProto = Object.prototype,
+        getClass = objectProto.toString,
+        isProperty, forEach, undef;
 
-		// Test the `Date#getUTC*` methods. Based on work by @Yaffle.
-		var isExtended = new Date(-3509827334573292);
-		try {
-			// The `getUTCFullYear`, `Month`, and `Date` methods return nonsensical
-			// results for certain dates in Opera >= 10.53.
-			isExtended = isExtended.getUTCFullYear() == -109252 && isExtended.getUTCMonth() === 0 && isExtended.getUTCDate() === 1 &&
-				// Safari < 2.0.2 stores the internal millisecond time value correctly,
-				// but clips the values returned by the date methods to the range of
-				// signed 32-bit integers ([-2 ** 31, 2 ** 31 - 1]).
-			isExtended.getUTCHours() == 10 && isExtended.getUTCMinutes() == 37 && isExtended.getUTCSeconds() == 6 && isExtended.getUTCMilliseconds() == 708;
-		} catch (exception) {
-		}
+    // Test the `Date#getUTC*` methods. Based on work by @Yaffle.
+    var isExtended = new Date(-3509827334573292);
+    try {
+      // The `getUTCFullYear`, `Month`, and `Date` methods return nonsensical
+      // results for certain dates in Opera >= 10.53.
+      isExtended = isExtended.getUTCFullYear() == -109252 && isExtended.getUTCMonth() === 0 && isExtended.getUTCDate() === 1 &&
+        // Safari < 2.0.2 stores the internal millisecond time value correctly,
+        // but clips the values returned by the date methods to the range of
+        // signed 32-bit integers ([-2 ** 31, 2 ** 31 - 1]).
+        isExtended.getUTCHours() == 10 && isExtended.getUTCMinutes() == 37 && isExtended.getUTCSeconds() == 6 && isExtended.getUTCMilliseconds() == 708;
+    } catch (exception) {}
 
-		// Internal: Determines whether the native `JSON.stringify` and `parse`
-		// implementations are spec-compliant. Based on work by Ken Snyder.
-		function has(name) {
-			if (has[name] !== undef) {
-				// Return cached feature test result.
-				return has[name];
-			}
-			var isSupported;
-			if (name == "bug-string-char-index") {
-				// IE <= 7 doesn't support accessing string characters using square
-				// bracket notation. IE 8 only supports this for primitives.
-				isSupported = "a"[0] != "a";
-			} else if (name == "json") {
-				// Indicates whether both `JSON.stringify` and `JSON.parse` are
-				// supported.
-				isSupported = has("json-stringify") && has("json-parse");
-			} else {
-				var value, serialized = '{"a":[1,true,false,null,"\\u0000\\b\\n\\f\\r\\t"]}';
-				// Test `JSON.stringify`.
-				if (name == "json-stringify") {
-					var stringify = exports.stringify, stringifySupported = typeof stringify == "function" && isExtended;
-					if (stringifySupported) {
-						// A test function object with a custom `toJSON` method.
-						(value = function () {
-							return 1;
-						}).toJSON = value;
-						try {
-							stringifySupported =
-								// Firefox 3.1b1 and b2 serialize string, number, and boolean
-								// primitives as object literals.
-								stringify(0) === "0" &&
-									// FF 3.1b1, b2, and JSON 2 serialize wrapped primitives as object
-									// literals.
-								stringify(new Number()) === "0" &&
-								stringify(new String()) == '""' &&
-									// FF 3.1b1, 2 throw an error if the value is `null`, `undefined`, or
-									// does not define a canonical JSON representation (this applies to
-									// objects with `toJSON` properties as well, *unless* they are nested
-									// within an object or array).
-								stringify(getClass) === undef &&
-									// IE 8 serializes `undefined` as `"undefined"`. Safari <= 5.1.7 and
-									// FF 3.1b3 pass this test.
-								stringify(undef) === undef &&
-									// Safari <= 5.1.7 and FF 3.1b3 throw `Error`s and `TypeError`s,
-									// respectively, if the value is omitted entirely.
-								stringify() === undef &&
-									// FF 3.1b1, 2 throw an error if the given value is not a number,
-									// string, array, object, Boolean, or `null` literal. This applies to
-									// objects with custom `toJSON` methods as well, unless they are nested
-									// inside object or array literals. YUI 3.0.0b1 ignores custom `toJSON`
-									// methods entirely.
-								stringify(value) === "1" &&
-								stringify([value]) == "[1]" &&
-									// Prototype <= 1.6.1 serializes `[undefined]` as `"[]"` instead of
-									// `"[null]"`.
-								stringify([undef]) == "[null]" &&
-									// YUI 3.0.0b1 fails to serialize `null` literals.
-								stringify(null) == "null" &&
-									// FF 3.1b1, 2 halts serialization if an array contains a function:
-									// `[1, true, getClass, 1]` serializes as "[1,true,],". FF 3.1b3
-									// elides non-JSON values from objects and arrays, unless they
-									// define custom `toJSON` methods.
-								stringify([undef, getClass, null]) == "[null,null,null]" &&
-									// Simple serialization test. FF 3.1b1 uses Unicode escape sequences
-									// where character escape codes are expected (e.g., `\b` => `\u0008`).
-								stringify({"a": [value, true, false, null, "\x00\b\n\f\r\t"]}) == serialized &&
-									// FF 3.1b1 and b2 ignore the `filter` and `width` arguments.
-								stringify(null, value) === "1" &&
-								stringify([1, 2], null, 1) == "[\n 1,\n 2\n]" &&
-									// JSON 2, Prototype <= 1.7, and older WebKit builds incorrectly
-									// serialize extended years.
-								stringify(new Date(-8.64e15)) == '"-271821-04-20T00:00:00.000Z"' &&
-									// The milliseconds are optional in ES 5, but required in 5.1.
-								stringify(new Date(8.64e15)) == '"+275760-09-13T00:00:00.000Z"' &&
-									// Firefox <= 11.0 incorrectly serializes years prior to 0 as negative
-									// four-digit years instead of six-digit years. Credits: @Yaffle.
-								stringify(new Date(-621987552e5)) == '"-000001-01-01T00:00:00.000Z"' &&
-									// Safari <= 5.1.5 and Opera >= 10.53 incorrectly serialize millisecond
-									// values less than 1000. Credits: @Yaffle.
-								stringify(new Date(-1)) == '"1969-12-31T23:59:59.999Z"';
-						} catch (exception) {
-							stringifySupported = false;
-						}
-					}
-					isSupported = stringifySupported;
-				}
-				// Test `JSON.parse`.
-				if (name == "json-parse") {
-					var parse = exports.parse;
-					if (typeof parse == "function") {
-						try {
-							// FF 3.1b1, b2 will throw an exception if a bare literal is provided.
-							// Conforming implementations should also coerce the initial argument to
-							// a string prior to parsing.
-							if (parse("0") === 0 && !parse(false)) {
-								// Simple parsing test.
-								value = parse(serialized);
-								var parseSupported = value["a"].length == 5 && value["a"][0] === 1;
-								if (parseSupported) {
-									try {
-										// Safari <= 5.1.2 and FF 3.1b1 allow unescaped tabs in strings.
-										parseSupported = !parse('"\t"');
-									} catch (exception) {
-									}
-									if (parseSupported) {
-										try {
-											// FF 4.0 and 4.0.1 allow leading `+` signs and leading
-											// decimal points. FF 4.0, 4.0.1, and IE 9-10 also allow
-											// certain octal literals.
-											parseSupported = parse("01") !== 1;
-										} catch (exception) {
-										}
-									}
-									if (parseSupported) {
-										try {
-											// FF 4.0, 4.0.1, and Rhino 1.7R3-R4 allow trailing decimal
-											// points. These environments, along with FF 3.1b1 and 2,
-											// also allow trailing commas in JSON objects and arrays.
-											parseSupported = parse("1.") !== 1;
-										} catch (exception) {
-										}
-									}
-								}
-							}
-						} catch (exception) {
-							parseSupported = false;
-						}
-					}
-					isSupported = parseSupported;
-				}
-			}
-			return has[name] = !!isSupported;
-		}
+    // Internal: Determines whether the native `JSON.stringify` and `parse`
+    // implementations are spec-compliant. Based on work by Ken Snyder.
+    function has(name) {
+      if (has[name] !== undef) {
+        // Return cached feature test result.
+        return has[name];
+      }
+      var isSupported;
+      if (name == "bug-string-char-index") {
+        // IE <= 7 doesn't support accessing string characters using square
+        // bracket notation. IE 8 only supports this for primitives.
+        isSupported = "a"[0] != "a";
+      } else if (name == "json") {
+        // Indicates whether both `JSON.stringify` and `JSON.parse` are
+        // supported.
+        isSupported = has("json-stringify") && has("json-parse");
+      } else {
+        var value, serialized = '{"a":[1,true,false,null,"\\u0000\\b\\n\\f\\r\\t"]}';
+        // Test `JSON.stringify`.
+        if (name == "json-stringify") {
+          var stringify = exports.stringify, stringifySupported = typeof stringify == "function" && isExtended;
+          if (stringifySupported) {
+            // A test function object with a custom `toJSON` method.
+            (value = function () {
+              return 1;
+            }).toJSON = value;
+            try {
+              stringifySupported =
+                // Firefox 3.1b1 and b2 serialize string, number, and boolean
+                // primitives as object literals.
+                stringify(0) === "0" &&
+                // FF 3.1b1, b2, and JSON 2 serialize wrapped primitives as object
+                // literals.
+                stringify(new Number()) === "0" &&
+                stringify(new String()) == '""' &&
+                // FF 3.1b1, 2 throw an error if the value is `null`, `undefined`, or
+                // does not define a canonical JSON representation (this applies to
+                // objects with `toJSON` properties as well, *unless* they are nested
+                // within an object or array).
+                stringify(getClass) === undef &&
+                // IE 8 serializes `undefined` as `"undefined"`. Safari <= 5.1.7 and
+                // FF 3.1b3 pass this test.
+                stringify(undef) === undef &&
+                // Safari <= 5.1.7 and FF 3.1b3 throw `Error`s and `TypeError`s,
+                // respectively, if the value is omitted entirely.
+                stringify() === undef &&
+                // FF 3.1b1, 2 throw an error if the given value is not a number,
+                // string, array, object, Boolean, or `null` literal. This applies to
+                // objects with custom `toJSON` methods as well, unless they are nested
+                // inside object or array literals. YUI 3.0.0b1 ignores custom `toJSON`
+                // methods entirely.
+                stringify(value) === "1" &&
+                stringify([value]) == "[1]" &&
+                // Prototype <= 1.6.1 serializes `[undefined]` as `"[]"` instead of
+                // `"[null]"`.
+                stringify([undef]) == "[null]" &&
+                // YUI 3.0.0b1 fails to serialize `null` literals.
+                stringify(null) == "null" &&
+                // FF 3.1b1, 2 halts serialization if an array contains a function:
+                // `[1, true, getClass, 1]` serializes as "[1,true,],". FF 3.1b3
+                // elides non-JSON values from objects and arrays, unless they
+                // define custom `toJSON` methods.
+                stringify([undef, getClass, null]) == "[null,null,null]" &&
+                // Simple serialization test. FF 3.1b1 uses Unicode escape sequences
+                // where character escape codes are expected (e.g., `\b` => `\u0008`).
+                stringify({ "a": [value, true, false, null, "\x00\b\n\f\r\t"] }) == serialized &&
+                // FF 3.1b1 and b2 ignore the `filter` and `width` arguments.
+                stringify(null, value) === "1" &&
+                stringify([1, 2], null, 1) == "[\n 1,\n 2\n]" &&
+                // JSON 2, Prototype <= 1.7, and older WebKit builds incorrectly
+                // serialize extended years.
+                stringify(new Date(-8.64e15)) == '"-271821-04-20T00:00:00.000Z"' &&
+                // The milliseconds are optional in ES 5, but required in 5.1.
+                stringify(new Date(8.64e15)) == '"+275760-09-13T00:00:00.000Z"' &&
+                // Firefox <= 11.0 incorrectly serializes years prior to 0 as negative
+                // four-digit years instead of six-digit years. Credits: @Yaffle.
+                stringify(new Date(-621987552e5)) == '"-000001-01-01T00:00:00.000Z"' &&
+                // Safari <= 5.1.5 and Opera >= 10.53 incorrectly serialize millisecond
+                // values less than 1000. Credits: @Yaffle.
+                stringify(new Date(-1)) == '"1969-12-31T23:59:59.999Z"';
+            } catch (exception) {
+              stringifySupported = false;
+            }
+          }
+          isSupported = stringifySupported;
+        }
+        // Test `JSON.parse`.
+        if (name == "json-parse") {
+          var parse = exports.parse;
+          if (typeof parse == "function") {
+            try {
+              // FF 3.1b1, b2 will throw an exception if a bare literal is provided.
+              // Conforming implementations should also coerce the initial argument to
+              // a string prior to parsing.
+              if (parse("0") === 0 && !parse(false)) {
+                // Simple parsing test.
+                value = parse(serialized);
+                var parseSupported = value["a"].length == 5 && value["a"][0] === 1;
+                if (parseSupported) {
+                  try {
+                    // Safari <= 5.1.2 and FF 3.1b1 allow unescaped tabs in strings.
+                    parseSupported = !parse('"\t"');
+                  } catch (exception) {}
+                  if (parseSupported) {
+                    try {
+                      // FF 4.0 and 4.0.1 allow leading `+` signs and leading
+                      // decimal points. FF 4.0, 4.0.1, and IE 9-10 also allow
+                      // certain octal literals.
+                      parseSupported = parse("01") !== 1;
+                    } catch (exception) {}
+                  }
+                  if (parseSupported) {
+                    try {
+                      // FF 4.0, 4.0.1, and Rhino 1.7R3-R4 allow trailing decimal
+                      // points. These environments, along with FF 3.1b1 and 2,
+                      // also allow trailing commas in JSON objects and arrays.
+                      parseSupported = parse("1.") !== 1;
+                    } catch (exception) {}
+                  }
+                }
+              }
+            } catch (exception) {
+              parseSupported = false;
+            }
+          }
+          isSupported = parseSupported;
+        }
+      }
+      return has[name] = !!isSupported;
+    }
 
-		if (!has("json")) {
-			// Common `[[Class]]` name aliases.
-			var functionClass = "[object Function]",
-				dateClass = "[object Date]",
-				numberClass = "[object Number]",
-				stringClass = "[object String]",
-				arrayClass = "[object Array]",
-				booleanClass = "[object Boolean]";
+    if (!has("json")) {
+      // Common `[[Class]]` name aliases.
+      var functionClass = "[object Function]",
+          dateClass = "[object Date]",
+          numberClass = "[object Number]",
+          stringClass = "[object String]",
+          arrayClass = "[object Array]",
+          booleanClass = "[object Boolean]";
 
-			// Detect incomplete support for accessing string characters by index.
-			var charIndexBuggy = has("bug-string-char-index");
+      // Detect incomplete support for accessing string characters by index.
+      var charIndexBuggy = has("bug-string-char-index");
 
-			// Define additional utility methods if the `Date` methods are buggy.
-			if (!isExtended) {
-				var floor = Math.floor;
-				// A mapping between the months of the year and the number of days between
-				// January 1st and the first of the respective month.
-				var Months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-				// Internal: Calculates the number of days between the Unix epoch and the
-				// first day of the given month.
-				var getDay = function (year, month) {
-					return Months[month] + 365 * (year - 1970) + floor((year - 1969 + (month = +(month > 1))) / 4) - floor((year - 1901 + month) / 100) + floor((year - 1601 + month) / 400);
-				};
-			}
+      // Define additional utility methods if the `Date` methods are buggy.
+      if (!isExtended) {
+        var floor = Math.floor;
+        // A mapping between the months of the year and the number of days between
+        // January 1st and the first of the respective month.
+        var Months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+        // Internal: Calculates the number of days between the Unix epoch and the
+        // first day of the given month.
+        var getDay = function (year, month) {
+          return Months[month] + 365 * (year - 1970) + floor((year - 1969 + (month = +(month > 1))) / 4) - floor((year - 1901 + month) / 100) + floor((year - 1601 + month) / 400);
+        };
+      }
 
-			// Internal: Determines if a property is a direct property of the given
-			// object. Delegates to the native `Object#hasOwnProperty` method.
-			if (!(isProperty = objectProto.hasOwnProperty)) {
-				isProperty = function (property) {
-					var members = {}, constructor;
-					if ((members.__proto__ = null, members.__proto__ = {
-							// The *proto* property cannot be set multiple times in recent
-							// versions of Firefox and SeaMonkey.
-							"toString": 1
-						}, members).toString != getClass) {
-						// Safari <= 2.0.3 doesn't implement `Object#hasOwnProperty`, but
-						// supports the mutable *proto* property.
-						isProperty = function (property) {
-							// Capture and break the object's prototype chain (see section 8.6.2
-							// of the ES 5.1 spec). The parenthesized expression prevents an
-							// unsafe transformation by the Closure Compiler.
-							var original = this.__proto__, result = property in (this.__proto__ = null, this);
-							// Restore the original prototype chain.
-							this.__proto__ = original;
-							return result;
-						};
-					} else {
-						// Capture a reference to the top-level `Object` constructor.
-						constructor = members.constructor;
-						// Use the `constructor` property to simulate `Object#hasOwnProperty` in
-						// other environments.
-						isProperty = function (property) {
-							var parent = (this.constructor || constructor).prototype;
-							return property in this && !(property in parent && this[property] === parent[property]);
-						};
-					}
-					members = null;
-					return isProperty.call(this, property);
-				};
-			}
+      // Internal: Determines if a property is a direct property of the given
+      // object. Delegates to the native `Object#hasOwnProperty` method.
+      if (!(isProperty = objectProto.hasOwnProperty)) {
+        isProperty = function (property) {
+          var members = {}, constructor;
+          if ((members.__proto__ = null, members.__proto__ = {
+            // The *proto* property cannot be set multiple times in recent
+            // versions of Firefox and SeaMonkey.
+            "toString": 1
+          }, members).toString != getClass) {
+            // Safari <= 2.0.3 doesn't implement `Object#hasOwnProperty`, but
+            // supports the mutable *proto* property.
+            isProperty = function (property) {
+              // Capture and break the object's prototype chain (see section 8.6.2
+              // of the ES 5.1 spec). The parenthesized expression prevents an
+              // unsafe transformation by the Closure Compiler.
+              var original = this.__proto__, result = property in (this.__proto__ = null, this);
+              // Restore the original prototype chain.
+              this.__proto__ = original;
+              return result;
+            };
+          } else {
+            // Capture a reference to the top-level `Object` constructor.
+            constructor = members.constructor;
+            // Use the `constructor` property to simulate `Object#hasOwnProperty` in
+            // other environments.
+            isProperty = function (property) {
+              var parent = (this.constructor || constructor).prototype;
+              return property in this && !(property in parent && this[property] === parent[property]);
+            };
+          }
+          members = null;
+          return isProperty.call(this, property);
+        };
+      }
 
-			// Internal: Normalizes the `for...in` iteration algorithm across
-			// environments. Each enumerated key is yielded to a `callback` function.
-			forEach = function (object, callback) {
-				var size = 0, Properties, members, property;
+      // Internal: Normalizes the `for...in` iteration algorithm across
+      // environments. Each enumerated key is yielded to a `callback` function.
+      forEach = function (object, callback) {
+        var size = 0, Properties, members, property;
 
-				// Tests for bugs in the current environment's `for...in` algorithm. The
-				// `valueOf` property inherits the non-enumerable flag from
-				// `Object.prototype` in older versions of IE, Netscape, and Mozilla.
-				(Properties = function () {
-					this.valueOf = 0;
-				}).prototype.valueOf = 0;
+        // Tests for bugs in the current environment's `for...in` algorithm. The
+        // `valueOf` property inherits the non-enumerable flag from
+        // `Object.prototype` in older versions of IE, Netscape, and Mozilla.
+        (Properties = function () {
+          this.valueOf = 0;
+        }).prototype.valueOf = 0;
 
-				// Iterate over a new instance of the `Properties` class.
-				members = new Properties();
-				for (property in members) {
-					// Ignore all properties inherited from `Object.prototype`.
-					if (isProperty.call(members, property)) {
-						size++;
-					}
-				}
-				Properties = members = null;
+        // Iterate over a new instance of the `Properties` class.
+        members = new Properties();
+        for (property in members) {
+          // Ignore all properties inherited from `Object.prototype`.
+          if (isProperty.call(members, property)) {
+            size++;
+          }
+        }
+        Properties = members = null;
 
-				// Normalize the iteration algorithm.
-				if (!size) {
-					// A list of non-enumerable properties inherited from `Object.prototype`.
-					members = ["valueOf", "toString", "toLocaleString", "propertyIsEnumerable", "isPrototypeOf", "hasOwnProperty", "constructor"];
-					// IE <= 8, Mozilla 1.0, and Netscape 6.2 ignore shadowed non-enumerable
-					// properties.
-					forEach = function (object, callback) {
-						var isFunction = getClass.call(object) == functionClass, property, length;
-						var hasProperty = !isFunction && typeof object.constructor != "function" && objectTypes[typeof object.hasOwnProperty] && object.hasOwnProperty || isProperty;
-						for (property in object) {
-							// Gecko <= 1.0 enumerates the `prototype` property of functions under
-							// certain conditions; IE does not.
-							if (!(isFunction && property == "prototype") && hasProperty.call(object, property)) {
-								callback(property);
-							}
-						}
-						// Manually invoke the callback for each non-enumerable property.
-						for (length = members.length; property = members[--length]; hasProperty.call(object, property) && callback(property));
-					};
-				} else if (size == 2) {
-					// Safari <= 2.0.4 enumerates shadowed properties twice.
-					forEach = function (object, callback) {
-						// Create a set of iterated properties.
-						var members = {}, isFunction = getClass.call(object) == functionClass, property;
-						for (property in object) {
-							// Store each property name to prevent double enumeration. The
-							// `prototype` property of functions is not enumerated due to cross-
-							// environment inconsistencies.
-							if (!(isFunction && property == "prototype") && !isProperty.call(members, property) && (members[property] = 1) && isProperty.call(object, property)) {
-								callback(property);
-							}
-						}
-					};
-				} else {
-					// No bugs detected; use the standard `for...in` algorithm.
-					forEach = function (object, callback) {
-						var isFunction = getClass.call(object) == functionClass, property, isConstructor;
-						for (property in object) {
-							if (!(isFunction && property == "prototype") && isProperty.call(object, property) && !(isConstructor = property === "constructor")) {
-								callback(property);
-							}
-						}
-						// Manually invoke the callback for the `constructor` property due to
-						// cross-environment inconsistencies.
-						if (isConstructor || isProperty.call(object, (property = "constructor"))) {
-							callback(property);
-						}
-					};
-				}
-				return forEach(object, callback);
-			};
+        // Normalize the iteration algorithm.
+        if (!size) {
+          // A list of non-enumerable properties inherited from `Object.prototype`.
+          members = ["valueOf", "toString", "toLocaleString", "propertyIsEnumerable", "isPrototypeOf", "hasOwnProperty", "constructor"];
+          // IE <= 8, Mozilla 1.0, and Netscape 6.2 ignore shadowed non-enumerable
+          // properties.
+          forEach = function (object, callback) {
+            var isFunction = getClass.call(object) == functionClass, property, length;
+            var hasProperty = !isFunction && typeof object.constructor != "function" && objectTypes[typeof object.hasOwnProperty] && object.hasOwnProperty || isProperty;
+            for (property in object) {
+              // Gecko <= 1.0 enumerates the `prototype` property of functions under
+              // certain conditions; IE does not.
+              if (!(isFunction && property == "prototype") && hasProperty.call(object, property)) {
+                callback(property);
+              }
+            }
+            // Manually invoke the callback for each non-enumerable property.
+            for (length = members.length; property = members[--length]; hasProperty.call(object, property) && callback(property));
+          };
+        } else if (size == 2) {
+          // Safari <= 2.0.4 enumerates shadowed properties twice.
+          forEach = function (object, callback) {
+            // Create a set of iterated properties.
+            var members = {}, isFunction = getClass.call(object) == functionClass, property;
+            for (property in object) {
+              // Store each property name to prevent double enumeration. The
+              // `prototype` property of functions is not enumerated due to cross-
+              // environment inconsistencies.
+              if (!(isFunction && property == "prototype") && !isProperty.call(members, property) && (members[property] = 1) && isProperty.call(object, property)) {
+                callback(property);
+              }
+            }
+          };
+        } else {
+          // No bugs detected; use the standard `for...in` algorithm.
+          forEach = function (object, callback) {
+            var isFunction = getClass.call(object) == functionClass, property, isConstructor;
+            for (property in object) {
+              if (!(isFunction && property == "prototype") && isProperty.call(object, property) && !(isConstructor = property === "constructor")) {
+                callback(property);
+              }
+            }
+            // Manually invoke the callback for the `constructor` property due to
+            // cross-environment inconsistencies.
+            if (isConstructor || isProperty.call(object, (property = "constructor"))) {
+              callback(property);
+            }
+          };
+        }
+        return forEach(object, callback);
+      };
 
-			// Public: Serializes a JavaScript `value` as a JSON string. The optional
-			// `filter` argument may specify either a function that alters how object and
-			// array members are serialized, or an array of strings and numbers that
-			// indicates which properties should be serialized. The optional `width`
-			// argument may be either a string or number that specifies the indentation
-			// level of the output.
-			if (!has("json-stringify")) {
-				// Internal: A map of control characters and their escaped equivalents.
-				var Escapes = {
-					92: "\\\\",
-					34: '\\"',
-					8: "\\b",
-					12: "\\f",
-					10: "\\n",
-					13: "\\r",
-					9: "\\t"
-				};
+      // Public: Serializes a JavaScript `value` as a JSON string. The optional
+      // `filter` argument may specify either a function that alters how object and
+      // array members are serialized, or an array of strings and numbers that
+      // indicates which properties should be serialized. The optional `width`
+      // argument may be either a string or number that specifies the indentation
+      // level of the output.
+      if (!has("json-stringify")) {
+        // Internal: A map of control characters and their escaped equivalents.
+        var Escapes = {
+          92: "\\\\",
+          34: '\\"',
+          8: "\\b",
+          12: "\\f",
+          10: "\\n",
+          13: "\\r",
+          9: "\\t"
+        };
 
-				// Internal: Converts `value` into a zero-padded string such that its
-				// length is at least equal to `width`. The `width` must be <= 6.
-				var leadingZeroes = "000000";
-				var toPaddedString = function (width, value) {
-					// The `|| 0` expression is necessary to work around a bug in
-					// Opera <= 7.54u2 where `0 == -0`, but `String(-0) !== "0"`.
-					return (leadingZeroes + (value || 0)).slice(-width);
-				};
+        // Internal: Converts `value` into a zero-padded string such that its
+        // length is at least equal to `width`. The `width` must be <= 6.
+        var leadingZeroes = "000000";
+        var toPaddedString = function (width, value) {
+          // The `|| 0` expression is necessary to work around a bug in
+          // Opera <= 7.54u2 where `0 == -0`, but `String(-0) !== "0"`.
+          return (leadingZeroes + (value || 0)).slice(-width);
+        };
 
-				// Internal: Double-quotes a string `value`, replacing all ASCII control
-				// characters (characters with code unit values between 0 and 31) with
-				// their escaped equivalents. This is an implementation of the
-				// `Quote(value)` operation defined in ES 5.1 section 15.12.3.
-				var unicodePrefix = "\\u00";
-				var quote = function (value) {
-					var result = '"', index = 0, length = value.length, useCharIndex = !charIndexBuggy || length > 10;
-					var symbols = useCharIndex && (charIndexBuggy ? value.split("") : value);
-					for (; index < length; index++) {
-						var charCode = value.charCodeAt(index);
-						// If the character is a control character, append its Unicode or
-						// shorthand escape sequence; otherwise, append the character as-is.
-						switch (charCode) {
-							case 8:
-							case 9:
-							case 10:
-							case 12:
-							case 13:
-							case 34:
-							case 92:
-								result += Escapes[charCode];
-								break;
-							default:
-								if (charCode < 32) {
-									result += unicodePrefix + toPaddedString(2, charCode.toString(16));
-									break;
-								}
-								result += useCharIndex ? symbols[index] : value.charAt(index);
-						}
-					}
-					return result + '"';
-				};
+        // Internal: Double-quotes a string `value`, replacing all ASCII control
+        // characters (characters with code unit values between 0 and 31) with
+        // their escaped equivalents. This is an implementation of the
+        // `Quote(value)` operation defined in ES 5.1 section 15.12.3.
+        var unicodePrefix = "\\u00";
+        var quote = function (value) {
+          var result = '"', index = 0, length = value.length, useCharIndex = !charIndexBuggy || length > 10;
+          var symbols = useCharIndex && (charIndexBuggy ? value.split("") : value);
+          for (; index < length; index++) {
+            var charCode = value.charCodeAt(index);
+            // If the character is a control character, append its Unicode or
+            // shorthand escape sequence; otherwise, append the character as-is.
+            switch (charCode) {
+              case 8: case 9: case 10: case 12: case 13: case 34: case 92:
+                result += Escapes[charCode];
+                break;
+              default:
+                if (charCode < 32) {
+                  result += unicodePrefix + toPaddedString(2, charCode.toString(16));
+                  break;
+                }
+                result += useCharIndex ? symbols[index] : value.charAt(index);
+            }
+          }
+          return result + '"';
+        };
 
-				// Internal: Recursively serializes an object. Implements the
-				// `Str(key, holder)`, `JO(value)`, and `JA(value)` operations.
-				var serialize = function (property, object, callback, properties, whitespace, indentation, stack) {
-					var value, className, year, month, date, time, hours, minutes, seconds, milliseconds, results, element, index, length, prefix, result;
-					try {
-						// Necessary for host object support.
-						value = object[property];
-					} catch (exception) {
-					}
-					if (typeof value == "object" && value) {
-						className = getClass.call(value);
-						if (className == dateClass && !isProperty.call(value, "toJSON")) {
-							if (value > -1 / 0 && value < 1 / 0) {
-								// Dates are serialized according to the `Date#toJSON` method
-								// specified in ES 5.1 section 15.9.5.44. See section 15.9.1.15
-								// for the ISO 8601 date time string format.
-								if (getDay) {
-									// Manually compute the year, month, date, hours, minutes,
-									// seconds, and milliseconds if the `getUTC*` methods are
-									// buggy. Adapted from @Yaffle's `date-shim` project.
-									date = floor(value / 864e5);
-									for (year = floor(date / 365.2425) + 1970 - 1; getDay(year + 1, 0) <= date; year++);
-									for (month = floor((date - getDay(year, 0)) / 30.42); getDay(year, month + 1) <= date; month++);
-									date = 1 + date - getDay(year, month);
-									// The `time` value specifies the time within the day (see ES
-									// 5.1 section 15.9.1.2). The formula `(A % B + B) % B` is used
-									// to compute `A modulo B`, as the `%` operator does not
-									// correspond to the `modulo` operation for negative numbers.
-									time = (value % 864e5 + 864e5) % 864e5;
-									// The hours, minutes, seconds, and milliseconds are obtained by
-									// decomposing the time within the day. See section 15.9.1.10.
-									hours = floor(time / 36e5) % 24;
-									minutes = floor(time / 6e4) % 60;
-									seconds = floor(time / 1e3) % 60;
-									milliseconds = time % 1e3;
-								} else {
-									year = value.getUTCFullYear();
-									month = value.getUTCMonth();
-									date = value.getUTCDate();
-									hours = value.getUTCHours();
-									minutes = value.getUTCMinutes();
-									seconds = value.getUTCSeconds();
-									milliseconds = value.getUTCMilliseconds();
-								}
-								// Serialize extended years correctly.
-								value = (year <= 0 || year >= 1e4 ? (year < 0 ? "-" : "+") + toPaddedString(6, year < 0 ? -year : year) : toPaddedString(4, year)) +
-								"-" + toPaddedString(2, month + 1) + "-" + toPaddedString(2, date) +
-									// Months, dates, hours, minutes, and seconds should have two
-									// digits; milliseconds should have three.
-								"T" + toPaddedString(2, hours) + ":" + toPaddedString(2, minutes) + ":" + toPaddedString(2, seconds) +
-									// Milliseconds are optional in ES 5.0, but required in 5.1.
-								"." + toPaddedString(3, milliseconds) + "Z";
-							} else {
-								value = null;
-							}
-						} else if (typeof value.toJSON == "function" && ((className != numberClass && className != stringClass && className != arrayClass) || isProperty.call(value, "toJSON"))) {
-							// Prototype <= 1.6.1 adds non-standard `toJSON` methods to the
-							// `Number`, `String`, `Date`, and `Array` prototypes. JSON 3
-							// ignores all `toJSON` methods on these objects unless they are
-							// defined directly on an instance.
-							value = value.toJSON(property);
-						}
-					}
-					if (callback) {
-						// If a replacement function was provided, call it to obtain the value
-						// for serialization.
-						value = callback.call(object, property, value);
-					}
-					if (value === null) {
-						return "null";
-					}
-					className = getClass.call(value);
-					if (className == booleanClass) {
-						// Booleans are represented literally.
-						return "" + value;
-					} else if (className == numberClass) {
-						// JSON numbers must be finite. `Infinity` and `NaN` are serialized as
-						// `"null"`.
-						return value > -1 / 0 && value < 1 / 0 ? "" + value : "null";
-					} else if (className == stringClass) {
-						// Strings are double-quoted and escaped.
-						return quote("" + value);
-					}
-					// Recursively serialize objects and arrays.
-					if (typeof value == "object") {
-						// Check for cyclic structures. This is a linear search; performance
-						// is inversely proportional to the number of unique nested objects.
-						for (length = stack.length; length--;) {
-							if (stack[length] === value) {
-								// Cyclic structures cannot be serialized by `JSON.stringify`.
-								throw TypeError();
-							}
-						}
-						// Add the object to the stack of traversed objects.
-						stack.push(value);
-						results = [];
-						// Save the current indentation level and indent one additional level.
-						prefix = indentation;
-						indentation += whitespace;
-						if (className == arrayClass) {
-							// Recursively serialize array elements.
-							for (index = 0, length = value.length; index < length; index++) {
-								element = serialize(index, value, callback, properties, whitespace, indentation, stack);
-								results.push(element === undef ? "null" : element);
-							}
-							result = results.length ? (whitespace ? "[\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "]" : ("[" + results.join(",") + "]")) : "[]";
-						} else {
-							// Recursively serialize object members. Members are selected from
-							// either a user-specified list of property names, or the object
-							// itself.
-							forEach(properties || value, function (property) {
-								var element = serialize(property, value, callback, properties, whitespace, indentation, stack);
-								if (element !== undef) {
-									// According to ES 5.1 section 15.12.3: "If `gap` {whitespace}
-									// is not the empty string, let `member` {quote(property) + ":"}
-									// be the concatenation of `member` and the `space` character."
-									// The "`space` character" refers to the literal space
-									// character, not the `space` {width} argument provided to
-									// `JSON.stringify`.
-									results.push(quote(property) + ":" + (whitespace ? " " : "") + element);
-								}
-							});
-							result = results.length ? (whitespace ? "{\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "}" : ("{" + results.join(",") + "}")) : "{}";
-						}
-						// Remove the object from the traversed object stack.
-						stack.pop();
-						return result;
-					}
-				};
+        // Internal: Recursively serializes an object. Implements the
+        // `Str(key, holder)`, `JO(value)`, and `JA(value)` operations.
+        var serialize = function (property, object, callback, properties, whitespace, indentation, stack) {
+          var value, className, year, month, date, time, hours, minutes, seconds, milliseconds, results, element, index, length, prefix, result;
+          try {
+            // Necessary for host object support.
+            value = object[property];
+          } catch (exception) {}
+          if (typeof value == "object" && value) {
+            className = getClass.call(value);
+            if (className == dateClass && !isProperty.call(value, "toJSON")) {
+              if (value > -1 / 0 && value < 1 / 0) {
+                // Dates are serialized according to the `Date#toJSON` method
+                // specified in ES 5.1 section 15.9.5.44. See section 15.9.1.15
+                // for the ISO 8601 date time string format.
+                if (getDay) {
+                  // Manually compute the year, month, date, hours, minutes,
+                  // seconds, and milliseconds if the `getUTC*` methods are
+                  // buggy. Adapted from @Yaffle's `date-shim` project.
+                  date = floor(value / 864e5);
+                  for (year = floor(date / 365.2425) + 1970 - 1; getDay(year + 1, 0) <= date; year++);
+                  for (month = floor((date - getDay(year, 0)) / 30.42); getDay(year, month + 1) <= date; month++);
+                  date = 1 + date - getDay(year, month);
+                  // The `time` value specifies the time within the day (see ES
+                  // 5.1 section 15.9.1.2). The formula `(A % B + B) % B` is used
+                  // to compute `A modulo B`, as the `%` operator does not
+                  // correspond to the `modulo` operation for negative numbers.
+                  time = (value % 864e5 + 864e5) % 864e5;
+                  // The hours, minutes, seconds, and milliseconds are obtained by
+                  // decomposing the time within the day. See section 15.9.1.10.
+                  hours = floor(time / 36e5) % 24;
+                  minutes = floor(time / 6e4) % 60;
+                  seconds = floor(time / 1e3) % 60;
+                  milliseconds = time % 1e3;
+                } else {
+                  year = value.getUTCFullYear();
+                  month = value.getUTCMonth();
+                  date = value.getUTCDate();
+                  hours = value.getUTCHours();
+                  minutes = value.getUTCMinutes();
+                  seconds = value.getUTCSeconds();
+                  milliseconds = value.getUTCMilliseconds();
+                }
+                // Serialize extended years correctly.
+                value = (year <= 0 || year >= 1e4 ? (year < 0 ? "-" : "+") + toPaddedString(6, year < 0 ? -year : year) : toPaddedString(4, year)) +
+                  "-" + toPaddedString(2, month + 1) + "-" + toPaddedString(2, date) +
+                  // Months, dates, hours, minutes, and seconds should have two
+                  // digits; milliseconds should have three.
+                  "T" + toPaddedString(2, hours) + ":" + toPaddedString(2, minutes) + ":" + toPaddedString(2, seconds) +
+                  // Milliseconds are optional in ES 5.0, but required in 5.1.
+                  "." + toPaddedString(3, milliseconds) + "Z";
+              } else {
+                value = null;
+              }
+            } else if (typeof value.toJSON == "function" && ((className != numberClass && className != stringClass && className != arrayClass) || isProperty.call(value, "toJSON"))) {
+              // Prototype <= 1.6.1 adds non-standard `toJSON` methods to the
+              // `Number`, `String`, `Date`, and `Array` prototypes. JSON 3
+              // ignores all `toJSON` methods on these objects unless they are
+              // defined directly on an instance.
+              value = value.toJSON(property);
+            }
+          }
+          if (callback) {
+            // If a replacement function was provided, call it to obtain the value
+            // for serialization.
+            value = callback.call(object, property, value);
+          }
+          if (value === null) {
+            return "null";
+          }
+          className = getClass.call(value);
+          if (className == booleanClass) {
+            // Booleans are represented literally.
+            return "" + value;
+          } else if (className == numberClass) {
+            // JSON numbers must be finite. `Infinity` and `NaN` are serialized as
+            // `"null"`.
+            return value > -1 / 0 && value < 1 / 0 ? "" + value : "null";
+          } else if (className == stringClass) {
+            // Strings are double-quoted and escaped.
+            return quote("" + value);
+          }
+          // Recursively serialize objects and arrays.
+          if (typeof value == "object") {
+            // Check for cyclic structures. This is a linear search; performance
+            // is inversely proportional to the number of unique nested objects.
+            for (length = stack.length; length--;) {
+              if (stack[length] === value) {
+                // Cyclic structures cannot be serialized by `JSON.stringify`.
+                throw TypeError();
+              }
+            }
+            // Add the object to the stack of traversed objects.
+            stack.push(value);
+            results = [];
+            // Save the current indentation level and indent one additional level.
+            prefix = indentation;
+            indentation += whitespace;
+            if (className == arrayClass) {
+              // Recursively serialize array elements.
+              for (index = 0, length = value.length; index < length; index++) {
+                element = serialize(index, value, callback, properties, whitespace, indentation, stack);
+                results.push(element === undef ? "null" : element);
+              }
+              result = results.length ? (whitespace ? "[\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "]" : ("[" + results.join(",") + "]")) : "[]";
+            } else {
+              // Recursively serialize object members. Members are selected from
+              // either a user-specified list of property names, or the object
+              // itself.
+              forEach(properties || value, function (property) {
+                var element = serialize(property, value, callback, properties, whitespace, indentation, stack);
+                if (element !== undef) {
+                  // According to ES 5.1 section 15.12.3: "If `gap` {whitespace}
+                  // is not the empty string, let `member` {quote(property) + ":"}
+                  // be the concatenation of `member` and the `space` character."
+                  // The "`space` character" refers to the literal space
+                  // character, not the `space` {width} argument provided to
+                  // `JSON.stringify`.
+                  results.push(quote(property) + ":" + (whitespace ? " " : "") + element);
+                }
+              });
+              result = results.length ? (whitespace ? "{\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "}" : ("{" + results.join(",") + "}")) : "{}";
+            }
+            // Remove the object from the traversed object stack.
+            stack.pop();
+            return result;
+          }
+        };
 
-				// Public: `JSON.stringify`. See ES 5.1 section 15.12.3.
-				exports.stringify = function (source, filter, width) {
-					var whitespace, callback, properties, className;
-					if (objectTypes[typeof filter] && filter) {
-						if ((className = getClass.call(filter)) == functionClass) {
-							callback = filter;
-						} else if (className == arrayClass) {
-							// Convert the property names array into a makeshift set.
-							properties = {};
-							for (var index = 0, length = filter.length, value; index < length; value = filter[index++], ((className = getClass.call(value)), className == stringClass || className == numberClass) && (properties[value] = 1));
-						}
-					}
-					if (width) {
-						if ((className = getClass.call(width)) == numberClass) {
-							// Convert the `width` to an integer and create a string containing
-							// `width` number of space characters.
-							if ((width -= width % 1) > 0) {
-								for (whitespace = "", width > 10 && (width = 10); whitespace.length < width; whitespace += " ");
-							}
-						} else if (className == stringClass) {
-							whitespace = width.length <= 10 ? width : width.slice(0, 10);
-						}
-					}
-					// Opera <= 7.54u2 discards the values associated with empty string keys
-					// (`""`) only if they are used directly within an object member list
-					// (e.g., `!("" in { "": 1})`).
-					return serialize("", (value = {}, value[""] = source, value), callback, properties, whitespace, "", []);
-				};
-			}
+        // Public: `JSON.stringify`. See ES 5.1 section 15.12.3.
+        exports.stringify = function (source, filter, width) {
+          var whitespace, callback, properties, className;
+          if (objectTypes[typeof filter] && filter) {
+            if ((className = getClass.call(filter)) == functionClass) {
+              callback = filter;
+            } else if (className == arrayClass) {
+              // Convert the property names array into a makeshift set.
+              properties = {};
+              for (var index = 0, length = filter.length, value; index < length; value = filter[index++], ((className = getClass.call(value)), className == stringClass || className == numberClass) && (properties[value] = 1));
+            }
+          }
+          if (width) {
+            if ((className = getClass.call(width)) == numberClass) {
+              // Convert the `width` to an integer and create a string containing
+              // `width` number of space characters.
+              if ((width -= width % 1) > 0) {
+                for (whitespace = "", width > 10 && (width = 10); whitespace.length < width; whitespace += " ");
+              }
+            } else if (className == stringClass) {
+              whitespace = width.length <= 10 ? width : width.slice(0, 10);
+            }
+          }
+          // Opera <= 7.54u2 discards the values associated with empty string keys
+          // (`""`) only if they are used directly within an object member list
+          // (e.g., `!("" in { "": 1})`).
+          return serialize("", (value = {}, value[""] = source, value), callback, properties, whitespace, "", []);
+        };
+      }
 
-			// Public: Parses a JSON source string.
-			if (!has("json-parse")) {
-				var fromCharCode = String.fromCharCode;
+      // Public: Parses a JSON source string.
+      if (!has("json-parse")) {
+        var fromCharCode = String.fromCharCode;
 
-				// Internal: A map of escaped control characters and their unescaped
-				// equivalents.
-				var Unescapes = {
-					92: "\\",
-					34: '"',
-					47: "/",
-					98: "\b",
-					116: "\t",
-					110: "\n",
-					102: "\f",
-					114: "\r"
-				};
+        // Internal: A map of escaped control characters and their unescaped
+        // equivalents.
+        var Unescapes = {
+          92: "\\",
+          34: '"',
+          47: "/",
+          98: "\b",
+          116: "\t",
+          110: "\n",
+          102: "\f",
+          114: "\r"
+        };
 
-				// Internal: Stores the parser state.
-				var Index, Source;
+        // Internal: Stores the parser state.
+        var Index, Source;
 
-				// Internal: Resets the parser state and throws a `SyntaxError`.
-				var abort = function () {
-					Index = Source = null;
-					throw SyntaxError();
-				};
+        // Internal: Resets the parser state and throws a `SyntaxError`.
+        var abort = function () {
+          Index = Source = null;
+          throw SyntaxError();
+        };
 
-				// Internal: Returns the next token, or `"$"` if the parser has reached
-				// the end of the source string. A token may be a string, number, `null`
-				// literal, or Boolean literal.
-				var lex = function () {
-					var source = Source, length = source.length, value, begin, position, isSigned, charCode;
-					while (Index < length) {
-						charCode = source.charCodeAt(Index);
-						switch (charCode) {
-							case 9:
-							case 10:
-							case 13:
-							case 32:
-								// Skip whitespace tokens, including tabs, carriage returns, line
-								// feeds, and space characters.
-								Index++;
-								break;
-							case 123:
-							case 125:
-							case 91:
-							case 93:
-							case 58:
-							case 44:
-								// Parse a punctuator token (`{`, `}`, `[`, `]`, `:`, or `,`) at
-								// the current position.
-								value = charIndexBuggy ? source.charAt(Index) : source[Index];
-								Index++;
-								return value;
-							case 34:
-								// `"` delimits a JSON string; advance to the next character and
-								// begin parsing the string. String tokens are prefixed with the
-								// sentinel `@` character to distinguish them from punctuators and
-								// end-of-string tokens.
-								for (value = "@", Index++; Index < length;) {
-									charCode = source.charCodeAt(Index);
-									if (charCode < 32) {
-										// Unescaped ASCII control characters (those with a code unit
-										// less than the space character) are not permitted.
-										abort();
-									} else if (charCode == 92) {
-										// A reverse solidus (`\`) marks the beginning of an escaped
-										// control character (including `"`, `\`, and `/`) or Unicode
-										// escape sequence.
-										charCode = source.charCodeAt(++Index);
-										switch (charCode) {
-											case 92:
-											case 34:
-											case 47:
-											case 98:
-											case 116:
-											case 110:
-											case 102:
-											case 114:
-												// Revive escaped control characters.
-												value += Unescapes[charCode];
-												Index++;
-												break;
-											case 117:
-												// `\u` marks the beginning of a Unicode escape sequence.
-												// Advance to the first character and validate the
-												// four-digit code point.
-												begin = ++Index;
-												for (position = Index + 4; Index < position; Index++) {
-													charCode = source.charCodeAt(Index);
-													// A valid sequence comprises four hexdigits (case-
-													// insensitive) that form a single hexadecimal value.
-													if (!(charCode >= 48 && charCode <= 57 || charCode >= 97 && charCode <= 102 || charCode >= 65 && charCode <= 70)) {
-														// Invalid Unicode escape sequence.
-														abort();
-													}
-												}
-												// Revive the escaped character.
-												value += fromCharCode("0x" + source.slice(begin, Index));
-												break;
-											default:
-												// Invalid escape sequence.
-												abort();
-										}
-									} else {
-										if (charCode == 34) {
-											// An unescaped double-quote character marks the end of the
-											// string.
-											break;
-										}
-										charCode = source.charCodeAt(Index);
-										begin = Index;
-										// Optimize for the common case where a string is valid.
-										while (charCode >= 32 && charCode != 92 && charCode != 34) {
-											charCode = source.charCodeAt(++Index);
-										}
-										// Append the string as-is.
-										value += source.slice(begin, Index);
-									}
-								}
-								if (source.charCodeAt(Index) == 34) {
-									// Advance to the next character and return the revived string.
-									Index++;
-									return value;
-								}
-								// Unterminated string.
-								abort();
-							default:
-								// Parse numbers and literals.
-								begin = Index;
-								// Advance past the negative sign, if one is specified.
-								if (charCode == 45) {
-									isSigned = true;
-									charCode = source.charCodeAt(++Index);
-								}
-								// Parse an integer or floating-point value.
-								if (charCode >= 48 && charCode <= 57) {
-									// Leading zeroes are interpreted as octal literals.
-									if (charCode == 48 && ((charCode = source.charCodeAt(Index + 1)), charCode >= 48 && charCode <= 57)) {
-										// Illegal octal literal.
-										abort();
-									}
-									isSigned = false;
-									// Parse the integer component.
-									for (; Index < length && ((charCode = source.charCodeAt(Index)), charCode >= 48 && charCode <= 57); Index++);
-									// Floats cannot contain a leading decimal point; however, this
-									// case is already accounted for by the parser.
-									if (source.charCodeAt(Index) == 46) {
-										position = ++Index;
-										// Parse the decimal component.
-										for (; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
-										if (position == Index) {
-											// Illegal trailing decimal.
-											abort();
-										}
-										Index = position;
-									}
-									// Parse exponents. The `e` denoting the exponent is
-									// case-insensitive.
-									charCode = source.charCodeAt(Index);
-									if (charCode == 101 || charCode == 69) {
-										charCode = source.charCodeAt(++Index);
-										// Skip past the sign following the exponent, if one is
-										// specified.
-										if (charCode == 43 || charCode == 45) {
-											Index++;
-										}
-										// Parse the exponential component.
-										for (position = Index; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
-										if (position == Index) {
-											// Illegal empty exponent.
-											abort();
-										}
-										Index = position;
-									}
-									// Coerce the parsed value to a JavaScript number.
-									return +source.slice(begin, Index);
-								}
-								// A negative sign may only precede numbers.
-								if (isSigned) {
-									abort();
-								}
-								// `true`, `false`, and `null` literals.
-								if (source.slice(Index, Index + 4) == "true") {
-									Index += 4;
-									return true;
-								} else if (source.slice(Index, Index + 5) == "false") {
-									Index += 5;
-									return false;
-								} else if (source.slice(Index, Index + 4) == "null") {
-									Index += 4;
-									return null;
-								}
-								// Unrecognized token.
-								abort();
-						}
-					}
-					// Return the sentinel `$` character if the parser has reached the end
-					// of the source string.
-					return "$";
-				};
+        // Internal: Returns the next token, or `"$"` if the parser has reached
+        // the end of the source string. A token may be a string, number, `null`
+        // literal, or Boolean literal.
+        var lex = function () {
+          var source = Source, length = source.length, value, begin, position, isSigned, charCode;
+          while (Index < length) {
+            charCode = source.charCodeAt(Index);
+            switch (charCode) {
+              case 9: case 10: case 13: case 32:
+                // Skip whitespace tokens, including tabs, carriage returns, line
+                // feeds, and space characters.
+                Index++;
+                break;
+              case 123: case 125: case 91: case 93: case 58: case 44:
+                // Parse a punctuator token (`{`, `}`, `[`, `]`, `:`, or `,`) at
+                // the current position.
+                value = charIndexBuggy ? source.charAt(Index) : source[Index];
+                Index++;
+                return value;
+              case 34:
+                // `"` delimits a JSON string; advance to the next character and
+                // begin parsing the string. String tokens are prefixed with the
+                // sentinel `@` character to distinguish them from punctuators and
+                // end-of-string tokens.
+                for (value = "@", Index++; Index < length;) {
+                  charCode = source.charCodeAt(Index);
+                  if (charCode < 32) {
+                    // Unescaped ASCII control characters (those with a code unit
+                    // less than the space character) are not permitted.
+                    abort();
+                  } else if (charCode == 92) {
+                    // A reverse solidus (`\`) marks the beginning of an escaped
+                    // control character (including `"`, `\`, and `/`) or Unicode
+                    // escape sequence.
+                    charCode = source.charCodeAt(++Index);
+                    switch (charCode) {
+                      case 92: case 34: case 47: case 98: case 116: case 110: case 102: case 114:
+                        // Revive escaped control characters.
+                        value += Unescapes[charCode];
+                        Index++;
+                        break;
+                      case 117:
+                        // `\u` marks the beginning of a Unicode escape sequence.
+                        // Advance to the first character and validate the
+                        // four-digit code point.
+                        begin = ++Index;
+                        for (position = Index + 4; Index < position; Index++) {
+                          charCode = source.charCodeAt(Index);
+                          // A valid sequence comprises four hexdigits (case-
+                          // insensitive) that form a single hexadecimal value.
+                          if (!(charCode >= 48 && charCode <= 57 || charCode >= 97 && charCode <= 102 || charCode >= 65 && charCode <= 70)) {
+                            // Invalid Unicode escape sequence.
+                            abort();
+                          }
+                        }
+                        // Revive the escaped character.
+                        value += fromCharCode("0x" + source.slice(begin, Index));
+                        break;
+                      default:
+                        // Invalid escape sequence.
+                        abort();
+                    }
+                  } else {
+                    if (charCode == 34) {
+                      // An unescaped double-quote character marks the end of the
+                      // string.
+                      break;
+                    }
+                    charCode = source.charCodeAt(Index);
+                    begin = Index;
+                    // Optimize for the common case where a string is valid.
+                    while (charCode >= 32 && charCode != 92 && charCode != 34) {
+                      charCode = source.charCodeAt(++Index);
+                    }
+                    // Append the string as-is.
+                    value += source.slice(begin, Index);
+                  }
+                }
+                if (source.charCodeAt(Index) == 34) {
+                  // Advance to the next character and return the revived string.
+                  Index++;
+                  return value;
+                }
+                // Unterminated string.
+                abort();
+              default:
+                // Parse numbers and literals.
+                begin = Index;
+                // Advance past the negative sign, if one is specified.
+                if (charCode == 45) {
+                  isSigned = true;
+                  charCode = source.charCodeAt(++Index);
+                }
+                // Parse an integer or floating-point value.
+                if (charCode >= 48 && charCode <= 57) {
+                  // Leading zeroes are interpreted as octal literals.
+                  if (charCode == 48 && ((charCode = source.charCodeAt(Index + 1)), charCode >= 48 && charCode <= 57)) {
+                    // Illegal octal literal.
+                    abort();
+                  }
+                  isSigned = false;
+                  // Parse the integer component.
+                  for (; Index < length && ((charCode = source.charCodeAt(Index)), charCode >= 48 && charCode <= 57); Index++);
+                  // Floats cannot contain a leading decimal point; however, this
+                  // case is already accounted for by the parser.
+                  if (source.charCodeAt(Index) == 46) {
+                    position = ++Index;
+                    // Parse the decimal component.
+                    for (; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
+                    if (position == Index) {
+                      // Illegal trailing decimal.
+                      abort();
+                    }
+                    Index = position;
+                  }
+                  // Parse exponents. The `e` denoting the exponent is
+                  // case-insensitive.
+                  charCode = source.charCodeAt(Index);
+                  if (charCode == 101 || charCode == 69) {
+                    charCode = source.charCodeAt(++Index);
+                    // Skip past the sign following the exponent, if one is
+                    // specified.
+                    if (charCode == 43 || charCode == 45) {
+                      Index++;
+                    }
+                    // Parse the exponential component.
+                    for (position = Index; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
+                    if (position == Index) {
+                      // Illegal empty exponent.
+                      abort();
+                    }
+                    Index = position;
+                  }
+                  // Coerce the parsed value to a JavaScript number.
+                  return +source.slice(begin, Index);
+                }
+                // A negative sign may only precede numbers.
+                if (isSigned) {
+                  abort();
+                }
+                // `true`, `false`, and `null` literals.
+                if (source.slice(Index, Index + 4) == "true") {
+                  Index += 4;
+                  return true;
+                } else if (source.slice(Index, Index + 5) == "false") {
+                  Index += 5;
+                  return false;
+                } else if (source.slice(Index, Index + 4) == "null") {
+                  Index += 4;
+                  return null;
+                }
+                // Unrecognized token.
+                abort();
+            }
+          }
+          // Return the sentinel `$` character if the parser has reached the end
+          // of the source string.
+          return "$";
+        };
 
-				// Internal: Parses a JSON `value` token.
-				var get = function (value) {
-					var results, hasMembers;
-					if (value == "$") {
-						// Unexpected end of input.
-						abort();
-					}
-					if (typeof value == "string") {
-						if ((charIndexBuggy ? value.charAt(0) : value[0]) == "@") {
-							// Remove the sentinel `@` character.
-							return value.slice(1);
-						}
-						// Parse object and array literals.
-						if (value == "[") {
-							// Parses a JSON array, returning a new JavaScript array.
-							results = [];
-							for (; ; hasMembers || (hasMembers = true)) {
-								value = lex();
-								// A closing square bracket marks the end of the array literal.
-								if (value == "]") {
-									break;
-								}
-								// If the array literal contains elements, the current token
-								// should be a comma separating the previous element from the
-								// next.
-								if (hasMembers) {
-									if (value == ",") {
-										value = lex();
-										if (value == "]") {
-											// Unexpected trailing `,` in array literal.
-											abort();
-										}
-									} else {
-										// A `,` must separate each array element.
-										abort();
-									}
-								}
-								// Elisions and leading commas are not permitted.
-								if (value == ",") {
-									abort();
-								}
-								results.push(get(value));
-							}
-							return results;
-						} else if (value == "{") {
-							// Parses a JSON object, returning a new JavaScript object.
-							results = {};
-							for (; ; hasMembers || (hasMembers = true)) {
-								value = lex();
-								// A closing curly brace marks the end of the object literal.
-								if (value == "}") {
-									break;
-								}
-								// If the object literal contains members, the current token
-								// should be a comma separator.
-								if (hasMembers) {
-									if (value == ",") {
-										value = lex();
-										if (value == "}") {
-											// Unexpected trailing `,` in object literal.
-											abort();
-										}
-									} else {
-										// A `,` must separate each object member.
-										abort();
-									}
-								}
-								// Leading commas are not permitted, object property names must be
-								// double-quoted strings, and a `:` must separate each property
-								// name and value.
-								if (value == "," || typeof value != "string" || (charIndexBuggy ? value.charAt(0) : value[0]) != "@" || lex() != ":") {
-									abort();
-								}
-								results[value.slice(1)] = get(lex());
-							}
-							return results;
-						}
-						// Unexpected token encountered.
-						abort();
-					}
-					return value;
-				};
+        // Internal: Parses a JSON `value` token.
+        var get = function (value) {
+          var results, hasMembers;
+          if (value == "$") {
+            // Unexpected end of input.
+            abort();
+          }
+          if (typeof value == "string") {
+            if ((charIndexBuggy ? value.charAt(0) : value[0]) == "@") {
+              // Remove the sentinel `@` character.
+              return value.slice(1);
+            }
+            // Parse object and array literals.
+            if (value == "[") {
+              // Parses a JSON array, returning a new JavaScript array.
+              results = [];
+              for (;; hasMembers || (hasMembers = true)) {
+                value = lex();
+                // A closing square bracket marks the end of the array literal.
+                if (value == "]") {
+                  break;
+                }
+                // If the array literal contains elements, the current token
+                // should be a comma separating the previous element from the
+                // next.
+                if (hasMembers) {
+                  if (value == ",") {
+                    value = lex();
+                    if (value == "]") {
+                      // Unexpected trailing `,` in array literal.
+                      abort();
+                    }
+                  } else {
+                    // A `,` must separate each array element.
+                    abort();
+                  }
+                }
+                // Elisions and leading commas are not permitted.
+                if (value == ",") {
+                  abort();
+                }
+                results.push(get(value));
+              }
+              return results;
+            } else if (value == "{") {
+              // Parses a JSON object, returning a new JavaScript object.
+              results = {};
+              for (;; hasMembers || (hasMembers = true)) {
+                value = lex();
+                // A closing curly brace marks the end of the object literal.
+                if (value == "}") {
+                  break;
+                }
+                // If the object literal contains members, the current token
+                // should be a comma separator.
+                if (hasMembers) {
+                  if (value == ",") {
+                    value = lex();
+                    if (value == "}") {
+                      // Unexpected trailing `,` in object literal.
+                      abort();
+                    }
+                  } else {
+                    // A `,` must separate each object member.
+                    abort();
+                  }
+                }
+                // Leading commas are not permitted, object property names must be
+                // double-quoted strings, and a `:` must separate each property
+                // name and value.
+                if (value == "," || typeof value != "string" || (charIndexBuggy ? value.charAt(0) : value[0]) != "@" || lex() != ":") {
+                  abort();
+                }
+                results[value.slice(1)] = get(lex());
+              }
+              return results;
+            }
+            // Unexpected token encountered.
+            abort();
+          }
+          return value;
+        };
 
-				// Internal: Updates a traversed object member.
-				var update = function (source, property, callback) {
-					var element = walk(source, property, callback);
-					if (element === undef) {
-						delete source[property];
-					} else {
-						source[property] = element;
-					}
-				};
+        // Internal: Updates a traversed object member.
+        var update = function (source, property, callback) {
+          var element = walk(source, property, callback);
+          if (element === undef) {
+            delete source[property];
+          } else {
+            source[property] = element;
+          }
+        };
 
-				// Internal: Recursively traverses a parsed JSON object, invoking the
-				// `callback` function for each value. This is an implementation of the
-				// `Walk(holder, name)` operation defined in ES 5.1 section 15.12.2.
-				var walk = function (source, property, callback) {
-					var value = source[property], length;
-					if (typeof value == "object" && value) {
-						// `forEach` can't be used to traverse an array in Opera <= 8.54
-						// because its `Object#hasOwnProperty` implementation returns `false`
-						// for array indices (e.g., `![1, 2, 3].hasOwnProperty("0")`).
-						if (getClass.call(value) == arrayClass) {
-							for (length = value.length; length--;) {
-								update(value, length, callback);
-							}
-						} else {
-							forEach(value, function (property) {
-								update(value, property, callback);
-							});
-						}
-					}
-					return callback.call(source, property, value);
-				};
+        // Internal: Recursively traverses a parsed JSON object, invoking the
+        // `callback` function for each value. This is an implementation of the
+        // `Walk(holder, name)` operation defined in ES 5.1 section 15.12.2.
+        var walk = function (source, property, callback) {
+          var value = source[property], length;
+          if (typeof value == "object" && value) {
+            // `forEach` can't be used to traverse an array in Opera <= 8.54
+            // because its `Object#hasOwnProperty` implementation returns `false`
+            // for array indices (e.g., `![1, 2, 3].hasOwnProperty("0")`).
+            if (getClass.call(value) == arrayClass) {
+              for (length = value.length; length--;) {
+                update(value, length, callback);
+              }
+            } else {
+              forEach(value, function (property) {
+                update(value, property, callback);
+              });
+            }
+          }
+          return callback.call(source, property, value);
+        };
 
-				// Public: `JSON.parse`. See ES 5.1 section 15.12.2.
-				exports.parse = function (source, callback) {
-					var result, value;
-					Index = 0;
-					Source = "" + source;
-					result = get(lex());
-					// If a JSON string contains multiple tokens, it is invalid.
-					if (lex() != "$") {
-						abort();
-					}
-					// Reset the parser state.
-					Index = Source = null;
-					return callback && getClass.call(callback) == functionClass ? walk((value = {}, value[""] = result, value), "", callback) : result;
-				};
-			}
-		}
+        // Public: `JSON.parse`. See ES 5.1 section 15.12.2.
+        exports.parse = function (source, callback) {
+          var result, value;
+          Index = 0;
+          Source = "" + source;
+          result = get(lex());
+          // If a JSON string contains multiple tokens, it is invalid.
+          if (lex() != "$") {
+            abort();
+          }
+          // Reset the parser state.
+          Index = Source = null;
+          return callback && getClass.call(callback) == functionClass ? walk((value = {}, value[""] = result, value), "", callback) : result;
+        };
+      }
+    }
 
-		exports["runInContext"] = runInContext;
-		return exports;
-	}
+    exports["runInContext"] = runInContext;
+    return exports;
+  }
 
-	if (freeExports && !isLoader) {
-		// Export for CommonJS environments.
-		runInContext(root, freeExports);
-	} else {
-		// Export for web browsers and JavaScript engines.
-		var nativeJSON = root.JSON,
-			previousJSON = root["JSON3"],
-			isRestored = false;
+  if (freeExports && !isLoader) {
+    // Export for CommonJS environments.
+    runInContext(root, freeExports);
+  } else {
+    // Export for web browsers and JavaScript engines.
+    var nativeJSON = root.JSON,
+        previousJSON = root["JSON3"],
+        isRestored = false;
 
-		var JSON3 = runInContext(root, (root["JSON3"] = {
-			// Public: Restores the original value of the global `JSON` object and
-			// returns a reference to the `JSON3` object.
-			"noConflict": function () {
-				if (!isRestored) {
-					isRestored = true;
-					root.JSON = nativeJSON;
-					root["JSON3"] = previousJSON;
-					nativeJSON = previousJSON = null;
-				}
-				return JSON3;
-			}
-		}));
+    var JSON3 = runInContext(root, (root["JSON3"] = {
+      // Public: Restores the original value of the global `JSON` object and
+      // returns a reference to the `JSON3` object.
+      "noConflict": function () {
+        if (!isRestored) {
+          isRestored = true;
+          root.JSON = nativeJSON;
+          root["JSON3"] = previousJSON;
+          nativeJSON = previousJSON = null;
+        }
+        return JSON3;
+      }
+    }));
 
-		root.JSON = {
-			"parse": JSON3.parse,
-			"stringify": JSON3.stringify
-		};
-	}
+    root.JSON = {
+      "parse": JSON3.parse,
+      "stringify": JSON3.stringify
+    };
+  }
 
-	// Export for asynchronous module loaders.
-	if (isLoader) {
-		define(function () {
-			return JSON3;
-		});
-	}
+  // Export for asynchronous module loaders.
+  if (isLoader) {
+    define(function () {
+      return JSON3;
+    });
+  }
 }).call(this);
 
 //##############################################################################
@@ -2001,8 +1924,7 @@ this.createjs = this.createjs || {};
 				xml.async = false;
 				xml.loadXML(text);
 			}
-		} catch (e) {
-		}
+		} catch (e) {}
 		return xml;
 	};
 
@@ -2207,11 +2129,9 @@ this.createjs = this.createjs || {};
 	 * @method set
 	 * @param {Object} props A generic object containing properties to copy to the LoadItem instance.
 	 * @return {LoadItem} Returns the instance the method is called on (useful for chaining calls.)
-	 */
-	p.set = function (props) {
-		for (var n in props) {
-			this[n] = props[n];
-		}
+	*/
+	p.set = function(props) {
+		for (var n in props) { this[n] = props[n]; }
 		return this;
 	};
 
@@ -2273,9 +2193,7 @@ this.createjs = this.createjs || {};
 	 */
 	s.parseURI = function (path) {
 		var info = {absolute: false, relative: false};
-		if (path == null) {
-			return info;
-		}
+		if (path == null) { return info; }
 
 		// Drop the query string
 		var queryIndex = path.indexOf("?");
@@ -2364,9 +2282,9 @@ this.createjs = this.createjs || {};
 		host.href = location.href;
 
 		var crossdomain = (target.hostname != "") &&
-			(target.port != host.port ||
-			target.protocol != host.protocol ||
-			target.hostname != host.hostname);
+						  (target.port != host.port ||
+						   target.protocol != host.protocol ||
+						   target.hostname != host.hostname);
 		return crossdomain;
 	};
 
@@ -2411,7 +2329,7 @@ this.createjs = this.createjs || {};
 	 * @returns {Boolean}
 	 * @static
 	 */
-	s.isImageTag = function (item) {
+	s.isImageTag = function(item) {
 		return item instanceof HTMLImageElement;
 	};
 
@@ -2422,7 +2340,7 @@ this.createjs = this.createjs || {};
 	 * @returns {Boolean}
 	 * @static
 	 */
-	s.isAudioTag = function (item) {
+	s.isAudioTag = function(item) {
 		if (window.HTMLAudioElement) {
 			return item instanceof HTMLAudioElement;
 		} else {
@@ -2437,7 +2355,7 @@ this.createjs = this.createjs || {};
 	 * @returns {Boolean}
 	 * @static
 	 */
-	s.isVideoTag = function (item) {
+	s.isVideoTag = function(item) {
 		if (window.HTMLVideoElement) {
 			return item instanceof HTMLVideoElement;
 		} else {
@@ -2946,8 +2864,8 @@ this.createjs = this.createjs || {};
 	 * @param {Object} tag The tag instance
 	 * @since 0.6.0
 	 */
-	p.setTag = function (tag) {
-		this._tag = tag;
+	p.setTag = function(tag) {
+	  this._tag = tag;
 	};
 
 	/**
@@ -2993,7 +2911,7 @@ this.createjs = this.createjs || {};
 	 * Clean up the loader.
 	 * @method destroy
 	 */
-	p.destroy = function () {
+	p.destroy = function() {
 		if (this._request) {
 			this._request.removeAllEventListeners();
 			this._request.destroy();
@@ -3031,7 +2949,7 @@ this.createjs = this.createjs || {};
 	 * @method _createRequest
 	 * @protected
 	 */
-	p._createRequest = function () {
+	p._createRequest = function() {
 		if (!this._preferXHR) {
 			this._request = new createjs.TagRequest(this._item, this._tag || this._createTag(), this._tagSrcAttribute);
 		} else {
@@ -3047,9 +2965,7 @@ this.createjs = this.createjs || {};
 	 * @return {HTMLElement} The tag that was created
 	 * @protected
 	 */
-	p._createTag = function (src) {
-		return null;
-	};
+	p._createTag = function(src) { return null; };
 
 	/**
 	 * Dispatch a loadstart {{#crossLink "Event"}}{{/crossLink}}. Please see the {{#crossLink "AbstractLoader/loadstart:event"}}{{/crossLink}}
@@ -3058,9 +2974,7 @@ this.createjs = this.createjs || {};
 	 * @protected
 	 */
 	p._sendLoadStart = function () {
-		if (this._isCanceled()) {
-			return;
-		}
+		if (this._isCanceled()) { return; }
 		this.dispatchEvent("loadstart");
 	};
 
@@ -3072,9 +2986,7 @@ this.createjs = this.createjs || {};
 	 * @protected
 	 */
 	p._sendProgress = function (value) {
-		if (this._isCanceled()) {
-			return;
-		}
+		if (this._isCanceled()) { return; }
 		var event = null;
 		if (typeof(value) == "number") {
 			this.progress = value;
@@ -3083,9 +2995,7 @@ this.createjs = this.createjs || {};
 			event = value;
 			this.progress = value.loaded / value.total;
 			event.progress = this.progress;
-			if (isNaN(this.progress) || this.progress == Infinity) {
-				this.progress = 0;
-			}
+			if (isNaN(this.progress) || this.progress == Infinity) { this.progress = 0; }
 		}
 		this.hasEventListener("progress") && this.dispatchEvent(event);
 	};
@@ -3096,9 +3006,7 @@ this.createjs = this.createjs || {};
 	 * @protected
 	 */
 	p._sendComplete = function () {
-		if (this._isCanceled()) {
-			return;
-		}
+		if (this._isCanceled()) { return; }
 
 		this.loaded = true;
 
@@ -3120,9 +3028,7 @@ this.createjs = this.createjs || {};
 	 * @protected
 	 */
 	p._sendError = function (event) {
-		if (this._isCanceled() || !this.hasEventListener("error")) {
-			return;
-		}
+		if (this._isCanceled() || !this.hasEventListener("error")) { return; }
 		if (event == null) {
 			event = new createjs.ErrorEvent("PRELOAD_ERROR_EMPTY"); // TODO: Populate error
 		}
@@ -3169,12 +3075,12 @@ this.createjs = this.createjs || {};
 				var result = this.resultFormatter && this.resultFormatter(this);
 				var _this = this;
 				if (result instanceof Function) {
-					result(function (result) {
+					result(function(result) {
 						_this._result = result;
 						_this._sendComplete();
 					});
 				} else {
-					this._result = result || this._rawResult;
+					this._result =  result || this._rawResult;
 					this._sendComplete();
 				}
 				break;
@@ -3269,11 +3175,10 @@ this.createjs = this.createjs || {};
 	 * @method _createTag
 	 * @private
 	 */
-	p._createTag = function () {
-	};
+	p._createTag = function () {};
 
 
-	p._createRequest = function () {
+	p._createRequest = function() {
 		if (!this._preferXHR) {
 			this._request = new createjs.MediaTagRequest(this._item, this._tag || this._createTag(), this._tagSrcAttribute);
 		} else {
@@ -3329,22 +3234,19 @@ this.createjs = this.createjs || {};
 	 * Begin a load.
 	 * @method load
 	 */
-	p.load = function () {
-	};
+	p.load =  function() {};
 
 	/**
 	 * Clean up a request.
 	 * @method destroy
 	 */
-	p.destroy = function () {
-	};
+	p.destroy = function() {};
 
 	/**
 	 * Cancel an in-progress request.
 	 * @method cancel
 	 */
-	p.cancel = function () {
-	};
+	p.cancel = function() {};
 
 	createjs.AbstractRequest = createjs.promote(AbstractRequest, "EventDispatcher");
 
@@ -3434,7 +3336,7 @@ this.createjs = this.createjs || {};
 		this._tag[this._tagSrcAttribute] = this._item.src;
 	};
 
-	p.destroy = function () {
+	p.destroy = function() {
 		this._clean();
 		this._tag = null;
 
@@ -3479,7 +3381,7 @@ this.createjs = this.createjs || {};
 	 * @method _clean
 	 * @private
 	 */
-	p._clean = function () {
+	p._clean = function() {
 		this._tag.onload = null;
 		this._tag.onreadystatechange = null;
 		if (this._addedToDOM && this._tag.parentNode != null) {
@@ -3487,12 +3389,12 @@ this.createjs = this.createjs || {};
 		}
 	};
 
-	p._hideTag = function () {
+	p._hideTag = function() {
 		this._startTagVisibility = this._tag.style.visibility;
 		this._tag.style.visibility = "hidden";
 	};
 
-	p._showTag = function () {
+	p._showTag = function() {
 		this._tag.style.visibility = this._startTagVisibility;
 	};
 
@@ -3748,7 +3650,7 @@ this.createjs = this.createjs || {};
 		this._request.addEventListener("loadstart", this._handleLoadStartProxy, false);
 		this._request.addEventListener("progress", this._handleProgressProxy, false);
 		this._request.addEventListener("abort", this._handleAbortProxy, false);
-		this._request.addEventListener("error", this._handleErrorProxy, false);
+		this._request.addEventListener("error",this._handleErrorProxy, false);
 		this._request.addEventListener("timeout", this._handleTimeoutProxy, false);
 
 		// Note: We don't get onload in all browsers (earlier FF and IE). onReadyStateChange handles these.
@@ -3999,12 +3901,9 @@ this.createjs = this.createjs || {};
 				try {
 					req = new ActiveXObject(axVersions);
 					break;
-				} catch (e) {
-				}
+				} catch (e) {}
 			}
-			if (req == null) {
-				return false;
-			}
+			if (req == null) { return false; }
 		}
 
 		// IE9 doesn't support overrideMimeType(), so we need to check for it.
@@ -4068,7 +3967,7 @@ this.createjs = this.createjs || {};
 		this._request.removeEventListener("loadstart", this._handleLoadStartProxy);
 		this._request.removeEventListener("progress", this._handleProgressProxy);
 		this._request.removeEventListener("abort", this._handleAbortProxy);
-		this._request.removeEventListener("error", this._handleErrorProxy);
+		this._request.removeEventListener("error",this._handleErrorProxy);
 		this._request.removeEventListener("timeout", this._handleTimeoutProxy);
 		this._request.removeEventListener("load", this._handleLoadProxy);
 		this._request.removeEventListener("readystatechange", this._handleReadyStateChangeProxy);
@@ -4280,7 +4179,7 @@ this.createjs = this.createjs || {};
 	 * @param crossOrigin
 	 * @private
 	 */
-	p.init = function (preferXHR, basePath, crossOrigin) {
+	p.init = function(preferXHR, basePath, crossOrigin) {
 
 		// public properties
 		/**
@@ -4818,7 +4717,7 @@ this.createjs = this.createjs || {};
 	 * @returns {Boolean} The value of {{#crossLink "preferXHR"}}{{/crossLink}} that was successfully set.
 	 * @since 0.6.0
 	 */
-	p.setPreferXHR = function (value) {
+	p.setPreferXHR = function(value) {
 		// Determine if we can use XHR. XHR defaults to TRUE, but the browser may not support it.
 		//TODO: Should we be checking for the other XHR types? Might have to do a try/catch on the different types similar to createXHR.
 		this.preferXHR = (value != false && window.XMLHttpRequest != null);
@@ -4965,9 +4864,7 @@ this.createjs = this.createjs || {};
 	 * @param {Function} plugin The plugin class to install.
 	 */
 	p.installPlugin = function (plugin) {
-		if (plugin == null) {
-			return;
-		}
+		if (plugin == null) { return; }
 
 		if (plugin.getPreloadHandlers != null) {
 			var map = plugin.getPreloadHandlers();
@@ -5197,9 +5094,7 @@ this.createjs = this.createjs || {};
 	 */
 	p.getResult = function (value, rawResult) {
 		var item = this._loadItemsById[value] || this._loadItemsBySrc[value];
-		if (item == null) {
-			return null;
-		}
+		if (item == null) { return null; }
 		var id = item.id;
 		if (rawResult && this._loadedRawResults[id]) {
 			return this._loadedRawResults[id];
@@ -5216,19 +5111,17 @@ this.createjs = this.createjs || {};
 	 * result, and rawResult.
 	 * @since 0.6.0
 	 */
-	p.getItems = function (loaded) {
+	p.getItems = function(loaded) {
 		var arr = [];
-		for (var i = 0, l = this._loadQueueBackup.length; i < l; i++) {
+		for (var i= 0, l=this._loadQueueBackup.length; i<l; i++) {
 			var loader = this._loadQueueBackup[i]
 			var item = loader.getItem();
-			if (loaded === true && !loader.loaded) {
-				continue;
-			}
+			if (loaded === true && !loader.loaded) { continue; }
 			arr.push({
 				item: item,
 				result: this.getResult(item.id),
 				rawResult: this.getResult(item.id, true)
-			});
+			 });
 		}
 		return arr;
 	};
@@ -5286,9 +5179,7 @@ this.createjs = this.createjs || {};
 	 */
 	p._addItem = function (value, path, basePath) {
 		var item = this._createLoadItem(value, path, basePath); // basePath and manifest path are added to the src.
-		if (item == null) {
-			return;
-		} // Sometimes plugins or types should be skipped.
+		if (item == null) { return; } // Sometimes plugins or types should be skipped.
 		var loader = this._createLoader(item);
 		if (loader != null) {
 			item._loader = loader;
@@ -5300,7 +5191,7 @@ this.createjs = this.createjs || {};
 
 			// Only worry about script order when using XHR to load scripts. Tags are only loading one at a time.
 			if ((this.maintainScriptOrder
-				&& item.type == createjs.LoadQueue.JAVASCRIPT
+				 && item.type == createjs.LoadQueue.JAVASCRIPT
 					//&& loader instanceof createjs.XHRLoader //NOTE: Have to track all JS files this way
 				)
 				|| item.maintainOrder === true) {
@@ -5329,15 +5220,11 @@ this.createjs = this.createjs || {};
 	 */
 	p._createLoadItem = function (value, path, basePath) {
 		var item = createjs.LoadItem.create(value);
-		if (item == null) {
-			return null;
-		}
+		if (item == null) { return null; }
 
 		// Determine Extension, etc.
 		var match = createjs.RequestUtils.parseURI(item.src);
-		if (match.extension) {
-			item.ext = match.extension;
-		}
+		if (match.extension) { item.ext = match.extension; }
 		if (item.type == null) {
 			item.type = createjs.RequestUtils.getTypeByExtension(item.ext);
 		}
@@ -5381,7 +5268,7 @@ this.createjs = this.createjs || {};
 			} else if (result === true) {
 				// Do Nothing
 
-				// Result is a loader class:
+			// Result is a loader class:
 			} else if (result != null) {
 				item._loader = result;
 			}
@@ -5443,9 +5330,7 @@ this.createjs = this.createjs || {};
 	 * @private
 	 */
 	p._loadNext = function () {
-		if (this._paused) {
-			return;
-		}
+		if (this._paused) { return; }
 
 		// Only dispatch loadstart event when the first file is loaded.
 		if (!this._loadStartWasDispatched) {
@@ -5468,16 +5353,12 @@ this.createjs = this.createjs || {};
 
 		// Must iterate forwards to load in the right order.
 		for (var i = 0; i < this._loadQueue.length; i++) {
-			if (this._currentLoads.length >= this._maxConnections) {
-				break;
-			}
+			if (this._currentLoads.length >= this._maxConnections) { break; }
 			var loader = this._loadQueue[i];
 
 			// Determine if we should be only loading one tag-script at a time:
 			// Note: maintainOrder items don't do anything here because we can hold onto their loaded value
-			if (!this._canStartLoad(loader)) {
-				continue;
-			}
+			if (!this._canStartLoad(loader)) { continue; }
 			this._loadQueue.splice(i, 1);
 			i--;
 			this._loadItem(loader);
@@ -5509,7 +5390,7 @@ this.createjs = this.createjs || {};
 	 * @private
 	 * @since 0.6.0
 	 */
-	p._handleFileLoad = function (event) {
+	p._handleFileLoad = function(event) {
 		event.target = null;
 		this.dispatchEvent(event);
 	};
@@ -5520,7 +5401,7 @@ this.createjs = this.createjs || {};
 	 * @param event
 	 * @private
 	 */
-	p._handleFileError = function (event) {
+	p._handleFileError = function(event) {
 		var newEvent = new createjs.ErrorEvent("FILE_LOAD_ERROR", null, event.item);
 		this._sendError(newEvent);
 	};
@@ -5590,13 +5471,11 @@ this.createjs = this.createjs || {};
 	 * @protected
 	 * @since 0.6.0
 	 */
-	p._saveLoadedItems = function (loader) {
+	p._saveLoadedItems = function(loader) {
 		// TODO: Not sure how to handle this. Would be nice to expose the items.
 		// Loaders may load sub-items. This adds them to this queue
 		var list = loader.getLoadedItems();
-		if (list === null) {
-			return;
-		}
+		if (list === null) { return; }
 
 		for (var i = 0; i < list.length; i++) {
 			var item = list[i].item;
@@ -5632,9 +5511,7 @@ this.createjs = this.createjs || {};
 			}
 
 			var index = createjs.indexOf(this._scriptOrder, item);
-			if (index == -1) {
-				return false;
-			} // This loader no longer exists
+			if (index == -1) { return false; } // This loader no longer exists
 			this._loadedScripts[index] = (loadFailed === true) ? true : item;
 
 			this._checkScriptLoadOrder();
@@ -5658,12 +5535,8 @@ this.createjs = this.createjs || {};
 
 		for (var i = 0; i < l; i++) {
 			var item = this._loadedScripts[i];
-			if (item === null) {
-				break;
-			} // This is still loading. Do not process further.
-			if (item === true) {
-				continue;
-			} // This has completed, and been processed. Move on.
+			if (item === null) { break; } // This is still loading. Do not process further.
+			if (item === true) { continue; } // This has completed, and been processed. Move on.
 
 			var loadItem = this._loadedResults[item.id];
 			if (item.type == createjs.LoadQueue.JAVASCRIPT) {
@@ -5702,24 +5575,16 @@ this.createjs = this.createjs || {};
 	 * @private
 	 */
 	p._canStartLoad = function (loader) {
-		if (!this.maintainScriptOrder || loader.preferXHR) {
-			return true;
-		}
+		if (!this.maintainScriptOrder || loader.preferXHR) { return true; }
 		var item = loader.getItem();
-		if (item.type != createjs.LoadQueue.JAVASCRIPT) {
-			return true;
-		}
-		if (this._currentlyLoadingScript) {
-			return false;
-		}
+		if (item.type != createjs.LoadQueue.JAVASCRIPT) { return true; }
+		if (this._currentlyLoadingScript) { return false; }
 
 		var index = this._scriptOrder.indexOf(item);
 		var i = 0;
 		while (i < index) {
 			var checkItem = this._loadedScripts[i];
-			if (checkItem == null) {
-				return false;
-			}
+			if (checkItem == null) { return false; }
 			i++;
 		}
 		this._currentlyLoadingScript = true;
@@ -5816,9 +5681,7 @@ this.createjs = this.createjs || {};
 			this._cleanUp();
 			return;
 		}
-		if (!this.hasEventListener("fileprogress")) {
-			return;
-		}
+		if (!this.hasEventListener("fileprogress")) { return; }
 
 		//LM: Rework ProgressEvent to support this?
 		var event = new createjs.Event("fileprogress");
@@ -5839,9 +5702,7 @@ this.createjs = this.createjs || {};
 	 * @protected
 	 */
 	p._sendFileComplete = function (item, loader) {
-		if (this._isCanceled()) {
-			return;
-		}
+		if (this._isCanceled()) { return; }
 
 		var event = new createjs.Event("fileload");
 		event.loader = loader;
@@ -6069,7 +5930,7 @@ this.createjs = this.createjs || {};
 	 * @param {Boolean} preferXHR
 	 * @constructor
 	 */
-	function ImageLoader(loadItem, preferXHR) {
+	function ImageLoader (loadItem, preferXHR) {
 		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.AbstractLoader.IMAGE);
 
 		// public properties
@@ -6120,9 +5981,7 @@ this.createjs = this.createjs || {};
 		}
 
 		var crossOrigin = this._item.crossOrigin;
-		if (crossOrigin == true) {
-			crossOrigin = "Anonymous";
-		}
+		if (crossOrigin == true) { crossOrigin = "Anonymous"; }
 		if (crossOrigin != null && !createjs.RequestUtils.isLocal(this._item.src)) {
 			this._tag.crossOrigin = crossOrigin;
 		}
@@ -6399,7 +6258,7 @@ this.createjs = this.createjs || {};
 
 		this._dispose();
 	};
-
+	
 	/**
 	 * Clean up the JSONP load. This clears out the callback and script tag that this loader creates.
 	 * @method _dispose
@@ -6481,7 +6340,7 @@ this.createjs = this.createjs || {};
 	};
 
 	// protected methods
-	p._createRequest = function () {
+	p._createRequest = function() {
 		var callback = this._item.callback
 		if (callback != null) {
 			this._request = new createjs.JSONPLoader(this._item);
@@ -6501,16 +6360,14 @@ this.createjs = this.createjs || {};
 			case "progress":
 				event.loaded *= s.MANIFEST_PROGRESS;
 				this.progress = event.loaded / event.total;
-				if (isNaN(this.progress) || this.progress == Infinity) {
-					this.progress = 0;
-				}
+				if (isNaN(this.progress) || this.progress == Infinity) { this.progress = 0; }
 				this._sendProgress(event);
 				return;
 		}
 		this.AbstractLoader_handleEvent(event);
 	};
 
-	p.destroy = function () {
+	p.destroy = function() {
 		this.AbstractLoader_destroy();
 		this._manifestQueue.close();
 	};
@@ -6673,7 +6530,7 @@ this.createjs = this.createjs || {};
 		this.AbstractMediaLoader_constructor(loadItem, preferXHR, createjs.AbstractLoader.VIDEO);
 
 		if (createjs.RequestUtils.isVideoTag(loadItem) || createjs.RequestUtils.isVideoTag(loadItem.src)) {
-			this.setTag(createjs.RequestUtils.isVideoTag(loadItem) ? loadItem : loadItem.src);
+			this.setTag(createjs.RequestUtils.isVideoTag(loadItem)?loadItem:loadItem.src);
 
 			// We can't use XHR for a tag that's passed in.
 			this._preferXHR = false;
@@ -6774,13 +6631,13 @@ this.createjs = this.createjs || {};
 	};
 
 	// public methods
-	p.destroy = function () {
+	p.destroy = function() {
 		this.AbstractLoader_destroy;
 		this._manifestQueue.close();
 	};
 
 	// protected methods
-	p._createRequest = function () {
+	p._createRequest = function() {
 		var callback = this._item.callback
 		if (callback != null && callback instanceof Function) {
 			this._request = new createjs.JSONPLoader(this._item);
@@ -6800,9 +6657,7 @@ this.createjs = this.createjs || {};
 			case "progress":
 				event.loaded *= s.SPRITESHEET_PROGRESS;
 				this.progress = event.loaded / event.total;
-				if (isNaN(this.progress) || this.progress == Infinity) {
-					this.progress = 0;
-				}
+				if (isNaN(this.progress) || this.progress == Infinity) { this.progress = 0; }
 				this._sendProgress(event);
 				return;
 		}

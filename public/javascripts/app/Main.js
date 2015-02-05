@@ -44,13 +44,6 @@ this.G = this.G || {};
 		createjs.Ticker.on("tick", this.handleTick, this);
 		createjs.Ticker.setFPS(60);
 
-		window.addEventListener('load', function() {
-			console.log('Window Loaded');
-			setTimeout(function() {
-				window.scrollTo(0, 1);
-			}, 0);
-		}, false);
-
 		var serverInterface = new G.ServerInterface();
 		serverInterface.init();
 
@@ -59,6 +52,9 @@ this.G = this.G || {};
 
 	};
 
+	/**
+	 * Createjs Ticker Handler
+	 */
 	p.handleTick = function() {
 		this.stats.begin();
 		this.stage.update();

@@ -23,11 +23,8 @@
     "createjs-tweenjs": "~0.6.0",
     "easeljs-filters": "~0.2.1",
     "easeljs": "~0.8.0",
-    "jasmine": "~2.1.3",
     "stats.js": "*",
-    "jasmine-sinon": "~0.4.0",
     "signals": "~1.0.0",
-    "jquery": "~2.1.3"
   },
   "install": {
     "path": "public/javascripts/vendor",
@@ -42,5 +39,11 @@
   },
   "resolutions": {
     "jasmine": "~2.1.3"
+  },
+  "devDependencies": {
+    "jasmine-sinon": "~0.4.0",
+    "jquery": "~2.1.3",
+    "jasmine": "~2.1.3"
+
   }
 }
