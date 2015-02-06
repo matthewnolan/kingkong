@@ -43,7 +43,7 @@ describe("Main Test", function () {
 		G.Game.restore();
 	});
 
-	it("Main is instantiated and is correct type", function () {
+	it("Class can be instantiated", function () {
 		expect(this.class).toBeDefined();
 		expect(this.class).toEqual(jasmine.any(G.Main));
 	});

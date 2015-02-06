@@ -16,7 +16,7 @@ this.G = this.G || {};
 
 	p.stage = null;
 
-	p.assets = {};
+	p.assets = null;
 
 	p.init = function(stage, serverInterface) {
 		this.serverInterface = serverInterface;
@@ -55,26 +55,29 @@ this.G = this.G || {};
 		var bezelW = this.setup.bezelW;
 		var bezelH = this.setup.bezelH;
 
-		var bgLayer = new createjs.Container();
-		this.stage.addChild(bgLayer);
+		//var bgLayer = new createjs.Container();
+		//this.stage.addChild(bgLayer);
 
 		var spriteSheet = new createjs.SpriteSheet(this.assets.spriteSheetStatics);
 		var sprite = new createjs.Sprite(spriteSheet, 'ui-bezel');
-		bgLayer.addChild(sprite);
+		this.stage.addChild(sprite);
 
 		this.reelsComponent = new G.ReelsComponent();
 		this.reelsComponent.init(this.setup, spriteSheet);
 		this.reelsComponent.drawReels();
 		this.reelsComponent.x = bezelMarginL;
 		this.reelsComponent.y = bezelMarginT;
-		bgLayer.addChild(this.reelsComponent);
+		this.stage.addChild(this.reelsComponent);
 
 		var sceneMask = new createjs.Shape();
 		sceneMask.graphics.setStrokeStyle(0)
 			.drawRect(bezelMarginL, bezelMarginT, bezelW, bezelH)
 			.closePath();
 		this.stage.addChild(sceneMask);
-		if (!this.setup.devMode) this.reelsComponent.mask = sceneMask;
+
+		if (!this.setup.devMode) {
+			this.reelsComponent.mask = sceneMask;
+		}
 
 	};
 
@@ -116,11 +119,8 @@ this.G = this.G || {};
 		});
 
 		if (!this.setup.domHelpers) {
-			console.log('remove');
 			$('.dom-helpers').remove();
 		}
-
-
 
 	};
 

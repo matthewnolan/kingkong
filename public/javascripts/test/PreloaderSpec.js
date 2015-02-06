@@ -9,7 +9,7 @@ describe("Preloader Test", function () {
 
 	});
 
-	it("Preloader is instantiated and is correct type", function () {
+	it("Class can be instantiated", function () {
 		expect(this.class).toBeDefined();
 		expect(this.class).toEqual(jasmine.any(G.Preloader));
 	});

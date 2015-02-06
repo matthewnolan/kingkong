@@ -4,8 +4,9 @@ var AppTemplates = {
 		contents+='\tbeforeEach(function () {\n\n';
 		contents+='\t\tthis.class = new G.<%= config.file %>();\n\n';
 		contents+='\t});\n\n';
-		contents+='\tit("<%= config.file %> can be instantiated", function () {\n';
+		contents+='\tit("Class can be instantiated", function () {\n';
 		contents+='\t\texpect(this.class).toBeDefined();\n';
+		contents+='\t\texpect(this.class).toEqual(jasmine.any(G.<%= config.file %>));\n';
 		contents+='\t});\n\n';
 		contents+='});';
 		return contents;
