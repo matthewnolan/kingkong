@@ -7,22 +7,37 @@ describe("Main Test", function () {
 	beforeEach(function () {
 		this.class = new G.Main();
 		// stubs lets us return fake object so tests are happy
+		sinon.stub(document.body, "appendChild");
 		sinon.stub(document, "querySelector").returns({
 			setAttribute: function(key, val) {
 				//do nothing
 			}
 		});
-		gameObj = sinon.stub(G, "Game").returns({
-			init: function() {
-
-			}
+		sinon.stub(G, "Game").returns({
+			init: jasmine.createSpy("game.init")
 		});
 		sinon.stub(window, "addEventListener");
+		sinon.stub(window, "Stats").returns({
+			setMode: function() {
+
+			},
+			begin: jasmine.createSpy("stats.begin"),
+			end: jasmine.createSpy("stats.end"),
+			domElement: {
+				style: {
+					position: "",
+					bottom: "",
+					left: ""
+				}
+			}
+		});
 	});
 
 	afterEach(function() {
 		this.class = null;
 		// tear down stubs
+		window.Stats.restore();
+		document.body.appendChild.restore();
 		document.querySelector.restore();
 		window.addEventListener.restore();
 		G.Game.restore();
@@ -69,27 +84,16 @@ describe("Main Test", function () {
 		expect(spiedObj.init).toHaveBeenCalled();
 	});
 
-	it("Main init should create a Game", function() {
-
+	it("Main init should create a Game and initialise it", function() {
 		this.class.init();
 		expect(G.Game).toHaveBeenCalled();
-	});
-
-	it("Game should be initialised", function() {
-		this.class.init();
-
-		console.log(gameObj);
-
-		expect(gameObj).toBeDefined();
-
-		expect(gameObj.init).toHaveBeenCalled();
+		expect(this.class.game.init).toHaveBeenCalled();
 	});
 
 	it("Ticker Handler should render the stage", function() {
 		this.class.init();
-		sinon.spy(this.class.stats, "begin");
+
 		sinon.spy(this.class.stage, "update");
-		sinon.spy(this.class.stats, "end");
 
 		this.class.handleTick();
 

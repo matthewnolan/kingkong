@@ -1,7 +1,7 @@
 /*! kingkong 0.0.1 - 2015-02-02
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
-xdescribe("Preloader Test", function () {
+describe("Preloader Test", function () {
 
 	beforeEach(function () {
 
@@ -77,7 +77,7 @@ xdescribe("Preloader Test", function () {
 	});
 
 
-	it("start load function should load the setup.json file", function() {
+	it("startLoad function should load the setup.json file", function() {
 
 		var mockGame = {
 			"init": function () {
@@ -91,57 +91,76 @@ xdescribe("Preloader Test", function () {
 		this.class.startLoad();
 
 		expect(this.class.setupLoader.loadFile).toHaveBeenCalledWith(this.class.SETUP_URL);
+	});
 
+	it("handleSetupLoaded should dispatch a 'setupComplete' Signal and pass the result", function() {
+
+		var event = {
+			result: "mock setup data"
+		};
+
+		//stubs also let us ignore function calls we are not testing in this unit
+		sinon.stub(this.class, "loadGameAssets");
+
+		spyOnSignal(this.class.setupComplete);
+
+		this.class.handleSetupLoaded(event);
+
+		expect(this.class.setupComplete).toHaveBeenDispatchedWith("mock setup data");
+	});
+
+	it("handleSetupLoaded should then start loading game assets", function() {
+
+		var event = {
+			result: "mock setup data"
+		};
+
+		sinon.stub(this.class.setupComplete, "dispatch");
+
+		spyOn(this.class, "loadGameAssets");
+
+		this.class.handleSetupLoaded(event);
+
+		expect(this.class.loadGameAssets).toHaveBeenCalled();
 
 	});
 
 
+	it("loadGameAssets should load the assets spriteManfiest", function() {
 
-	/**
-
-	 p.startLoad = function() {
-		console.log('{Preload} startLoad');
-
-		this.setupLoader.loadFile(this.SETUP_URL);
-	};
-
-	 p.handleSetupLoaded = function(event) {
-		console.log('handle setup loaded', this, event.result);
-
-		this.setupComplete.dispatch(event.result);
-		this.loadGameAssets();
-	};
-
-	 p.loadGameAssets = function() {
-		//console.log('loadGameAssets', this.game.setup.spritesManifest);
-		this.assetsLoader.loadManifest(this.game.setup.spritesManifest);
-	};
-
-	 p.handleAssetsError = function(e) { };
-
-	 p.handleAssetsProgress = function(e) { };
-
-	 p.handleAssetsLoaded = function(e) {
-		var assets = {
-			spriteSheetBigWin: this.assetsLoader.getResult('bigWinAnim'),
-			spriteSheetStatics: this.assetsLoader.getResult('staticImages'),
-			spriteSheetSymbolAnims: this.assetsLoader.getResult('symbolAnims')
+		var mockGame = {
+			setup: {
+				spritesManifest: "mock sprites manifest"
+			}
 		};
 
-		this.assetsLoaded.dispatch(assets);
-	};
+		this.class.init(mockGame);
 
-	 */
+		spyOn(this.class.assetsLoader, "loadManifest");
 
+		this.class.loadGameAssets();
 
+		expect(this.class.assetsLoader.loadManifest).toHaveBeenCalledWith("mock sprites manifest");
 
-
-
-
-
+	});
 
 
+	it("handleAssetsLoaded should dispatch an 'assetsLoaded' Signal with loaded assets", function() {
 
+		this.class.init();
 
+		sinon.stub(this.class.assetsLoader, "getResult").returns("fakeAsset");
+
+		spyOnSignal(this.class.assetsLoaded);
+
+		this.class.handleAssetsLoaded(event);
+
+		expect(this.class.assetsLoaded).toHaveBeenDispatchedWith({
+			spriteSheetBigWin: "fakeAsset",
+			spriteSheetStatics: "fakeAsset",
+			spriteSheetSymbolAnims: "fakeAsset"
+		});
+
+	});
 
 });

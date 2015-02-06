@@ -23,8 +23,6 @@ this.G = this.G || {};
 	p.assetsLoaded = new signals.Signal();
 
 	p.init = function(game) {
-		//console.log(this, 'init');
-
 		this.game = game;
 
 		this.setupLoader = new createjs.LoadQueue(true);
@@ -37,14 +35,10 @@ this.G = this.G || {};
 	};
 
 	p.startLoad = function() {
-		console.log('{Preload} startLoad');
-
 		this.setupLoader.loadFile(this.SETUP_URL);
 	};
 
 	p.handleSetupLoaded = function(event) {
-		console.log('handle setup loaded', this, event.result);
-
 		this.setupComplete.dispatch(event.result);
 		this.loadGameAssets();
 	};

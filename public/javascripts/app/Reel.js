@@ -114,7 +114,7 @@ var G = G || {};
 
 		this.stopTimeout = setTimeout(function() {
 			self.fastStop();
-		}, this.setup.reelAnimation.duration)
+		}, this.setup.reelAnimation.duration + delay)
 	};
 
 	p.loopSpin = function(index) {
