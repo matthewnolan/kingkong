@@ -14,8 +14,9 @@ describe("Command Test", function () {
 		expect(this.class).toEqual(jasmine.any(G.Command));
 	});
 
-	xit("Class vars are initialised correctly", function () {
-		expect(this.class.classVar).toBeDefined();
+	it("Class vars are initialised correctly", function () {
+		expect(this.class.loopIndex).toBe(0);
+		expect(this.class.callNextDelay).toBe(2000);
 	});
 
 });

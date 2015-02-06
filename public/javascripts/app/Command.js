@@ -10,8 +10,14 @@ var G = G || {};
 	var p = Command.prototype;
 	p.constructor = Command;
 
+	p.loopIndex = 0;
+	p.callNextDelay = 2000;
 
 	p.init = function() { 
+
+	};
+
+	p.execute = function() {
 
 	};
 
