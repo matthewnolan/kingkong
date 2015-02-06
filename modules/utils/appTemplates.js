@@ -8,6 +8,9 @@ var AppTemplates = {
 		contents+='\t\texpect(this.class).toBeDefined();\n';
 		contents+='\t\texpect(this.class).toEqual(jasmine.any(G.<%= config.file %>));\n';
 		contents+='\t});\n\n';
+		contents+='\txit("Class vars are initialised correctly", function () {\n';
+		contents+='\t\texpect(this.class.classVar).toBeDefined();\n';
+		contents+='\t});\n\n';
 		contents+='});';
 		return contents;
 	},

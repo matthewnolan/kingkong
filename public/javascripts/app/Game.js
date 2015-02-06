@@ -35,7 +35,6 @@ this.G = this.G || {};
 	 * @param data
 	 */
 	p.onSetupLoaded = function(data) {
-		console.log('onSetupLoaded data=', data);
 		this.setup = data;
 	};
 
@@ -43,7 +42,6 @@ this.G = this.G || {};
 	 * Signal Handler onSetupLoadComplete
 	 */
 	p.onAssetsLoadComplete = function(assets) {
-		console.log('{Game} :: onAssetsLoadComplete', this);
 		this.assets = assets;
 		this.setupDisplay();
 		this.initUIEvents();
