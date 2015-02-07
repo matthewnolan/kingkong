@@ -151,7 +151,7 @@ module.exports = function (grunt) {
 						{
 							config: 'config.superFull',
 							type: 'input',
-							message: 'Name Super class including namespace (eg. G.Button)',
+							message: 'Name Super class including namespace (eg. createjs.Container)',
 							default: 'value',
 							validate: function (value) {
 								if (value.length && value.indexOf('.') >= 1) {
