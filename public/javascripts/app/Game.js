@@ -6,6 +6,11 @@ this.G = this.G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * Game class is responsible for initialising preloading of assets, storing Setup and GameState, adding GameComponents to the stage
+	 * and User Interface Events can defined set here.
+	 * @constructor
+	 */
 	var Game = function() {};
 	var p = Game.prototype;
 	p.constructor = Game;
@@ -18,6 +23,12 @@ this.G = this.G || {};
 
 	p.assets = null;
 
+	/**
+	 * init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.
+	 * Starts Preloading of assets
+	 * @param {createjs.Stage} stage - The root Display Container which is added to Canvas
+	 * @param {ServerInterface} serverInterface - Interface for incoming and outgoing server requests
+	 */
 	p.init = function(stage, serverInterface) {
 		this.serverInterface = serverInterface;
 		this.stage = stage;
@@ -31,15 +42,19 @@ this.G = this.G || {};
 
 
 	/**
-	 * Signal Handler onSetupLoaded
-	 * @param data
+	 * Signal Handler
+	 * onSetupLoaded: setup is loaded and stored
+	 * @param {Object} data - Setup Object which is loaded from setup.json file
 	 */
+
 	p.onSetupLoaded = function(data) {
 		this.setup = data;
 	};
 
 	/**
-	 * Signal Handler onSetupLoadComplete
+	 * Signal Handler
+	 * onAssetsLoadComplete: Asets have been loaded.  Now initialise the Display
+	 * @param assets
 	 */
 	p.onAssetsLoadComplete = function(assets) {
 		this.assets = assets;
@@ -47,6 +62,10 @@ this.G = this.G || {};
 		this.initUIEvents();
 	};
 
+	/**
+	 * setupDisplay: Start layering Containers and GameComponents.  Mask the stage for reels.
+	 * nb. These are potentially expensive cpu operations, but everything done here is done after Preload and during app initialisation.
+	 */
 	p.setupDisplay = function() {
 		var bezelMarginL = this.setup.bezelMarginL;
 		var bezelMarginT = this.setup.bezelMarginT;
@@ -76,9 +95,13 @@ this.G = this.G || {};
 		if (!this.setup.devMode) {
 			this.reelsComponent.mask = sceneMask;
 		}
-
 	};
 
+	/**
+	 * initUIEvents: keyboard control / touch controls initialise them here
+	 * if User Control shouldn't be enabled during app initialisation phase, then execute this function later.
+	 * @todo - configure a way to turn on/off user interaction events.
+	 */
 	p.initUIEvents = function() {
 
 		var self = this;

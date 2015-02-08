@@ -54,15 +54,22 @@ module.exports = function (grunt) {
 					"createjs" : true,
 					"Stats" : true,
 					"signals" : true,
+					"jasmine" : false,
+					"sinon" : false,
+					"spyOn" : false,
+					"spyOnSignal" : false,
 					"expect"   : false,
 					"describe"   : false,
 					"it"         : false,
+					"xit" 		 : false,
 					"before"     : false,
 					"beforeEach" : false,
 					"after"      : false,
 					"afterEach"  : false,
 					"require" : false,
-					"console" : false
+					"console" : false,
+					"Hammer" : true,
+					"$" : true
 				}
 			},
 			all: ['public/javascripts/app/**/*.js', 'public/javascripts/test/**/*.js'],
@@ -78,6 +85,14 @@ module.exports = function (grunt) {
 			lib_test: {
 				files: '<%= jshint.lib_test.src %>',
 				tasks: ['jshint:lib_test', 'qunit']
+			}
+		},
+		jsdoc : {
+			dist : {
+				src: ['public/javascripts/app/*.js'],
+				options: {
+					destination: 'doc'
+				}
 			}
 		},
 
@@ -192,11 +207,13 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-file-creator');
 	grunt.loadNpmTasks('grunt-prompt');
+	grunt.loadNpmTasks('grunt-jsdoc');
 
 	// Default task.
 	grunt.registerTask('add', ['prompt:file-creator', 'file-creator']);
 	grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
 	grunt.registerTask('texture', ['easel-packer']);
+	grunt.registerTask('docs', ['jsdoc']);
 
 
 };

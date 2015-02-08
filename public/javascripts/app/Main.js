@@ -6,6 +6,11 @@ this.G = this.G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * The Main Class should give the app its entry point.
+	 * No other entry points should be used by the index.html
+	 * @constructor
+	 */
 	var Main = function() {};
 	var p = Main.prototype;
 	p.constructor = Main;
@@ -17,8 +22,7 @@ this.G = this.G || {};
 	p.game = null;
 
 	/**
-	 * init
-	 * Application Entry Point
+	 * init: Application entry point initialises the canvas viewport (currently createjs) and the Game.
 	 */
 	p.init = function() {
 
@@ -53,7 +57,7 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * Createjs Ticker Handler
+	 * handleTick: update stage and any profiling tool
 	 */
 	p.handleTick = function() {
 		this.stats.begin();

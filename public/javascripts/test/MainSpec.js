@@ -2,14 +2,13 @@
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
 describe("Main Test", function () {
-	var gameObj;
 
 	beforeEach(function () {
 		this.class = new G.Main();
 		// stubs lets us return fake object so tests are happy
 		sinon.stub(document.body, "appendChild");
 		sinon.stub(document, "querySelector").returns({
-			setAttribute: function(key, val) {
+			setAttribute: function() {
 				//do nothing
 			}
 		});
@@ -74,9 +73,9 @@ describe("Main Test", function () {
 	});
 
 	it("ServerInterface should be initialised", function() {
-		var spiedObj, constructor = G.ServerInterface;
+		var spiedObj, Constructor = G.ServerInterface;
 		spyOn(G, "ServerInterface").and.callFake(function() {
-			spiedObj = new constructor();
+			spiedObj = new Constructor();
 			spyOn(spiedObj, "init");
 			return spiedObj;
 		});

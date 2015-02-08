@@ -6,11 +6,21 @@ this.G = this.G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * Preloader is responsible loading Setup and assets into the Game.
+	 * These include sounds, spritesheets, and data in the form of json files
+	 * It will then dispatch Signals (Events) back to the Game for notification and safe caching of assets.
+	 * @constructor
+	 */
 	var Preloader = function() {};
 
 	var p = Preloader.prototype;
 	p.constructor = Preloader;
 
+	/**
+	 * @constant SETUP_URL - path of setup.json file relative to public root.
+	 * @type {string}
+	 */
 	p.SETUP_URL = "assets/config/setup.json";
 	p.game = null;
 	p.setupLoader = null;
@@ -18,10 +28,15 @@ this.G = this.G || {};
 	p.spriteSheetBigWin = null;
 	p.spriteSheetStatics = null;
 	p.spriteSheetSymbolAnims = null;
-
 	p.setupComplete = new signals.Signal();
 	p.assetsLoaded = new signals.Signal();
 
+	/**
+	 * init - store a reference to game, creates a LoadQueue for Setup, creates a LoadQueue for Assets
+	 * Defines Event Handlers for LoadQueues
+	 * @param game
+	 * @todo only pass in Setup
+	 */
 	p.init = function(game) {
 		this.game = game;
 
@@ -34,25 +49,44 @@ this.G = this.G || {};
 		this.assetsLoader.on("complete", this.handleAssetsLoaded, this);
 	};
 
+	/**
+	 * startLoad - starts loading setup.json file
+	 */
 	p.startLoad = function() {
 		this.setupLoader.loadFile(this.SETUP_URL);
 	};
 
-	p.handleSetupLoaded = function(event) {
-		this.setupComplete.dispatch(event.result);
+	/**
+	 * handleSetupLoaded - dispatches a Signal to Game then loads Game assets
+	 * @param e
+	 */
+	p.handleSetupLoaded = function(e) {
+		this.setupComplete.dispatch(e.result);
 		this.loadGameAssets();
 	};
 
+	/**
+	 * loadGameAssets - loads spritesheets defined in Setup
+	 */
 	p.loadGameAssets = function() {
 		//console.log('loadGameAssets', this.game.setup.spritesManifest);
 		this.assetsLoader.loadManifest(this.game.setup.spritesManifest);
 	};
 
-	p.handleAssetsError = function(e) { };
+	/**
+	 * handleAssetsError - handle errors in asset loading phase gracefully
+	 */
+	p.handleAssetsError = function() { };
 
-	p.handleAssetsProgress = function(e) { };
+	/**
+	 * handleAssetsProgress - handle loading of game assets
+	 */
+	p.handleAssetsProgress = function() { };
 
-	p.handleAssetsLoaded = function(e) {
+	/**
+	 * handleAssetsLoaded - dispatch a Signal to Game containing loaded Assets
+	 */
+	p.handleAssetsLoaded = function() {
 		var assets = {
 			spriteSheetBigWin: this.assetsLoader.getResult('bigWinAnim'),
 			spriteSheetStatics: this.assetsLoader.getResult('staticImages'),

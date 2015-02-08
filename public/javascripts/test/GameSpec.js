@@ -3,8 +3,6 @@
 
 describe("Game Test", function () {
 
-	var preloaderStub;
-
 	beforeEach(function () {
 
 		this.class = new G.Game();
@@ -43,7 +41,7 @@ describe("Game Test", function () {
 			mock: "server"
 		};
 		this.class.init(null, mockServerInterface);
-		expect(this.class.serverInterface).toEqual(mockServerInterface)
+		expect(this.class.serverInterface).toEqual(mockServerInterface);
 	});
 
 	it("init function should set a passed stage object", function () {
@@ -130,7 +128,7 @@ describe("Game Test", function () {
 
 	});
 
-	xdescribe("setupDisplay function", function() {
+	describe("setupDisplay function", function() {
 
 		beforeEach(function() {
 

@@ -114,10 +114,10 @@ var G = G || {};
 
 		this.stopTimeout = setTimeout(function() {
 			self.fastStop();
-		}, this.setup.reelAnimation.duration + delay)
+		}, this.setup.reelAnimation.duration + delay);
 	};
 
-	p.loopSpin = function(index) {
+	p.loopSpin = function() {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
