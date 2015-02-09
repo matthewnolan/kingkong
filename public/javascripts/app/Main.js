@@ -9,20 +9,38 @@ this.G = this.G || {};
 	/**
 	 * The Main Class should give the app its entry point.
 	 * No other entry points should be used by the index.html
+	 * @class Main
 	 * @constructor
 	 */
 	var Main = function() {};
 	var p = Main.prototype;
 	p.constructor = Main;
 
+	/**
+	 * Stores reference to Stats, this is a profiling tool which displays FPS and MSPF
+	 * @property stats
+	 * @type {Stats}
+	 */
 	p.stats = null;
 
+	/**
+	 * Stores a reference to Stage Object, a Special Container which is at the root of the Canvas
+	 * @property stage
+	 * @type {createjs.Stage}
+	 */
 	p.stage = null;
 
+	/**
+	 * Stores a reference to G.Game, Everything a KingKong game is created by this Object or passed into it during initialisation.
+	 * @property game
+	 * @type {G.Game}
+	 */
 	p.game = null;
 
 	/**
-	 * init: Application entry point initialises the canvas viewport (currently createjs) and the Game.
+	 * Application entry point initialises the canvas viewport (currently createjs) and the Game
+	 * @method init
+	 *
 	 */
 	p.init = function() {
 
@@ -57,7 +75,8 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * handleTick: update stage and any profiling tool
+	 * Render Tick which updates Stage and any profiling tool.
+	 * @method handleTick
 	 */
 	p.handleTick = function() {
 		this.stats.begin();

@@ -6,6 +6,11 @@ var G = G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * Schdule and execute Commands in a CommandQueue
+	 * @class CommandQueue
+	 * @constructor
+	 */
 	var CommandQueue = function() {};
 	var p = CommandQueue.prototype;
 	p.constructor = CommandQueue;

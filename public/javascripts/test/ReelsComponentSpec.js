@@ -8,13 +8,12 @@ describe("ReelsComponent Test", function () {
 		this.class = new G.ReelsComponent();
 
 		sinon.stub(this.class, "initDomEvents");
-		sinon.stub(this.class, "shuffleReels");
+		spyOn(this.class, "shuffleReels");
 	});
 
 	afterEach(function() {
 
 		this.class.initDomEvents.restore();
-		this.class.shuffleReels.restore();
 
 	});
 

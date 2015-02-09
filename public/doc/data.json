@@ -1,0 +1,637 @@
+{
+    "project": {
+        "name": "kingkong",
+        "description": "",
+        "version": "0.0.6",
+        "url": ""
+    },
+    "files": {
+        "public/javascripts/app/CommandQueue.js": {
+            "name": "public/javascripts/app/CommandQueue.js",
+            "modules": {},
+            "classes": {
+                "CommandQueue": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/Game.js": {
+            "name": "public/javascripts/app/Game.js",
+            "modules": {},
+            "classes": {
+                "Game": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/Main.js": {
+            "name": "public/javascripts/app/Main.js",
+            "modules": {},
+            "classes": {
+                "Main": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/Preloader.js": {
+            "name": "public/javascripts/app/Preloader.js",
+            "modules": {},
+            "classes": {
+                "": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/Reel.js": {
+            "name": "public/javascripts/app/Reel.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/ReelsComponent.js": {
+            "name": "public/javascripts/app/ReelsComponent.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/WinLine.js": {
+            "name": "public/javascripts/app/WinLine.js",
+            "modules": {},
+            "classes": {
+                "WinLine": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/WinLinesComponent.js": {
+            "name": "public/javascripts/app/WinLinesComponent.js",
+            "modules": {},
+            "classes": {
+                "WinLinesComponent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "CommandQueue": {
+            "name": "CommandQueue",
+            "shortname": "CommandQueue",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 9,
+            "description": "Schdule and execute Commands in a CommandQueue",
+            "is_constructor": 1
+        },
+        "Game": {
+            "name": "Game",
+            "shortname": "Game",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/Game.js",
+            "line": 9,
+            "description": "Initialises preloading of assets, stores Setup, GameState, and GameComponents\nGameComponents are added to Stage\nWires ServerInterface to GameComponents (new Class?)\nUser Interface Events can defined set here.",
+            "is_constructor": 1
+        },
+        "Main": {
+            "name": "Main",
+            "shortname": "Main",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/Main.js",
+            "line": 9,
+            "description": "The Main Class should give the app its entry point.\nNo other entry points should be used by the index.html",
+            "is_constructor": 1
+        },
+        "": {
+            "file": "public/javascripts/app/Preloader.js",
+            "line": 9,
+            "description": "Preloader is responsible loading Setup and assets into the Game.\nThese include sounds, spritesheets, and data in the form of json files\nIt will then dispatch Signals (Events) back to the Game for notification and safe caching of assets.",
+            "is_constructor": 1
+        },
+        "WinLine": {
+            "name": "WinLine",
+            "shortname": "WinLine",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 9,
+            "is_constructor": 1
+        },
+        "WinLinesComponent": {
+            "name": "WinLinesComponent",
+            "shortname": "WinLinesComponent",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 9,
+            "description": "GameComponent for drawing Win Lines",
+            "extends": "createjs.Container",
+            "is_constructor": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 21,
+            "itemtype": "property",
+            "name": "setup",
+            "type": "{Object}",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 27,
+            "itemtype": "property",
+            "name": "serverInterface",
+            "type": "{G.ServerInterface}",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 33,
+            "itemtype": "property",
+            "name": "stage",
+            "type": "{createjs.Stage}",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 39,
+            "itemtype": "property",
+            "name": "assets",
+            "type": "{Object}",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 46,
+            "description": "GameComponents stored here",
+            "itemtype": "property",
+            "name": "components",
+            "type": "{{reels: null, winLines: null}}",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 56,
+            "description": "init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.\nStarts Preloading of assets",
+            "params": [
+                {
+                    "name": "stage",
+                    "description": "- The root Display Container which is added to Canvas",
+                    "type": "createjs.Stage"
+                },
+                {
+                    "name": "serverInterface",
+                    "description": "- Interface for incoming and outgoing server requests",
+                    "type": "ServerInterface"
+                }
+            ],
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 74,
+            "description": "SignalHandler which saves setup data when loaded by Preloader",
+            "params": [
+                {
+                    "name": "setup",
+                    "description": "- Setup Object which is loaded from setup.json file",
+                    "type": "Object"
+                }
+            ],
+            "itemtype": "event",
+            "name": "onSetupLoaded",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 83,
+            "description": "Signal Handler\nonAssetsLoadComplete: Asets have been loaded.  Now initialise the Display",
+            "params": [
+                {
+                    "name": "assets",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "itemtype": "event",
+            "name": "onAssetsLoadComplete",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 95,
+            "description": "setupDisplay: Start layering Containers and GameComponents.  Mask the stage for reels.\nnb. These are potentially expensive cpu operations, but everything done here is done after Preload and during app initialisation.\nAny filters applied to display objects will magnify the length of time this function takes to complete.",
+            "itemtype": "method",
+            "name": "setupDisplay",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 136,
+            "description": "User Control is initialised: Keyboard control / touch controls\nif User Control shouldn't be enabled during app initialisation phase, then execute this function later.",
+            "todo": [
+                "- configure a way to turn on/off user interaction events."
+            ],
+            "itemtype": "method",
+            "name": "initUIEvents",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Main.js",
+            "line": 19,
+            "description": "Stores reference to Stats, this is a profiling tool which displays FPS and MSPF",
+            "itemtype": "property",
+            "name": "stats",
+            "type": "{Stats}",
+            "class": "Main"
+        },
+        {
+            "file": "public/javascripts/app/Main.js",
+            "line": 26,
+            "description": "Stores a reference to Stage Object, a Special Container which is at the root of the Canvas",
+            "itemtype": "property",
+            "name": "stage",
+            "type": "{createjs.Stage}",
+            "class": "Main"
+        },
+        {
+            "file": "public/javascripts/app/Main.js",
+            "line": 33,
+            "description": "Stores a reference to G.Game, Everything a KingKong game is created by this Object or passed into it during initialisation.",
+            "itemtype": "property",
+            "name": "game",
+            "type": "{G.Game}",
+            "class": "Main"
+        },
+        {
+            "file": "public/javascripts/app/Main.js",
+            "line": 40,
+            "description": "Application entry point initialises the canvas viewport (currently createjs) and the Game",
+            "itemtype": "method",
+            "name": "init",
+            "class": "Main"
+        },
+        {
+            "file": "public/javascripts/app/Main.js",
+            "line": 77,
+            "description": "Render Tick which updates Stage and any profiling tool.",
+            "itemtype": "method",
+            "name": "handleTick",
+            "class": "Main"
+        },
+        {
+            "file": "public/javascripts/app/Preloader.js",
+            "line": 21,
+            "constant": "SETUP_URL - path of setup.json file relative to public root.",
+            "type": "{string}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/Preloader.js",
+            "line": 35,
+            "description": "init - store a reference to game, creates a LoadQueue for Setup, creates a LoadQueue for Assets\nDefines Event Handlers for LoadQueues",
+            "params": [
+                {
+                    "name": "game",
+                    "description": ""
+                }
+            ],
+            "todo": [
+                "only pass in Setup"
+            ],
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/Preloader.js",
+            "line": 53,
+            "description": "startLoad - starts loading setup.json file",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/Preloader.js",
+            "line": 60,
+            "description": "handleSetupLoaded - dispatches a Signal to Game then loads Game assets",
+            "params": [
+                {
+                    "name": "e",
+                    "description": ""
+                }
+            ],
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/Preloader.js",
+            "line": 69,
+            "description": "loadGameAssets - loads spritesheets defined in Setup",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/Preloader.js",
+            "line": 77,
+            "description": "handleAssetsError - handle errors in asset loading phase gracefully",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/Preloader.js",
+            "line": 82,
+            "description": "handleAssetsProgress - handle loading of game assets",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/Preloader.js",
+            "line": 87,
+            "description": "handleAssetsLoaded - dispatch a Signal to Game containing loaded Assets",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/Reel.js",
+            "line": 29,
+            "description": "Dynamically alter the speed of reels by changing this percentage:\neg. 0.5 = half speed reels",
+            "type": "{number}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/Reel.js",
+            "line": 36,
+            "description": "Maximum Speed the reels can spin in pixels per second",
+            "type": "{number}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 140,
+            "description": "DOM events\nfor development only",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 19,
+            "description": "Store data for telling the win line what to draw",
+            "itemtype": "property",
+            "name": "winLineSquares",
+            "required": 1,
+            "usage": "0 = Line, 1 = Square, 2 = Split Square",
+            "example": [
+                " - [1, 1 , 1, 0, 0] to draw winning symbol border boxes in the first 3 then a line in the final 2 [] [] [] - -"
+            ],
+            "default": "- [0,0,0,0,0]",
+            "type": "{number[]}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 31,
+            "description": "Store data required to locate the win line on the reel",
+            "itemtype": "property",
+            "name": "symbolLocations",
+            "required": 1,
+            "usage": "0 = top symbol, 1 = middle symbol, 2 = bottom symbol on a 3 line reel.  For greater visible reel height just increase the number",
+            "example": [
+                " - [0,0,0,1,2] would draw the line along the top row of the first 3 reels, then it would go through the next row and the last row in the final reel"
+            ],
+            "default": "[1, 1, 1, 1, 1]",
+            "type": "{number[]}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 43,
+            "description": "Stores game setup",
+            "itemtype": "property",
+            "name": "setup",
+            "required": 1,
+            "type": "{Object}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 52,
+            "description": "Line Color",
+            "itemtype": "property",
+            "name": "color",
+            "example": [
+                " \"#ff0000\","
+            ],
+            "default": "\"#ff0000\",",
+            "type": "{string}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 61,
+            "description": "Line Thickness in pixels",
+            "itemtype": "property",
+            "name": "thickness",
+            "default": "5",
+            "type": "{number}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 69,
+            "description": "Stores the glowFilter reference",
+            "itemtype": "property",
+            "name": "glowFilter",
+            "type": "{createjs.GlowFilter}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 77,
+            "description": "Stores the dropShadow reference",
+            "itemtype": "property",
+            "name": "dropShadowFilter",
+            "type": "{createjs.DropShadowFilter}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 84,
+            "description": "Stores the WinLine Data in preparation for drawing",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "setup",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "winLineSquares",
+                    "description": "- prepare to draw a line or square at this index",
+                    "type": "Array"
+                },
+                {
+                    "name": "symbolLocations",
+                    "description": "- prepare to draw a line or square at this vartical location and this index",
+                    "type": "Array"
+                }
+            ],
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 100,
+            "description": "Draws the WinLine according to stored Data",
+            "itemtype": "method",
+            "name": "draw",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 205,
+            "description": "initialises DropShadow variables",
+            "itemtype": "method",
+            "name": "setupDropShadow",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 224,
+            "description": "initialises GlowFilter variables",
+            "itemtype": "method",
+            "name": "setupGlowFilter",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 21,
+            "description": "Stores game setup",
+            "itemtype": "property",
+            "name": "setup",
+            "required": 1,
+            "type": "{Object}",
+            "class": "WinLinesComponent"
+        },
+        {
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 29,
+            "description": "Stores win lines",
+            "itemtype": "property",
+            "name": "winLines",
+            "type": "{G.WinLine[]}",
+            "class": "WinLinesComponent"
+        },
+        {
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 37,
+            "description": "Stores passed setup data",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "setup",
+                    "description": ""
+                }
+            ],
+            "class": "WinLinesComponent"
+        },
+        {
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 46,
+            "description": "draws winLines to stage in an invisible state ready for displaying later",
+            "itemtype": "method",
+            "name": "drawComponent",
+            "class": "WinLinesComponent"
+        },
+        {
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 76,
+            "description": "Shows all winlines at the passed indexes of setup.json winLines array",
+            "itemtype": "method",
+            "name": "showWinLinByIndexes",
+            "params": [
+                {
+                    "name": "indexes",
+                    "description": "show winlines at these indexes eg: [1,3,5] shows winlines 1,3,5 together at once;",
+                    "type": "Array"
+                }
+            ],
+            "class": "WinLinesComponent"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: constant",
+            "line": " public/javascripts/app/Preloader.js:21"
+        },
+        {
+            "message": "unknown tag: usage",
+            "line": " public/javascripts/app/WinLine.js:19"
+        },
+        {
+            "message": "unknown tag: usage",
+            "line": " public/javascripts/app/WinLine.js:31"
+        },
+        {
+            "message": "Missing item type\ninit: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.\nStarts Preloading of assets",
+            "line": " public/javascripts/app/Game.js:56"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public/javascripts/app/Preloader.js:21"
+        },
+        {
+            "message": "Missing item type\ninit - store a reference to game, creates a LoadQueue for Setup, creates a LoadQueue for Assets\nDefines Event Handlers for LoadQueues",
+            "line": " public/javascripts/app/Preloader.js:35"
+        },
+        {
+            "message": "Missing item type\nstartLoad - starts loading setup.json file",
+            "line": " public/javascripts/app/Preloader.js:53"
+        },
+        {
+            "message": "Missing item type\nhandleSetupLoaded - dispatches a Signal to Game then loads Game assets",
+            "line": " public/javascripts/app/Preloader.js:60"
+        },
+        {
+            "message": "Missing item type\nloadGameAssets - loads spritesheets defined in Setup",
+            "line": " public/javascripts/app/Preloader.js:69"
+        },
+        {
+            "message": "Missing item type\nhandleAssetsError - handle errors in asset loading phase gracefully",
+            "line": " public/javascripts/app/Preloader.js:77"
+        },
+        {
+            "message": "Missing item type\nhandleAssetsProgress - handle loading of game assets",
+            "line": " public/javascripts/app/Preloader.js:82"
+        },
+        {
+            "message": "Missing item type\nhandleAssetsLoaded - dispatch a Signal to Game containing loaded Assets",
+            "line": " public/javascripts/app/Preloader.js:87"
+        },
+        {
+            "message": "Missing item type\nDynamically alter the speed of reels by changing this percentage:\neg. 0.5 = half speed reels",
+            "line": " public/javascripts/app/Reel.js:29"
+        },
+        {
+            "message": "Missing item type\nMaximum Speed the reels can spin in pixels per second",
+            "line": " public/javascripts/app/Reel.js:36"
+        },
+        {
+            "message": "Missing item type\nDOM events\nfor development only",
+            "line": " public/javascripts/app/ReelsComponent.js:140"
+        }
+    ]
+}

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>public/javascripts/app/Game.js - kingkong</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="kingkong" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.6</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/WinLine.html">WinLine</a></li>
+                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: public/javascripts/app/Game.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*! kingkong 0.0.1 - 2015-02-02
+* Copyright (c) 2015 Licensed @HighFiveGames */
+
+this.G = this.G || {};
+
+(function () {
+	&quot;use strict&quot;;
+
+	/**
+	 * Initialises preloading of assets, stores Setup, GameState, and GameComponents
+	 * GameComponents are added to Stage
+	 * Wires ServerInterface to GameComponents (new Class?)
+	 * User Interface Events can defined set here.
+	 * @class Game
+	 * @constructor
+	 */
+	var Game = function() {};
+	var p = Game.prototype;
+	p.constructor = Game;
+
+	/**
+	 * @property setup
+	 * @type {Object}
+	 */
+	p.setup = null;
+
+	/**
+	 * @property serverInterface
+	 * @type {G.ServerInterface}
+	 */
+	p.serverInterface = null;
+
+	/**
+	 * @property stage
+	 * @type {createjs.Stage}
+	 */
+	p.stage = null;
+
+	/**
+	 * @property assets
+	 * @type {Object}
+	 */
+	p.assets = null;
+
+
+	/**
+	 * GameComponents stored here
+	 * @property components
+	 * @type {{reels: null, winLines: null}}
+	 */
+	p.components = {
+		reels: null,
+		winLines: null
+	};
+
+	/**
+	 * init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.
+	 * Starts Preloading of assets
+	 * @param {createjs.Stage} stage - The root Display Container which is added to Canvas
+	 * @param {ServerInterface} serverInterface - Interface for incoming and outgoing server requests
+	 */
+	p.init = function(stage, serverInterface) {
+		this.serverInterface = serverInterface;
+		this.stage = stage;
+
+		var preloader = new G.Preloader();
+		preloader.init(this, this.SETUP_URL);
+		preloader.setupComplete.add(this.onSetupLoaded, this);
+		preloader.assetsLoaded.add(this.onAssetsLoadComplete, this);
+		preloader.startLoad();
+	};
+
+
+	/**
+	 * SignalHandler which saves setup data when loaded by Preloader
+	 * @param {Object} setup - Setup Object which is loaded from setup.json file
+	 * @event onSetupLoaded
+	 */
+	p.onSetupLoaded = function(setup) {
+		this.setup = setup;
+	};
+
+	/**
+	 * Signal Handler
+	 * onAssetsLoadComplete: Asets have been loaded.  Now initialise the Display
+	 * @param {Object} assets
+	 * @event onAssetsLoadComplete
+	 */
+	p.onAssetsLoadComplete = function(assets) {
+		this.assets = assets;
+		this.setupDisplay();
+		this.initUIEvents();
+	};
+
+	/**
+	 * setupDisplay: Start layering Containers and GameComponents.  Mask the stage for reels.
+	 * nb. These are potentially expensive cpu operations, but everything done here is done after Preload and during app initialisation.
+	 * Any filters applied to display objects will magnify the length of time this function takes to complete.
+	 * @method setupDisplay
+	 */
+	p.setupDisplay = function() {
+		var bezelMarginL = this.setup.bezelMarginL;
+		var bezelMarginT = this.setup.bezelMarginT;
+		var bezelW = this.setup.bezelW;
+		var bezelH = this.setup.bezelH;
+
+		var spriteSheet = new createjs.SpriteSheet(this.assets.spriteSheetStatics);
+		var sprite = new createjs.Sprite(spriteSheet, &#x27;ui-bezel&#x27;);
+		this.stage.addChild(sprite);
+
+		var reelsComponent = new G.ReelsComponent();
+		reelsComponent.init(this.setup, spriteSheet);
+		reelsComponent.drawReels();
+		reelsComponent.x = bezelMarginL;
+		reelsComponent.y = bezelMarginT;
+		this.stage.addChild(reelsComponent);
+
+		var winLinesComponet = new G.WinLinesComponent();
+		winLinesComponet.init(this.setup);
+		this.stage.addChild(winLinesComponet);
+		winLinesComponet.drawComponent();
+
+		this.components.reels = reelsComponent;
+		this.components.winLines = winLinesComponet;
+
+		var sceneMask = new createjs.Shape();
+		sceneMask.graphics.setStrokeStyle(0)
+			.drawRect(bezelMarginL, bezelMarginT, bezelW, bezelH)
+			.closePath();
+		this.stage.addChild(sceneMask);
+		if (!this.setup.devMode) {
+			reelsComponent.mask = sceneMask;
+		}
+	};
+
+	/**
+	 * User Control is initialised: Keyboard control / touch controls
+	 * if User Control shouldn&#x27;t be enabled during app initialisation phase, then execute this function later.
+	 * @todo - configure a way to turn on/off user interaction events.
+	 * @method initUIEvents
+	 */
+	p.initUIEvents = function() {
+
+		var self = this;
+		window.document.onkeydown = function(e) {
+			switch(e.keyCode) {
+				//space //enter
+				case 32:
+				case 0:
+					self.components.reels.spinReels();
+					break;
+			}
+		};
+
+		createjs.Touch.enable(this.stage);
+
+		var myElement = document.querySelector(&#x27;#app&#x27;);
+		var mc = new Hammer(myElement);
+		mc.get(&#x27;swipe&#x27;).set({
+			direction: Hammer.DIRECTION_ALL
+		});
+
+		mc.get(&#x27;pinch&#x27;).set({
+			enable: true
+		});
+
+		mc.on(&#x27;swipe&#x27;, function() {
+			self.components.reels.spinReels();
+		});
+
+		mc.on(&#x27;pinchin&#x27;, function() {
+			//G.util.showGaffMenu();
+		});
+
+		mc.on(&#x27;pinchout&#x27;, function() {
+			//G.util.hideGaffMenu();
+		});
+
+		if (!this.setup.domHelpers) {
+			$(&#x27;.dom-helpers&#x27;).remove();
+		}
+
+	};
+
+
+	G.Game = Game;
+
+})();
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

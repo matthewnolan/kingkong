@@ -15,7 +15,32 @@ module.exports = function (grunt) {
 		'<%= grunt.template.today("yyyy-mm-dd") %>\n' +
 		'* Copyright (c) <%= grunt.template.today("yyyy") %> ' +
 		'Licensed @HighFiveGames */\n',
+		bump: {
+			options: {
+				files: ['package.json'],
+				updateConfigs: ['pkg'],
+				commit: false,
+				commitMessage: 'Release v%VERSION%',
+				commitFiles: ['package.json'],
+				createTag: true,
+				tagName: 'v%VERSION%',
+				tagMessage: 'Version %VERSION%',
+				push: false,
+				pushTo: 'upstream',
+				gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
+				globalReplace: false
+			}
+		},
 		// Task configuration.
+		jasmine: {
+			src: 'public/javascripts/app/*.js',
+			options: {
+				specs: 'public/javascripts/test/*.js',
+				vendor: 'public/javascripts/vendor/**/*.js',
+				version: '2.1.3'
+			}
+		},
+
 		concat: {
 			options: {
 				banner: '<%= banner %>',
@@ -60,8 +85,11 @@ module.exports = function (grunt) {
 					"spyOnSignal" : false,
 					"expect"   : false,
 					"describe"   : false,
+					"xdescribe"   : false,
+					"fdescribe"   : false,
 					"it"         : false,
 					"xit" 		 : false,
+					"fit" 		 : false,
 					"before"     : false,
 					"beforeEach" : false,
 					"after"      : false,
@@ -87,11 +115,18 @@ module.exports = function (grunt) {
 				tasks: ['jshint:lib_test', 'qunit']
 			}
 		},
-		jsdoc : {
-			dist : {
-				src: ['public/javascripts/app/*.js'],
+
+
+		yuidoc: {
+			compile: {
+				name: '<%= pkg.name %>',
+				description: '<%= pkg.description %>',
+				version: '<%= pkg.version %>',
+				url: '<%= pkg.homepage %>',
 				options: {
-					destination: 'doc'
+					paths: 'public/javascripts/app/',
+					themedir: 'src/yuidoc/themes/',
+					outdir: 'public/doc/'
 				}
 			}
 		},
@@ -172,7 +207,7 @@ module.exports = function (grunt) {
 								if (value.length && value.indexOf('.') >= 1) {
 									return true;
 								} else {
-									return "Please include namespace (eg. createjs.Container)";
+									return "Write the global object.Class (eg. createjs.Container)";
 								}
 							},
 							when: function (answers) {
@@ -201,19 +236,29 @@ module.exports = function (grunt) {
 	grunt.loadTasks('./modules/gruntTasks/');
 
 	// These plugins provide necessary tasks.
+	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-file-creator');
 	grunt.loadNpmTasks('grunt-prompt');
-	grunt.loadNpmTasks('grunt-jsdoc');
+	grunt.loadNpmTasks('grunt-bump');
+	grunt.loadNpmTasks('grunt-contrib-jasmine');
+
+	// chosse a documentation tool
+	grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
 	// Default task.
-	grunt.registerTask('add', ['prompt:file-creator', 'file-creator']);
-	grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
+
+	grunt.registerTask('build', ['jasmine', 'jshint', 'concat', 'uglify', 'yuidoc']);
+	grunt.registerTask('patch', ['jasmine', 'jshint', 'bump:patch', 'concat', 'uglify', 'yuidoc']);
+	grunt.registerTask('minor', ['jasmine', 'jshint', 'bump:minor', 'concat', 'uglify', 'yuidoc']);
+	grunt.registerTask('release', ['jasmine', 'jshint', 'bump:major', 'concat', 'uglify', 'yuidoc']);
 	grunt.registerTask('texture', ['easel-packer']);
-	grunt.registerTask('docs', ['jsdoc']);
+	grunt.registerTask('doc', ['yuidoc']);
+	grunt.registerTask('docs', ['yuidoc']);
+	grunt.registerTask('add', ['prompt:file-creator', 'file-creator']);
 
 
 };

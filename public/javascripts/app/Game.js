@@ -7,21 +7,51 @@ this.G = this.G || {};
 	"use strict";
 
 	/**
-	 * Game class is responsible for initialising preloading of assets, storing Setup and GameState, adding GameComponents to the stage
-	 * and User Interface Events can defined set here.
+	 * Initialises preloading of assets, stores Setup, GameState, and GameComponents
+	 * GameComponents are added to Stage
+	 * Wires ServerInterface to GameComponents (new Class?)
+	 * User Interface Events can defined set here.
+	 * @class Game
 	 * @constructor
 	 */
 	var Game = function() {};
 	var p = Game.prototype;
 	p.constructor = Game;
 
+	/**
+	 * @property setup
+	 * @type {Object}
+	 */
 	p.setup = null;
 
+	/**
+	 * @property serverInterface
+	 * @type {G.ServerInterface}
+	 */
 	p.serverInterface = null;
 
+	/**
+	 * @property stage
+	 * @type {createjs.Stage}
+	 */
 	p.stage = null;
 
+	/**
+	 * @property assets
+	 * @type {Object}
+	 */
 	p.assets = null;
+
+
+	/**
+	 * GameComponents stored here
+	 * @property components
+	 * @type {{reels: null, winLines: null}}
+	 */
+	p.components = {
+		reels: null,
+		winLines: null
+	};
 
 	/**
 	 * init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.
@@ -42,19 +72,19 @@ this.G = this.G || {};
 
 
 	/**
-	 * Signal Handler
-	 * onSetupLoaded: setup is loaded and stored
-	 * @param {Object} data - Setup Object which is loaded from setup.json file
+	 * SignalHandler which saves setup data when loaded by Preloader
+	 * @param {Object} setup - Setup Object which is loaded from setup.json file
+	 * @event onSetupLoaded
 	 */
-
-	p.onSetupLoaded = function(data) {
-		this.setup = data;
+	p.onSetupLoaded = function(setup) {
+		this.setup = setup;
 	};
 
 	/**
 	 * Signal Handler
 	 * onAssetsLoadComplete: Asets have been loaded.  Now initialise the Display
-	 * @param assets
+	 * @param {Object} assets
+	 * @event onAssetsLoadComplete
 	 */
 	p.onAssetsLoadComplete = function(assets) {
 		this.assets = assets;
@@ -65,6 +95,8 @@ this.G = this.G || {};
 	/**
 	 * setupDisplay: Start layering Containers and GameComponents.  Mask the stage for reels.
 	 * nb. These are potentially expensive cpu operations, but everything done here is done after Preload and during app initialisation.
+	 * Any filters applied to display objects will magnify the length of time this function takes to complete.
+	 * @method setupDisplay
 	 */
 	p.setupDisplay = function() {
 		var bezelMarginL = this.setup.bezelMarginL;
@@ -72,35 +104,40 @@ this.G = this.G || {};
 		var bezelW = this.setup.bezelW;
 		var bezelH = this.setup.bezelH;
 
-		//var bgLayer = new createjs.Container();
-		//this.stage.addChild(bgLayer);
-
 		var spriteSheet = new createjs.SpriteSheet(this.assets.spriteSheetStatics);
 		var sprite = new createjs.Sprite(spriteSheet, 'ui-bezel');
 		this.stage.addChild(sprite);
 
-		this.reelsComponent = new G.ReelsComponent();
-		this.reelsComponent.init(this.setup, spriteSheet);
-		this.reelsComponent.drawReels();
-		this.reelsComponent.x = bezelMarginL;
-		this.reelsComponent.y = bezelMarginT;
-		this.stage.addChild(this.reelsComponent);
+		var reelsComponent = new G.ReelsComponent();
+		reelsComponent.init(this.setup, spriteSheet);
+		reelsComponent.drawReels();
+		reelsComponent.x = bezelMarginL;
+		reelsComponent.y = bezelMarginT;
+		this.stage.addChild(reelsComponent);
+
+		var winLinesComponet = new G.WinLinesComponent();
+		winLinesComponet.init(this.setup);
+		this.stage.addChild(winLinesComponet);
+		winLinesComponet.drawComponent();
+
+		this.components.reels = reelsComponent;
+		this.components.winLines = winLinesComponet;
 
 		var sceneMask = new createjs.Shape();
 		sceneMask.graphics.setStrokeStyle(0)
 			.drawRect(bezelMarginL, bezelMarginT, bezelW, bezelH)
 			.closePath();
 		this.stage.addChild(sceneMask);
-
 		if (!this.setup.devMode) {
-			this.reelsComponent.mask = sceneMask;
+			reelsComponent.mask = sceneMask;
 		}
 	};
 
 	/**
-	 * initUIEvents: keyboard control / touch controls initialise them here
+	 * User Control is initialised: Keyboard control / touch controls
 	 * if User Control shouldn't be enabled during app initialisation phase, then execute this function later.
 	 * @todo - configure a way to turn on/off user interaction events.
+	 * @method initUIEvents
 	 */
 	p.initUIEvents = function() {
 
@@ -110,7 +147,7 @@ this.G = this.G || {};
 				//space //enter
 				case 32:
 				case 0:
-					self.reelsComponent.spinReels();
+					self.components.reels.spinReels();
 					break;
 			}
 		};
@@ -128,7 +165,7 @@ this.G = this.G || {};
 		});
 
 		mc.on('swipe', function() {
-			self.reelsComponent.spinReels();
+			self.components.reels.spinReels();
 		});
 
 		mc.on('pinchin', function() {

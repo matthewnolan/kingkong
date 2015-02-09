@@ -7,7 +7,7 @@
   "playWinAfterSpin": 1,
   "useLoader": 1,
   "soundVolume": 1,
-  "enableShadowsOnDesktop": false,
+  "enableWinLineShadows": false,
   "winAnimDelay": 3000,
   "stageW": 667,
   "stageH": 375,

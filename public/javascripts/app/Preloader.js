@@ -10,6 +10,7 @@ this.G = this.G || {};
 	 * Preloader is responsible loading Setup and assets into the Game.
 	 * These include sounds, spritesheets, and data in the form of json files
 	 * It will then dispatch Signals (Events) back to the Game for notification and safe caching of assets.
+	 * @class
 	 * @constructor
 	 */
 	var Preloader = function() {};

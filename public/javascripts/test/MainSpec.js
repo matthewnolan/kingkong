@@ -12,7 +12,10 @@ describe("Main Test", function () {
 				//do nothing
 			}
 		});
-		sinon.stub(G, "Game").returns({
+
+		spyOn(createjs.Ticker, "on");
+
+		spyOn(G, "Game").and.returnValue({
 			init: jasmine.createSpy("game.init")
 		});
 		sinon.stub(window, "addEventListener");
@@ -39,7 +42,7 @@ describe("Main Test", function () {
 		document.body.appendChild.restore();
 		document.querySelector.restore();
 		window.addEventListener.restore();
-		G.Game.restore();
+		//G.Game.restore();
 	});
 
 	it("Class can be instantiated", function () {
@@ -55,19 +58,23 @@ describe("Main Test", function () {
 
 	it("Main init should create a Stage and initialise it with the correct", function() {
 		// spies let us test a function is called
-		sinon.spy(createjs, "Stage");
+		spyOn(createjs, "Stage");
 		this.class.init();
 		expect(createjs.Stage).toHaveBeenCalledWith("app");
 	});
 
 	it("Main init should setup the Ticker correctly", function() {
-		sinon.spy(createjs.Ticker, "on");
 		this.class.init();
 		expect(createjs.Ticker.on).toHaveBeenCalledWith("tick", this.class.handleTick, this.class);
 	});
 
 	it("Main init should create a ServerInterface", function() {
-		sinon.spy(G, "ServerInterface");
+		spyOn(G, "ServerInterface").and.returnValue({
+			init: function() {
+				//do nothing
+			}
+
+		});
 		this.class.init();
 		expect(G.ServerInterface).toHaveBeenCalled();
 	});
@@ -85,14 +92,16 @@ describe("Main Test", function () {
 
 	it("Main init should create a Game and initialise it", function() {
 		this.class.init();
+
 		expect(G.Game).toHaveBeenCalled();
+
 		expect(this.class.game.init).toHaveBeenCalled();
 	});
 
 	it("Ticker Handler should render the stage", function() {
 		this.class.init();
 
-		sinon.spy(this.class.stage, "update");
+		spyOn(this.class.stage, "update");
 
 		this.class.handleTick();
 
