@@ -38,13 +38,17 @@
     <script src="javascripts/vendor/jquery/jquery.js"></script>
 
     <!-- Application -->
+    <script src="javascripts/app/Command.js"></script>
+    <script src="javascripts/app/CommandQueue.js"></script>
+    <script src="javascripts/app/Game.js"></script>
+    <script src="javascripts/app/GameComponent.js"></script>
     <script src="javascripts/app/Main.js"></script>
     <script src="javascripts/app/Preloader.js"></script>
-    <script src="javascripts/app/Game.js"></script>
     <script src="javascripts/app/ServerInterface.js"></script>
     <script src="javascripts/app/Reel.js"></script>
     <script src="javascripts/app/ReelsComponent.js"></script>
-    <script src="javascripts/app/CommandQueue.js"></script>
+    <script src="javascripts/app/SignalDispatcher.js"></script>
+
     <script src="javascripts/app/QueueFactory.js"></script>
     <script src="javascripts/app/Command.js"></script>
     <script src="javascripts/app/WinLinesComponent.js"></script>
@@ -65,6 +69,11 @@
     <input type="range" id="gasPedal" min="0" value="50" max="100" step="1" onchange="window.updateSpeed(value)" oninput="window.updateSpeed(value)">
     <div class="spin-perc"></div>
     <div class="spin-speed"></div>
+</div>
+
+<div>
+    <a href="tests.html">Tests</a>
+    <a href="/doc/">Documentation</a>
 </div>
 
 

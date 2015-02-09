@@ -42,6 +42,8 @@
                                 <li><a href="../classes/Game.html">Game</a></li>
                                 <li><a href="../classes/Main.html">Main</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
                             </ul>
@@ -95,7 +97,7 @@ this.G = this.G || {};
 	/**
 	 * Initialises preloading of assets, stores Setup, GameState, and GameComponents
 	 * GameComponents are added to Stage
-	 * Wires ServerInterface to GameComponents (new Class?)
+	 * Wires ServerInterface to GameComponents using a SignalDispatcher
 	 * User Interface Events can defined set here.
 	 * @class Game
 	 * @constructor
@@ -128,6 +130,12 @@ this.G = this.G || {};
 	 */
 	p.assets = null;
 
+	/**
+	 * Game Events be listened to and dispatched from here. Should be passed to GameComponents which require it.
+	 * @property signalDispatcher
+	 * @type {G.SignalDispatcher}
+	 */
+	p.signalDispatcher = null;
 
 	/**
 	 * GameComponents stored here
@@ -154,6 +162,9 @@ this.G = this.G || {};
 		preloader.setupComplete.add(this.onSetupLoaded, this);
 		preloader.assetsLoaded.add(this.onAssetsLoadComplete, this);
 		preloader.startLoad();
+
+		this.signalDispatcher = new G.SignalDispatcher();
+
 	};
 
 
@@ -176,6 +187,7 @@ this.G = this.G || {};
 		this.assets = assets;
 		this.setupDisplay();
 		this.initUIEvents();
+		this.signalDispatcher.init();
 	};
 
 	/**
@@ -195,6 +207,7 @@ this.G = this.G || {};
 		this.stage.addChild(sprite);
 
 		var reelsComponent = new G.ReelsComponent();
+		reelsComponent.signalDispatcher = this.signalDispatcher;
 		reelsComponent.init(this.setup, spriteSheet);
 		reelsComponent.drawReels();
 		reelsComponent.x = bezelMarginL;

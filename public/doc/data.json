@@ -52,7 +52,18 @@
         "public/javascripts/app/ReelsComponent.js": {
             "name": "public/javascripts/app/ReelsComponent.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "ReelsComponent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/SignalDispatcher.js": {
+            "name": "public/javascripts/app/SignalDispatcher.js",
+            "modules": {},
+            "classes": {
+                "SignalDispatcher": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -100,7 +111,7 @@
             "extension_for": [],
             "file": "public/javascripts/app/Game.js",
             "line": 9,
-            "description": "Initialises preloading of assets, stores Setup, GameState, and GameComponents\nGameComponents are added to Stage\nWires ServerInterface to GameComponents (new Class?)\nUser Interface Events can defined set here.",
+            "description": "Initialises preloading of assets, stores Setup, GameState, and GameComponents\nGameComponents are added to Stage\nWires ServerInterface to GameComponents using a SignalDispatcher\nUser Interface Events can defined set here.",
             "is_constructor": 1
         },
         "Main": {
@@ -120,6 +131,33 @@
             "file": "public/javascripts/app/Preloader.js",
             "line": 9,
             "description": "Preloader is responsible loading Setup and assets into the Game.\nThese include sounds, spritesheets, and data in the form of json files\nIt will then dispatch Signals (Events) back to the Game for notification and safe caching of assets.",
+            "is_constructor": 1
+        },
+        "ReelsComponent": {
+            "name": "ReelsComponent",
+            "shortname": "ReelsComponent",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 9,
+            "description": "GameComponent responsible for drawing symbols to each reel and spinning them.",
+            "extends": "createjs.Container",
+            "is_constructor": 1
+        },
+        "SignalDispatcher": {
+            "name": "SignalDispatcher",
+            "shortname": "SignalDispatcher",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/SignalDispatcher.js",
+            "line": 9,
+            "description": "Central Hub for providing Signals for the app to dispatch and listen to.",
             "is_constructor": 1
         },
         "WinLine": {
@@ -184,7 +222,16 @@
         },
         {
             "file": "public/javascripts/app/Game.js",
-            "line": 46,
+            "line": 45,
+            "description": "Game Events be listened to and dispatched from here. Should be passed to GameComponents which require it.",
+            "itemtype": "property",
+            "name": "signalDispatcher",
+            "type": "{G.SignalDispatcher}",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 52,
             "description": "GameComponents stored here",
             "itemtype": "property",
             "name": "components",
@@ -193,7 +240,7 @@
         },
         {
             "file": "public/javascripts/app/Game.js",
-            "line": 56,
+            "line": 62,
             "description": "init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.\nStarts Preloading of assets",
             "params": [
                 {
@@ -211,7 +258,7 @@
         },
         {
             "file": "public/javascripts/app/Game.js",
-            "line": 74,
+            "line": 83,
             "description": "SignalHandler which saves setup data when loaded by Preloader",
             "params": [
                 {
@@ -226,7 +273,7 @@
         },
         {
             "file": "public/javascripts/app/Game.js",
-            "line": 83,
+            "line": 92,
             "description": "Signal Handler\nonAssetsLoadComplete: Asets have been loaded.  Now initialise the Display",
             "params": [
                 {
@@ -241,7 +288,7 @@
         },
         {
             "file": "public/javascripts/app/Game.js",
-            "line": 95,
+            "line": 105,
             "description": "setupDisplay: Start layering Containers and GameComponents.  Mask the stage for reels.\nnb. These are potentially expensive cpu operations, but everything done here is done after Preload and during app initialisation.\nAny filters applied to display objects will magnify the length of time this function takes to complete.",
             "itemtype": "method",
             "name": "setupDisplay",
@@ -249,7 +296,7 @@
         },
         {
             "file": "public/javascripts/app/Game.js",
-            "line": 136,
+            "line": 147,
             "description": "User Control is initialised: Keyboard control / touch controls\nif User Control shouldn't be enabled during app initialisation phase, then execute this function later.",
             "todo": [
                 "- configure a way to turn on/off user interaction events."
@@ -306,7 +353,7 @@
             "line": 21,
             "constant": "SETUP_URL - path of setup.json file relative to public root.",
             "type": "{string}",
-            "class": "WinLine"
+            "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
@@ -321,13 +368,13 @@
             "todo": [
                 "only pass in Setup"
             ],
-            "class": "WinLine"
+            "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
             "line": 53,
             "description": "startLoad - starts loading setup.json file",
-            "class": "WinLine"
+            "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
@@ -339,51 +386,194 @@
                     "description": ""
                 }
             ],
-            "class": "WinLine"
+            "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
             "line": 69,
             "description": "loadGameAssets - loads spritesheets defined in Setup",
-            "class": "WinLine"
+            "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
             "line": 77,
             "description": "handleAssetsError - handle errors in asset loading phase gracefully",
-            "class": "WinLine"
+            "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
             "line": 82,
             "description": "handleAssetsProgress - handle loading of game assets",
-            "class": "WinLine"
+            "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
             "line": 87,
             "description": "handleAssetsLoaded - dispatch a Signal to Game containing loaded Assets",
-            "class": "WinLine"
+            "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/Reel.js",
             "line": 29,
             "description": "Dynamically alter the speed of reels by changing this percentage:\neg. 0.5 = half speed reels",
             "type": "{number}",
-            "class": "WinLine"
+            "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/Reel.js",
             "line": 36,
             "description": "Maximum Speed the reels can spin in pixels per second",
             "type": "{number}",
-            "class": "WinLine"
+            "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 140,
+            "line": 22,
+            "itemtype": "property",
+            "name": "symbolSprites",
+            "type": "{Object}",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 28,
+            "itemtype": "property",
+            "name": "signalDispatcher",
+            "type": "{G.SignalDispatcher}",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 34,
+            "itemtype": "property",
+            "name": "setup",
+            "type": "{Object}",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 40,
+            "itemtype": "property",
+            "name": "reelData",
+            "type": "{Number[]}",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 52,
+            "itemtype": "property",
+            "name": "reels",
+            "type": "{G.Reel[]}",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 58,
+            "itemtype": "property",
+            "name": "reelMap",
+            "type": "{Object}",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 64,
+            "description": "Number of reels currently spinning",
+            "itemtype": "property",
+            "name": "reelsSpinning",
+            "type": "{number}",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 71,
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "setup",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "symbolSprites",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 88,
+            "itemtype": "method",
+            "name": "shuffleReels",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 113,
+            "itemtype": "method",
+            "name": "drawReels",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 131,
+            "description": "Spins all reels with a delay configuration from setup.json\nStops reels if they are currently spinning.",
+            "itemtype": "method",
+            "name": "spinReels",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 169,
+            "description": "method updateSpinSpeed",
+            "params": [
+                {
+                    "name": "val",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 182,
+            "description": "Signal dispatched when a reel spin is finished",
+            "itemtype": "event",
+            "name": "reelSpinEnd",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/ReelsComponent.js",
+            "line": 197,
             "description": "DOM events\nfor development only",
-            "class": "WinLine"
+            "itemtype": "method",
+            "name": "initDomEvents",
+            "class": "ReelsComponent"
+        },
+        {
+            "file": "public/javascripts/app/SignalDispatcher.js",
+            "line": 18,
+            "itemtype": "property",
+            "name": "reelSpinComplete",
+            "type": "{Signal}",
+            "class": "SignalDispatcher"
+        },
+        {
+            "file": "public/javascripts/app/SignalDispatcher.js",
+            "line": 24,
+            "itemtype": "method",
+            "name": "init",
+            "class": "SignalDispatcher"
+        },
+        {
+            "file": "public/javascripts/app/SignalDispatcher.js",
+            "line": 35,
+            "itemtype": "method",
+            "name": "handleReeSpinComplete",
+            "class": "SignalDispatcher"
         },
         {
             "file": "public/javascripts/app/WinLine.js",
@@ -587,7 +777,7 @@
         },
         {
             "message": "Missing item type\ninit: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.\nStarts Preloading of assets",
-            "line": " public/javascripts/app/Game.js:56"
+            "line": " public/javascripts/app/Game.js:62"
         },
         {
             "message": "Missing item type",
@@ -630,8 +820,8 @@
             "line": " public/javascripts/app/Reel.js:36"
         },
         {
-            "message": "Missing item type\nDOM events\nfor development only",
-            "line": " public/javascripts/app/ReelsComponent.js:140"
+            "message": "Missing item type\nmethod updateSpinSpeed",
+            "line": " public/javascripts/app/ReelsComponent.js:169"
         }
     ]
 }

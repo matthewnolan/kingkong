@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Main - kingkong</title>
+    <title>SignalDispatcher - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -82,12 +82,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>Main Class</h1>
+<h1>SignalDispatcher Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/public_javascripts_app_Main.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;Main.js:9</code></a>
+            Defined in: <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:9</code></a>
         </div>
 
 
@@ -95,15 +95,14 @@
 
 
 <div class="box intro">
-    <p>The Main Class should give the app its entry point.
-No other entry points should be used by the index.html</p>
+    <p>Central Hub for providing Signals for the app to dispatch and listen to.</p>
 
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_Main" class="method item">
-            <h3 class="name"><code>Main</code></h3>
+        <div id="method_SignalDispatcher" class="method item">
+            <h3 class="name"><code>SignalDispatcher</code></h3>
         
                 <span class="paren">()</span>
         
@@ -117,7 +116,7 @@ No other entry points should be used by the index.html</p>
             <div class="meta">
                         <p>
                         Defined in
-                <a href="../files/public_javascripts_app_Main.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;Main.js:9</code></a>
+                <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:9</code></a>
                 </p>
         
         
@@ -151,7 +150,7 @@ No other entry points should be used by the index.html</p>
 
                     <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_handleTick">handleTick</a>
+                                <a href="#method_handleReeSpinComplete">handleReeSpinComplete</a>
 
                             </li>
                             <li class="index-item method">
@@ -166,15 +165,7 @@ No other entry points should be used by the index.html</p>
 
                     <ul class="index-list properties">
                             <li class="index-item property">
-                                <a href="#property_game">game</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_stage">stage</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_stats">stats</a>
+                                <a href="#property_reelSpinComplete">reelSpinComplete</a>
 
                             </li>
                     </ul>
@@ -186,8 +177,8 @@ No other entry points should be used by the index.html</p>
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_handleTick" class="method item">
-    <h3 class="name"><code>handleTick</code></h3>
+<div id="method_handleReeSpinComplete" class="method item">
+    <h3 class="name"><code>handleReeSpinComplete</code></h3>
 
         <span class="paren">()</span>
 
@@ -201,7 +192,7 @@ No other entry points should be used by the index.html</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_Main.js.html#l77"><code>public&#x2F;javascripts&#x2F;app&#x2F;Main.js:77</code></a>
+        <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l35"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:35</code></a>
         </p>
 
 
@@ -209,8 +200,7 @@ No other entry points should be used by the index.html</p>
     </div>
 
     <div class="description">
-        <p>Render Tick which updates Stage and any profiling tool.</p>
-
+        
     </div>
 
 
@@ -232,7 +222,7 @@ No other entry points should be used by the index.html</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_Main.js.html#l40"><code>public&#x2F;javascripts&#x2F;app&#x2F;Main.js:40</code></a>
+        <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l24"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:24</code></a>
         </p>
 
 
@@ -240,8 +230,7 @@ No other entry points should be used by the index.html</p>
     </div>
 
     <div class="description">
-        <p>Application entry point initialises the canvas viewport (currently createjs) and the Game</p>
-
+        
     </div>
 
 
@@ -253,9 +242,9 @@ No other entry points should be used by the index.html</p>
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-                    <div id="property_game" class="property item">
-                        <h3 class="name"><code>game</code></h3>
-                        <span class="type">G.Game</span>
+                    <div id="property_reelSpinComplete" class="property item">
+                        <h3 class="name"><code>reelSpinComplete</code></h3>
+                        <span class="type">Signal</span>
                     
                     
                     
@@ -264,65 +253,14 @@ No other entry points should be used by the index.html</p>
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_Main.js.html#l33"><code>public&#x2F;javascripts&#x2F;app&#x2F;Main.js:33</code></a>
+                            <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l18"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:18</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Stores a reference to G.Game, Everything a KingKong game is created by this Object or passed into it during initialisation.</p>
-                    
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_stage" class="property item">
-                        <h3 class="name"><code>stage</code></h3>
-                        <span class="type">createjs.Stage</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/public_javascripts_app_Main.js.html#l26"><code>public&#x2F;javascripts&#x2F;app&#x2F;Main.js:26</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>Stores a reference to Stage Object, a Special Container which is at the root of the Canvas</p>
-                    
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_stats" class="property item">
-                        <h3 class="name"><code>stats</code></h3>
-                        <span class="type">Stats</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/public_javascripts_app_Main.js.html#l19"><code>public&#x2F;javascripts&#x2F;app&#x2F;Main.js:19</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>Stores reference to Stats, this is a profiling tool which displays FPS and MSPF</p>
-                    
+                            
                         </div>
                     
                     

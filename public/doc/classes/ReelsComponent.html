@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>WinLine - kingkong</title>
+    <title>ReelsComponent - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -82,12 +82,15 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>WinLine Class</h1>
+<h1>ReelsComponent Class</h1>
 <div class="box meta">
 
+        <div class="extends">
+            Extends createjs.Container
+        </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/public_javascripts_app_WinLine.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:9</code></a>
+            Defined in: <a href="../files/public_javascripts_app_ReelsComponent.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:9</code></a>
         </div>
 
 
@@ -95,13 +98,14 @@
 
 
 <div class="box intro">
-    
+    <p>GameComponent responsible for drawing symbols to each reel and spinning them.</p>
+
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_WinLine" class="method item">
-            <h3 class="name"><code>WinLine</code></h3>
+        <div id="method_ReelsComponent" class="method item">
+            <h3 class="name"><code>ReelsComponent</code></h3>
         
                 <span class="paren">()</span>
         
@@ -115,7 +119,7 @@
             <div class="meta">
                         <p>
                         Defined in
-                <a href="../files/public_javascripts_app_WinLine.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:9</code></a>
+                <a href="../files/public_javascripts_app_ReelsComponent.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:9</code></a>
                 </p>
         
         
@@ -138,6 +142,7 @@
 
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+            <li class="api-class-tab events"><a href="#events">Events</a></li>
     </ul>
 
     <div>
@@ -147,9 +152,9 @@
                 <div class="index-section methods">
                     <h3>Methods</h3>
 
-                    <ul class="index-list methods">
+                    <ul class="index-list methods extends">
                             <li class="index-item method">
-                                <a href="#method_draw">draw</a>
+                                <a href="#method_drawReels">drawReels</a>
 
                             </li>
                             <li class="index-item method">
@@ -157,11 +162,15 @@
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_setupDropShadow">setupDropShadow</a>
+                                <a href="#method_initDomEvents">initDomEvents</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_setupGlowFilter">setupGlowFilter</a>
+                                <a href="#method_shuffleReels">shuffleReels</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_spinReels">spinReels</a>
 
                             </li>
                     </ul>
@@ -170,17 +179,21 @@
                 <div class="index-section properties">
                     <h3>Properties</h3>
 
-                    <ul class="index-list properties">
+                    <ul class="index-list properties extends">
                             <li class="index-item property">
-                                <a href="#property_color">color</a>
+                                <a href="#property_reelData">reelData</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_dropShadowFilter">dropShadowFilter</a>
+                                <a href="#property_reelMap">reelMap</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_glowFilter">glowFilter</a>
+                                <a href="#property_reels">reels</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_reelsSpinning">reelsSpinning</a>
 
                             </li>
                             <li class="index-item property">
@@ -188,28 +201,34 @@
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_symbolLocations">symbolLocations</a>
+                                <a href="#property_signalDispatcher">signalDispatcher</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_thickness">thickness</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_winLineSquares">winLineSquares</a>
+                                <a href="#property_symbolSprites">symbolSprites</a>
 
                             </li>
                     </ul>
                 </div>
 
 
+                <div class="index-section events">
+                    <h3>Events</h3>
+
+                    <ul class="index-list events extends">
+                            <li class="index-item event">
+                                <a href="#event_reelSpinEnd">reelSpinEnd</a>
+
+                            </li>
+                    </ul>
+                </div>
         </div>
 
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_draw" class="method item">
-    <h3 class="name"><code>draw</code></h3>
+<div id="method_drawReels" class="method item">
+    <h3 class="name"><code>drawReels</code></h3>
 
         <span class="paren">()</span>
 
@@ -223,7 +242,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_WinLine.js.html#l100"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:100</code></a>
+        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l113"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:113</code></a>
         </p>
 
 
@@ -231,8 +250,7 @@
     </div>
 
     <div class="description">
-        <p>Draws the WinLine according to stored Data</p>
-
+        
     </div>
 
 
@@ -248,10 +266,7 @@
                         <code>setup</code>
                 </li>
                 <li class="arg">
-                        <code>winLineSquares</code>
-                </li>
-                <li class="arg">
-                        <code>symbolLocations</code>
+                        <code>symbolSprites</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -266,7 +281,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_WinLine.js.html#l84"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:84</code></a>
+        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l71"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:71</code></a>
         </p>
 
 
@@ -274,8 +289,7 @@
     </div>
 
     <div class="description">
-        <p>Stores the WinLine Data in preparation for drawing</p>
-
+        
     </div>
 
         <div class="params">
@@ -293,28 +307,12 @@
 
                 </li>
                 <li class="param">
-                        <code class="param-name">winLineSquares</code>
-                        <span class="type">Array</span>
+                        <code class="param-name">symbolSprites</code>
+                        <span class="type">Object</span>
 
 
                     <div class="param-description">
-                        <ul>
-<li>prepare to draw a line or square at this index</li>
-</ul>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">symbolLocations</code>
-                        <span class="type">Array</span>
-
-
-                    <div class="param-description">
-                        <ul>
-<li>prepare to draw a line or square at this vartical location and this index</li>
-</ul>
-
+                         
                     </div>
 
                 </li>
@@ -324,8 +322,8 @@
 
 
 </div>
-<div id="method_setupDropShadow" class="method item">
-    <h3 class="name"><code>setupDropShadow</code></h3>
+<div id="method_initDomEvents" class="method item">
+    <h3 class="name"><code>initDomEvents</code></h3>
 
         <span class="paren">()</span>
 
@@ -339,7 +337,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_WinLine.js.html#l205"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:205</code></a>
+        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l197"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:197</code></a>
         </p>
 
 
@@ -347,7 +345,8 @@
     </div>
 
     <div class="description">
-        <p>initialises DropShadow variables</p>
+        <p>DOM events
+for development only</p>
 
     </div>
 
@@ -355,8 +354,8 @@
 
 
 </div>
-<div id="method_setupGlowFilter" class="method item">
-    <h3 class="name"><code>setupGlowFilter</code></h3>
+<div id="method_shuffleReels" class="method item">
+    <h3 class="name"><code>shuffleReels</code></h3>
 
         <span class="paren">()</span>
 
@@ -370,7 +369,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_WinLine.js.html#l224"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:224</code></a>
+        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l88"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:88</code></a>
         </p>
 
 
@@ -378,7 +377,38 @@
     </div>
 
     <div class="description">
-        <p>initialises GlowFilter variables</p>
+        
+    </div>
+
+
+
+
+</div>
+<div id="method_spinReels" class="method item">
+    <h3 class="name"><code>spinReels</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l131"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:131</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Spins all reels with a delay configuration from setup.json
+Stops reels if they are currently spinning.</p>
 
     </div>
 
@@ -391,9 +421,9 @@
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-                    <div id="property_color" class="property item">
-                        <h3 class="name"><code>color</code></h3>
-                        <span class="type">String</span>
+                    <div id="property_reelData" class="property item">
+                        <h3 class="name"><code>reelData</code></h3>
+                        <span class="type">Number</span>
                     
                     
                     
@@ -402,57 +432,22 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_WinLine.js.html#l52"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:52</code></a>
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l40"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:40</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Line Color</p>
-                    
-                        </div>
-                    
-                            <p><strong>Default:</strong> &quot;#ff0000&quot;,</p>
-                    
-                            <div class="example">
-                                <h4>Example:</h4>
-                    
-                                <div class="example-content">
-                                    <p> &quot;#ff0000&quot;,</p>
-                    
-                                </div>
-                            </div>
-                    
-                    </div>
-                    <div id="property_dropShadowFilter" class="property item">
-                        <h3 class="name"><code>dropShadowFilter</code></h3>
-                        <span class="type">createjs.DropShadowFilter</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/public_javascripts_app_WinLine.js.html#l77"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:77</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>Stores the dropShadow reference</p>
-                    
+                            
                         </div>
                     
                     
                     
                     </div>
-                    <div id="property_glowFilter" class="property item">
-                        <h3 class="name"><code>glowFilter</code></h3>
-                        <span class="type">createjs.GlowFilter</span>
+                    <div id="property_reelMap" class="property item">
+                        <h3 class="name"><code>reelMap</code></h3>
+                        <span class="type">Object</span>
                     
                     
                     
@@ -461,14 +456,62 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_WinLine.js.html#l69"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:69</code></a>
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l58"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:58</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Stores the glowFilter reference</p>
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_reels" class="property item">
+                        <h3 class="name"><code>reels</code></h3>
+                        <span class="type">G.Reel</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l52"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:52</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_reelsSpinning" class="property item">
+                        <h3 class="name"><code>reelsSpinning</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l64"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:64</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Number of reels currently spinning</p>
                     
                         </div>
                     
@@ -486,23 +529,22 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_WinLine.js.html#l43"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:43</code></a>
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l34"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:34</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Stores game setup</p>
-                    
+                            
                         </div>
                     
                     
                     
                     </div>
-                    <div id="property_symbolLocations" class="property item">
-                        <h3 class="name"><code>symbolLocations</code></h3>
-                        <span class="type">Number</span>
+                    <div id="property_signalDispatcher" class="property item">
+                        <h3 class="name"><code>signalDispatcher</code></h3>
+                        <span class="type">G.SignalDispatcher</span>
                     
                     
                     
@@ -511,34 +553,22 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_WinLine.js.html#l31"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:31</code></a>
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l28"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:28</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Store data required to locate the win line on the reel</p>
-                    
+                            
                         </div>
                     
-                            <p><strong>Default:</strong> [1, 1, 1, 1, 1]</p>
                     
-                            <div class="example">
-                                <h4>Example:</h4>
-                    
-                                <div class="example-content">
-                                    <ul>
-                    <li>[0,0,0,1,2] would draw the line along the top row of the first 3 reels, then it would go through the next row and the last row in the final reel</li>
-                    </ul>
-                    
-                                </div>
-                            </div>
                     
                     </div>
-                    <div id="property_thickness" class="property item">
-                        <h3 class="name"><code>thickness</code></h3>
-                        <span class="type">Number</span>
+                    <div id="property_symbolSprites" class="property item">
+                        <h3 class="name"><code>symbolSprites</code></h3>
+                        <span class="type">Object</span>
                     
                     
                     
@@ -547,60 +577,51 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_WinLine.js.html#l61"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:61</code></a>
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l22"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:22</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Line Thickness in pixels</p>
-                    
+                            
                         </div>
                     
-                            <p><strong>Default:</strong> 5</p>
                     
-                    
-                    </div>
-                    <div id="property_winLineSquares" class="property item">
-                        <h3 class="name"><code>winLineSquares</code></h3>
-                        <span class="type">Number</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/public_javascripts_app_WinLine.js.html#l19"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLine.js:19</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>Store data for telling the win line what to draw</p>
-                    
-                        </div>
-                    
-                            <p><strong>Default:</strong> - [0,0,0,0,0]</p>
-                    
-                            <div class="example">
-                                <h4>Example:</h4>
-                    
-                                <div class="example-content">
-                                    <ul>
-                    <li>[1, 1 , 1, 0, 0] to draw winning symbol border boxes in the first 3 then a line in the final 2 [] [] [] - -</li>
-                    </ul>
-                    
-                                </div>
-                            </div>
                     
                     </div>
             </div>
 
 
+            <div id="events" class="api-class-tabpanel">
+                <h2 class="off-left">Events</h2>
+
+                    <div id="event_reelSpinEnd" class="events item">
+                        <h3 class="name"><code>reelSpinEnd</code></h3>
+                        <span class="type"><a href="../classes/.html" class="crosslink"></a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l182"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:182</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Signal dispatched when a reel spin is finished</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
     </div>
 </div>
                     </div>

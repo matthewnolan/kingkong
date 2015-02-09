@@ -42,6 +42,8 @@
                                 <li><a href="../classes/Game.html">Game</a></li>
                                 <li><a href="../classes/Main.html">Main</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
                             </ul>
@@ -95,7 +97,7 @@
 <div class="box intro">
     <p>Initialises preloading of assets, stores Setup, GameState, and GameComponents
 GameComponents are added to Stage
-Wires ServerInterface to GameComponents (new Class?)
+Wires ServerInterface to GameComponents using a SignalDispatcher
 User Interface Events can defined set here.</p>
 
 </div>
@@ -183,6 +185,10 @@ User Interface Events can defined set here.</p>
 
                             </li>
                             <li class="index-item property">
+                                <a href="#property_signalDispatcher">signalDispatcher</a>
+
+                            </li>
+                            <li class="index-item property">
                                 <a href="#property_stage">stage</a>
 
                             </li>
@@ -224,7 +230,7 @@ User Interface Events can defined set here.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_Game.js.html#l136"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:136</code></a>
+        <a href="../files/public_javascripts_app_Game.js.html#l147"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:147</code></a>
         </p>
 
 
@@ -256,7 +262,7 @@ if User Control shouldn&#39;t be enabled during app initialisation phase, then e
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_Game.js.html#l95"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:95</code></a>
+        <a href="../files/public_javascripts_app_Game.js.html#l105"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:105</code></a>
         </p>
 
 
@@ -314,7 +320,7 @@ Any filters applied to display objects will magnify the length of time this func
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_Game.js.html#l46"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:46</code></a>
+                            <a href="../files/public_javascripts_app_Game.js.html#l52"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:52</code></a>
                             </p>
                     
                     
@@ -376,6 +382,31 @@ Any filters applied to display objects will magnify the length of time this func
                     
                     
                     </div>
+                    <div id="property_signalDispatcher" class="property item">
+                        <h3 class="name"><code>signalDispatcher</code></h3>
+                        <span class="type">G.SignalDispatcher</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/public_javascripts_app_Game.js.html#l45"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:45</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Game Events be listened to and dispatched from here. Should be passed to GameComponents which require it.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
                     <div id="property_stage" class="property item">
                         <h3 class="name"><code>stage</code></h3>
                         <span class="type">createjs.Stage</span>
@@ -417,7 +448,7 @@ Any filters applied to display objects will magnify the length of time this func
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_Game.js.html#l83"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:83</code></a>
+                            <a href="../files/public_javascripts_app_Game.js.html#l92"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:92</code></a>
                             </p>
                     
                     
@@ -459,7 +490,7 @@ Any filters applied to display objects will magnify the length of time this func
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_Game.js.html#l74"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:74</code></a>
+                            <a href="../files/public_javascripts_app_Game.js.html#l83"><code>public&#x2F;javascripts&#x2F;app&#x2F;Game.js:83</code></a>
                             </p>
                     
                     

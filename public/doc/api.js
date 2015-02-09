@@ -4,6 +4,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "CommandQueue",
         "Game",
         "Main",
+        "ReelsComponent",
+        "SignalDispatcher",
         "WinLine",
         "WinLinesComponent",
         null

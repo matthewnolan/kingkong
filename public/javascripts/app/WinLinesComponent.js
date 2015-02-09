@@ -9,22 +9,15 @@ var G = G || {};
 	/**
 	 * GameComponent for drawing Win Lines
 	 * @class WinLinesComponent
-	 * @extends createjs.Container
+	 * @extends G.GameComponent
 	 * @constructor
 	 */
 	var WinLinesComponent = function() {
-		this.Container_constructor();
+		this.GameComponent_constructor();
 	};
-	var p = createjs.extend(WinLinesComponent, createjs.Container);
-	p.constructor = WinLinesComponent;
 
-	/**
-	 * Stores game setup
-	 * @property setup
-	 * @required
-	 * @type {Object}
-	 */
-	p.setup = null;
+	var p = createjs.extend(WinLinesComponent, G.GameComponent);
+	p.constructor = WinLinesComponent;
 
 	/**
 	 * Stores win lines
@@ -39,8 +32,8 @@ var G = G || {};
 	 * @method init
 	 * @param setup
 	 */
-	p.init = function(setup) {
-		this.setup = setup;
+	p.init = function(setup, signalDispatcher) {
+		this.GameComponent_init(setup, signalDispatcher);
 	};
 
 	/**
@@ -86,6 +79,6 @@ var G = G || {};
 	};
 
 
-	G.WinLinesComponent = createjs.promote(WinLinesComponent, "Container");
+	G.WinLinesComponent = createjs.promote(WinLinesComponent, "GameComponent");
 
 })();

@@ -6,6 +6,10 @@ var G = G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * @class
+	 * @constructor
+	 */
 	var Command = function() {};
 	var p = Command.prototype;
 	p.constructor = Command;
@@ -14,11 +18,11 @@ var G = G || {};
 	p.callNextDelay = 2000;
 
 	p.init = function() { 
-
+		console.log("Command innit");
 	};
 
 	p.execute = function() {
-
+		console.log("Command execute");
 	};
 
 	G.Command = Command;

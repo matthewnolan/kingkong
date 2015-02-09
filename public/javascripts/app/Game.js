@@ -9,7 +9,7 @@ this.G = this.G || {};
 	/**
 	 * Initialises preloading of assets, stores Setup, GameState, and GameComponents
 	 * GameComponents are added to Stage
-	 * Wires ServerInterface to GameComponents (new Class?)
+	 * Wires ServerInterface to GameComponents using a SignalDispatcher
 	 * User Interface Events can defined set here.
 	 * @class Game
 	 * @constructor
@@ -42,6 +42,12 @@ this.G = this.G || {};
 	 */
 	p.assets = null;
 
+	/**
+	 * Game Events be listened to and dispatched from here. Should be passed to GameComponents which require it.
+	 * @property signalDispatcher
+	 * @type {G.SignalDispatcher}
+	 */
+	p.signalDispatcher = null;
 
 	/**
 	 * GameComponents stored here
@@ -82,14 +88,20 @@ this.G = this.G || {};
 
 	/**
 	 * Signal Handler
-	 * onAssetsLoadComplete: Asets have been loaded.  Now initialise the Display
+	 * onAssetsLoadComplete: Asets have been loaded.  Now initialise the Display,
+	 * Initialise UI Events, and Create a SignalDispatcher
 	 * @param {Object} assets
 	 * @event onAssetsLoadComplete
 	 */
 	p.onAssetsLoadComplete = function(assets) {
 		this.assets = assets;
+
+		this.signalDispatcher = new G.SignalDispatcher();
+		this.signalDispatcher.init();
+
 		this.setupDisplay();
 		this.initUIEvents();
+
 	};
 
 	/**
@@ -109,7 +121,7 @@ this.G = this.G || {};
 		this.stage.addChild(sprite);
 
 		var reelsComponent = new G.ReelsComponent();
-		reelsComponent.init(this.setup, spriteSheet);
+		reelsComponent.init(this.setup, this.signalDispatcher, spriteSheet);
 		reelsComponent.drawReels();
 		reelsComponent.x = bezelMarginL;
 		reelsComponent.y = bezelMarginT;

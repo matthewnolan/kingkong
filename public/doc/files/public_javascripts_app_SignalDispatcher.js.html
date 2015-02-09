@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>kingkong</title>
+    <title>public/javascripts/app/SignalDispatcher.js - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -82,78 +82,57 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1> Class</h1>
-<div class="box meta">
+<h1 class="file-heading">File: public/javascripts/app/SignalDispatcher.js</h1>
 
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*! kingkong 0.0.6 - 2015-02-09
+* Copyright (c) 2015 Licensed @HighFiveGames */
 
-        <div class="foundat">
-            Defined in: <a href="../files/public_javascripts_app_Preloader.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;Preloader.js:9</code></a>
-        </div>
+var G = G || {};
 
+(function () {
+	&quot;use strict&quot;;
 
-</div>
+	/**
+	 * Central Hub for providing Signals for the app to dispatch and listen to.
+	 * @class SignalDispatcher
+	 * @constructor
+	 */
+	var SignalDispatcher = function() {};
+	var p = SignalDispatcher.prototype;
+	p.constructor = SignalDispatcher;
 
+	/**
+	 * @property reelSpinComplete
+	 * @type {Signal}
+	 */
+	p.reelSpinComplete = new signals.Signal();
 
-<div class="box intro">
-    <p>Preloader is responsible loading Setup and assets into the Game.
-These include sounds, spritesheets, and data in the form of json files
-It will then dispatch Signals (Events) back to the Game for notification and safe caching of assets.</p>
+	/**
+	 * @method init
+	 */
+	p.init = function() {
 
-</div>
+		this.commandQueue = new G.CommandQueue();
+		this.commandQueue.init();
 
-    <div class="constructor">
-        <h2>Constructor</h2>
-        <div id="method_" class="method item">
-            <h3 class="name"><code></code></h3>
-        
-                <span class="paren">()</span>
-        
-        
-        
-        
-        
-        
-        
-        
-            <div class="meta">
-                        <p>
-                        Defined in
-                <a href="../files/public_javascripts_app_Preloader.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;Preloader.js:9</code></a>
-                </p>
-        
-        
-        
-            </div>
-        
-            <div class="description">
-                
-            </div>
-        
-        
-        
-        
-        </div>
-    </div>
+		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
+	};
 
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
+	/**
+	 * @method handleReeSpinComplete
+	 */
+	p.handleReelSpinComplete = function() {
 
-    </ul>
+		this.commandQueue.setupQueue();
+		this.commandQueue.play();
+	};
 
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
+	G.SignalDispatcher = SignalDispatcher;
 
-
-
-
-        </div>
-
-
-
-
-    </div>
+})();
+    </pre>
 </div>
                     </div>
                 </div>

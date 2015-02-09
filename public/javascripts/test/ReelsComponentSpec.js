@@ -52,7 +52,7 @@ describe("ReelsComponent Test", function () {
 
 			}
 		};
-		this.class.init(setup, symbolSprites);
+		this.class.init(setup, null, symbolSprites);
 		expect(this.class.symbolSprites).toBe("symbols");
 	});
 

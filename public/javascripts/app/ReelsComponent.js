@@ -6,17 +6,29 @@ var G = G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * GameComponent responsible for drawing symbols to each reel and spinning them.
+	 * @class ReelsComponent
+	 * @extends G.GameComponent
+	 * @constructor
+	 */
 	var ReelsComponent = function() {
-		this.Container_constructor();
+		this.GameComponent_constructor();
 	};
 
-	var p = createjs.extend(ReelsComponent, createjs.Container);
+	var p = createjs.extend(ReelsComponent, G.GameComponent);
 	p.constructor = ReelsComponent;
 
+	/**
+	 * @property symbolSprites
+	 * @type {Object}
+	 */
 	p.symbolSprites = null;
 
-	p.setup = null;
-
+	/**
+	 * @property reelData
+	 * @type {Number[]}
+	 */
 	p.reelsData = [
 		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
 		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
@@ -25,17 +37,35 @@ var G = G || {};
 		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
 	];
 
+	/**
+	 * @property reels
+	 * @type {G.Reel[]}
+	 */
 	p.reels = [];
 
+	/**
+	 * @property reelMap
+	 * @type {Object}
+	 */
 	p.reelMap = null;
 
+	/**
+	 * Number of reels currently spinning
+	 * @property reelsSpinning
+	 * @type {number}
+	 */
 	p.reelsSpinning = 0;
 
-	p.init = function(setup, symbolSprites) {
-		this.setup = setup;
-		this.symbolSprites = symbolSprites;
+	/**
+	 * @method init
+	 * @param setup {Object}
+	 * @param signalDispatcher {G.SignalDispatcher}
+	 * @param symbolSprites {Object}
+	 */
+	p.init = function(setup, signalDispatcher, symbolSprites) {
+		this.GameComponent_init(setup, signalDispatcher);
 		this.reelsMap = setup.reelMap;
-
+		this.symbolSprites = symbolSprites;
 		this.initDomEvents();
 
 		if (setup.reelAnimation.shuffleReels) {
@@ -43,6 +73,9 @@ var G = G || {};
 		}
 	};
 
+	/**
+	 * @method shuffleReels
+	 */
 	p.shuffleReels = function() {
 		var i, len = this.reelsData.length;
 		for (i = 0; i < len; i++) {
@@ -65,6 +98,9 @@ var G = G || {};
 		return array;
 	};
 
+	/**
+	 * @method drawReels
+	 */
 	p.drawReels = function() {
 		var i, len = this.reelsData.length, reel;
 		var symbolW = this.setup.symbolW;
@@ -80,6 +116,11 @@ var G = G || {};
 		}
 	};
 
+	/**
+	 * Spins all reels with a delay configuration from setup.json
+	 * Stops reels if they are currently spinning.
+	 * @method spinReels
+	 */
 	p.spinReels = function() {
 		console.log('spinReels');
 		var self = this;
@@ -111,11 +152,12 @@ var G = G || {};
 				reel.fastStop();
 			}
 		}
-
-
-
 	};
 
+	/**
+	 * method updateSpinSpeed
+	 * @param val {Number}
+	 */
 	p.updateSpinSpeed = function(val) {
 		var i, len = this.reels.length, reel;
 		for (i = 0; i < len; i++)
@@ -125,21 +167,25 @@ var G = G || {};
 		}
 	};
 
+	/**
+	 * Signal dispatched when a reel spin is finished
+	 * @Event reelSpinEnd
+	 */
 	p.reelSpinEnd = function() {
-		console.log('this.reelsSpinning=', this.reelsSpinning);
+		console.log('this.reelsSpinning=', this.reelsSpinning, this.signalDispatcher);
 
 		if (--this.reelsSpinning === 0)
 		{
 			console.log('REEL ANIM COMPLETE');
+			this.signalDispatcher.reelSpinComplete.dispatch();
 
 		}
-
-
 	};
 
 	/**
 	 * DOM events
 	 * for development only
+	 * @method initDomEvents
 	 */
 	p.initDomEvents = function() {
 		var self = this;
@@ -149,6 +195,6 @@ var G = G || {};
 		});
 	};
 
-	G.ReelsComponent = createjs.promote(ReelsComponent, "Container");
+	G.ReelsComponent = createjs.promote(ReelsComponent, "GameComponent");
 
 })();
