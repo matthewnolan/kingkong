@@ -24,7 +24,8 @@
     "easeljs-filters": "~0.2.1",
     "easeljs": "~0.8.0",
     "stats.js": "*",
-    "signals": "~1.0.0"
+    "signals": "~1.0.0",
+    "lodash": "~3.1.0"
   },
   "install": {
     "path": "public/javascripts/vendor",

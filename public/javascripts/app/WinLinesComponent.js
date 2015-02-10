@@ -66,6 +66,10 @@ var G = G || {};
 		}
 	};
 
+	p.clearWinLines = function() {
+
+	};
+
 	/**
 	 * Shows all winlines at the passed indexes of setup.json winLines array
 	 * @method showWinLinByIndexes
