@@ -38,11 +38,16 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
@@ -98,7 +103,7 @@ this.G = this.G || {};
 	 * Preloader is responsible loading Setup and assets into the Game.
 	 * These include sounds, spritesheets, and data in the form of json files
 	 * It will then dispatch Signals (Events) back to the Game for notification and safe caching of assets.
-	 * @class
+	 * @class Preloader
 	 * @constructor
 	 */
 	var Preloader = function() {};
@@ -136,6 +141,7 @@ this.G = this.G || {};
 		this.assetsLoader.on(&quot;error&quot;, this.handleAssetsError, this);
 		this.assetsLoader.on(&quot;progress&quot;, this.handleAssetsProgress, this);
 		this.assetsLoader.on(&quot;complete&quot;, this.handleAssetsLoaded, this);
+		this.assetsLoader.installPlugin(createjs.Sound);
 	};
 
 	/**
@@ -158,8 +164,8 @@ this.G = this.G || {};
 	 * loadGameAssets - loads spritesheets defined in Setup
 	 */
 	p.loadGameAssets = function() {
-		//console.log(&#x27;loadGameAssets&#x27;, this.game.setup.spritesManifest);
 		this.assetsLoader.loadManifest(this.game.setup.spritesManifest);
+		this.assetsLoader.loadManifest(this.game.setup.soundsManifest);
 	};
 
 	/**
@@ -170,19 +176,36 @@ this.G = this.G || {};
 	/**
 	 * handleAssetsProgress - handle loading of game assets
 	 */
-	p.handleAssetsProgress = function() { };
+	p.handleAssetsProgress = function(e) {
+		var el = document.querySelector(&quot;#loadPercentage&quot;);
+		el.innerHTML = Math.round(e.progress * 100).toString() + &quot;%&quot;;
+	};
 
 	/**
 	 * handleAssetsLoaded - dispatch a Signal to Game containing loaded Assets
 	 */
 	p.handleAssetsLoaded = function() {
+
+		var self = this;
+
 		var assets = {
 			spriteSheetBigWin: this.assetsLoader.getResult(&#x27;bigWinAnim&#x27;),
 			spriteSheetStatics: this.assetsLoader.getResult(&#x27;staticImages&#x27;),
 			spriteSheetSymbolAnims: this.assetsLoader.getResult(&#x27;symbolAnims&#x27;)
 		};
 
-		this.assetsLoaded.dispatch(assets);
+		var el = document.querySelector(&quot;#loadState&quot;);
+		el.innerHTML = &quot;Loaded&quot;;
+
+		el = document.querySelector(&quot;#initializeState&quot;);
+		el.innerHTML = &quot;Initializing...&quot;;
+
+
+		setTimeout(function(){
+			self.assetsLoaded.dispatch(assets);
+		}, 50);
+
+
 	};
 
 	G.Preloader = Preloader;

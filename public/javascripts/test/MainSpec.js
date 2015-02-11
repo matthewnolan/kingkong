@@ -10,6 +10,10 @@ describe("Main Test", function () {
 		sinon.stub(document, "querySelector").returns({
 			setAttribute: function() {
 				//do nothing
+			},
+			style: {
+				width: 100,
+				height: 100
 			}
 		});
 
@@ -33,6 +37,7 @@ describe("Main Test", function () {
 				}
 			}
 		});
+
 	});
 
 	afterEach(function() {
@@ -42,6 +47,7 @@ describe("Main Test", function () {
 		document.body.appendChild.restore();
 		document.querySelector.restore();
 		window.addEventListener.restore();
+		//document.querySelector.restore();
 		//G.Game.restore();
 	});
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>kingkong</title>
+    <title>public/javascripts/app/commands/WinLineCommand.js - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -87,75 +87,56 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1> Class</h1>
-<div class="box meta">
+<h1 class="file-heading">File: public/javascripts/app/commands/WinLineCommand.js</h1>
 
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*! kingkong 0.0.6 - 2015-02-10
+* Copyright (c) 2015 Licensed @HighFiveGames */
 
-        <div class="foundat">
-            Defined in: <a href="../files/public_javascripts_app_Command.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;Command.js:9</code></a>
-        </div>
+var G = G || {};
 
+(function () {
+	&quot;use strict&quot;;
 
-</div>
+	var WinLineCommand = function() {
+		this.Command_constructor();
+	};
+	var p = createjs.extend(WinLineCommand, G.Command);
+	p.constructor = WinLineCommand;
 
+	/**
+	 * this array defines the indexes of winLines to show in this command.  Based on setup.winLines
+	 * @property winLineIndexes
+	 * @default [0] - show the setup.winLines[0]
+	 * @type {number[]}
+	 */
+	p.winLineIndexes = [0];
 
-<div class="box intro">
-    
-</div>
+	/**
+	 *
+	 * @param {Object} setup
+	 * @param {G.WinLinesComponent} gameComponent
+	 * @param {Number[]} winLineIndexes - indexes of winLines based on setup.winLines which we&#x27;d like to show
+	 */
+	p.init = function(setup, gameComponent, winLineIndexes) {
+		this.Command_init(setup, gameComponent);
+		this.winLineIndexes = winLineIndexes || this.winLineIndexes;
+	};
 
-    <div class="constructor">
-        <h2>Constructor</h2>
-        <div id="method_" class="method item">
-            <h3 class="name"><code></code></h3>
-        
-                <span class="paren">()</span>
-        
-        
-        
-        
-        
-        
-        
-        
-            <div class="meta">
-                        <p>
-                        Defined in
-                <a href="../files/public_javascripts_app_Command.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;Command.js:9</code></a>
-                </p>
-        
-        
-        
-            </div>
-        
-            <div class="description">
-                
-            </div>
-        
-        
-        
-        
-        </div>
-    </div>
+	/**
+	 * Hide Previously drawn winLines and show more winLines.
+	 * @method execute
+	 */
+	p.execute = function() {
+		this.gameComponent.hideWinLines();
+		this.gameComponent.showWinLineByIndexes(this.winLineIndexes);
+	};
 
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
+	G.WinLineCommand = createjs.promote(WinLineCommand, &quot;Command&quot;);
 
-    </ul>
-
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
-
-
-
-
-        </div>
-
-
-
-
-    </div>
+})();
+    </pre>
 </div>
                     </div>
                 </div>

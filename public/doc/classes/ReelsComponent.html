@@ -38,11 +38,16 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
@@ -86,7 +91,7 @@
 <div class="box meta">
 
         <div class="extends">
-            Extends createjs.Container
+            Extends G.GameComponent
         </div>
 
         <div class="foundat">
@@ -197,14 +202,6 @@
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_setup">setup</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_signalDispatcher">signalDispatcher</a>
-
-                            </li>
-                            <li class="index-item property">
                                 <a href="#property_symbolSprites">symbolSprites</a>
 
                             </li>
@@ -242,7 +239,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l113"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:113</code></a>
+        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l101"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:101</code></a>
         </p>
 
 
@@ -266,6 +263,9 @@
                         <code>setup</code>
                 </li>
                 <li class="arg">
+                        <code>signalDispatcher</code>
+                </li>
+                <li class="arg">
                         <code>symbolSprites</code>
                 </li>
             </ul><span class="paren">)</span>
@@ -281,7 +281,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l71"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:71</code></a>
+        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l59"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:59</code></a>
         </p>
 
 
@@ -299,6 +299,16 @@
                 <li class="param">
                         <code class="param-name">setup</code>
                         <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">signalDispatcher</code>
+                        <span class="type">G.SignalDispatcher</span>
 
 
                     <div class="param-description">
@@ -337,7 +347,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l197"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:197</code></a>
+        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l186"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:186</code></a>
         </p>
 
 
@@ -369,7 +379,7 @@ for development only</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l88"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:88</code></a>
+        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l76"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:76</code></a>
         </p>
 
 
@@ -399,7 +409,7 @@ for development only</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l131"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:131</code></a>
+        <a href="../files/public_javascripts_app_ReelsComponent.js.html#l119"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:119</code></a>
         </p>
 
 
@@ -408,7 +418,9 @@ for development only</p>
 
     <div class="description">
         <p>Spins all reels with a delay configuration from setup.json
-Stops reels if they are currently spinning.</p>
+Stops reels if they are currently spinning.
+Clear any winline/animation overlays
+Play Spin Sound</p>
 
     </div>
 
@@ -432,7 +444,7 @@ Stops reels if they are currently spinning.</p>
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l40"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:40</code></a>
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l28"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:28</code></a>
                             </p>
                     
                     
@@ -456,7 +468,7 @@ Stops reels if they are currently spinning.</p>
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l58"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:58</code></a>
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l46"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:46</code></a>
                             </p>
                     
                     
@@ -480,7 +492,7 @@ Stops reels if they are currently spinning.</p>
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l52"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:52</code></a>
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l40"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:40</code></a>
                             </p>
                     
                     
@@ -504,7 +516,7 @@ Stops reels if they are currently spinning.</p>
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l64"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:64</code></a>
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l52"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:52</code></a>
                             </p>
                     
                     
@@ -513,54 +525,6 @@ Stops reels if they are currently spinning.</p>
                         <div class="description">
                             <p>Number of reels currently spinning</p>
                     
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_setup" class="property item">
-                        <h3 class="name"><code>setup</code></h3>
-                        <span class="type">Object</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l34"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:34</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_signalDispatcher" class="property item">
-                        <h3 class="name"><code>signalDispatcher</code></h3>
-                        <span class="type">G.SignalDispatcher</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l28"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:28</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
                         </div>
                     
                     
@@ -607,7 +571,7 @@ Stops reels if they are currently spinning.</p>
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l182"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:182</code></a>
+                            <a href="../files/public_javascripts_app_ReelsComponent.js.html#l174"><code>public&#x2F;javascripts&#x2F;app&#x2F;ReelsComponent.js:174</code></a>
                             </p>
                     
                     

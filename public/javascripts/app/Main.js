@@ -59,9 +59,16 @@ this.G = this.G || {};
 		this.stage.scaleX = stageScale;
 		this.stage.scaleY = stageScale;
 
+		var styleWidth = (stageW * stageScale).toString() + "px";
+		var styleHeight = (stageH * stageScale).toString() + "px";
+
 		var mainCanvas = document.querySelector("#app");
-		mainCanvas.setAttribute("width", (stageW * stageScale).toString() + "px");
-		mainCanvas.setAttribute("height", (stageH * stageScale).toString() + "px");
+		mainCanvas.setAttribute("width", styleWidth );
+		mainCanvas.setAttribute("height", styleHeight);
+
+		var preloaderCover = document.querySelector("#preloader");
+		preloaderCover.style.width = styleWidth;
+		preloaderCover.style.height = styleHeight;
 
 		createjs.Ticker.on("tick", this.handleTick, this);
 		createjs.Ticker.setFPS(60);

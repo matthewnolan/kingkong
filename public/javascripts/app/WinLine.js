@@ -82,6 +82,12 @@ var G = G || {};
 	p.dropshadowfilter = null;
 
 	/**
+	 * @property drawComplete
+	 * @type {Signal}
+	 */
+	p.drawComplete = new signals.Signal();
+
+	/**
 	 * Stores the WinLine Data in preparation for drawing
 	 * @method init
 	 * @param {Object} setup
@@ -102,8 +108,6 @@ var G = G || {};
 	 * @method draw
 	 */
 	p.drawComponent = function () {
-
-		console.log('winLineComponent.draw');
 
 		var symbolW = this.setup.symbolW;
 		var symbolH = this.setup.symbolH;
@@ -146,12 +150,12 @@ var G = G || {};
 
 					if (this.symbolLocations[i + 1] === this.symbolLocations[i]) {
 						//next reel is same row
-						gp.moveTo(x + outlineW, y + outlineH / 2);
+						graph.moveTo(x + outlineW, y + outlineH / 2);
 					}
 
 					if (this.symbolLocations[i + 1] === this.symbolLocations[i] + 1) {
 						//next reel is on row below
-						gp.moveTo(x + outlineW, y + outlineH);
+						graph.moveTo(x + outlineW, y + outlineH);
 						drawPoint.y = y + outlineH + this.thickness * 2;
 					}
 
@@ -200,6 +204,8 @@ var G = G || {};
 			var bounds = shape.getBounds();
 			shape.cache(bounds.x, bounds.y, bounds.width, bounds.height);
 		}
+
+		this.drawComplete.dispatch();
 	};
 
 	/**

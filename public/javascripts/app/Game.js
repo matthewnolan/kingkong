@@ -60,6 +60,12 @@ this.G = this.G || {};
 	};
 
 	/**
+	 * @property gameComponents
+	 * @type {G.GameComponent[]}
+	 */
+	p.gameComponents = [];
+
+	/**
 	 * init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.
 	 * Starts Preloading of assets
 	 * @param {createjs.Stage} stage - The root Display Container which is added to Canvas
@@ -97,7 +103,6 @@ this.G = this.G || {};
 		this.assets = assets;
 
 		this.signalDispatcher = new G.SignalDispatcher();
-		this.signalDispatcher.init();
 
 		this.setupDisplay();
 		this.initUIEvents();
@@ -128,12 +133,14 @@ this.G = this.G || {};
 		this.stage.addChild(reelsComponent);
 
 		var winLinesComponet = new G.WinLinesComponent();
-		winLinesComponet.init(this.setup);
+		winLinesComponet.init(this.setup, this.signalDispatcher);
 		this.stage.addChild(winLinesComponet);
 		winLinesComponet.drawComponent();
 
 		this.components.reels = reelsComponent;
 		this.components.winLines = winLinesComponet;
+		this.gameComponents.push(reelsComponent, winLinesComponet);
+		this.signalDispatcher.init(this.setup, this.gameComponents);
 
 		var sceneMask = new createjs.Shape();
 		sceneMask.graphics.setStrokeStyle(0)

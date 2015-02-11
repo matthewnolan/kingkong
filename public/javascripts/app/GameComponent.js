@@ -6,6 +6,13 @@ var G = G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * Super class of any game component.  These game components are always initialised with the game's setup file and a signal dispatcher.
+	 * This allows all game components (eg. ReelsComponent or WinLinesComponent) to access game setup and dispatch and receive events from other
+	 * areas of the application
+	 * @class GameComponent
+	 * @constructor
+	 */
 	var GameComponent = function() {
 		this.Container_constructor();
 	};
@@ -27,6 +34,12 @@ var G = G || {};
 	 */
 	p.setup = null;
 
+	/**
+	 * initialises the setup and signalDispatcher for the component.
+	 * @method init
+	 * @param {Object} setup
+	 * @param {G.SignalDispatcher} signalDispatcher
+	 */
 	p.init = function(setup, signalDispatcher) {
 		this.setup = setup;
 		this.signalDispatcher = signalDispatcher;

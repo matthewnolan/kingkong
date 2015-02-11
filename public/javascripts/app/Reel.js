@@ -6,6 +6,14 @@ var G = G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * One Reel defined by this class. Contains a sprite map for mapping sprite ids to symbol sprites.
+	 * Sets up and executes the spin animation Tween when reels are spun.
+	 * Stops the tween when spinning is ended and signals to the ReelComponent.
+	 * @class Reel
+	 * @extends createjs.Container
+	 * @constructor
+	 */
 	var Reel = function() {
 		this.Container_constructor();
 	};
@@ -144,10 +152,16 @@ var G = G || {};
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
 		var yPos = (symbolH * index + symbolMarginB * index) + (symbolH * symbolsLen + symbolMarginB * symbolsLen);
+		var stopTime = this.getStopTime(index);
+
+		setTimeout(function() {
+			createjs.Sound.play("reelstop1");
+		}, stopTime - 300);
+
 		this.y = 0;
 		createjs.Tween
 			.get(this, {override: true, loop:false})
-			.to({y: yPos}, this.getStopTime(index), createjs.Ease.getElasticOut(2,5))
+			.to({y: yPos}, stopTime, createjs.Ease.getElasticOut(2,5))
 			.call(this.handleSpinComplete);
 	};
 
@@ -159,8 +173,6 @@ var G = G || {};
 	};
 
 	p.handleSpinComplete = function() {
-		console.log('handleSpinComplte');
-
 		this.reelSpinEnd.dispatch();
 	};
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>kingkong</title>
+    <title>public/javascripts/app/GameComponent.js - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -87,75 +87,61 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1> Class</h1>
-<div class="box meta">
+<h1 class="file-heading">File: public/javascripts/app/GameComponent.js</h1>
 
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*! kingkong 0.0.6 - 2015-02-09
+* Copyright (c) 2015 Licensed @HighFiveGames */
 
-        <div class="foundat">
-            Defined in: <a href="../files/public_javascripts_app_Command.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;Command.js:9</code></a>
-        </div>
+var G = G || {};
 
+(function () {
+	&quot;use strict&quot;;
 
-</div>
+	/**
+	 * Super class of any game component.  These game components are always initialised with the game&#x27;s setup file and a signal dispatcher.
+	 * This allows all game components (eg. ReelsComponent or WinLinesComponent) to access game setup and dispatch and receive events from other
+	 * areas of the application
+	 * @class GameComponent
+	 * @constructor
+	 */
+	var GameComponent = function() {
+		this.Container_constructor();
+	};
+	var p = createjs.extend(GameComponent, createjs.Container);
+	p.constructor = GameComponent;
 
+	/**
+	 * Store for the SignalDispatcher allows us to dispatch and listen to Signals from the rest of the application
+	 * @property signalDispatcher
+	 * @required
+	 * @type {G.SignalDispatcher}
+	 */
+	p.signalDispatcher = null;
 
-<div class="box intro">
-    
-</div>
+	/**
+	 * Store the Setup
+	 * @property Setup
+	 * @type {null}
+	 */
+	p.setup = null;
 
-    <div class="constructor">
-        <h2>Constructor</h2>
-        <div id="method_" class="method item">
-            <h3 class="name"><code></code></h3>
-        
-                <span class="paren">()</span>
-        
-        
-        
-        
-        
-        
-        
-        
-            <div class="meta">
-                        <p>
-                        Defined in
-                <a href="../files/public_javascripts_app_Command.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;Command.js:9</code></a>
-                </p>
-        
-        
-        
-            </div>
-        
-            <div class="description">
-                
-            </div>
-        
-        
-        
-        
-        </div>
-    </div>
+	/**
+	 * initialises the setup and signalDispatcher for the component.
+	 * @method init
+	 * @param {Object} setup
+	 * @param {G.SignalDispatcher} signalDispatcher
+	 */
+	p.init = function(setup, signalDispatcher) {
+		this.setup = setup;
+		this.signalDispatcher = signalDispatcher;
+	};
 
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
+	G.GameComponent = createjs.promote(GameComponent, &quot;Container&quot;);
 
-    </ul>
-
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
-
-
-
-
-        </div>
-
-
-
-
-    </div>
+})();
+    </pre>
 </div>
                     </div>
                 </div>

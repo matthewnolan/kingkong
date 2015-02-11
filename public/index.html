@@ -34,6 +34,7 @@
     <script src="javascripts/vendor/stats.js/stats.min.js"></script>
     <script src="javascripts/vendor/js-signals/signals.js"></script>
     <script src="javascripts/vendor/hammerjs/hammer.js"></script>
+    <script src="javascripts/vendor/lodash/lodash.js"></script>
     <!-- for dev only will not be required in final app-->
     <script src="javascripts/vendor/jquery/jquery.js"></script>
 
@@ -52,6 +53,7 @@
     <script src="javascripts/app/Command.js"></script>
     <script src="javascripts/app/WinLinesComponent.js"></script>
     <script src="javascripts/app/WinLine.js"></script>
+    <script src="javascripts/app/commands/WinLineCommand.js"></script>
 
 
     <link rel="stylesheet" href="stylesheets/style.css">
@@ -60,7 +62,18 @@
 
 <div>
     <canvas id="app"></canvas>
+    <div id="preloader">
+        <div class="content">
+            <div class="vertical-center">
+                <div id="loadState">Loading...</div>
+                <div id="loadPercentage">0%</div>
+                <div id="initializeState"></div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 
 <div class="dom-helpers">
     <h4>Spin Demo (Press space to spin - again to stop)</h4>

@@ -38,11 +38,16 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
@@ -97,22 +102,15 @@ var G = G || {};
 	/**
 	 * GameComponent for drawing Win Lines
 	 * @class WinLinesComponent
-	 * @extends createjs.Container
+	 * @extends G.GameComponent
 	 * @constructor
 	 */
 	var WinLinesComponent = function() {
-		this.Container_constructor();
+		this.GameComponent_constructor();
 	};
-	var p = createjs.extend(WinLinesComponent, createjs.Container);
-	p.constructor = WinLinesComponent;
 
-	/**
-	 * Stores game setup
-	 * @property setup
-	 * @required
-	 * @type {Object}
-	 */
-	p.setup = null;
+	var p = createjs.extend(WinLinesComponent, G.GameComponent);
+	p.constructor = WinLinesComponent;
 
 	/**
 	 * Stores win lines
@@ -121,14 +119,41 @@ var G = G || {};
 	 */
 	p.winLines = [];
 
+	/**
+	 * Store number of winLines to compare with drawn Lines and dispatch complete signal when drawn
+	 * @property numLinesTotal
+	 * @type {number}
+	 */
+	p.numLinesTotoal = 0;
+
+	/**
+	 * Count number of lines drawn to compare with numLinesTotal to dispatch complete signal.
+	 * @property numLinesDrawn
+	 * @type {number}
+	 */
+	p.numLinesDrawn = 0;
+
+	/**
+	 * @property el
+	 * @type {HTMLElement}
+	 */
+	p.el = null;
+
+	/**
+	 *
+	 * @type {Number}
+	 */
+	p.loadPercentage = 0;
+
 
 	/**
 	 * Stores passed setup data
 	 * @method init
-	 * @param setup
+	 * @param {Object} setup
+	 * @param {G.SignalDispatcher} signalDispatcher
 	 */
-	p.init = function(setup) {
-		this.setup = setup;
+	p.init = function(setup, signalDispatcher) {
+		this.GameComponent_init(setup, signalDispatcher);
 	};
 
 	/**
@@ -140,7 +165,9 @@ var G = G || {};
 		var marginL = this.setup.bezelMarginL;
 		var marginT = this.setup.bezelMarginT;
 		var winLines = this.setup.winLines;
-		var i, len = winLines.length;
+		var i, len = this.numLinesTotal = winLines.length;
+
+		this.el = document.querySelector(&quot;#preloader&quot;);
 
 		if (this.setup.enableShadowsOnDesktop) {
 			var filters = [];
@@ -153,12 +180,37 @@ var G = G || {};
 			winLine.init(this.setup, [0,0,0,0,0], winLines[i].data);
 			winLine.color = winLines[i].color;
 			this.addChild(winLine);
+			winLine.drawComplete.add(this.onWinLineDrawn, this);
 			winLine.drawComponent();
 			winLine.x = marginL;
 			winLine.y = marginT;
 			winLine.visible = false;
 			this.winLines.push(winLine);
 		}
+
+
+
+		//this.hideWinLines();
+	};
+
+	p.onWinLineDrawn = function() {
+		++this.numLinesDrawn;
+		if (this.numLinesDrawn === this.numLinesTotal) {
+			this.el.style.visibility = &quot;hidden&quot;;
+		}
+	};
+
+	/**
+	 * Hides all visible winLines
+	 * @method hideWinLines
+	 */
+	p.hideWinLines = function() {
+
+		var hideWinLine = function(winLine) {
+			winLine.visible = false;
+		};
+
+		_.each(this.winLines, hideWinLine);
 	};
 
 	/**
@@ -174,7 +226,7 @@ var G = G || {};
 	};
 
 
-	G.WinLinesComponent = createjs.promote(WinLinesComponent, &quot;Container&quot;);
+	G.WinLinesComponent = createjs.promote(WinLinesComponent, &quot;GameComponent&quot;);
 
 })();
     </pre>

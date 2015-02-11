@@ -38,11 +38,16 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
@@ -94,6 +99,14 @@ var G = G || {};
 (function () {
 	&quot;use strict&quot;;
 
+	/**
+	 * One Reel defined by this class. Contains a sprite map for mapping sprite ids to symbol sprites.
+	 * Sets up and executes the spin animation Tween when reels are spun.
+	 * Stops the tween when spinning is ended and signals to the ReelComponent.
+	 * @class Reel
+	 * @extends createjs.Container
+	 * @constructor
+	 */
 	var Reel = function() {
 		this.Container_constructor();
 	};
@@ -232,10 +245,16 @@ var G = G || {};
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
 		var yPos = (symbolH * index + symbolMarginB * index) + (symbolH * symbolsLen + symbolMarginB * symbolsLen);
+		var stopTime = this.getStopTime(index);
+
+		setTimeout(function() {
+			createjs.Sound.play(&quot;reelstop1&quot;);
+		}, stopTime - 300);
+
 		this.y = 0;
 		createjs.Tween
 			.get(this, {override: true, loop:false})
-			.to({y: yPos}, this.getStopTime(index), createjs.Ease.getElasticOut(2,5))
+			.to({y: yPos}, stopTime, createjs.Ease.getElasticOut(2,5))
 			.call(this.handleSpinComplete);
 	};
 
@@ -247,8 +266,6 @@ var G = G || {};
 	};
 
 	p.handleSpinComplete = function() {
-		console.log(&#x27;handleSpinComplte&#x27;);
-
 		this.reelSpinEnd.dispatch();
 	};
 

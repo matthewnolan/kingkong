@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>SignalDispatcher - kingkong</title>
+    <title>GameComponent - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -87,12 +87,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>SignalDispatcher Class</h1>
+<h1>GameComponent Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:9</code></a>
+            Defined in: <a href="../files/public_javascripts_app_GameComponent.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;GameComponent.js:9</code></a>
         </div>
 
 
@@ -100,14 +100,16 @@
 
 
 <div class="box intro">
-    <p>Central Hub for providing Signals for the app to dispatch and listen to.</p>
+    <p>Super class of any game component.  These game components are always initialised with the game&#39;s setup file and a signal dispatcher.
+This allows all game components (eg. ReelsComponent or WinLinesComponent) to access game setup and dispatch and receive events from other
+areas of the application</p>
 
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_SignalDispatcher" class="method item">
-            <h3 class="name"><code>SignalDispatcher</code></h3>
+        <div id="method_GameComponent" class="method item">
+            <h3 class="name"><code>GameComponent</code></h3>
         
                 <span class="paren">()</span>
         
@@ -121,7 +123,7 @@
             <div class="meta">
                         <p>
                         Defined in
-                <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:9</code></a>
+                <a href="../files/public_javascripts_app_GameComponent.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;GameComponent.js:9</code></a>
                 </p>
         
         
@@ -155,10 +157,6 @@
 
                     <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_handleReeSpinComplete">handleReeSpinComplete</a>
-
-                            </li>
-                            <li class="index-item method">
                                 <a href="#method_init">init</a>
 
                             </li>
@@ -170,15 +168,11 @@
 
                     <ul class="index-list properties">
                             <li class="index-item property">
-                                <a href="#property_gameComponents">gameComponents</a>
+                                <a href="#property_Setup">Setup</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_reelSpinComplete">reelSpinComplete</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_setup">setup</a>
+                                <a href="#property_signalDispatcher">signalDispatcher</a>
 
                             </li>
                     </ul>
@@ -190,40 +184,19 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_handleReeSpinComplete" class="method item">
-    <h3 class="name"><code>handleReeSpinComplete</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l60"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:60</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-
-
-
-</div>
 <div id="method_init" class="method item">
     <h3 class="name"><code>init</code></h3>
 
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>setup</code>
+                </li>
+                <li class="arg">
+                        <code>signalDispatcher</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
 
 
 
@@ -235,7 +208,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l38"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:38</code></a>
+        <a href="../files/public_javascripts_app_GameComponent.js.html#l37"><code>public&#x2F;javascripts&#x2F;app&#x2F;GameComponent.js:37</code></a>
         </p>
 
 
@@ -243,9 +216,36 @@
     </div>
 
     <div class="description">
-        
+        <p>initialises the setup and signalDispatcher for the component.</p>
+
     </div>
 
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">setup</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">signalDispatcher</code>
+                        <span class="type">G.SignalDispatcher</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
 
 
 
@@ -255,9 +255,9 @@
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-                    <div id="property_gameComponents" class="property item">
-                        <h3 class="name"><code>gameComponents</code></h3>
-                        <span class="type">G.GameComponent</span>
+                    <div id="property_Setup" class="property item">
+                        <h3 class="name"><code>Setup</code></h3>
+                        <span class="type">Null</span>
                     
                     
                     
@@ -266,22 +266,23 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l18"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:18</code></a>
+                            <a href="../files/public_javascripts_app_GameComponent.js.html#l30"><code>public&#x2F;javascripts&#x2F;app&#x2F;GameComponent.js:30</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            
+                            <p>Store the Setup</p>
+                    
                         </div>
                     
                     
                     
                     </div>
-                    <div id="property_reelSpinComplete" class="property item">
-                        <h3 class="name"><code>reelSpinComplete</code></h3>
-                        <span class="type">Signal</span>
+                    <div id="property_signalDispatcher" class="property item">
+                        <h3 class="name"><code>signalDispatcher</code></h3>
+                        <span class="type">G.SignalDispatcher</span>
                     
                     
                     
@@ -290,38 +291,15 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l30"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:30</code></a>
+                            <a href="../files/public_javascripts_app_GameComponent.js.html#l22"><code>public&#x2F;javascripts&#x2F;app&#x2F;GameComponent.js:22</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            
-                        </div>
+                            <p>Store for the SignalDispatcher allows us to dispatch and listen to Signals from the rest of the application</p>
                     
-                    
-                    
-                    </div>
-                    <div id="property_setup" class="property item">
-                        <h3 class="name"><code>setup</code></h3>
-                        <span class="type">Object</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/public_javascripts_app_SignalDispatcher.js.html#l24"><code>public&#x2F;javascripts&#x2F;app&#x2F;SignalDispatcher.js:24</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
                         </div>
                     
                     

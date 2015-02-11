@@ -38,11 +38,16 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
@@ -86,7 +91,7 @@
 <div class="box meta">
 
         <div class="extends">
-            Extends createjs.Container
+            Extends G.GameComponent
         </div>
 
         <div class="foundat">
@@ -157,6 +162,10 @@
 
                             </li>
                             <li class="index-item method">
+                                <a href="#method_hideWinLines">hideWinLines</a>
+
+                            </li>
+                            <li class="index-item method">
                                 <a href="#method_init">init</a>
 
                             </li>
@@ -172,7 +181,15 @@
 
                     <ul class="index-list properties extends">
                             <li class="index-item property">
-                                <a href="#property_setup">setup</a>
+                                <a href="#property_el">el</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_numLinesDrawn">numLinesDrawn</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_numLinesTotal">numLinesTotal</a>
 
                             </li>
                             <li class="index-item property">
@@ -203,7 +220,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l46"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:46</code></a>
+        <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l66"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:66</code></a>
         </p>
 
 
@@ -219,6 +236,37 @@
 
 
 </div>
+<div id="method_hideWinLines" class="method item">
+    <h3 class="name"><code>hideWinLines</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l110"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:110</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Hides all visible winLines</p>
+
+    </div>
+
+
+
+
+</div>
 <div id="method_init" class="method item">
     <h3 class="name"><code>init</code></h3>
 
@@ -226,6 +274,9 @@
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
                         <code>setup</code>
+                </li>
+                <li class="arg">
+                        <code>signalDispatcher</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -240,7 +291,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l37"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:37</code></a>
+        <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l56"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:56</code></a>
         </p>
 
 
@@ -259,6 +310,16 @@
                 <li class="param">
                         <code class="param-name">setup</code>
                         <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">signalDispatcher</code>
+                        <span class="type">G.SignalDispatcher</span>
 
 
                     <div class="param-description">
@@ -293,7 +354,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l76"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:76</code></a>
+        <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l123"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:123</code></a>
         </p>
 
 
@@ -331,9 +392,9 @@
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-                    <div id="property_setup" class="property item">
-                        <h3 class="name"><code>setup</code></h3>
-                        <span class="type">Object</span>
+                    <div id="property_el" class="property item">
+                        <h3 class="name"><code>el</code></h3>
+                        <span class="type">HTMLElement</span>
                     
                     
                     
@@ -342,14 +403,63 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l21"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:21</code></a>
+                            <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l43"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:43</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Stores game setup</p>
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_numLinesDrawn" class="property item">
+                        <h3 class="name"><code>numLinesDrawn</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l36"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:36</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Count number of lines drawn to compare with numLinesTotal to dispatch complete signal.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_numLinesTotal" class="property item">
+                        <h3 class="name"><code>numLinesTotal</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l29"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:29</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Store number of winLines to compare with drawn Lines and dispatch complete signal when drawn</p>
                     
                         </div>
                     
@@ -367,7 +477,7 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l29"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:29</code></a>
+                            <a href="../files/public_javascripts_app_WinLinesComponent.js.html#l22"><code>public&#x2F;javascripts&#x2F;app&#x2F;WinLinesComponent.js:22</code></a>
                             </p>
                     
                     

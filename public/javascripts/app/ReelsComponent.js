@@ -119,13 +119,17 @@ var G = G || {};
 	/**
 	 * Spins all reels with a delay configuration from setup.json
 	 * Stops reels if they are currently spinning.
+	 * Clear any winline/animation overlays
+	 * Play Spin Sound
 	 * @method spinReels
 	 */
 	p.spinReels = function() {
-		console.log('spinReels');
 		var self = this;
 		var i, len = this.reels.length, reel, delay;
 		var maxDelay = this.setup.reelAnimation.delay.max;
+
+		createjs.Sound.play("spin1");
+		this.signalDispatcher.reelSpinStart.dispatch();
 
 		var getDelay = function(i) {
 			if (self.setup.reelAnimation.delay.random === true) {
@@ -172,11 +176,8 @@ var G = G || {};
 	 * @Event reelSpinEnd
 	 */
 	p.reelSpinEnd = function() {
-		console.log('this.reelsSpinning=', this.reelsSpinning, this.signalDispatcher);
-
 		if (--this.reelsSpinning === 0)
 		{
-			console.log('REEL ANIM COMPLETE');
 			this.signalDispatcher.reelSpinComplete.dispatch();
 
 		}

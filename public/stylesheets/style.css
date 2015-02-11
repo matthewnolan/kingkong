@@ -9,6 +9,26 @@ body {
 
 #app {
     background-color: #000000;
+    float: left;
 }
 
-input.vertical { -webkit-appearance: slider-vertical; writing-mode: bt-lr; }
+#preloader {
+    width: 667px;
+    height: 350px;
+    position: relative;
+
+    background-color: black;
+
+}
+
+#preloader .content {
+    position: absolute;
+    width: 100%;
+    color: #5ba490;
+    font-size: 18px;
+}
+
+.vertical-center {
+    display: inline-block;
+
+}

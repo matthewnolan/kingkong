@@ -6,13 +6,27 @@ this.G = this.G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * Makes calls to the Server and receives messages.  It then calls the signal dispatcher to dispatch necessary events to GameComponents
+	 * @class ServerInterface
+	 * @constructor
+	 */
 	var ServerInterface = function() {};
 	var p = ServerInterface.prototype;
 	p.constructor = ServerInterface;
 
+	/**
+	 * @property signalDispatcher
+	 * @type {G.SignalDispatcher}
+	 */
+	p.signalDispatcher = null;
 
-	p.init = function() { 
-
+	/**
+	 * @method init
+	 * @param signalDispatcher
+	 */
+	p.init = function(signalDispatcher) {
+		this.signalDispatcher = signalDispatcher;
 	};
 
 	G.ServerInterface = ServerInterface;

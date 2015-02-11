@@ -33,9 +33,9 @@ module.exports = function (grunt) {
 		},
 		// Task configuration.
 		jasmine: {
-			src: 'public/javascripts/app/*.js',
+			src: 'public/javascripts/app/**/*.js',
 			options: {
-				specs: 'public/javascripts/test/*.js',
+				specs: 'public/javascripts/test/**/*.js',
 				vendor: 'public/javascripts/vendor/**/*.js',
 				version: '2.1.3'
 			}
@@ -76,6 +76,7 @@ module.exports = function (grunt) {
 				browser: true,
 				globals: {
 					"G": true,
+					"_" : true,
 					"createjs" : true,
 					"Stats" : true,
 					"signals" : true,
@@ -106,13 +107,12 @@ module.exports = function (grunt) {
 			}
 		},
 		watch: {
-			gruntfile: {
-				files: '<%= jshint.gruntfile.src %>',
-				tasks: ['jshint:gruntfile']
+			scripts: {
+				files: ['public/javascripts/app/**/*.js', 'public/javascripts/test/**/*.js'],
+				tasks: ['jshint', 'jasmine']
 			},
-			lib_test: {
-				files: '<%= jshint.lib_test.src %>',
-				tasks: ['jshint:lib_test', 'qunit']
+			options: {
+				spawn: true
 			}
 		},
 
@@ -245,6 +245,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-prompt');
 	grunt.loadNpmTasks('grunt-bump');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
+	grunt.loadNpmTasks('grunt-notify');
 
 	// chosse a documentation tool
 	grunt.loadNpmTasks('grunt-contrib-yuidoc');

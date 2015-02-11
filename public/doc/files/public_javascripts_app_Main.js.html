@@ -38,11 +38,16 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
@@ -147,9 +152,16 @@ this.G = this.G || {};
 		this.stage.scaleX = stageScale;
 		this.stage.scaleY = stageScale;
 
+		var styleWidth = (stageW * stageScale).toString() + &quot;px&quot;;
+		var styleHeight = (stageH * stageScale).toString() + &quot;px&quot;;
+
 		var mainCanvas = document.querySelector(&quot;#app&quot;);
-		mainCanvas.setAttribute(&quot;width&quot;, (stageW * stageScale).toString() + &quot;px&quot;);
-		mainCanvas.setAttribute(&quot;height&quot;, (stageH * stageScale).toString() + &quot;px&quot;);
+		mainCanvas.setAttribute(&quot;width&quot;, styleWidth );
+		mainCanvas.setAttribute(&quot;height&quot;, styleHeight);
+
+		var preloaderCover = document.querySelector(&quot;#preloader&quot;);
+		preloaderCover.style.width = styleWidth;
+		preloaderCover.style.height = styleHeight;
 
 		createjs.Ticker.on(&quot;tick&quot;, this.handleTick, this);
 		createjs.Ticker.setFPS(60);

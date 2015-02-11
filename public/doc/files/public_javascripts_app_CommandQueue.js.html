@@ -38,11 +38,16 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
@@ -103,39 +108,106 @@ var G = G || {};
 	var p = CommandQueue.prototype;
 	p.constructor = CommandQueue;
 
+	/**
+	 * @property setup
+	 * @type {Object}
+	 */
 	p.setup = null;
+
+	/**
+	 * @property queue
+	 * @type {G.Command[]}
+	 */
 	p.queue = [];
+
+	/**
+	 * @deprecated
+	 * @property timeout
+	 * @type {Number}
+	 */
 	p.timeout = null;
+
+	/**
+	 * @property shouldLoop
+	 * @type {boolean}
+	 */
 	p.shouldLoop = false;
+
+	/**
+	 * @property loopReturnIndex
+	 * @type {number}
+	 */
 	p.loopReturnIndex = 0;
+
+	/**
+	 * @property queueFactory
+	 * @type {G.QueueFactory}
+	 */
 	p.queueFactory = null;
+
+	/**
+	 * @property currentIndex
+	 * @type {number}
+	 */
 	p.currentIndex = 0;
 
-	p.init = function(setup) {
+	/**
+	 * @property gameComponents
+	 * @type {G.GameComponent[]}
+	 */
+	p.gameComponents = null;
+
+	/**
+	 * Saves reference to Setup and creates a QueueFactory
+	 * @method init
+	 * @param {Object} setup
+	 * @param {G.GameComponent[]} gameComponents
+	 */
+	p.init = function(setup, gameComponents) {
 		this.setup = setup;
-
+		this.gameComponents = gameComponents;
 		this.queueFactory = new G.QueueFactory();
-		this.queueFactory.init();
+		this.queueFactory.init(setup, gameComponents);
 	};
 
+	/**
+	 * Initialise a queue ready for playing
+	 * @method setupQueue
+	 * @todo introduce playNow option
+	 */
 	p.setupQueue = function() {
-		throw &quot;not implemented&quot;;
+		createjs.Sound.play(&quot;bonusStop1&quot;);
+
+		var winLinesComponent =_.find(this.gameComponents, function(component) {
+			return component instanceof G.WinLinesComponent;
+		});
+
+		var winLineCommand = new G.WinLineCommand();
+		winLineCommand.init(this.setup, winLinesComponent, [1,2,3,4,5]);
+		this.queue = [winLineCommand];
 	};
 
+	/**
+	 *  Plays the current queue, defined during setupQueue function.
+	 * @method play
+	 */
 	p.play = function() {
-
 		var len = this.queue.length;
 
 		if (len) {
-			this.executeNext(this.queue[this.currentIndex]);
+			this.executeNext();
 		}
-
 	};
 
-	p.executeNext = function(command) {
-
+	/**
+	 * executes the currently queued command and schedules a timeout to call the next in queue
+	 * or finishes if at the end of the queue, or loops back (loops back to first command in queue with a loopIndex).
+	 * @method executeNext
+	 */
+	p.executeNext = function() {
+		var self = this;
+		var command = this.queue[this.currentIndex];
 		command.execute();
-
 		if (command.loopIndex) {
 			this.loopReturnIndex = command.loopIndex;
 		}
@@ -146,19 +218,31 @@ var G = G || {};
 				this.currentIndex = 0;
 			} else {
 				this.flushQueue();
+				return;
 			}
 		}
 
-		this.timeout = setTimeout(this.executeNext, command.callNextDelay);
+		this.timeout = setTimeout(function() {
+			self.executeNext.call(self);
+		},  command.callNextDelay);
 	};
 
+	/**
+	 * @todo implement this
+	 * @method stop
+	 */
 	p.stop = function() {
 		throw &quot;not implemented&quot;;
 	};
 
+	/**
+	 * clears any timeouts and prepares class for a new queue.
+	 * @method flushQueue
+	 */
 	p.flushQueue = function() {
+		clearTimeout(this.timeout);
+		this.currentIndex = 0;
 		this.queue = [];
-		window.clearTimeout(this.timeout);
 	};
 
 	G.CommandQueue = CommandQueue;

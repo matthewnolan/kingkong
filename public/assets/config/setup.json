@@ -7,7 +7,7 @@
   "playWinAfterSpin": 1,
   "useLoader": 1,
   "soundVolume": 1,
-  "enableWinLineShadows": false,
+  "enableWinLineShadows": true,
   "winAnimDelay": 3000,
   "stageW": 667,
   "stageH": 375,
@@ -305,6 +305,17 @@
       "type": 2
     }
   ],
+  "soundsManifest": [{
+    "id": "spin1",
+    "src": "assets/sounds/JLspin01.mp3"
+  }, {
+    "id": "reelstop1",
+    "src": "assets/sounds/reelstop1.mp3"
+  }, {
+    "id": "bonusStop1",
+    "src": "assets/sounds/bonus_stop1.mp3"
+  }],
+
   "playModes": {
     "normal": {
       "winOnLine": true,

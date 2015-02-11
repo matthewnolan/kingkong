@@ -26,11 +26,38 @@ var G = G || {};
 	 */
 	p.winLines = [];
 
+	/**
+	 * Store number of winLines to compare with drawn Lines and dispatch complete signal when drawn
+	 * @property numLinesTotal
+	 * @type {number}
+	 */
+	p.numLinesTotoal = 0;
+
+	/**
+	 * Count number of lines drawn to compare with numLinesTotal to dispatch complete signal.
+	 * @property numLinesDrawn
+	 * @type {number}
+	 */
+	p.numLinesDrawn = 0;
+
+	/**
+	 * @property el
+	 * @type {HTMLElement}
+	 */
+	p.el = null;
+
+	/**
+	 *
+	 * @type {Number}
+	 */
+	p.loadPercentage = 0;
+
 
 	/**
 	 * Stores passed setup data
 	 * @method init
-	 * @param setup
+	 * @param {Object} setup
+	 * @param {G.SignalDispatcher} signalDispatcher
 	 */
 	p.init = function(setup, signalDispatcher) {
 		this.GameComponent_init(setup, signalDispatcher);
@@ -45,7 +72,9 @@ var G = G || {};
 		var marginL = this.setup.bezelMarginL;
 		var marginT = this.setup.bezelMarginT;
 		var winLines = this.setup.winLines;
-		var i, len = winLines.length;
+		var i, len = this.numLinesTotal = winLines.length;
+
+		this.el = document.querySelector("#preloader");
 
 		if (this.setup.enableShadowsOnDesktop) {
 			var filters = [];
@@ -58,16 +87,37 @@ var G = G || {};
 			winLine.init(this.setup, [0,0,0,0,0], winLines[i].data);
 			winLine.color = winLines[i].color;
 			this.addChild(winLine);
+			winLine.drawComplete.add(this.onWinLineDrawn, this);
 			winLine.drawComponent();
 			winLine.x = marginL;
 			winLine.y = marginT;
 			winLine.visible = false;
 			this.winLines.push(winLine);
 		}
+
+
+
+		//this.hideWinLines();
 	};
 
-	p.clearWinLines = function() {
+	p.onWinLineDrawn = function() {
+		++this.numLinesDrawn;
+		if (this.numLinesDrawn === this.numLinesTotal) {
+			this.el.style.visibility = "hidden";
+		}
+	};
 
+	/**
+	 * Hides all visible winLines
+	 * @method hideWinLines
+	 */
+	p.hideWinLines = function() {
+
+		var hideWinLine = function(winLine) {
+			winLine.visible = false;
+		};
+
+		_.each(this.winLines, hideWinLine);
 	};
 
 	/**

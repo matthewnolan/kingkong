@@ -10,7 +10,7 @@ this.G = this.G || {};
 	 * Preloader is responsible loading Setup and assets into the Game.
 	 * These include sounds, spritesheets, and data in the form of json files
 	 * It will then dispatch Signals (Events) back to the Game for notification and safe caching of assets.
-	 * @class
+	 * @class Preloader
 	 * @constructor
 	 */
 	var Preloader = function() {};
@@ -48,6 +48,7 @@ this.G = this.G || {};
 		this.assetsLoader.on("error", this.handleAssetsError, this);
 		this.assetsLoader.on("progress", this.handleAssetsProgress, this);
 		this.assetsLoader.on("complete", this.handleAssetsLoaded, this);
+		this.assetsLoader.installPlugin(createjs.Sound);
 	};
 
 	/**
@@ -70,8 +71,8 @@ this.G = this.G || {};
 	 * loadGameAssets - loads spritesheets defined in Setup
 	 */
 	p.loadGameAssets = function() {
-		//console.log('loadGameAssets', this.game.setup.spritesManifest);
 		this.assetsLoader.loadManifest(this.game.setup.spritesManifest);
+		this.assetsLoader.loadManifest(this.game.setup.soundsManifest);
 	};
 
 	/**
@@ -82,19 +83,36 @@ this.G = this.G || {};
 	/**
 	 * handleAssetsProgress - handle loading of game assets
 	 */
-	p.handleAssetsProgress = function() { };
+	p.handleAssetsProgress = function(e) {
+		var el = document.querySelector("#loadPercentage");
+		el.innerHTML = Math.round(e.progress * 100).toString() + "%";
+	};
 
 	/**
 	 * handleAssetsLoaded - dispatch a Signal to Game containing loaded Assets
 	 */
 	p.handleAssetsLoaded = function() {
+
+		var self = this;
+
 		var assets = {
 			spriteSheetBigWin: this.assetsLoader.getResult('bigWinAnim'),
 			spriteSheetStatics: this.assetsLoader.getResult('staticImages'),
 			spriteSheetSymbolAnims: this.assetsLoader.getResult('symbolAnims')
 		};
 
-		this.assetsLoaded.dispatch(assets);
+		var el = document.querySelector("#loadState");
+		el.innerHTML = "Loaded";
+
+		el = document.querySelector("#initializeState");
+		el.innerHTML = "Initializing...";
+
+
+		setTimeout(function(){
+			self.assetsLoaded.dispatch(assets);
+		}, 50);
+
+
 	};
 
 	G.Preloader = Preloader;

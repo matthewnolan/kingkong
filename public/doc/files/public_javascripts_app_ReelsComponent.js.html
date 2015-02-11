@@ -38,11 +38,16 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
@@ -97,14 +102,14 @@ var G = G || {};
 	/**
 	 * GameComponent responsible for drawing symbols to each reel and spinning them.
 	 * @class ReelsComponent
-	 * @extends createjs.Container
+	 * @extends G.GameComponent
 	 * @constructor
 	 */
 	var ReelsComponent = function() {
-		this.Container_constructor();
+		this.GameComponent_constructor();
 	};
 
-	var p = createjs.extend(ReelsComponent, createjs.Container);
+	var p = createjs.extend(ReelsComponent, G.GameComponent);
 	p.constructor = ReelsComponent;
 
 	/**
@@ -112,18 +117,6 @@ var G = G || {};
 	 * @type {Object}
 	 */
 	p.symbolSprites = null;
-
-	/**
-	 * @property signalDispatcher
-	 * @type {G.SignalDispatcher}
-	 */
-	p.singalDispatcher = null;
-
-	/**
-	 * @property setup
-	 * @type {Object}
-	 */
-	p.setup = null;
 
 	/**
 	 * @property reelData
@@ -159,13 +152,13 @@ var G = G || {};
 	/**
 	 * @method init
 	 * @param setup {Object}
+	 * @param signalDispatcher {G.SignalDispatcher}
 	 * @param symbolSprites {Object}
 	 */
-	p.init = function(setup, symbolSprites) {
-		this.setup = setup;
-		this.symbolSprites = symbolSprites;
+	p.init = function(setup, signalDispatcher, symbolSprites) {
+		this.GameComponent_init(setup, signalDispatcher);
 		this.reelsMap = setup.reelMap;
-
+		this.symbolSprites = symbolSprites;
 		this.initDomEvents();
 
 		if (setup.reelAnimation.shuffleReels) {
@@ -219,13 +212,17 @@ var G = G || {};
 	/**
 	 * Spins all reels with a delay configuration from setup.json
 	 * Stops reels if they are currently spinning.
+	 * Clear any winline/animation overlays
+	 * Play Spin Sound
 	 * @method spinReels
 	 */
 	p.spinReels = function() {
-		console.log(&#x27;spinReels&#x27;);
 		var self = this;
 		var i, len = this.reels.length, reel, delay;
 		var maxDelay = this.setup.reelAnimation.delay.max;
+
+		createjs.Sound.play(&quot;spin1&quot;);
+		this.signalDispatcher.reelSpinStart.dispatch();
 
 		var getDelay = function(i) {
 			if (self.setup.reelAnimation.delay.random === true) {
@@ -272,11 +269,8 @@ var G = G || {};
 	 * @Event reelSpinEnd
 	 */
 	p.reelSpinEnd = function() {
-		console.log(&#x27;this.reelsSpinning=&#x27;, this.reelsSpinning, this.signalDispatcher);
-
 		if (--this.reelsSpinning === 0)
 		{
-			console.log(&#x27;REEL ANIM COMPLETE&#x27;);
 			this.signalDispatcher.reelSpinComplete.dispatch();
 
 		}
@@ -295,7 +289,7 @@ var G = G || {};
 		});
 	};
 
-	G.ReelsComponent = createjs.promote(ReelsComponent, &quot;Container&quot;);
+	G.ReelsComponent = createjs.promote(ReelsComponent, &quot;GameComponent&quot;);
 
 })();
     </pre>

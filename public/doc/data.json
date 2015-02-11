@@ -6,6 +6,22 @@
         "url": ""
     },
     "files": {
+        "public/javascripts/app/commands/WinLineCommand.js": {
+            "name": "public/javascripts/app/commands/WinLineCommand.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/Command.js": {
+            "name": "public/javascripts/app/Command.js",
+            "modules": {},
+            "classes": {
+                "": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "public/javascripts/app/CommandQueue.js": {
             "name": "public/javascripts/app/CommandQueue.js",
             "modules": {},
@@ -24,6 +40,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "public/javascripts/app/GameComponent.js": {
+            "name": "public/javascripts/app/GameComponent.js",
+            "modules": {},
+            "classes": {
+                "GameComponent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "public/javascripts/app/Main.js": {
             "name": "public/javascripts/app/Main.js",
             "modules": {},
@@ -37,7 +62,16 @@
             "name": "public/javascripts/app/Preloader.js",
             "modules": {},
             "classes": {
-                "": 1
+                "Preloader": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/QueueFactory.js": {
+            "name": "public/javascripts/app/QueueFactory.js",
+            "modules": {},
+            "classes": {
+                "QueueFactory": 1
             },
             "fors": {},
             "namespaces": {}
@@ -45,7 +79,9 @@
         "public/javascripts/app/Reel.js": {
             "name": "public/javascripts/app/Reel.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "Reel": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -54,6 +90,15 @@
             "modules": {},
             "classes": {
                 "ReelsComponent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/ServerInterface.js": {
+            "name": "public/javascripts/app/ServerInterface.js",
+            "modules": {},
+            "classes": {
+                "ServerInterface": 1
             },
             "fors": {},
             "namespaces": {}
@@ -88,6 +133,11 @@
     },
     "modules": {},
     "classes": {
+        "": {
+            "file": "public/javascripts/app/Command.js",
+            "line": 9,
+            "is_constructor": 1
+        },
         "CommandQueue": {
             "name": "CommandQueue",
             "shortname": "CommandQueue",
@@ -114,6 +164,19 @@
             "description": "Initialises preloading of assets, stores Setup, GameState, and GameComponents\nGameComponents are added to Stage\nWires ServerInterface to GameComponents using a SignalDispatcher\nUser Interface Events can defined set here.",
             "is_constructor": 1
         },
+        "GameComponent": {
+            "name": "GameComponent",
+            "shortname": "GameComponent",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/GameComponent.js",
+            "line": 9,
+            "description": "Super class of any game component.  These game components are always initialised with the game's setup file and a signal dispatcher.\nThis allows all game components (eg. ReelsComponent or WinLinesComponent) to access game setup and dispatch and receive events from other\nareas of the application",
+            "is_constructor": 1
+        },
         "Main": {
             "name": "Main",
             "shortname": "Main",
@@ -127,10 +190,44 @@
             "description": "The Main Class should give the app its entry point.\nNo other entry points should be used by the index.html",
             "is_constructor": 1
         },
-        "": {
+        "Preloader": {
+            "name": "Preloader",
+            "shortname": "Preloader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
             "file": "public/javascripts/app/Preloader.js",
             "line": 9,
             "description": "Preloader is responsible loading Setup and assets into the Game.\nThese include sounds, spritesheets, and data in the form of json files\nIt will then dispatch Signals (Events) back to the Game for notification and safe caching of assets.",
+            "is_constructor": 1
+        },
+        "QueueFactory": {
+            "name": "QueueFactory",
+            "shortname": "QueueFactory",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/QueueFactory.js",
+            "line": 9,
+            "description": "Constructs queues for the CommandQueue for the purpose of displaying winning animations",
+            "is_constructor": 1
+        },
+        "Reel": {
+            "name": "Reel",
+            "shortname": "Reel",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/Reel.js",
+            "line": 9,
+            "description": "One Reel defined by this class. Contains a sprite map for mapping sprite ids to symbol sprites.\nSets up and executes the spin animation Tween when reels are spun.\nStops the tween when spinning is ended and signals to the ReelComponent.",
+            "extends": "createjs.Container",
             "is_constructor": 1
         },
         "ReelsComponent": {
@@ -144,7 +241,20 @@
             "file": "public/javascripts/app/ReelsComponent.js",
             "line": 9,
             "description": "GameComponent responsible for drawing symbols to each reel and spinning them.",
-            "extends": "createjs.Container",
+            "extends": "G.GameComponent",
+            "is_constructor": 1
+        },
+        "ServerInterface": {
+            "name": "ServerInterface",
+            "shortname": "ServerInterface",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/ServerInterface.js",
+            "line": 9,
+            "description": "Makes calls to the Server and receives messages.  It then calls the signal dispatcher to dispatch necessary events to GameComponents",
             "is_constructor": 1
         },
         "SignalDispatcher": {
@@ -183,11 +293,234 @@
             "file": "public/javascripts/app/WinLinesComponent.js",
             "line": 9,
             "description": "GameComponent for drawing Win Lines",
-            "extends": "createjs.Container",
+            "extends": "G.GameComponent",
             "is_constructor": 1
         }
     },
     "classitems": [
+        {
+            "file": "public/javascripts/app/commands/WinLineCommand.js",
+            "line": 15,
+            "description": "this array defines the indexes of winLines to show in this command.  Based on setup.winLines",
+            "itemtype": "property",
+            "name": "winLineIndexes",
+            "default": "[0] - show the setup.winLines[0]",
+            "type": "{number[]}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/commands/WinLineCommand.js",
+            "line": 23,
+            "params": [
+                {
+                    "name": "setup",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "gameComponent",
+                    "description": "",
+                    "type": "G.WinLinesComponent"
+                },
+                {
+                    "name": "winLineIndexes",
+                    "description": "- indexes of winLines based on setup.winLines which we'd like to show",
+                    "type": "Number[]"
+                }
+            ],
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/commands/WinLineCommand.js",
+            "line": 34,
+            "description": "Hide Previously drawn winLines and show more winLines.",
+            "itemtype": "method",
+            "name": "execute",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/Command.js",
+            "line": 17,
+            "description": "Set to any value other than 0 to make the Queue loop back to this command when finished",
+            "itemtype": "property",
+            "name": "loopIndex",
+            "default": "0 - No looping",
+            "type": "{number}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/Command.js",
+            "line": 25,
+            "description": "duration of time in millis to allow this command to execute",
+            "itemtype": "property",
+            "name": "callNextDelay",
+            "default": "2000",
+            "type": "{number}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/Command.js",
+            "line": 33,
+            "itemtype": "property",
+            "name": "setup",
+            "type": "{Object}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/Command.js",
+            "line": 39,
+            "itemtype": "property",
+            "name": "gameComponent",
+            "type": "{G.GameComponent}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/Command.js",
+            "line": 45,
+            "params": [
+                {
+                    "name": "setup",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "gameComponent",
+                    "description": "",
+                    "type": "G.GameComponent"
+                }
+            ],
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 18,
+            "itemtype": "property",
+            "name": "setup",
+            "type": "{Object}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 24,
+            "itemtype": "property",
+            "name": "queue",
+            "type": "{G.Command[]}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 30,
+            "deprecated": true,
+            "itemtype": "property",
+            "name": "timeout",
+            "type": "{Number}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 37,
+            "itemtype": "property",
+            "name": "shouldLoop",
+            "type": "{boolean}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 43,
+            "itemtype": "property",
+            "name": "loopReturnIndex",
+            "type": "{number}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 49,
+            "itemtype": "property",
+            "name": "queueFactory",
+            "type": "{G.QueueFactory}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 55,
+            "itemtype": "property",
+            "name": "currentIndex",
+            "type": "{number}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 61,
+            "itemtype": "property",
+            "name": "gameComponents",
+            "type": "{G.GameComponent[]}",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 67,
+            "description": "Saves reference to Setup and creates a QueueFactory",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "setup",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "gameComponents",
+                    "description": "",
+                    "type": "G.GameComponent[]"
+                }
+            ],
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 80,
+            "description": "Initialise a queue ready for playing",
+            "itemtype": "method",
+            "name": "setupQueue",
+            "todo": [
+                "introduce playNow option"
+            ],
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 97,
+            "description": "Plays the current queue, defined during setupQueue function.",
+            "itemtype": "method",
+            "name": "play",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 109,
+            "description": "executes the currently queued command and schedules a timeout to call the next in queue\nor finishes if at the end of the queue, or loops back (loops back to first command in queue with a loopIndex).",
+            "itemtype": "method",
+            "name": "executeNext",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 137,
+            "todo": [
+                "implement this"
+            ],
+            "itemtype": "method",
+            "name": "stop",
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/CommandQueue.js",
+            "line": 145,
+            "description": "clears any timeouts and prepares class for a new queue.",
+            "itemtype": "method",
+            "name": "flushQueue",
+            "class": "CommandQueue"
+        },
         {
             "file": "public/javascripts/app/Game.js",
             "line": 21,
@@ -241,6 +574,14 @@
         {
             "file": "public/javascripts/app/Game.js",
             "line": 62,
+            "itemtype": "property",
+            "name": "gameComponents",
+            "type": "{G.GameComponent[]}",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/Game.js",
+            "line": 68,
             "description": "init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.\nStarts Preloading of assets",
             "params": [
                 {
@@ -258,7 +599,7 @@
         },
         {
             "file": "public/javascripts/app/Game.js",
-            "line": 83,
+            "line": 86,
             "description": "SignalHandler which saves setup data when loaded by Preloader",
             "params": [
                 {
@@ -273,8 +614,8 @@
         },
         {
             "file": "public/javascripts/app/Game.js",
-            "line": 92,
-            "description": "Signal Handler\nonAssetsLoadComplete: Asets have been loaded.  Now initialise the Display",
+            "line": 95,
+            "description": "Signal Handler\nonAssetsLoadComplete: Asets have been loaded.  Now initialise the Display,\nInitialise UI Events, and Create a SignalDispatcher",
             "params": [
                 {
                     "name": "assets",
@@ -288,7 +629,7 @@
         },
         {
             "file": "public/javascripts/app/Game.js",
-            "line": 105,
+            "line": 112,
             "description": "setupDisplay: Start layering Containers and GameComponents.  Mask the stage for reels.\nnb. These are potentially expensive cpu operations, but everything done here is done after Preload and during app initialisation.\nAny filters applied to display objects will magnify the length of time this function takes to complete.",
             "itemtype": "method",
             "name": "setupDisplay",
@@ -296,7 +637,7 @@
         },
         {
             "file": "public/javascripts/app/Game.js",
-            "line": 147,
+            "line": 155,
             "description": "User Control is initialised: Keyboard control / touch controls\nif User Control shouldn't be enabled during app initialisation phase, then execute this function later.",
             "todo": [
                 "- configure a way to turn on/off user interaction events."
@@ -304,6 +645,45 @@
             "itemtype": "method",
             "name": "initUIEvents",
             "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/GameComponent.js",
+            "line": 22,
+            "description": "Store for the SignalDispatcher allows us to dispatch and listen to Signals from the rest of the application",
+            "itemtype": "property",
+            "name": "signalDispatcher",
+            "required": 1,
+            "type": "{G.SignalDispatcher}",
+            "class": "GameComponent"
+        },
+        {
+            "file": "public/javascripts/app/GameComponent.js",
+            "line": 30,
+            "description": "Store the Setup",
+            "itemtype": "property",
+            "name": "Setup",
+            "type": "{null}",
+            "class": "GameComponent"
+        },
+        {
+            "file": "public/javascripts/app/GameComponent.js",
+            "line": 37,
+            "description": "initialises the setup and signalDispatcher for the component.",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "setup",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "signalDispatcher",
+                    "description": "",
+                    "type": "G.SignalDispatcher"
+                }
+            ],
+            "class": "GameComponent"
         },
         {
             "file": "public/javascripts/app/Main.js",
@@ -342,7 +722,7 @@
         },
         {
             "file": "public/javascripts/app/Main.js",
-            "line": 77,
+            "line": 84,
             "description": "Render Tick which updates Stage and any profiling tool.",
             "itemtype": "method",
             "name": "handleTick",
@@ -353,7 +733,7 @@
             "line": 21,
             "constant": "SETUP_URL - path of setup.json file relative to public root.",
             "type": "{string}",
-            "class": "ReelsComponent"
+            "class": "Preloader"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
@@ -368,17 +748,17 @@
             "todo": [
                 "only pass in Setup"
             ],
-            "class": "ReelsComponent"
+            "class": "Preloader"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
-            "line": 53,
+            "line": 54,
             "description": "startLoad - starts loading setup.json file",
-            "class": "ReelsComponent"
+            "class": "Preloader"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
-            "line": 60,
+            "line": 61,
             "description": "handleSetupLoaded - dispatches a Signal to Game then loads Game assets",
             "params": [
                 {
@@ -386,45 +766,65 @@
                     "description": ""
                 }
             ],
-            "class": "ReelsComponent"
+            "class": "Preloader"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
-            "line": 69,
+            "line": 70,
             "description": "loadGameAssets - loads spritesheets defined in Setup",
-            "class": "ReelsComponent"
+            "class": "Preloader"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
-            "line": 77,
+            "line": 78,
             "description": "handleAssetsError - handle errors in asset loading phase gracefully",
-            "class": "ReelsComponent"
+            "class": "Preloader"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
-            "line": 82,
+            "line": 83,
             "description": "handleAssetsProgress - handle loading of game assets",
-            "class": "ReelsComponent"
+            "class": "Preloader"
         },
         {
             "file": "public/javascripts/app/Preloader.js",
-            "line": 87,
+            "line": 91,
             "description": "handleAssetsLoaded - dispatch a Signal to Game containing loaded Assets",
-            "class": "ReelsComponent"
+            "class": "Preloader"
+        },
+        {
+            "file": "public/javascripts/app/QueueFactory.js",
+            "line": 19,
+            "description": "Saves reference to Setup and GameComponents",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "setup",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "gameComponents",
+                    "description": "",
+                    "type": "G.GameComponent[]"
+                }
+            ],
+            "class": "QueueFactory"
         },
         {
             "file": "public/javascripts/app/Reel.js",
-            "line": 29,
+            "line": 37,
             "description": "Dynamically alter the speed of reels by changing this percentage:\neg. 0.5 = half speed reels",
             "type": "{number}",
-            "class": "ReelsComponent"
+            "class": "Reel"
         },
         {
             "file": "public/javascripts/app/Reel.js",
-            "line": 36,
+            "line": 44,
             "description": "Maximum Speed the reels can spin in pixels per second",
             "type": "{number}",
-            "class": "ReelsComponent"
+            "class": "Reel"
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
@@ -438,29 +838,13 @@
             "file": "public/javascripts/app/ReelsComponent.js",
             "line": 28,
             "itemtype": "property",
-            "name": "signalDispatcher",
-            "type": "{G.SignalDispatcher}",
-            "class": "ReelsComponent"
-        },
-        {
-            "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 34,
-            "itemtype": "property",
-            "name": "setup",
-            "type": "{Object}",
-            "class": "ReelsComponent"
-        },
-        {
-            "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 40,
-            "itemtype": "property",
             "name": "reelData",
             "type": "{Number[]}",
             "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 52,
+            "line": 40,
             "itemtype": "property",
             "name": "reels",
             "type": "{G.Reel[]}",
@@ -468,7 +852,7 @@
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 58,
+            "line": 46,
             "itemtype": "property",
             "name": "reelMap",
             "type": "{Object}",
@@ -476,7 +860,7 @@
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 64,
+            "line": 52,
             "description": "Number of reels currently spinning",
             "itemtype": "property",
             "name": "reelsSpinning",
@@ -485,7 +869,7 @@
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 71,
+            "line": 59,
             "itemtype": "method",
             "name": "init",
             "params": [
@@ -493,6 +877,11 @@
                     "name": "setup",
                     "description": "",
                     "type": "Object"
+                },
+                {
+                    "name": "signalDispatcher",
+                    "description": "",
+                    "type": "G.SignalDispatcher"
                 },
                 {
                     "name": "symbolSprites",
@@ -504,29 +893,29 @@
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 88,
+            "line": 76,
             "itemtype": "method",
             "name": "shuffleReels",
             "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 113,
+            "line": 101,
             "itemtype": "method",
             "name": "drawReels",
             "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 131,
-            "description": "Spins all reels with a delay configuration from setup.json\nStops reels if they are currently spinning.",
+            "line": 119,
+            "description": "Spins all reels with a delay configuration from setup.json\nStops reels if they are currently spinning.\nClear any winline/animation overlays\nPlay Spin Sound",
             "itemtype": "method",
             "name": "spinReels",
             "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 169,
+            "line": 161,
             "description": "method updateSpinSpeed",
             "params": [
                 {
@@ -539,7 +928,7 @@
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 182,
+            "line": 174,
             "description": "Signal dispatched when a reel spin is finished",
             "itemtype": "event",
             "name": "reelSpinEnd",
@@ -547,15 +936,52 @@
         },
         {
             "file": "public/javascripts/app/ReelsComponent.js",
-            "line": 197,
+            "line": 186,
             "description": "DOM events\nfor development only",
             "itemtype": "method",
             "name": "initDomEvents",
             "class": "ReelsComponent"
         },
         {
+            "file": "public/javascripts/app/ServerInterface.js",
+            "line": 18,
+            "itemtype": "property",
+            "name": "signalDispatcher",
+            "type": "{G.SignalDispatcher}",
+            "class": "ServerInterface"
+        },
+        {
+            "file": "public/javascripts/app/ServerInterface.js",
+            "line": 24,
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "signalDispatcher",
+                    "description": ""
+                }
+            ],
+            "class": "ServerInterface"
+        },
+        {
             "file": "public/javascripts/app/SignalDispatcher.js",
             "line": 18,
+            "itemtype": "property",
+            "name": "gameComponents",
+            "type": "{G.GameComponent[]}",
+            "class": "SignalDispatcher"
+        },
+        {
+            "file": "public/javascripts/app/SignalDispatcher.js",
+            "line": 24,
+            "itemtype": "property",
+            "name": "setup",
+            "type": "{Object}",
+            "class": "SignalDispatcher"
+        },
+        {
+            "file": "public/javascripts/app/SignalDispatcher.js",
+            "line": 30,
             "itemtype": "property",
             "name": "reelSpinComplete",
             "type": "{Signal}",
@@ -563,14 +989,14 @@
         },
         {
             "file": "public/javascripts/app/SignalDispatcher.js",
-            "line": 24,
+            "line": 38,
             "itemtype": "method",
             "name": "init",
             "class": "SignalDispatcher"
         },
         {
             "file": "public/javascripts/app/SignalDispatcher.js",
-            "line": 35,
+            "line": 60,
             "itemtype": "method",
             "name": "handleReeSpinComplete",
             "class": "SignalDispatcher"
@@ -659,6 +1085,14 @@
         {
             "file": "public/javascripts/app/WinLine.js",
             "line": 84,
+            "itemtype": "property",
+            "name": "drawComplete",
+            "type": "{Signal}",
+            "class": "WinLine"
+        },
+        {
+            "file": "public/javascripts/app/WinLine.js",
+            "line": 90,
             "description": "Stores the WinLine Data in preparation for drawing",
             "itemtype": "method",
             "name": "init",
@@ -683,7 +1117,7 @@
         },
         {
             "file": "public/javascripts/app/WinLine.js",
-            "line": 100,
+            "line": 106,
             "description": "Draws the WinLine according to stored Data",
             "itemtype": "method",
             "name": "draw",
@@ -691,7 +1125,7 @@
         },
         {
             "file": "public/javascripts/app/WinLine.js",
-            "line": 205,
+            "line": 211,
             "description": "initialises DropShadow variables",
             "itemtype": "method",
             "name": "setupDropShadow",
@@ -699,7 +1133,7 @@
         },
         {
             "file": "public/javascripts/app/WinLine.js",
-            "line": 224,
+            "line": 230,
             "description": "initialises GlowFilter variables",
             "itemtype": "method",
             "name": "setupGlowFilter",
@@ -707,17 +1141,7 @@
         },
         {
             "file": "public/javascripts/app/WinLinesComponent.js",
-            "line": 21,
-            "description": "Stores game setup",
-            "itemtype": "property",
-            "name": "setup",
-            "required": 1,
-            "type": "{Object}",
-            "class": "WinLinesComponent"
-        },
-        {
-            "file": "public/javascripts/app/WinLinesComponent.js",
-            "line": 29,
+            "line": 22,
             "description": "Stores win lines",
             "itemtype": "property",
             "name": "winLines",
@@ -726,21 +1150,59 @@
         },
         {
             "file": "public/javascripts/app/WinLinesComponent.js",
-            "line": 37,
+            "line": 29,
+            "description": "Store number of winLines to compare with drawn Lines and dispatch complete signal when drawn",
+            "itemtype": "property",
+            "name": "numLinesTotal",
+            "type": "{number}",
+            "class": "WinLinesComponent"
+        },
+        {
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 36,
+            "description": "Count number of lines drawn to compare with numLinesTotal to dispatch complete signal.",
+            "itemtype": "property",
+            "name": "numLinesDrawn",
+            "type": "{number}",
+            "class": "WinLinesComponent"
+        },
+        {
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 43,
+            "itemtype": "property",
+            "name": "el",
+            "type": "{HTMLElement}",
+            "class": "WinLinesComponent"
+        },
+        {
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 49,
+            "type": "{Number}",
+            "class": "WinLinesComponent"
+        },
+        {
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 56,
             "description": "Stores passed setup data",
             "itemtype": "method",
             "name": "init",
             "params": [
                 {
                     "name": "setup",
-                    "description": ""
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "signalDispatcher",
+                    "description": "",
+                    "type": "G.SignalDispatcher"
                 }
             ],
             "class": "WinLinesComponent"
         },
         {
             "file": "public/javascripts/app/WinLinesComponent.js",
-            "line": 46,
+            "line": 66,
             "description": "draws winLines to stage in an invisible state ready for displaying later",
             "itemtype": "method",
             "name": "drawComponent",
@@ -748,7 +1210,15 @@
         },
         {
             "file": "public/javascripts/app/WinLinesComponent.js",
-            "line": 76,
+            "line": 110,
+            "description": "Hides all visible winLines",
+            "itemtype": "method",
+            "name": "hideWinLines",
+            "class": "WinLinesComponent"
+        },
+        {
+            "file": "public/javascripts/app/WinLinesComponent.js",
+            "line": 123,
             "description": "Shows all winlines at the passed indexes of setup.json winLines array",
             "itemtype": "method",
             "name": "showWinLinByIndexes",
@@ -776,8 +1246,16 @@
             "line": " public/javascripts/app/WinLine.js:31"
         },
         {
+            "message": "Missing item type",
+            "line": " public/javascripts/app/commands/WinLineCommand.js:23"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public/javascripts/app/Command.js:45"
+        },
+        {
             "message": "Missing item type\ninit: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.\nStarts Preloading of assets",
-            "line": " public/javascripts/app/Game.js:62"
+            "line": " public/javascripts/app/Game.js:68"
         },
         {
             "message": "Missing item type",
@@ -789,39 +1267,43 @@
         },
         {
             "message": "Missing item type\nstartLoad - starts loading setup.json file",
-            "line": " public/javascripts/app/Preloader.js:53"
+            "line": " public/javascripts/app/Preloader.js:54"
         },
         {
             "message": "Missing item type\nhandleSetupLoaded - dispatches a Signal to Game then loads Game assets",
-            "line": " public/javascripts/app/Preloader.js:60"
+            "line": " public/javascripts/app/Preloader.js:61"
         },
         {
             "message": "Missing item type\nloadGameAssets - loads spritesheets defined in Setup",
-            "line": " public/javascripts/app/Preloader.js:69"
+            "line": " public/javascripts/app/Preloader.js:70"
         },
         {
             "message": "Missing item type\nhandleAssetsError - handle errors in asset loading phase gracefully",
-            "line": " public/javascripts/app/Preloader.js:77"
+            "line": " public/javascripts/app/Preloader.js:78"
         },
         {
             "message": "Missing item type\nhandleAssetsProgress - handle loading of game assets",
-            "line": " public/javascripts/app/Preloader.js:82"
+            "line": " public/javascripts/app/Preloader.js:83"
         },
         {
             "message": "Missing item type\nhandleAssetsLoaded - dispatch a Signal to Game containing loaded Assets",
-            "line": " public/javascripts/app/Preloader.js:87"
+            "line": " public/javascripts/app/Preloader.js:91"
         },
         {
             "message": "Missing item type\nDynamically alter the speed of reels by changing this percentage:\neg. 0.5 = half speed reels",
-            "line": " public/javascripts/app/Reel.js:29"
+            "line": " public/javascripts/app/Reel.js:37"
         },
         {
             "message": "Missing item type\nMaximum Speed the reels can spin in pixels per second",
-            "line": " public/javascripts/app/Reel.js:36"
+            "line": " public/javascripts/app/Reel.js:44"
         },
         {
             "message": "Missing item type\nmethod updateSpinSpeed",
-            "line": " public/javascripts/app/ReelsComponent.js:169"
+            "line": " public/javascripts/app/ReelsComponent.js:161"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public/javascripts/app/WinLinesComponent.js:49"
         }
     ]
 }

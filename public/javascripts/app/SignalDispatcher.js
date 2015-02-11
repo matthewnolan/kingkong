@@ -16,21 +16,56 @@ var G = G || {};
 	p.constructor = SignalDispatcher;
 
 	/**
+	 * @property gameComponents
+	 * @type {G.GameComponent[]}
+	 */
+	p.gameComponents = null;
+
+	/**
+	 * @property setup
+	 * @type {Object}
+	 */
+	p.setup = null;
+
+	/**
 	 * @property reelSpinComplete
 	 * @type {Signal}
 	 */
 	p.reelSpinComplete = new signals.Signal();
 
 	/**
-	 * @method init
+	 * @property reelSpinStart
+	 * @type {Signal}
 	 */
-	p.init = function() {
+	p.reelSpinStart = new signals.Signal();
 
+	/**
+	 *
+	 * @method init
+	 * @param {Object} setup
+	 * @param {G.GameComponent[]} gameComponents
+	 */
+	p.init = function(setup, gameComponents) {
+		this.setup = setup;
+		this.gameComponents = gameComponents;
 		this.commandQueue = new G.CommandQueue();
-		this.commandQueue.init();
-
+		this.commandQueue.init(setup, gameComponents);
+		this.reelSpinStart.add(this.handleReelSpinStart, this);
 		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
 	};
+
+	/**
+	 * @method handleReelSpinStart
+	 */
+	p.handleReelSpinStart = function() {
+		var winLinesComponent = _.find(this.gameComponents, function(component) {
+			return component instanceof G.WinLinesComponent;
+		});
+
+		winLinesComponent.hideWinLines();
+	};
+
+
 
 	/**
 	 * @method handleReeSpinComplete

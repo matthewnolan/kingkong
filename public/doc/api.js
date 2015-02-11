@@ -3,8 +3,13 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "CommandQueue",
         "Game",
+        "GameComponent",
         "Main",
+        "Preloader",
+        "QueueFactory",
+        "Reel",
         "ReelsComponent",
+        "ServerInterface",
         "SignalDispatcher",
         "WinLine",
         "WinLinesComponent",

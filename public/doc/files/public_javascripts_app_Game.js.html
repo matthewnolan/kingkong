@@ -38,11 +38,16 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
                                 <li><a href="../classes/.html"></a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
@@ -148,6 +153,12 @@ this.G = this.G || {};
 	};
 
 	/**
+	 * @property gameComponents
+	 * @type {G.GameComponent[]}
+	 */
+	p.gameComponents = [];
+
+	/**
 	 * init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.
 	 * Starts Preloading of assets
 	 * @param {createjs.Stage} stage - The root Display Container which is added to Canvas
@@ -162,9 +173,6 @@ this.G = this.G || {};
 		preloader.setupComplete.add(this.onSetupLoaded, this);
 		preloader.assetsLoaded.add(this.onAssetsLoadComplete, this);
 		preloader.startLoad();
-
-		this.signalDispatcher = new G.SignalDispatcher();
-
 	};
 
 
@@ -179,15 +187,19 @@ this.G = this.G || {};
 
 	/**
 	 * Signal Handler
-	 * onAssetsLoadComplete: Asets have been loaded.  Now initialise the Display
+	 * onAssetsLoadComplete: Asets have been loaded.  Now initialise the Display,
+	 * Initialise UI Events, and Create a SignalDispatcher
 	 * @param {Object} assets
 	 * @event onAssetsLoadComplete
 	 */
 	p.onAssetsLoadComplete = function(assets) {
 		this.assets = assets;
+
+		this.signalDispatcher = new G.SignalDispatcher();
+
 		this.setupDisplay();
 		this.initUIEvents();
-		this.signalDispatcher.init();
+
 	};
 
 	/**
@@ -207,20 +219,21 @@ this.G = this.G || {};
 		this.stage.addChild(sprite);
 
 		var reelsComponent = new G.ReelsComponent();
-		reelsComponent.signalDispatcher = this.signalDispatcher;
-		reelsComponent.init(this.setup, spriteSheet);
+		reelsComponent.init(this.setup, this.signalDispatcher, spriteSheet);
 		reelsComponent.drawReels();
 		reelsComponent.x = bezelMarginL;
 		reelsComponent.y = bezelMarginT;
 		this.stage.addChild(reelsComponent);
 
 		var winLinesComponet = new G.WinLinesComponent();
-		winLinesComponet.init(this.setup);
+		winLinesComponet.init(this.setup, this.signalDispatcher);
 		this.stage.addChild(winLinesComponet);
 		winLinesComponet.drawComponent();
 
 		this.components.reels = reelsComponent;
 		this.components.winLines = winLinesComponet;
+		this.gameComponents.push(reelsComponent, winLinesComponet);
+		this.signalDispatcher.init(this.setup, this.gameComponents);
 
 		var sceneMask = new createjs.Shape();
 		sceneMask.graphics.setStrokeStyle(0)
