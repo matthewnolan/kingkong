@@ -37,7 +37,8 @@ module.exports = function (grunt) {
 			options: {
 				specs: 'public/javascripts/test/**/*.js',
 				vendor: 'public/javascripts/vendor/**/*.js',
-				version: '2.1.3'
+				version: '2.1.3',
+				keepRunner: true
 			}
 		},
 
@@ -109,7 +110,7 @@ module.exports = function (grunt) {
 		watch: {
 			scripts: {
 				files: ['public/javascripts/app/**/*.js', 'public/javascripts/test/**/*.js'],
-				tasks: ['jshint', 'jasmine']
+				tasks: ['jshint', 'jasmine:build']
 			},
 			options: {
 				spawn: true

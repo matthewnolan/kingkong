@@ -1,5 +1,7 @@
 .idea/
 .vagrant/
+.grunt
 bower_components/
 node_modules/
+_SpecRunner.html
 

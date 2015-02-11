@@ -121,10 +121,12 @@ this.G = this.G || {};
 		var bezelW = this.setup.bezelW;
 		var bezelH = this.setup.bezelH;
 
+		//init background
 		var spriteSheet = new createjs.SpriteSheet(this.assets.spriteSheetStatics);
 		var sprite = new createjs.Sprite(spriteSheet, 'ui-bezel');
 		this.stage.addChild(sprite);
 
+		//init reels
 		var reelsComponent = new G.ReelsComponent();
 		reelsComponent.init(this.setup, this.signalDispatcher, spriteSheet);
 		reelsComponent.drawReels();
@@ -132,21 +134,37 @@ this.G = this.G || {};
 		reelsComponent.y = bezelMarginT;
 		this.stage.addChild(reelsComponent);
 
+		//init winLines
 		var winLinesComponet = new G.WinLinesComponent();
 		winLinesComponet.init(this.setup, this.signalDispatcher);
 		this.stage.addChild(winLinesComponet);
 		winLinesComponet.drawComponent();
 
+		//store components
 		this.components.reels = reelsComponent;
 		this.components.winLines = winLinesComponet;
 		this.gameComponents.push(reelsComponent, winLinesComponet);
 		this.signalDispatcher.init(this.setup, this.gameComponents);
 
+		//init mask
 		var sceneMask = new createjs.Shape();
 		sceneMask.graphics.setStrokeStyle(0)
 			.drawRect(bezelMarginL, bezelMarginT, bezelW, bezelH)
 			.closePath();
 		this.stage.addChild(sceneMask);
+
+		//init symbolWins
+		var symbolWinsComponent = new G.SymbolWinsComponent();
+		symbolWinsComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetSymbolAnims);
+		symbolWinsComponent.x = bezelMarginL;
+		symbolWinsComponent.y = bezelMarginT;
+		this.stage.addChild(symbolWinsComponent);
+		symbolWinsComponent.drawSprites();
+		//symbolWinsComponent.drawDebug();
+		symbolWinsComponent.runUnifiedSprites();
+		this.components.symbolWins = symbolWinsComponent;
+		this.gameComponents.push(symbolWinsComponent);
+
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
 		}

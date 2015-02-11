@@ -53,7 +53,7 @@ this.G = this.G || {};
 
 		var stageW = 667;
 		var stageH = 375;
-		var stageScale = 0.75;
+		var stageScale = 1;
 
 		this.stage = new createjs.Stage("app");
 		this.stage.scaleX = stageScale;
