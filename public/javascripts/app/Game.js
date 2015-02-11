@@ -176,7 +176,7 @@ this.G = this.G || {};
 		var myElement = document.querySelector('#app');
 		var mc = new Hammer(myElement);
 		mc.get('swipe').set({
-			direction: Hammer.DIRECTION_ALL
+			direction: Hammer.DIRECTION_DOWN
 		});
 
 		mc.get('pinch').set({
