@@ -107,9 +107,13 @@ module.exports = function (grunt) {
 			}
 		},
 
-		// Task configuration. //load order of source files is important.
+		// Task configuration.
+		// load order of source files is important, so start with any Super Types then load the whole app src
 		jasmine: {
-			src: ['public/javascripts/app/components/GameComponent.js', 'public/javascripts/app/**/*.js'],
+			src: [
+				'public/javascripts/app/commands/Command.js',
+				'public/javascripts/app/components/GameComponent.js',
+				'public/javascripts/app/**/*.js'],
 			options: {
 				specs: 'public/javascripts/test/**/*.js',
 				vendor: ['public/javascripts/vendor/easeljs/easeljs-0.8.0.combined.js', 'public/javascripts/vendor/**/*.js'],
@@ -254,6 +258,7 @@ module.exports = function (grunt) {
 
 	// Default task.
 
+	grunt.registerTask('test', ['jshint', 'jasmine']);
 	grunt.registerTask('build', ['jasmine', 'jshint', 'concat', 'uglify', 'yuidoc']);
 	grunt.registerTask('patch', ['jasmine', 'jshint', 'bump:patch', 'concat', 'uglify', 'yuidoc']);
 	grunt.registerTask('minor', ['jasmine', 'jshint', 'bump:minor', 'concat', 'uglify', 'yuidoc']);
