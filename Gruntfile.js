@@ -31,16 +31,6 @@ module.exports = function (grunt) {
 				globalReplace: false
 			}
 		},
-		// Task configuration.
-		jasmine: {
-			src: 'public/javascripts/app/**/*.js',
-			options: {
-				specs: 'public/javascripts/test/**/*.js',
-				vendor: 'public/javascripts/vendor/**/*.js',
-				version: '2.1.3',
-				keepRunner: true
-			}
-		},
 
 		concat: {
 			options: {
@@ -110,10 +100,21 @@ module.exports = function (grunt) {
 		watch: {
 			scripts: {
 				files: ['public/javascripts/app/**/*.js', 'public/javascripts/test/**/*.js'],
-				tasks: ['jshint', 'jasmine:build']
+				tasks: ['jshint', 'jasmine']
 			},
 			options: {
 				spawn: true
+			}
+		},
+
+		// Task configuration. //load order of source files is important.
+		jasmine: {
+			src: ['public/javascripts/app/components/GameComponent.js', 'public/javascripts/app/**/*.js'],
+			options: {
+				specs: 'public/javascripts/test/**/*.js',
+				vendor: ['public/javascripts/vendor/easeljs/easeljs-0.8.0.combined.js', 'public/javascripts/vendor/**/*.js'],
+				version: '2.1.3',
+				keepRunner: true
 			}
 		},
 

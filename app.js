@@ -30,7 +30,7 @@ var sendIndex = function (req, res) {
 };
 
 var sendTests = function(req, res) {
-	res.sendfile(__dirname + "/public/tests.html");
+	res.sendfile(__dirname + "/_SpecRunner.html");
 };
 
 var sendClassStructure = function(req, res) {

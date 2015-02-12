@@ -16,7 +16,7 @@ var G = G || {};
 	/**
 	 * the spritesheet data for symbol win animations loaded by Preloader
 	 * @property symbolAnims
-	 * @type {null}
+	 * @type {Object}
 	 */
 	p.symbolAnims = null;
 
@@ -26,6 +26,12 @@ var G = G || {};
 	 * @type {number}
 	 */
 	p.SCALE_FACTOR = (1 / 0.9375);
+
+	/**
+	 * Stored reference to symbols, top left is 0 indexed Sprite, then go down to next row, until bottom symbols then continues to next reel
+	 * @type {createjs.Sprite}
+	 */
+	p.symbols = [];
 
 	/**
 	 * @param setup
@@ -81,38 +87,59 @@ var G = G || {};
 
 		for (i = 0; i < reelLen; i++) {
 			for (j = 0; j < symbolLen; j++) {
-
 				sprite = new createjs.Sprite(spritesheet, 0);
 				sprite.x = i * symbolW + i * reelMarginR;
 				sprite.y = j * symbolH + j * symbolMarginB;
 				sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
 				this.addChild(sprite);
-				sprite.visible = true;
-
-
+				//sprite.on("animationend", this.handleAnimationEnd);
+				sprite.visible = false;
+				this.symbols.push(sprite);
 			}
 		}
 	};
 
+	/**
+	 * hide animation at the end of one play
+	 * @method handleAnimationEnd
+	 * @param e
+	 */
+	/*
+	p.handleAnimationEnd = function(e) {
+		//var sprite = e.target;
+		//sprite.visible = false;
+	};
+	*/
+
+	p.hideSymbolAnim = function(symbolIndex) {
+		this.symbols[symbolIndex].visible = false;
+	};
+
+	/**
+	 * test symbol anims here
+	 */
 	p.runUnifiedSprites = function() {
-		var arr = ['d1-sprite__000', 'm1-sprite__000', 'd2-sprite_000', 'f5-sprite__000'];
-		var animIndex = 0;
-		var i, len = this.getNumChildren(), sprite;
 
-		for (i = 0; i < len; i++) {
+		this.runAnimationBySymbolIndex(0, 'd1-sprite__000');
+		this.runAnimationBySymbolIndex(1, 'd1-sprite__000');
+		this.runAnimationBySymbolIndex(2, 'd1-sprite__000');
+		this.runAnimationBySymbolIndex(3, 'm1-sprite__000');
+		this.runAnimationBySymbolIndex(4, 'm1-sprite__000');
+		this.runAnimationBySymbolIndex(5, 'm1-sprite__000');
+		this.runAnimationBySymbolIndex(6, 'd2-sprite__000');
+		this.runAnimationBySymbolIndex(7, 'd2-sprite__000');
+		this.runAnimationBySymbolIndex(8, 'd2-sprite__000');
 
-			if (animIndex === arr.length) {
-				animIndex = 0;
-			}
+	};
 
-			sprite = this.getChildAt(i);
-			sprite.visible = true;
-			sprite.gotoAndPlay(arr[animIndex]);
-
-			animIndex++;
-		}
-
-
+	/**
+	 *
+	 * @param {Number} symbolIndex - index in the array where the sprite is stored. Stored in this order reel[0]: t, m, b, reel[1]: t, m, b eg... this.symbols[4] = top symbol in second reel
+	 * @param {String} id - id of animation -see symbol_anims.json 'animations'.
+	 */
+	p.runAnimationBySymbolIndex = function(symbolIndex, id) {
+		this.symbols[symbolIndex].visible = true;
+		this.symbols[symbolIndex].gotoAndPlay(id);
 	};
 
 
