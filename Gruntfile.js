@@ -102,8 +102,7 @@ module.exports = function (grunt) {
 					"afterEach"  : false,
 					"require" : false,
 					"console" : false,
-					"Hammer" : true,
-					"$" : true
+					"Hammer" : true
 				}
 			},
 			all: ['public/javascripts/app/**/*.js', 'public/javascripts/test/**/*.js'],

@@ -62,8 +62,13 @@ var G = G || {};
 			return component instanceof G.WinLinesComponent;
 		});
 
+		var bigWinComponent = _.find(this.gameComponents, function(component) {
+			return component instanceof G.BigWinComponent;
+		});
+
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
+		bigWinComponent.hideAnimation();
 	};
 
 

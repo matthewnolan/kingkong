@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>King Kong</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1, user-scalable=yes, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1, user-scalable=yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -41,7 +41,6 @@
     <script src="javascripts/vendor/hammerjs/hammer.js"></script>
     <script src="javascripts/vendor/lodash/lodash.js"></script>
     <!-- for dev only will not be required in final app-->
-    <script src="javascripts/vendor/jquery/jquery.js"></script>
 
     <!-- Application sources -->
     <script src="javascripts/app/Main.js"></script>
@@ -61,7 +60,6 @@
     <script src="javascripts/app/components/WinLine.js"></script>
     <script src="javascripts/app/components/BigWinComponent.js"></script>
     <script src="javascripts/app/utils/QueueFactory.js"></script>
-
 
     <link rel="stylesheet" href="stylesheets/style.css">
 </head>
@@ -117,8 +115,12 @@
          */
         window.updateSpeed = function(val) {
             currentSpinSpeed = Math.round(val/100 * 6000);
-            $('div.spin-perc').html(val + '%');
-            $('div.spin-speed').html(currentSpinSpeed + 'pps');
+
+            var spinPerc = document.querySelector('div.spin-perc');
+            var spinSpeed = document.querySelector('div.spin-speed');
+
+            spinPerc.innerHTML = val.toString() + "%";
+            spinSpeed.innerHTML = currentSpinSpeed.toString() + 'pps';
         };
         window.updateSpeed(50);
     })(window);

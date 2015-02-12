@@ -179,7 +179,6 @@ var G = G || {};
 		if (--this.reelsSpinning === 0)
 		{
 			this.signalDispatcher.reelSpinComplete.dispatch();
-
 		}
 	};
 
@@ -190,8 +189,10 @@ var G = G || {};
 	 */
 	p.initDomEvents = function() {
 		var self = this;
-		$('#gasPedal').on('input', function(e) {
-			var newSpeed = $(e.target).val();
+		var gasPedal = document.querySelector('#gasPedal');
+		gasPedal.addEventListener("input", function() {
+			var newSpeed = gasPedal.value;
+			console.log('newSpeed', newSpeed);
 			self.updateSpinSpeed(newSpeed);
 		});
 	};

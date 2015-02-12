@@ -65,6 +65,12 @@ var G = G || {};
 		//this.playAnimation();
 	};
 
+	p.hideAnimation = function() {
+		this.bigWins[0].gotoAndStop(0);
+		this.bigWins[0].visible = false;
+		//this.bigWins[0].gotoAndPlay("celebration1__000");
+	};
+
 	/**
 	 * @method playAnimation
 	 */
