@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>public/javascripts/app/SignalDispatcher.js - kingkong</title>
+    <title>public/javascripts/app/components/GameComponent.js - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -38,19 +38,20 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
                                 <li><a href="../classes/.html"></a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
-                                <li><a href="../classes/Preloader.html">Preloader</a></li>
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/WinLine.html">WinLine</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
-                                <li><a href="../classes/WinLine.html">WinLine</a></li>
-                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
                             <ul id="api-modules" class="apis modules">
@@ -87,7 +88,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: public/javascripts/app/SignalDispatcher.js</h1>
+<h1 class="file-heading">File: public/javascripts/app/components/GameComponent.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -100,66 +101,45 @@ var G = G || {};
 	&quot;use strict&quot;;
 
 	/**
-	 * Central Hub for providing Signals for the app to dispatch and listen to.
-	 * @class SignalDispatcher
+	 * Super class of any game component.  These game components are always initialised with the game&#x27;s setup file and a signal dispatcher.
+	 * This allows all game components (eg. ReelsComponent or WinLinesComponent) to access game setup and dispatch and receive events from other
+	 * areas of the application
+	 * @class GameComponent
 	 * @constructor
 	 */
-	var SignalDispatcher = function() {};
-	var p = SignalDispatcher.prototype;
-	p.constructor = SignalDispatcher;
+	var GameComponent = function() {
+		this.Container_constructor();
+	};
+	var p = createjs.extend(GameComponent, createjs.Container);
+	p.constructor = GameComponent;
 
 	/**
-	 * @property gameComponents
-	 * @type {G.GameComponent[]}
+	 * Store for the SignalDispatcher allows us to dispatch and listen to Signals from the rest of the application
+	 * @property signalDispatcher
+	 * @required
+	 * @type {G.SignalDispatcher}
 	 */
-	p.gameComponents = null;
+	p.signalDispatcher = null;
 
 	/**
-	 * @property setup
-	 * @type {Object}
+	 * Store the Setup
+	 * @property Setup
+	 * @type {null}
 	 */
 	p.setup = null;
 
 	/**
-	 * @property reelSpinComplete
-	 * @type {Signal}
-	 */
-	p.reelSpinComplete = new signals.Signal();
-
-	p.reelSpinStart = new signals.Signal();
-
-	/**
+	 * initialises the setup and signalDispatcher for the component.
 	 * @method init
+	 * @param {Object} setup
+	 * @param {G.SignalDispatcher} signalDispatcher
 	 */
-	p.init = function(setup, gameComponents) {
+	p.init = function(setup, signalDispatcher) {
 		this.setup = setup;
-		this.gameComponents = gameComponents;
-		this.commandQueue = new G.CommandQueue();
-		this.commandQueue.init(setup, gameComponents);
-		this.reelSpinStart.add(this.handleReelSpinStart, this);
-		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
+		this.signalDispatcher = signalDispatcher;
 	};
 
-	p.handleReelSpinStart = function() {
-		var winLinesComponent = _.find(this.gameComponents, function(component) {
-			return component instanceof G.WinLinesComponent;
-		});
-
-		winLinesComponent.hideWinLines();
-	};
-
-
-
-	/**
-	 * @method handleReeSpinComplete
-	 */
-	p.handleReelSpinComplete = function() {
-
-		this.commandQueue.setupQueue();
-		this.commandQueue.play();
-	};
-
-	G.SignalDispatcher = SignalDispatcher;
+	G.GameComponent = createjs.promote(GameComponent, &quot;Container&quot;);
 
 })();
     </pre>

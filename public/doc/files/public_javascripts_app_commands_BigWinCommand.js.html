@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Reel - kingkong</title>
+    <title>public/javascripts/app/commands/BigWinCommand.js - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -88,81 +88,44 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>Reel Class</h1>
-<div class="box meta">
+<h1 class="file-heading">File: public/javascripts/app/commands/BigWinCommand.js</h1>
 
-        <div class="extends">
-            Extends createjs.Container
-        </div>
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*! kingkong 0.0.6 - 2015-02-12
+* Copyright (c) 2015 Licensed @HighFiveGames */
 
-        <div class="foundat">
-            Defined in: <a href="../files/public_javascripts_app_components_Reel.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;Reel.js:9</code></a>
-        </div>
+var G = G || {};
 
+(function () {
+	&quot;use strict&quot;;
 
-</div>
-
-
-<div class="box intro">
-    <p>One Reel defined by this class. Contains a sprite map for mapping sprite ids to symbol sprites.
-Sets up and executes the spin animation Tween when reels are spun.
-Stops the tween when spinning is ended and signals to the ReelComponent.</p>
-
-</div>
-
-    <div class="constructor">
-        <h2>Constructor</h2>
-        <div id="method_Reel" class="method item">
-            <h3 class="name"><code>Reel</code></h3>
-        
-                <span class="paren">()</span>
-        
-        
-        
-        
-        
-        
-        
-        
-            <div class="meta">
-                        <p>
-                        Defined in
-                <a href="../files/public_javascripts_app_components_Reel.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;Reel.js:9</code></a>
-                </p>
-        
-        
-        
-            </div>
-        
-            <div class="description">
-                
-            </div>
-        
-        
-        
-        
-        </div>
-    </div>
-
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
-
-    </ul>
-
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
+	var BigWinCommand = function() {
+		this.Command_constructor();
+	};
+	var p = createjs.extend(BigWinCommand, G.Command);
+	p.constructor = BigWinCommand;
 
 
+	/**
+	 * initialise game data and component
+	 * @method init
+	 * @param setup
+	 * @param gameComponent
+	 */
+	p.init = function(setup, gameComponent) {
+		this.Command_init(setup, gameComponent);
 
+	};
 
-        </div>
+	p.execute = function() {
+		this.gameComponent.playAnimation();
+	};
 
+	G.BigWinCommand = createjs.promote(BigWinCommand, &quot;Command&quot;);
 
-
-
-    </div>
+})();
+    </pre>
 </div>
                     </div>
                 </div>

@@ -161,9 +161,19 @@ this.G = this.G || {};
 		this.stage.addChild(symbolWinsComponent);
 		symbolWinsComponent.drawSprites();
 		//symbolWinsComponent.drawDebug();
-		symbolWinsComponent.runUnifiedSprites();
+		//symbolWinsComponent.runUnifiedSprites();
 		this.components.symbolWins = symbolWinsComponent;
 		this.gameComponents.push(symbolWinsComponent);
+
+		var bigWinComponent = new G.BigWinComponent();
+		bigWinComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetBigWin);
+		bigWinComponent.x = bezelMarginL;
+		bigWinComponent.y = bezelMarginT;
+		this.stage.addChild(bigWinComponent);
+		bigWinComponent.drawSprites();
+
+		this.components.bigWin = bigWinComponent;
+		this.gameComponents.push(bigWinComponent);
 
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;

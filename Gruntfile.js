@@ -38,7 +38,21 @@ module.exports = function (grunt) {
 				stripBanners: true
 			},
 			dist: {
-				src: ['public/javascripts/app/**/*.js'],
+				src: [
+					'public/javascripts/vendor/easeljs/**/*.js',
+					'public/javascripts/vendor/**/*.js',
+					'public/javascripts/app/utils/*.js',
+					'public/javascripts/app/core/*.js',
+					'public/javascripts/app/commands/Command.js',
+					'public/javascripts/app/components/GameComponent.js',
+					'public/javascripts/app/commands/*.js',
+					'public/javascripts/app/components/*.js',
+					'public/javascripts/app/Main.js',
+					'!public/javascripts/vendor/jasmine/**/*.js',
+					'!public/javascripts/vendor/jasmine-signals/**/*.js',
+					'!public/javascripts/vendor/jasmine-sinon/**/*.js',
+					'!public/javascripts/vendor/sinonjs/**/*.js'
+				],
 				dest: 'public/javascripts/dist/<%= pkg.name %>.js'
 			}
 		},
@@ -258,11 +272,14 @@ module.exports = function (grunt) {
 
 	// Default task.
 
+	//build tasks
 	grunt.registerTask('test', ['jshint', 'jasmine']);
 	grunt.registerTask('build', ['jasmine', 'jshint', 'concat', 'uglify', 'yuidoc']);
 	grunt.registerTask('patch', ['jasmine', 'jshint', 'bump:patch', 'concat', 'uglify', 'yuidoc']);
 	grunt.registerTask('minor', ['jasmine', 'jshint', 'bump:minor', 'concat', 'uglify', 'yuidoc']);
 	grunt.registerTask('release', ['jasmine', 'jshint', 'bump:major', 'concat', 'uglify', 'yuidoc']);
+
+	//dev support
 	grunt.registerTask('texture', ['easel-packer']);
 	grunt.registerTask('doc', ['yuidoc']);
 	grunt.registerTask('docs', ['yuidoc']);

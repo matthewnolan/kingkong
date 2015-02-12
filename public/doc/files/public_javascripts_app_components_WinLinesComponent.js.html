@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>public/javascripts/app/QueueFactory.js - kingkong</title>
+    <title>public/javascripts/app/components/WinLinesComponent.js - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -38,19 +38,20 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
                                 <li><a href="../classes/.html"></a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
-                                <li><a href="../classes/Preloader.html">Preloader</a></li>
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/WinLine.html">WinLine</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
-                                <li><a href="../classes/WinLine.html">WinLine</a></li>
-                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
                             <ul id="api-modules" class="apis modules">
@@ -87,11 +88,11 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: public/javascripts/app/QueueFactory.js</h1>
+<h1 class="file-heading">File: public/javascripts/app/components/WinLinesComponent.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/*! kingkong 0.0.1 - 2015-02-06
+/*! kingkong 0.0.1 - 2015-02-07
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
 var G = G || {};
@@ -100,32 +101,133 @@ var G = G || {};
 	&quot;use strict&quot;;
 
 	/**
-	 * Constructs queues for the CommandQueue for the purpose of displaying winning animations
-	 * @class QueueFactory
+	 * GameComponent for drawing Win Lines
+	 * @class WinLinesComponent
+	 * @extends G.GameComponent
 	 * @constructor
 	 */
-	var QueueFactory = function() {};
-	var p = QueueFactory.prototype;
-	p.constructor = QueueFactory;
+	var WinLinesComponent = function() {
+		this.GameComponent_constructor();
+	};
+
+	var p = createjs.extend(WinLinesComponent, G.GameComponent);
+	p.constructor = WinLinesComponent;
+
+	/**
+	 * Stores win lines
+	 * @property winLines
+	 * @type {G.WinLine[]}
+	 */
+	p.winLines = [];
+
+	/**
+	 * Store number of winLines to compare with drawn Lines and dispatch complete signal when drawn
+	 * @property numLinesTotal
+	 * @type {number}
+	 */
+	p.numLinesTotoal = 0;
+
+	/**
+	 * Count number of lines drawn to compare with numLinesTotal to dispatch complete signal.
+	 * @property numLinesDrawn
+	 * @type {number}
+	 */
+	p.numLinesDrawn = 0;
+
+	/**
+	 * @property el
+	 * @type {HTMLElement}
+	 */
+	p.el = null;
+
+	/**
+	 *
+	 * @type {Number}
+	 */
+	p.loadPercentage = 0;
 
 
 	/**
-	 * Saves reference to Setup and GameComponents
+	 * Stores passed setup data
 	 * @method init
 	 * @param {Object} setup
-	 * @param {G.GameComponent[]} gameComponents
+	 * @param {G.SignalDispatcher} signalDispatcher
 	 */
-	p.init = function(setup, gameComponents) {
-		this.setup = setup;
-		this.gameComponents = gameComponents;
+	p.init = function(setup, signalDispatcher) {
+		this.GameComponent_init(setup, signalDispatcher);
+	};
+
+	/**
+	 * draws winLines to stage in an invisible state ready for displaying later
+	 * @method drawComponent
+	 */
+	p.drawComponent = function() {
+
+		var marginL = this.setup.bezelMarginL;
+		var marginT = this.setup.bezelMarginT;
+		var winLines = this.setup.winLines;
+		var i, len = this.numLinesTotal = winLines.length;
+
+		this.el = document.querySelector(&quot;#preloader&quot;);
+
+		if (this.setup.enableShadowsOnDesktop) {
+			var filters = [];
+			filters.push(this.dropShadow);
+			filters.push(this.glowFilter);
+		}
+
+		for (i = 0; i &lt; len; i++) {
+			var winLine = new G.WinLine();
+			winLine.init(this.setup, [0,0,0,0,0], winLines[i].data);
+			winLine.color = winLines[i].color;
+			this.addChild(winLine);
+			winLine.drawComplete.add(this.onWinLineDrawn, this);
+			winLine.drawComponent();
+			winLine.x = marginL;
+			winLine.y = marginT;
+			winLine.visible = false;
+			this.winLines.push(winLine);
+		}
+
+
+
+		//this.hideWinLines();
+	};
+
+	p.onWinLineDrawn = function() {
+		++this.numLinesDrawn;
+		if (this.numLinesDrawn === this.numLinesTotal) {
+			this.el.style.visibility = &quot;hidden&quot;;
+		}
+	};
+
+	/**
+	 * Hides all visible winLines
+	 * @method hideWinLines
+	 */
+	p.hideWinLines = function() {
+
+		var hideWinLine = function(winLine) {
+			winLine.visible = false;
+		};
+
+		_.each(this.winLines, hideWinLine);
+	};
+
+	/**
+	 * Shows all winlines at the passed indexes of setup.json winLines array
+	 * @method showWinLinByIndexes
+	 * @param {Array} indexes show winlines at these indexes eg: [1,3,5] shows winlines 1,3,5 together at once;
+	 */
+	p.showWinLineByIndexes = function(indexes) {
+		var i, len = indexes.length;
+		for (i = 0; i &lt; len; i++) {
+			this.winLines[indexes[i]].visible = true;
+		}
 	};
 
 
-
-
-
-
-	G.QueueFactory = QueueFactory;
+	G.WinLinesComponent = createjs.promote(WinLinesComponent, &quot;GameComponent&quot;);
 
 })();
     </pre>

@@ -89,9 +89,16 @@ var G = G || {};
 			return component instanceof G.WinLinesComponent;
 		});
 
+		var bigWinComponent = _.find(this.gameComponents, function(component) {
+			return component instanceof G.BigWinComponent;
+		});
+
+		var bigWinCommand = new G.BigWinCommand();
+		bigWinCommand.init(this.setup, bigWinComponent);
+
 		var winLineCommand = new G.WinLineCommand();
 		winLineCommand.init(this.setup, winLinesComponent, [1,2,3,4,5]);
-		this.queue = [winLineCommand];
+		this.queue = [winLineCommand, bigWinCommand];
 	};
 
 	/**

@@ -13,8 +13,19 @@ var G = G || {};
 	p.constructor = BigWinCommand;
 
 
-	p.init = function() { 
+	/**
+	 * initialise game data and component
+	 * @method init
+	 * @param setup
+	 * @param gameComponent
+	 */
+	p.init = function(setup, gameComponent) {
+		this.Command_init(setup, gameComponent);
 
+	};
+
+	p.execute = function() {
+		this.gameComponent.playAnimation();
 	};
 
 	G.BigWinCommand = createjs.promote(BigWinCommand, "Command");

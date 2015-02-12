@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>public/javascripts/app/CommandQueue.js - kingkong</title>
+    <title>public/javascripts/app/core/ServerInterface.js - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -38,19 +38,20 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
                                 <li><a href="../classes/.html"></a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
-                                <li><a href="../classes/Preloader.html">Preloader</a></li>
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/WinLine.html">WinLine</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
-                                <li><a href="../classes/WinLine.html">WinLine</a></li>
-                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
                             <ul id="api-modules" class="apis modules">
@@ -87,165 +88,42 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: public/javascripts/app/CommandQueue.js</h1>
+<h1 class="file-heading">File: public/javascripts/app/core/ServerInterface.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/*! kingkong 0.0.1 - 2015-02-06
+/*! kingkong 0.0.1 - 2015-02-02
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
-var G = G || {};
+this.G = this.G || {};
 
 (function () {
 	&quot;use strict&quot;;
 
 	/**
-	 * Schdule and execute Commands in a CommandQueue
-	 * @class CommandQueue
+	 * Makes calls to the Server and receives messages.  It then calls the signal dispatcher to dispatch necessary events to GameComponents
+	 * @class ServerInterface
 	 * @constructor
 	 */
-	var CommandQueue = function() {};
-	var p = CommandQueue.prototype;
-	p.constructor = CommandQueue;
+	var ServerInterface = function() {};
+	var p = ServerInterface.prototype;
+	p.constructor = ServerInterface;
 
 	/**
-	 * @property setup
-	 * @type {Object}
+	 * @property signalDispatcher
+	 * @type {G.SignalDispatcher}
 	 */
-	p.setup = null;
+	p.signalDispatcher = null;
 
 	/**
-	 * @property queue
-	 * @type {G.Command[]}
-	 */
-	p.queue = [];
-
-	/**
-	 * @deprecated
-	 * @property timeout
-	 * @type {Number}
-	 */
-	p.timeout = null;
-
-	/**
-	 * @property shouldLoop
-	 * @type {boolean}
-	 */
-	p.shouldLoop = false;
-
-	/**
-	 * @property loopReturnIndex
-	 * @type {number}
-	 */
-	p.loopReturnIndex = 0;
-
-	/**
-	 * @property queueFactory
-	 * @type {G.QueueFactory}
-	 */
-	p.queueFactory = null;
-
-	/**
-	 * @property currentIndex
-	 * @type {number}
-	 */
-	p.currentIndex = 0;
-
-	/**
-	 * @property gameComponents
-	 * @type {G.GameComponent[]}
-	 */
-	p.gameComponents = null;
-
-	/**
-	 * Saves reference to Setup and creates a QueueFactory
 	 * @method init
-	 * @param {Object} setup
-	 * @param {G.GameComponent[]} gameComponents
+	 * @param signalDispatcher
 	 */
-	p.init = function(setup, gameComponents) {
-		this.setup = setup;
-		this.gameComponents = gameComponents;
-		this.queueFactory = new G.QueueFactory();
-		this.queueFactory.init(setup, gameComponents);
+	p.init = function(signalDispatcher) {
+		this.signalDispatcher = signalDispatcher;
 	};
 
-	/**
-	 * Initialise a queue ready for playing
-	 * @method setupQueue
-	 * @todo introduce playNow option
-	 */
-	p.setupQueue = function() {
-		createjs.Sound.play(&quot;bonusStop1&quot;);
-
-		var winLinesComponent =_.find(this.gameComponents, function(component) {
-			return component instanceof G.WinLinesComponent;
-		});
-
-		var winLineCommand = new G.WinLineCommand();
-		winLineCommand.init(this.setup, winLinesComponent, [1,2,3,4,5]);
-		this.queue = [winLineCommand];
-	};
-
-	/**
-	 *  Plays the current queue, defined during setupQueue function.
-	 * @method play
-	 */
-	p.play = function() {
-		var len = this.queue.length;
-
-		if (len) {
-			this.executeNext();
-		}
-	};
-
-	/**
-	 * executes the currently queued command and schedules a timeout to call the next in queue
-	 * or finishes if at the end of the queue, or loops back (loops back to first command in queue with a loopIndex).
-	 * @method executeNext
-	 */
-	p.executeNext = function() {
-		var self = this;
-		var command = this.queue[this.currentIndex];
-		command.execute();
-		if (command.loopIndex) {
-			this.loopReturnIndex = command.loopIndex;
-		}
-
-		if (this.currentIndex ++ === this.queue.length - 1)
-		{
-			if (this.shouldLoop) {
-				this.currentIndex = 0;
-			} else {
-				this.flushQueue();
-				return;
-			}
-		}
-
-		this.timeout = setTimeout(function() {
-			self.executeNext.call(self);
-		},  command.callNextDelay);
-	};
-
-	/**
-	 * @todo implement this
-	 * @method stop
-	 */
-	p.stop = function() {
-		throw &quot;not implemented&quot;;
-	};
-
-	/**
-	 * clears any timeouts and prepares class for a new queue.
-	 * @method flushQueue
-	 */
-	p.flushQueue = function() {
-		clearTimeout(this.timeout);
-		this.currentIndex = 0;
-		this.queue = [];
-	};
-
-	G.CommandQueue = CommandQueue;
+	G.ServerInterface = ServerInterface;
 
 })();
     </pre>

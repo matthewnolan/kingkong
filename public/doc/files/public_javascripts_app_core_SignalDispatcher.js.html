@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Reel - kingkong</title>
+    <title>public/javascripts/app/core/SignalDispatcher.js - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -88,81 +88,92 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>Reel Class</h1>
-<div class="box meta">
+<h1 class="file-heading">File: public/javascripts/app/core/SignalDispatcher.js</h1>
 
-        <div class="extends">
-            Extends createjs.Container
-        </div>
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*! kingkong 0.0.6 - 2015-02-09
+* Copyright (c) 2015 Licensed @HighFiveGames */
 
-        <div class="foundat">
-            Defined in: <a href="../files/public_javascripts_app_components_Reel.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;Reel.js:9</code></a>
-        </div>
+var G = G || {};
 
+(function () {
+	&quot;use strict&quot;;
 
-</div>
+	/**
+	 * Central Hub for providing Signals for the app to dispatch and listen to.
+	 * @class SignalDispatcher
+	 * @constructor
+	 */
+	var SignalDispatcher = function() {};
+	var p = SignalDispatcher.prototype;
+	p.constructor = SignalDispatcher;
 
+	/**
+	 * @property gameComponents
+	 * @type {G.GameComponent[]}
+	 */
+	p.gameComponents = null;
 
-<div class="box intro">
-    <p>One Reel defined by this class. Contains a sprite map for mapping sprite ids to symbol sprites.
-Sets up and executes the spin animation Tween when reels are spun.
-Stops the tween when spinning is ended and signals to the ReelComponent.</p>
+	/**
+	 * @property setup
+	 * @type {Object}
+	 */
+	p.setup = null;
 
-</div>
+	/**
+	 * @property reelSpinComplete
+	 * @type {Signal}
+	 */
+	p.reelSpinComplete = new signals.Signal();
 
-    <div class="constructor">
-        <h2>Constructor</h2>
-        <div id="method_Reel" class="method item">
-            <h3 class="name"><code>Reel</code></h3>
-        
-                <span class="paren">()</span>
-        
-        
-        
-        
-        
-        
-        
-        
-            <div class="meta">
-                        <p>
-                        Defined in
-                <a href="../files/public_javascripts_app_components_Reel.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;Reel.js:9</code></a>
-                </p>
-        
-        
-        
-            </div>
-        
-            <div class="description">
-                
-            </div>
-        
-        
-        
-        
-        </div>
-    </div>
+	/**
+	 * @property reelSpinStart
+	 * @type {Signal}
+	 */
+	p.reelSpinStart = new signals.Signal();
 
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
+	/**
+	 *
+	 * @method init
+	 * @param {Object} setup
+	 * @param {G.GameComponent[]} gameComponents
+	 */
+	p.init = function(setup, gameComponents) {
+		this.setup = setup;
+		this.gameComponents = gameComponents;
+		this.commandQueue = new G.CommandQueue();
+		this.commandQueue.init(setup, gameComponents);
+		this.reelSpinStart.add(this.handleReelSpinStart, this);
+		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
+	};
 
-    </ul>
+	/**
+	 * @method handleReelSpinStart
+	 */
+	p.handleReelSpinStart = function() {
+		var winLinesComponent = _.find(this.gameComponents, function(component) {
+			return component instanceof G.WinLinesComponent;
+		});
 
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
-
-
-
-
-        </div>
-
-
+		winLinesComponent.hideWinLines();
+	};
 
 
-    </div>
+
+	/**
+	 * @method handleReeSpinComplete
+	 */
+	p.handleReelSpinComplete = function() {
+
+		this.commandQueue.setupQueue();
+		this.commandQueue.play();
+	};
+
+	G.SignalDispatcher = SignalDispatcher;
+
+})();
+    </pre>
 </div>
                     </div>
                 </div>

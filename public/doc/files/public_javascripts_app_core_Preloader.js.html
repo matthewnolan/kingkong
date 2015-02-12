@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>public/javascripts/app/GameComponent.js - kingkong</title>
+    <title>public/javascripts/app/core/Preloader.js - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -38,19 +38,20 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
                                 <li><a href="../classes/.html"></a></li>
-                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
-                                <li><a href="../classes/Main.html">Main</a></li>
-                                <li><a href="../classes/Preloader.html">Preloader</a></li>
-                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                                <li><a href="../classes/WinLine.html">WinLine</a></li>
+                                <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/Game.html">Game</a></li>
+                                <li><a href="../classes/Preloader.html">Preloader</a></li>
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
-                                <li><a href="../classes/WinLine.html">WinLine</a></li>
-                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                                <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
                             <ul id="api-modules" class="apis modules">
@@ -87,58 +88,128 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: public/javascripts/app/GameComponent.js</h1>
+<h1 class="file-heading">File: public/javascripts/app/core/Preloader.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/*! kingkong 0.0.6 - 2015-02-09
+/*! kingkong 0.0.1 - 2015-02-02
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
-var G = G || {};
+this.G = this.G || {};
 
 (function () {
 	&quot;use strict&quot;;
 
 	/**
-	 * Super class of any game component.  These game components are always initialised with the game&#x27;s setup file and a signal dispatcher.
-	 * This allows all game components (eg. ReelsComponent or WinLinesComponent) to access game setup and dispatch and receive events from other
-	 * areas of the application
-	 * @class GameComponent
+	 * Preloader is responsible loading Setup and assets into the Game.
+	 * These include sounds, spritesheets, and data in the form of json files
+	 * It will then dispatch Signals (Events) back to the Game for notification and safe caching of assets.
+	 * @class Preloader
 	 * @constructor
 	 */
-	var GameComponent = function() {
-		this.Container_constructor();
+	var Preloader = function() {};
+
+	var p = Preloader.prototype;
+	p.constructor = Preloader;
+
+	/**
+	 * @constant SETUP_URL - path of setup.json file relative to public root.
+	 * @type {string}
+	 */
+	p.SETUP_URL = &quot;assets/config/setup.json&quot;;
+	p.game = null;
+	p.setupLoader = null;
+	p.assetsLoader = null;
+	p.spriteSheetBigWin = null;
+	p.spriteSheetStatics = null;
+	p.spriteSheetSymbolAnims = null;
+	p.setupComplete = new signals.Signal();
+	p.assetsLoaded = new signals.Signal();
+
+	/**
+	 * init - store a reference to game, creates a LoadQueue for Setup, creates a LoadQueue for Assets
+	 * Defines Event Handlers for LoadQueues
+	 * @param game
+	 * @todo only pass in Setup
+	 */
+	p.init = function(game) {
+		this.game = game;
+
+		this.setupLoader = new createjs.LoadQueue(true);
+		this.setupLoader.on(&quot;fileload&quot;, this.handleSetupLoaded, this);
+
+		this.assetsLoader = new createjs.LoadQueue(true);
+		this.assetsLoader.on(&quot;error&quot;, this.handleAssetsError, this);
+		this.assetsLoader.on(&quot;progress&quot;, this.handleAssetsProgress, this);
+		this.assetsLoader.on(&quot;complete&quot;, this.handleAssetsLoaded, this);
+		this.assetsLoader.installPlugin(createjs.Sound);
 	};
-	var p = createjs.extend(GameComponent, createjs.Container);
-	p.constructor = GameComponent;
 
 	/**
-	 * Store for the SignalDispatcher allows us to dispatch and listen to Signals from the rest of the application
-	 * @property signalDispatcher
-	 * @required
-	 * @type {G.SignalDispatcher}
+	 * startLoad - starts loading setup.json file
 	 */
-	p.signalDispatcher = null;
-
-	/**
-	 * Store the Setup
-	 * @property Setup
-	 * @type {null}
-	 */
-	p.setup = null;
-
-	/**
-	 * initialises the setup and signalDispatcher for the component.
-	 * @method init
-	 * @param {Object} setup
-	 * @param {G.SignalDispatcher} signalDispatcher
-	 */
-	p.init = function(setup, signalDispatcher) {
-		this.setup = setup;
-		this.signalDispatcher = signalDispatcher;
+	p.startLoad = function() {
+		this.setupLoader.loadFile(this.SETUP_URL);
 	};
 
-	G.GameComponent = createjs.promote(GameComponent, &quot;Container&quot;);
+	/**
+	 * handleSetupLoaded - dispatches a Signal to Game then loads Game assets
+	 * @param e
+	 */
+	p.handleSetupLoaded = function(e) {
+		this.setupComplete.dispatch(e.result);
+		this.loadGameAssets();
+	};
+
+	/**
+	 * loadGameAssets - loads spritesheets defined in Setup
+	 */
+	p.loadGameAssets = function() {
+		this.assetsLoader.loadManifest(this.game.setup.spritesManifest);
+		this.assetsLoader.loadManifest(this.game.setup.soundsManifest);
+	};
+
+	/**
+	 * handleAssetsError - handle errors in asset loading phase gracefully
+	 */
+	p.handleAssetsError = function() { };
+
+	/**
+	 * handleAssetsProgress - handle loading of game assets
+	 */
+	p.handleAssetsProgress = function(e) {
+		var el = document.querySelector(&quot;#loadPercentage&quot;);
+		el.innerHTML = Math.round(e.progress * 100).toString() + &quot;%&quot;;
+	};
+
+	/**
+	 * handleAssetsLoaded - dispatch a Signal to Game containing loaded Assets
+	 */
+	p.handleAssetsLoaded = function() {
+
+		var self = this;
+
+		var assets = {
+			spriteSheetBigWin: this.assetsLoader.getResult(&#x27;bigWinAnim&#x27;),
+			spriteSheetStatics: this.assetsLoader.getResult(&#x27;staticImages&#x27;),
+			spriteSheetSymbolAnims: this.assetsLoader.getResult(&#x27;symbolAnims&#x27;)
+		};
+
+		var el = document.querySelector(&quot;#loadState&quot;);
+		el.innerHTML = &quot;Loaded&quot;;
+
+		el = document.querySelector(&quot;#initializeState&quot;);
+		el.innerHTML = &quot;Initializing...&quot;;
+
+
+		setTimeout(function(){
+			self.assetsLoaded.dispatch(assets);
+		}, 50);
+
+
+	};
+
+	G.Preloader = Preloader;
 
 })();
     </pre>
