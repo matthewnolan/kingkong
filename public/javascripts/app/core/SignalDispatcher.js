@@ -62,6 +62,7 @@ var G = G || {};
 			return component instanceof G.WinLinesComponent;
 		});
 
+		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 	};
 
