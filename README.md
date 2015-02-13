@@ -2,16 +2,24 @@
 
 ## installation
 
-    - initial dependency setup: npm install
+```sh
+$ npm install
+```
 
-    - run node server: npm start
+Run local server
+```sh
+$ npm start
+```
 
-    - run app: browse to http://localhost:3000
+Tests and minifies current javascripts and generate yuidocs
+```sh
+$ grunt build
+```
 
-    - init vagrant: vagrant up
-
-    - grunt build
-
+Initiate Vagrant box for sharing
+```sh
+$ vagrant up
+```
 
 ## gruntTasks
 
