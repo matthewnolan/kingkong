@@ -2,7 +2,7 @@
     "project": {
         "name": "kingkong",
         "description": "",
-        "version": "0.0.6",
+        "version": "0.1.2",
         "url": ""
     },
     "files": {
@@ -50,6 +50,15 @@
             "modules": {},
             "classes": {
                 "BigWinComponent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "public/javascripts/app/components/GaffButton.js": {
+            "name": "public/javascripts/app/components/GaffButton.js",
+            "modules": {},
+            "classes": {
+                "GaffButton": 1
             },
             "fors": {},
             "namespaces": {}
@@ -192,6 +201,22 @@
             "file": "public/javascripts/app/components/BigWinComponent.js",
             "line": 9,
             "extends": "G.GameComponent",
+            "uses": [
+                "createjs.Container"
+            ],
+            "is_constructor": 1
+        },
+        "GaffButton": {
+            "name": "GaffButton",
+            "shortname": "GaffButton",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/components/GaffButton.js",
+            "line": 9,
+            "extends": "G.Container",
             "uses": [
                 "createjs.Container"
             ],
@@ -678,10 +703,18 @@
         },
         {
             "file": "public/javascripts/app/components/BigWinComponent.js",
-            "line": 68,
+            "line": 74,
             "itemtype": "method",
             "name": "playAnimation",
             "class": "BigWinComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffButton.js",
+            "line": 21,
+            "itemtype": "property",
+            "name": "labelText",
+            "type": "{string}",
+            "class": "GaffButton"
         },
         {
             "file": "public/javascripts/app/components/GameComponent.js",
@@ -846,7 +879,7 @@
         },
         {
             "file": "public/javascripts/app/components/ReelsComponent.js",
-            "line": 186,
+            "line": 185,
             "description": "DOM events\nfor development only",
             "itemtype": "method",
             "name": "initDomEvents",
@@ -1182,6 +1215,15 @@
         {
             "file": "public/javascripts/app/core/Game.js",
             "line": 21,
+            "description": "AUTO_GENERATED in all grunt builds",
+            "itemtype": "property",
+            "name": "version",
+            "type": "{string}",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/core/Game.js",
+            "line": 28,
             "itemtype": "property",
             "name": "setup",
             "type": "{Object}",
@@ -1189,7 +1231,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 27,
+            "line": 34,
             "itemtype": "property",
             "name": "serverInterface",
             "type": "{G.ServerInterface}",
@@ -1197,7 +1239,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 33,
+            "line": 40,
             "itemtype": "property",
             "name": "stage",
             "type": "{createjs.Stage}",
@@ -1205,7 +1247,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 39,
+            "line": 46,
             "itemtype": "property",
             "name": "assets",
             "type": "{Object}",
@@ -1213,7 +1255,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 45,
+            "line": 52,
             "description": "Game Events be listened to and dispatched from here. Should be passed to GameComponents which require it.",
             "itemtype": "property",
             "name": "signalDispatcher",
@@ -1222,7 +1264,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 52,
+            "line": 59,
             "description": "GameComponents stored here",
             "itemtype": "property",
             "name": "components",
@@ -1231,7 +1273,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 62,
+            "line": 69,
             "itemtype": "property",
             "name": "gameComponents",
             "type": "{G.GameComponent[]}",
@@ -1239,7 +1281,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 68,
+            "line": 75,
             "description": "init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.\nStarts Preloading of assets",
             "params": [
                 {
@@ -1257,7 +1299,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 86,
+            "line": 93,
             "description": "SignalHandler which saves setup data when loaded by Preloader",
             "params": [
                 {
@@ -1272,7 +1314,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 95,
+            "line": 102,
             "description": "Signal Handler\nonAssetsLoadComplete: Asets have been loaded.  Now initialise the Display,\nInitialise UI Events, and Create a SignalDispatcher",
             "params": [
                 {
@@ -1287,7 +1329,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 112,
+            "line": 116,
             "description": "setupDisplay: Start layering Containers and GameComponents.  Mask the stage for reels.\nnb. These are potentially expensive cpu operations, but everything done here is done after Preload and during app initialisation.\nAny filters applied to display objects will magnify the length of time this function takes to complete.",
             "itemtype": "method",
             "name": "setupDisplay",
@@ -1295,7 +1337,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 183,
+            "line": 203,
             "description": "User Control is initialised: Keyboard control / touch controls\nif User Control shouldn't be enabled during app initialisation phase, then execute this function later.",
             "todo": [
                 "- configure a way to turn on/off user interaction events."
@@ -1449,7 +1491,7 @@
         },
         {
             "file": "public/javascripts/app/core/SignalDispatcher.js",
-            "line": 70,
+            "line": 76,
             "itemtype": "method",
             "name": "handleReeSpinComplete",
             "class": "SignalDispatcher"
@@ -1577,7 +1619,7 @@
         },
         {
             "message": "Missing item type\ninit: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.\nStarts Preloading of assets",
-            "line": " public/javascripts/app/core/Game.js:68"
+            "line": " public/javascripts/app/core/Game.js:75"
         },
         {
             "message": "Missing item type",

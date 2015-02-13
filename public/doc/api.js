@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "BigWinComponent",
         "CommandQueue",
+        "GaffButton",
         "Game",
         "GameComponent",
         "Main",

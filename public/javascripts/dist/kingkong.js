@@ -1,4 +1,4 @@
-/*! kingkong 0.0.6 - 2015-02-12
+/*! kingkong 0.1.2 - 2015-02-13
 * Copyright (c) 2015 Licensed @HighFiveGames */
 /*!
 * EaselJS
@@ -52732,6 +52732,13 @@ this.G = this.G || {};
 	p.constructor = Game;
 
 	/**
+	 * AUTO_GENERATED in all grunt builds
+	 * @property version
+	 * @type {string}
+	 */
+	p.version = "0.1.2";
+
+	/**
 	 * @property setup
 	 * @type {Object}
 	 */
@@ -52814,12 +52821,9 @@ this.G = this.G || {};
 	 */
 	p.onAssetsLoadComplete = function(assets) {
 		this.assets = assets;
-
 		this.signalDispatcher = new G.SignalDispatcher();
-
 		this.setupDisplay();
 		this.initUIEvents();
-
 	};
 
 	/**
@@ -52888,6 +52892,22 @@ this.G = this.G || {};
 		this.components.bigWin = bigWinComponent;
 		this.gameComponents.push(bigWinComponent);
 
+		var gaffMenu = new G.GaffMenuComponent(this.version);
+		gaffMenu.init(this.setup, this.signalDispatcher);
+		gaffMenu.drawMenu();
+		this.stage.addChild(gaffMenu);
+		gaffMenu.x = bezelMarginL + (bezelW / 2);
+		gaffMenu.y = bezelMarginT + (bezelH / 2);
+		//gaffMenu.x = 185;
+		//gaffMenu.y = 348;
+
+
+		console.log('gaff', gaffMenu.x, gaffMenu.y);
+
+		this.components.gaff = gaffMenu;
+		this.gameComponents.push(gaffMenu);
+
+
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
 		}
@@ -52909,6 +52929,10 @@ this.G = this.G || {};
 				case 0:
 					self.components.reels.spinReels();
 					break;
+				////shift+g
+				case 71 :
+					self.components.gaff.show();
+					break;
 			}
 		};
 
@@ -52929,15 +52953,18 @@ this.G = this.G || {};
 		});
 
 		mc.on('pinchin', function() {
-			//G.util.showGaffMenu();
+			this.components.gaff.show();
 		});
 
 		mc.on('pinchout', function() {
-			//G.util.hideGaffMenu();
+			this.components.gaff.hide();
 		});
 
 		if (!this.setup.domHelpers) {
-			$('.dom-helpers').remove();
+			//$('.dom-helpers').remove();
+
+			var domHelpers = document.querySelector(".dom-helpers");
+			domHelpers.parentNode.removeChild(domHelpers);
 		}
 
 	};
@@ -53164,7 +53191,13 @@ var G = G || {};
 			return component instanceof G.WinLinesComponent;
 		});
 
+		var bigWinComponent = _.find(this.gameComponents, function(component) {
+			return component instanceof G.BigWinComponent;
+		});
+
+		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
+		bigWinComponent.hideAnimation();
 	};
 
 
@@ -53315,7 +53348,6 @@ var G = G || {};
 	 */
 	p.init = function(setup, gameComponent) {
 		this.Command_init(setup, gameComponent);
-
 	};
 
 	p.execute = function() {
@@ -53425,7 +53457,7 @@ var G = G || {};
 
 		var winLineCommand = new G.WinLineCommand();
 		winLineCommand.init(this.setup, winLinesComponent, [1,2,3,4,5]);
-		this.queue = [winLineCommand, bigWinCommand];
+		this.queue = [winLineCommand];
 	};
 
 	/**
@@ -53644,6 +53676,12 @@ var G = G || {};
 		//this.playAnimation();
 	};
 
+	p.hideAnimation = function() {
+		this.bigWins[0].gotoAndStop(0);
+		this.bigWins[0].visible = false;
+		//this.bigWins[0].gotoAndPlay("celebration1__000");
+	};
+
 	/**
 	 * @method playAnimation
 	 */
@@ -53656,6 +53694,204 @@ var G = G || {};
 
 
 	G.BigWinComponent = createjs.promote(BigWinComponent, "GameComponent");
+
+})();
+/*! kingkong 0.0.6 - 2015-02-12
+* Copyright (c) 2015 Licensed @HighFiveGames */
+
+var G = G || {};
+
+(function () {
+	"use strict";
+
+	/**
+	 * @class GaffButton
+	 * @extends G.Container
+	 * @uses createjs.Container
+	 * @constructor
+	 */
+	var GaffButton = function() {
+		this.Container_constructor();
+	};
+	var p = createjs.extend(GaffButton, createjs.Container);
+	p.constructor = GaffButton;
+
+	/**
+	 * @property labelText
+	 * @type {string}
+	 */
+	p.labelText = "button";
+
+	p.width = 100;
+
+	p.height = 100;
+
+	p.cornerRadius = 10;
+
+	p.strokeCommand = null;
+
+	p.strokeColor = "#ff0000";
+
+	p.fillColor = "#099999";
+
+	p.textColor = "#000000";
+
+	p.clickSignal = new signals.Signal();
+
+	p.init = function() { 
+
+	};
+
+	p.drawButton = function() {
+		var self = this;
+		console.log('button draw', this.labelText);
+		var shape = new createjs.Shape();
+		var gp = shape.graphics;
+
+		gp.setStrokeStyle(3);
+		this.strokeCommand = gp.beginStroke(this.color).command;
+		gp.beginFill(this.fillColor);
+		gp.drawRoundRect(0, 0, this.width, this.height, this.cornerRadius);
+		gp.endFill().endStroke();
+
+
+		this.addChild(shape);
+
+		var labelText = new createjs.Text(this.labelText, "12px Arial", this.textColor);
+		this.addChild(labelText);
+		labelText.x = 10;
+		labelText.y = 10;
+
+		this.on("click", function() {
+			self.clickSignal.dispatch(self);
+			self.select();
+		});
+	};
+
+
+	p.select = function() {
+		this.strokeCommand.style = '#00ff00';
+	};
+
+	p.deselect = function() {
+		this.strokeCommand.style = this.strokeColor;
+	};
+
+	G.GaffButton = createjs.promote(GaffButton, "Container");
+
+})();
+/*! kingkong 0.0.6 - 2015-02-12
+* Copyright (c) 2015 Licensed @HighFiveGames */
+
+var G = G || {};
+
+(function () {
+	"use strict";
+
+	var GaffMenuComponent = function(version) {
+		this.version = version;
+		this.GameComponent_constructor();
+	};
+	var p = createjs.extend(GaffMenuComponent, G.GameComponent);
+	p.constructor = GaffMenuComponent;
+
+
+	p.version = null;
+
+	p.init = function(setup, signalDispatcher) {
+		this.GameComponent_init(setup, signalDispatcher);
+
+	};
+
+	p.drawMenu = function(){
+		var self = this;
+		var w = this.setup.bezelW;
+		var h = this.setup.bezelH;
+
+		// console.log('Draw GaffMenu');
+		var shape, gp;
+		shape = new createjs.Shape();
+		gp = shape.graphics;
+		gp.setStrokeStyle(4);
+		gp.beginStroke(createjs.Graphics.getRGB(0, 20, 20, 0.9));
+		gp.beginFill(createjs.Graphics.getRGB(50, 100, 150, 0.75));
+		gp.drawRoundRect(0, 0, w ,h, 5);
+		gp.endFill();
+		gp.endStroke();
+
+		this.addChild(shape);
+
+		var closeButton = new createjs.Container();
+		shape = new createjs.Shape();
+		gp = shape.graphics;
+		gp.setStrokeStyle(4);
+		gp.beginStroke(createjs.Graphics.getRGB(50, 100, 150, 0.5));
+		gp.beginFill(createjs.Graphics.getRGB(0, 20, 20, 0.9));
+		gp.drawCircle(w, 0, 20);
+		gp.endFill();
+		gp.endStroke();
+
+		var closeTxt = new createjs.Text("X", "19px Helvetica", createjs.Graphics.getRGB(100,100,100,0.75));
+		//closeButton.addChild(txt);
+		closeTxt.x = w - 6;
+		closeTxt.y = - 12;
+
+
+		var labelTxt = new createjs.Text("Gaff Menu", "17px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
+		labelTxt.x = 5;
+		labelTxt.y = 5;
+		labelTxt.setBounds(0,0, this.setup.bezelW, this.setup.bezelH);
+		var bounds = labelTxt.getBounds();
+		labelTxt.filters = [new createjs.DropShadowFilter(3, 90, 0x00000,1, 4, 5, 5, 3, false, false, false)];
+		labelTxt.cache(bounds.x, bounds.y, bounds.width, bounds.height);
+
+		var versionTxt = new createjs.Text("Version:" + this.version, "12px sans-serif", createjs.Graphics.getRGB(255,255,255, 1));
+		versionTxt.x = w - versionTxt.getMeasuredWidth();
+		versionTxt.y = h - versionTxt.getMeasuredHeight();
+		this.addChild(versionTxt);
+
+		this.addChild(labelTxt);
+		this.addChild(closeButton);
+		closeButton.addChild(shape);
+		closeButton.addChild(closeTxt);
+
+		closeButton.on('click', function() {
+			console.log("mofo", self);
+			self.hide();
+		});
+
+		this.regX = w / 2;
+		this.regY = h / 2;
+
+		this.visible = false;
+	};
+
+	p.show = function() {
+		this.visible = true;
+		this.alpha = 0;
+		this.scaleX = 0.01;
+		this.scaleY = 0.01;
+
+		createjs.Tween.get(this)
+			.to({alpha: 1, scaleX: 1, scaleY: 1, visible:true}, 400, createjs.Ease.getElasticOut(4,2));
+	};
+
+	p.handleComplete = function() {
+		console.log('show gaff complete');
+		this.visible = false;
+	};
+
+	p.hide = function() {
+		this.visible = true;
+		this.alpha = 1;
+
+		createjs.Tween.get(this)
+			.to({alpha: 0, scaleX: 0.01, scaleY: 0.01}, 400, createjs.Ease.getElasticIn(4,2))
+			.call(this.handleComplete);
+	};
+
+
+	G.GaffMenuComponent = createjs.promote(GaffMenuComponent, "GameComponent");
 
 })();
 /*! kingkong 0.0.1 - 2015-02-04
@@ -54030,7 +54266,6 @@ var G = G || {};
 		if (--this.reelsSpinning === 0)
 		{
 			this.signalDispatcher.reelSpinComplete.dispatch();
-
 		}
 	};
 
@@ -54041,8 +54276,10 @@ var G = G || {};
 	 */
 	p.initDomEvents = function() {
 		var self = this;
-		$('#gasPedal').on('input', function(e) {
-			var newSpeed = $(e.target).val();
+		var gasPedal = document.querySelector('#gasPedal');
+		gasPedal.addEventListener("input", function() {
+			var newSpeed = gasPedal.value;
+			console.log('newSpeed', newSpeed);
 			self.updateSpinSpeed(newSpeed);
 		});
 	};

@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="kingkong" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.0.6</em>
+            <em>API Docs for: 0.1.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -38,14 +38,15 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                                <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/.html"></a></li>
                                 <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
+                                <li><a href="../classes/GaffButton.html">GaffButton</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
-                                <li><a href="../classes/WinLine.html">WinLine</a></li>
                                 <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                                <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
                                 <li><a href="../classes/Game.html">Game</a></li>
                                 <li><a href="../classes/Preloader.html">Preloader</a></li>
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
@@ -273,7 +274,6 @@ var G = G || {};
 		if (--this.reelsSpinning === 0)
 		{
 			this.signalDispatcher.reelSpinComplete.dispatch();
-
 		}
 	};
 
@@ -284,8 +284,10 @@ var G = G || {};
 	 */
 	p.initDomEvents = function() {
 		var self = this;
-		$(&#x27;#gasPedal&#x27;).on(&#x27;input&#x27;, function(e) {
-			var newSpeed = $(e.target).val();
+		var gasPedal = document.querySelector(&#x27;#gasPedal&#x27;);
+		gasPedal.addEventListener(&quot;input&quot;, function() {
+			var newSpeed = gasPedal.value;
+			console.log(&#x27;newSpeed&#x27;, newSpeed);
 			self.updateSpinSpeed(newSpeed);
 		});
 	};

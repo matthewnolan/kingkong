@@ -1,6 +1,6 @@
 {
   "name": "kingkong",
-  "version": "0.0.6",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -35,6 +35,7 @@
     "grunt-jsdoc": "^0.5.7",
     "grunt-notify": "^0.4.1",
     "grunt-prompt": "^1.3.0",
+    "grunt-text-replace": "^0.4.0",
     "yuidocjs": "^0.5.0"
   }
 }

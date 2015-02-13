@@ -21,7 +21,6 @@ var G = G || {};
 	 */
 	p.init = function(setup, gameComponent) {
 		this.Command_init(setup, gameComponent);
-
 	};
 
 	p.execute = function() {

@@ -19,6 +19,13 @@ this.G = this.G || {};
 	p.constructor = Game;
 
 	/**
+	 * AUTO_GENERATED in all grunt builds
+	 * @property version
+	 * @type {string}
+	 */
+	p.version = "{{ VERSION }}";
+
+	/**
 	 * @property setup
 	 * @type {Object}
 	 */
@@ -101,12 +108,9 @@ this.G = this.G || {};
 	 */
 	p.onAssetsLoadComplete = function(assets) {
 		this.assets = assets;
-
 		this.signalDispatcher = new G.SignalDispatcher();
-
 		this.setupDisplay();
 		this.initUIEvents();
-
 	};
 
 	/**
@@ -175,6 +179,22 @@ this.G = this.G || {};
 		this.components.bigWin = bigWinComponent;
 		this.gameComponents.push(bigWinComponent);
 
+		var gaffMenu = new G.GaffMenuComponent(this.version);
+		gaffMenu.init(this.setup, this.signalDispatcher);
+		gaffMenu.drawMenu();
+		this.stage.addChild(gaffMenu);
+		gaffMenu.x = bezelMarginL + (bezelW / 2);
+		gaffMenu.y = bezelMarginT + (bezelH / 2);
+		//gaffMenu.x = 185;
+		//gaffMenu.y = 348;
+
+
+		console.log('gaff', gaffMenu.x, gaffMenu.y);
+
+		this.components.gaff = gaffMenu;
+		this.gameComponents.push(gaffMenu);
+
+
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
 		}
@@ -196,6 +216,10 @@ this.G = this.G || {};
 				case 0:
 					self.components.reels.spinReels();
 					break;
+				////shift+g
+				case 71 :
+					self.components.gaff.show();
+					break;
 			}
 		};
 
@@ -216,15 +240,18 @@ this.G = this.G || {};
 		});
 
 		mc.on('pinchin', function() {
-			//G.util.showGaffMenu();
+			this.components.gaff.show();
 		});
 
 		mc.on('pinchout', function() {
-			//G.util.hideGaffMenu();
+			this.components.gaff.hide();
 		});
 
 		if (!this.setup.domHelpers) {
-			$('.dom-helpers').remove();
+			//$('.dom-helpers').remove();
+
+			var domHelpers = document.querySelector(".dom-helpers");
+			domHelpers.parentNode.removeChild(domHelpers);
 		}
 
 	};

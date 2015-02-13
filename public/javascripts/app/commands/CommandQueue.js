@@ -98,7 +98,7 @@ var G = G || {};
 
 		var winLineCommand = new G.WinLineCommand();
 		winLineCommand.init(this.setup, winLinesComponent, [1,2,3,4,5]);
-		this.queue = [winLineCommand, bigWinCommand];
+		this.queue = [winLineCommand];
 	};
 
 	/**

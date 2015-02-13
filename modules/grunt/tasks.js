@@ -1,8 +1,25 @@
 /**
- * Created by hayesmaker on 03/02/2015.
+ * Created by andy hayes on 03/02/2015.
  */
 
 module.exports = function(grunt) {
+
+	grunt.registerTask('temp-copy', 'Copying Game.js for temp version', function() {
+		grunt.file.copy('public/javascripts/app/core/Game.js', '.temp/Game.js');
+	});
+
+	grunt.registerTask('temp-copy-return', 'Returning Game.js from temp location', function() {
+		grunt.file.copy('.temp/Game.js', 'public/javascripts/app/core/Game.js');
+		grunt.file.delete('.temp/');
+	});
+
+	grunt.registerTask('copy-prod-index', 'Copying html template for minified js (index.html)', function() {
+		grunt.file.copy('src/html-templates/index-prod.html', 'public/index.html');
+	});
+
+	grunt.registerTask('copy-dev-index', 'Copying html template for un-concatenated development files (index.html)', function() {
+		grunt.file.copy('src/html-templates/index-dev.html', 'public/index.html');
+	});
 
 	grunt.registerTask('easel-packer', 'EaselPacking Sprite json..', function() {
 

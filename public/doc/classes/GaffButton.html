@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>public/javascripts/app/components/SymbolWinsComponent.js - kingkong</title>
+    <title>GaffButton - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -89,168 +89,123 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: public/javascripts/app/components/SymbolWinsComponent.js</h1>
+<h1>GaffButton Class</h1>
+<div class="box meta">
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                    <li><a href="createjs.Container.html">createjs.Container</a></li>
+            </ul>
+        </div>
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-/*! kingkong 0.0.6 - 2015-02-11
-* Copyright (c) 2015 Licensed @HighFiveGames */
+        <div class="extends">
+            Extends G.Container
+        </div>
 
-var G = G || {};
-
-(function () {
-	&quot;use strict&quot;;
-
-	var SymbolWinsComponent = function() {
-		this.GameComponent_constructor();
-	};
-
-	var p = createjs.extend(SymbolWinsComponent, G.GameComponent);
-	p.constructor = SymbolWinsComponent;
-
-	/**
-	 * the spritesheet data for symbol win animations loaded by Preloader
-	 * @property symbolAnims
-	 * @type {Object}
-	 */
-	p.symbolAnims = null;
-
-	/**
-	 * Scale the symbols by this amount, determined by the scale reduction (n) used in Texturepacker to the ratio 1/n
-	 * @const SCALE_FACTOR
-	 * @type {number}
-	 */
-	p.SCALE_FACTOR = (1 / 0.9375);
-
-	/**
-	 * Stored reference to symbols, top left is 0 indexed Sprite, then go down to next row, until bottom symbols then continues to next reel
-	 * @type {createjs.Sprite}
-	 */
-	p.symbols = [];
-
-	/**
-	 * @param setup
-	 * @param signalDispatcher
-	 * @param symbolAnims
-	 */
-	p.init = function(setup, signalDispatcher, symbolAnims) {
-		this.GameComponent_init(setup, signalDispatcher);
-		this.symbolAnims = symbolAnims;
-	};
-
-	/**
-	 * @method drawDebug
-	 */
-	p.drawDebug = function() {
-		var symbolW = this.setup.symbolW;
-		var symbolH = this.setup.symbolH;
-		var symbolMarginR = this.setup.reelMarginRight;
-		var symbolMarginB = this.setup.symbolMarginBottom;
-
-		var i, j, reelsLen = this.setup.numberOfReels, symbolsLen = this.setup.symbolsPerReel, container;
-		for (i = 0; i &lt; reelsLen; i++) {
-			for (j = 0; j &lt; symbolsLen; j++) {
-				container = new createjs.Container();
-				this.addChild(container);
-				var shape = new createjs.Shape();
-				var gp = shape.graphics;
-				//gp.setStrokeStyle(3);
-				gp.beginStroke(&quot;#ff0000&quot;);
-				gp.beginFill(&quot;rgba(128,3,95,0.3)&quot;);
-				gp.drawRect(0, 0, symbolW, symbolH);
-				gp.endFill().endStroke();
-				//container.addChild(shape);
-				container.x = (i * symbolW) + (i * symbolMarginR);
-				container.y = (j * symbolH) + (j * symbolMarginB);
-			}
-		}
-	};
-
-	/**
-	 * Draws a symbol sprite on each visible symbol on the reels
-	 * @method drawSprites
-	 */
-	p.drawSprites = function() {
-		var spritesheet = new createjs.SpriteSheet(this.symbolAnims);
-		var i, j, sprite;
-		var reelLen = this.setup.numberOfReels;
-		var symbolLen = this.setup.symbolsPerReel;
-		var symbolW = this.setup.symbolW;
-		var symbolH = this.setup.symbolH;
-		var reelMarginR = this.setup.reelMarginRight;
-		var symbolMarginB = this.setup.symbolMarginBottom;
-
-		for (i = 0; i &lt; reelLen; i++) {
-			for (j = 0; j &lt; symbolLen; j++) {
-				sprite = new createjs.Sprite(spritesheet, 0);
-				sprite.x = i * symbolW + i * reelMarginR;
-				sprite.y = j * symbolH + j * symbolMarginB;
-				sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
-				this.addChild(sprite);
-				//sprite.on(&quot;animationend&quot;, this.handleAnimationEnd);
-				sprite.visible = false;
-				this.symbols.push(sprite);
-			}
-		}
-	};
-
-	/**
-	 * hide animation at the end of one play
-	 * @method handleAnimationEnd
-	 * @param e
-	 */
-	/*
-	p.handleAnimationEnd = function(e) {
-		//var sprite = e.target;
-		//sprite.visible = false;
-	};
-	*/
-
-	p.hideSymbolAnim = function(symbolIndex) {
-		this.symbols[symbolIndex].visible = false;
-	};
-
-	/**
-	 * test symbol anims here
-	 */
-	p.runUnifiedSprites = function() {
-
-		this.runAnimationBySymbolIndex(0, &#x27;d1-sprite__000&#x27;);
-		this.runAnimationBySymbolIndex(1, &#x27;d1-sprite__000&#x27;);
-		this.runAnimationBySymbolIndex(2, &#x27;d1-sprite__000&#x27;);
-		this.runAnimationBySymbolIndex(3, &#x27;m1-sprite__000&#x27;);
-		this.runAnimationBySymbolIndex(4, &#x27;m1-sprite__000&#x27;);
-		this.runAnimationBySymbolIndex(5, &#x27;m1-sprite__000&#x27;);
-		this.runAnimationBySymbolIndex(6, &#x27;d2-sprite__000&#x27;);
-		this.runAnimationBySymbolIndex(7, &#x27;d2-sprite__000&#x27;);
-		this.runAnimationBySymbolIndex(8, &#x27;d2-sprite__000&#x27;);
-
-	};
-
-	/**
-	 *
-	 * @param {Number} symbolIndex - index in the array where the sprite is stored. Stored in this order reel[0]: t, m, b, reel[1]: t, m, b eg... this.symbols[4] = top symbol in second reel
-	 * @param {String} id - id of animation -see symbol_anims.json &#x27;animations&#x27;.
-	 */
-	p.runAnimationBySymbolIndex = function(symbolIndex, id) {
-		this.symbols[symbolIndex].visible = true;
-		this.symbols[symbolIndex].gotoAndPlay(id);
-	};
+        <div class="foundat">
+            Defined in: <a href="../files/public_javascripts_app_components_GaffButton.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffButton.js:9</code></a>
+        </div>
 
 
+</div>
 
 
+<div class="box intro">
+    
+</div>
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_GaffButton" class="method item">
+            <h3 class="name"><code>GaffButton</code></h3>
+        
+                <span class="paren">()</span>
+        
+        
+        
+        
+        
+        
+        
+        
+            <div class="meta">
+                        <p>
+                        Defined in
+                <a href="../files/public_javascripts_app_components_GaffButton.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffButton.js:9</code></a>
+                </p>
+        
+        
+        
+            </div>
+        
+            <div class="description">
+                
+            </div>
+        
+        
+        
+        
+        </div>
+    </div>
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
 
 
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property">
+                                <a href="#property_labelText">labelText</a>
+
+                            </li>
+                    </ul>
+                </div>
 
 
+        </div>
 
 
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
 
-	G.SymbolWinsComponent = createjs.promote(SymbolWinsComponent, &quot;GameComponent&quot;);
+                    <div id="property_labelText" class="property item">
+                        <h3 class="name"><code>labelText</code></h3>
+                        <span class="type">String</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/public_javascripts_app_components_GaffButton.js.html#l21"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffButton.js:21</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
 
-})();
-    </pre>
+
+    </div>
 </div>
                     </div>
                 </div>
