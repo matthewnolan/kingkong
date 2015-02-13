@@ -1,5 +1,7 @@
 # kingkong
 
+## installation
+
     - initial dependency setup: npm install
 
     - run node server: npm start
@@ -11,7 +13,7 @@
     - grunt build
 
 
-#4 gruntTasks
+## gruntTasks
 
     default      : runs tests and jsLint
     test         : runs tests and jsLint
