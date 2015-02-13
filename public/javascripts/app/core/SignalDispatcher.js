@@ -28,6 +28,12 @@ var G = G || {};
 	p.setup = null;
 
 	/**
+	 * @property gaffSelect
+	 * @type {Signal}
+	 */
+	p.gaffSelect = new signals.Signal();
+
+	/**
 	 * @property reelSpinComplete
 	 * @type {Signal}
 	 */
@@ -52,6 +58,7 @@ var G = G || {};
 		this.commandQueue.init(setup, gameComponents);
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
 		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
+		this.gaffSelect.add(this.handleGaffSelected, this);
 	};
 
 	/**
@@ -69,6 +76,8 @@ var G = G || {};
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 		bigWinComponent.hideAnimation();
+
+		this.commandQueue.setupQueue();
 	};
 
 
@@ -77,9 +86,25 @@ var G = G || {};
 	 * @method handleReeSpinComplete
 	 */
 	p.handleReelSpinComplete = function() {
-
-		this.commandQueue.setupQueue();
 		this.commandQueue.play();
+		this.commandQueue.gaffType = "default";
+	};
+
+	/**
+	 * @method handleGaffSelected
+	 * @param {String} gaffType - the menu option string
+	 */
+	p.handleGaffSelected = function(gaffType) {
+
+		console.log('handleGaffSelected', gaffType);
+
+		this.commandQueue.gaffType = gaffType;
+
+		var reelsComponent = _.find(this.gameComponents, function(component) {
+			return component instanceof G.ReelsComponent;
+		});
+
+		reelsComponent.spinReels();
 	};
 
 	G.SignalDispatcher = SignalDispatcher;

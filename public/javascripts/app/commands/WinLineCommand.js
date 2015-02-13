@@ -36,6 +36,7 @@ var G = G || {};
 	 * @method execute
 	 */
 	p.execute = function() {
+		createjs.Sound.play("bonusStop1");
 		this.gameComponent.hideWinLines();
 		this.gameComponent.showWinLineByIndexes(this.winLineIndexes);
 	};

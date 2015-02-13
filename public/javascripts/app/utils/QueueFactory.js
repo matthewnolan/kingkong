@@ -27,6 +27,48 @@ var G = G || {};
 		this.gameComponents = gameComponents;
 	};
 
+	/**
+	 * Generates a win animation accorind to gaffType
+	 * @method generateGaff
+	 * @param {String} gaffType - the gaff to generate a queue for
+	 * @returns Array
+	 */
+	p.generateGaff = function(gaffType) {
+
+		var queue = [];
+
+		switch(gaffType) {
+			case "normal" :
+				 var winLinesComponent =_.find(this.gameComponents, function(component) {
+					 return component instanceof G.WinLinesComponent;
+				 });
+
+				 var bigWinComponent = _.find(this.gameComponents, function(component) {
+					return component instanceof G.BigWinComponent;
+				 });
+
+				 var bigWinCommand = new G.BigWinCommand();
+				 bigWinCommand.init(this.setup, bigWinComponent);
+
+				 var winLineCommand = new G.WinLineCommand();
+				 winLineCommand.init(this.setup, winLinesComponent, [1,2,3,4,5]);
+				 queue.push(winLineCommand);
+				break;
+			case "lotsOfWin" :
+
+				break;
+			case "gaff_Line_M1" :
+
+				break;
+			default :
+
+				break;
+		}
+
+		return queue;
+
+	};
+
 
 
 

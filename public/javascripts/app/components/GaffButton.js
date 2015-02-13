@@ -38,10 +38,33 @@ var G = G || {};
 
 	p.textColor = "#000000";
 
-	p.clickSignal = new signals.Signal();
+	p.clicked = new signals.Signal();
 
-	p.init = function() { 
+	/**
+	 *
+	 * @type {string}
+	 */
+	p.type = "";
 
+	/**
+	 * Sets up button params
+	 * @method init
+	 * @param labelText
+	 * @param width
+	 * @param height
+	 * @param radius
+	 * @param strokeColor
+	 * @param fillColor
+	 * @param textColor
+	 */
+	p.init = function(labelText, width, height, radius,strokeColor, fillColor, textColor) {
+		this.type = this.labelText = labelText || this.labelTxt;
+		this.width = width || this.width;
+		this.height = height || this.height;
+		this.radius = radius || this.radius;
+		this.strokeColor = strokeColor || this.strokeColor;
+		this.fillColor = fillColor || this.fillColor;
+		this.textColor = textColor || this.textColor;
 	};
 
 	p.drawButton = function() {
@@ -51,7 +74,7 @@ var G = G || {};
 		var gp = shape.graphics;
 
 		gp.setStrokeStyle(3);
-		this.strokeCommand = gp.beginStroke(this.color).command;
+		this.strokeCommand = gp.beginStroke(this.strokeColor).command;
 		gp.beginFill(this.fillColor);
 		gp.drawRoundRect(0, 0, this.width, this.height, this.cornerRadius);
 		gp.endFill().endStroke();
@@ -65,7 +88,7 @@ var G = G || {};
 		labelText.y = 10;
 
 		this.on("click", function() {
-			self.clickSignal.dispatch(self);
+			self.clicked.dispatch(self);
 			self.select();
 		});
 	};

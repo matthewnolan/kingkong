@@ -39,6 +39,11 @@ module.exports = function (grunt) {
 			},
 			dist: {
 				src: [
+					// some source and vendor files need to be concatenated first.
+					// So this list must sometimes be updated manually.
+					// This is a bit of a pain, which we could avoid if we used Require.js or similar
+					// i recommend we do this if (this pain > pain of refactoring modules to amd)
+					//includes
 					'public/javascripts/vendor/easeljs/**/*.js',
 					'public/javascripts/vendor/**/*.js',
 					'public/javascripts/app/utils/*.js',
@@ -48,6 +53,7 @@ module.exports = function (grunt) {
 					'public/javascripts/app/commands/*.js',
 					'public/javascripts/app/components/*.js',
 					'public/javascripts/app/Main.js',
+					//excludes
 					'!public/javascripts/vendor/jasmine/**/*.js',
 					'!public/javascripts/vendor/jasmine-signals/**/*.js',
 					'!public/javascripts/vendor/jasmine-sinon/**/*.js',
@@ -131,7 +137,7 @@ module.exports = function (grunt) {
 				specs: 'public/javascripts/test/**/*.js',
 				vendor: ['public/javascripts/vendor/easeljs/easeljs-0.8.0.combined.js', 'public/javascripts/vendor/**/*.js'],
 				version: '2.1.3',
-				keepRunner: true
+				keepRunner: false
 			}
 		},
 

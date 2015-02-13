@@ -65,6 +65,14 @@ var G = G || {};
 	p.gameComponents = null;
 
 	/**
+	 * A special win animation is displayed according to setup.gaffs and QueueFactory
+	 * @property gaffType
+	 * @type {string}
+	 * @see G.QueueFactory
+	 */
+	p.gaffType = "default";
+
+	/**
 	 * Saves reference to Setup and creates a QueueFactory
 	 * @method init
 	 * @param {Object} setup
@@ -83,22 +91,10 @@ var G = G || {};
 	 * @todo introduce playNow option
 	 */
 	p.setupQueue = function() {
-		createjs.Sound.play("bonusStop1");
 
-		var winLinesComponent =_.find(this.gameComponents, function(component) {
-			return component instanceof G.WinLinesComponent;
-		});
-
-		var bigWinComponent = _.find(this.gameComponents, function(component) {
-			return component instanceof G.BigWinComponent;
-		});
-
-		var bigWinCommand = new G.BigWinCommand();
-		bigWinCommand.init(this.setup, bigWinComponent);
-
-		var winLineCommand = new G.WinLineCommand();
-		winLineCommand.init(this.setup, winLinesComponent, [1,2,3,4,5]);
-		this.queue = [winLineCommand];
+		if (this.gaffType !== "default") {
+			this.queue = this.queueFactory.generateGaff(this.gaffType);
+		}
 	};
 
 	/**

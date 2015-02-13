@@ -13,12 +13,17 @@ var G = G || {};
 	var p = createjs.extend(GaffMenuComponent, G.GameComponent);
 	p.constructor = GaffMenuComponent;
 
+	/**
+	 * Store the buttons on the menu for deselection purposes
+	 * @property buttons
+	 * @type {G.GaffButton[]}
+	 */
+	p.buttons = [];
 
 	p.version = null;
 
 	p.init = function(setup, signalDispatcher) {
 		this.GameComponent_init(setup, signalDispatcher);
-
 	};
 
 	p.drawMenu = function(){
@@ -26,7 +31,6 @@ var G = G || {};
 		var w = this.setup.bezelW;
 		var h = this.setup.bezelH;
 
-		// console.log('Draw GaffMenu');
 		var shape, gp;
 		shape = new createjs.Shape();
 		gp = shape.graphics;
@@ -49,10 +53,24 @@ var G = G || {};
 		gp.endFill();
 		gp.endStroke();
 
-		var closeTxt = new createjs.Text("X", "19px Helvetica", createjs.Graphics.getRGB(100,100,100,0.75));
-		//closeButton.addChild(txt);
-		closeTxt.x = w - 6;
+		var closeTxt = new createjs.Text("x", "20px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
+		closeTxt.x = w - 5;
 		closeTxt.y = - 12;
+
+		var i, len = this.setup.playModesNew.length, button, data;
+		console.log(this.setup);
+		for (i = 0; i < len; i++) {
+			data = this.setup.playModesNew[i];
+			console.log('data', data);
+			button = new G.GaffButton();
+			button.init(data.type, 100, 100, 10);
+			button.drawButton();
+			button.x = 20 + i * button.width + i * 10;
+			button.y = 40;
+			button.clicked.add(this.buttonClicked, this);
+			this.addChild(button);
+			this.buttons.push(button);
+		}
 
 
 		var labelTxt = new createjs.Text("Gaff Menu", "17px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
@@ -74,7 +92,6 @@ var G = G || {};
 		closeButton.addChild(closeTxt);
 
 		closeButton.on('click', function() {
-			console.log("mofo", self);
 			self.hide();
 		});
 
@@ -84,6 +101,20 @@ var G = G || {};
 		this.visible = false;
 	};
 
+	p.buttonClicked = function(button) {
+		var i, len = this.buttons.length, tempButton;
+		for (i  = 0; i < len; i++) {
+			tempButton = this.buttons[i];
+			if (tempButton !== button) {
+				tempButton.deselect();
+			}
+		}
+		this.signalDispatcher.gaffSelect.dispatch(button.type);
+		this.hide();
+
+
+	};
+
 	p.show = function() {
 		this.visible = true;
 		this.alpha = 0;
@@ -91,11 +122,10 @@ var G = G || {};
 		this.scaleY = 0.01;
 
 		createjs.Tween.get(this)
-			.to({alpha: 1, scaleX: 1, scaleY: 1, visible:true}, 400, createjs.Ease.getElasticOut(4,2));
+			.to({alpha: 1, scaleX: 1, scaleY: 1}, 400, createjs.Ease.getElasticOut(4,2));
 	};
 
 	p.handleComplete = function() {
-		console.log('show gaff complete');
 		this.visible = false;
 	};
 
