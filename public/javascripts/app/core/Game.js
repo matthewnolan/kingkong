@@ -242,11 +242,11 @@ this.G = this.G || {};
 		});
 
 		mc.on('pinchin', function() {
-			this.components.gaff.show();
+			self.components.gaff.show();
 		});
 
 		mc.on('pinchout', function() {
-			this.components.gaff.hide();
+			self.components.gaff.hide();
 		});
 
 		if (!this.setup.domHelpers) {
