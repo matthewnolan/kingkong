@@ -76,7 +76,6 @@ var G = G || {};
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 		bigWinComponent.hideAnimation();
-
 		this.commandQueue.setupQueue();
 	};
 
@@ -88,6 +87,10 @@ var G = G || {};
 	p.handleReelSpinComplete = function() {
 		this.commandQueue.play();
 		this.commandQueue.gaffType = "default";
+		var gaffMenu = _.find(this.gameComponents, function(component) {
+			return component instanceof G.GaffMenuComponent;
+		});
+		gaffMenu.deselectGaffButtons();
 	};
 
 	/**

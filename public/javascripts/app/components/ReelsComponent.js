@@ -128,9 +128,6 @@ var G = G || {};
 		var i, len = this.reels.length, reel, delay;
 		var maxDelay = this.setup.reelAnimation.delay.max;
 
-		createjs.Sound.play("spin1");
-		this.signalDispatcher.reelSpinStart.dispatch();
-
 		var getDelay = function(i) {
 			if (self.setup.reelAnimation.delay.random === true) {
 				return Math.random() * maxDelay;
@@ -141,6 +138,8 @@ var G = G || {};
 		};
 
 		if (this.reelsSpinning === 0) {
+			createjs.Sound.play("spin1");
+			this.signalDispatcher.reelSpinStart.dispatch();
 			for (i = 0; i < len; i++)
 			{
 				delay = getDelay(i);
@@ -150,6 +149,11 @@ var G = G || {};
 				this.reelsSpinning++;
 			}
 		} else {
+			setTimeout(function() {
+					createjs.Sound.stop("spin1");
+				}, 200
+			);
+
 			for (i = 0; i < len; i++)
 			{
 				reel = this.reels[i];

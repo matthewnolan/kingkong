@@ -217,6 +217,9 @@
   "playModesNew" : [
     {
       "type": "normal"
+    },
+    {
+      "type": "gaff_Line_M1"
     }
   ],
 

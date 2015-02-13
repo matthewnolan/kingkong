@@ -6,6 +6,13 @@ var G = G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * A GaffMenu component which you can call show/hide from to show and hide the menu
+	 * should also draw some buttons based on setup.json's gaffs
+	 * @class GaffMenuComponent
+	 * @param version {String}
+	 * @constructor
+	 */
 	var GaffMenuComponent = function(version) {
 		this.version = version;
 		this.GameComponent_constructor();
@@ -20,12 +27,26 @@ var G = G || {};
 	 */
 	p.buttons = [];
 
-	p.version = null;
+	/**
+	 * A version number which can be shown on the menu.
+	 * nb. do a grunt build:prod to generate the index.html and inject the version number from package.json.
+	 * @property version
+	 * @type {string}
+	 */
+	p.version = "";
 
+	/**
+	 * @method init
+	 * @param setup
+	 * @param signalDispatcher
+	 */
 	p.init = function(setup, signalDispatcher) {
 		this.GameComponent_init(setup, signalDispatcher);
 	};
 
+	/**
+	 * @method drawMenu
+	 */
 	p.drawMenu = function(){
 		var self = this;
 		var w = this.setup.bezelW;
@@ -82,8 +103,8 @@ var G = G || {};
 		labelTxt.cache(bounds.x, bounds.y, bounds.width, bounds.height);
 
 		var versionTxt = new createjs.Text("Version:" + this.version, "12px sans-serif", createjs.Graphics.getRGB(255,255,255, 1));
-		versionTxt.x = w - versionTxt.getMeasuredWidth();
-		versionTxt.y = h - versionTxt.getMeasuredHeight();
+		versionTxt.x = w - 10 - versionTxt.getMeasuredWidth();
+		versionTxt.y = h - 10 - versionTxt.getMeasuredHeight();
 		this.addChild(versionTxt);
 
 		this.addChild(labelTxt);
@@ -101,20 +122,35 @@ var G = G || {};
 		this.visible = false;
 	};
 
+	/**
+	 * dispatch to SignalDispatcher to update gaff type
+	 * @method buttonClicked
+	 * @param button
+	 */
 	p.buttonClicked = function(button) {
+		this.deselectGaffButtons(button);
+		this.signalDispatcher.gaffSelect.dispatch(button.type);
+		this.hide();
+	};
+
+	/**
+	 * @method deselectGaffButtons
+	 * @param {G.GaffButton} [button] do not deselect this button
+	 */
+	p.deselectGaffButtons = function(button) {
 		var i, len = this.buttons.length, tempButton;
 		for (i  = 0; i < len; i++) {
 			tempButton = this.buttons[i];
-			if (tempButton !== button) {
+			if (!button || button !== tempButton) {
 				tempButton.deselect();
 			}
 		}
-		this.signalDispatcher.gaffSelect.dispatch(button.type);
-		this.hide();
-
-
 	};
 
+	/**
+	 * Shows the gaff menu
+	 * @method show
+	 */
 	p.show = function() {
 		this.visible = true;
 		this.alpha = 0;
@@ -125,10 +161,18 @@ var G = G || {};
 			.to({alpha: 1, scaleX: 1, scaleY: 1}, 400, createjs.Ease.getElasticOut(4,2));
 	};
 
+	/**
+	 * visible false
+	 * @method handleComplete
+	 */
 	p.handleComplete = function() {
 		this.visible = false;
 	};
 
+	/**
+	 * Hides the gaff menu
+	 * @method hide
+	 */
 	p.hide = function() {
 		this.visible = true;
 		this.alpha = 1;
