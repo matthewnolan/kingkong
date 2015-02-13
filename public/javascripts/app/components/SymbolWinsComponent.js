@@ -64,7 +64,7 @@ var G = G || {};
 				gp.beginFill("rgba(128,3,95,0.3)");
 				gp.drawRect(0, 0, symbolW, symbolH);
 				gp.endFill().endStroke();
-				//container.addChild(shape);
+				container.addChild(shape);
 				container.x = (i * symbolW) + (i * symbolMarginR);
 				container.y = (j * symbolH) + (j * symbolMarginB);
 			}

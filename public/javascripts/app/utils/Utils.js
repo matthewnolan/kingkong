@@ -8,11 +8,29 @@ var G = G || {};
 
 	/**
 	 * @class Utils
-	 * @constructor
+	 * @static
 	 */
-	var Utils = function() {};
+	var Utils = {};
+
 	var p = Utils.prototype;
-	p.constructor = Utils;
+	//var Utils = function() {};
+	//var p = Utils.prototype;
+	//p.constructor = Utils;
+
+	/**
+	 * @property gameComponents
+	 * @type {G.GameComponent[]}
+	 */
+	p.gameComponents = [];
+
+	/**
+	 *
+	 */
+	p.getGameComponent = function () {
+
+	};
+
+
 
 
 	G.Utils = Utils;

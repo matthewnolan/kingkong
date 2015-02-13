@@ -46,13 +46,14 @@ module.exports = function (grunt) {
 					//includes
 					'public/javascripts/vendor/easeljs/**/*.js',
 					'public/javascripts/vendor/**/*.js',
-					'public/javascripts/app/utils/*.js',
 					'public/javascripts/app/core/*.js',
 					'public/javascripts/app/commands/Command.js',
 					'public/javascripts/app/components/GameComponent.js',
 					'public/javascripts/app/commands/*.js',
 					'public/javascripts/app/components/*.js',
 					'public/javascripts/app/Main.js',
+					'public/javascripts/app/utils/*.js',
+
 					//excludes
 					'!public/javascripts/vendor/jasmine/**/*.js',
 					'!public/javascripts/vendor/jasmine-signals/**/*.js',
@@ -132,6 +133,7 @@ module.exports = function (grunt) {
 			src: [
 				'public/javascripts/app/commands/Command.js',
 				'public/javascripts/app/components/GameComponent.js',
+				'public/javascript/app/utils/*.js',
 				'public/javascripts/app/**/*.js'],
 			options: {
 				specs: 'public/javascripts/test/**/*.js',

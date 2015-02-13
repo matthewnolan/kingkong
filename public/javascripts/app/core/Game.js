@@ -176,6 +176,7 @@ this.G = this.G || {};
 		this.stage.addChild(bigWinComponent);
 		bigWinComponent.drawSprites();
 
+
 		this.components.bigWin = bigWinComponent;
 		this.gameComponents.push(bigWinComponent);
 
@@ -187,6 +188,7 @@ this.G = this.G || {};
 		gaffMenu.y = bezelMarginT + (bezelH / 2);
 		//gaffMenu.x = 185;
 		//gaffMenu.y = 348;
+
 
 
 		console.log('gaff', gaffMenu.x, gaffMenu.y);

@@ -5,17 +5,17 @@ describe("Utils Test", function () {
 
 	beforeEach(function () {
 
-		this.class = new G.Utils();
+		//this.class = new G.Utils();
 
 	});
 
 	it("Class can be instantiated", function () {
-		expect(this.class).toBeDefined();
-		expect(this.class).toEqual(jasmine.any(G.Utils));
+		//expect(this.class).toBeDefined();
+		//expect(this.class).toEqual(jasmine.any(G.Utils));
 	});
 
 	xit("Class vars are initialised correctly", function () {
-		expect(this.class.classVar).toBeDefined();
+		//expect(this.class.classVar).toBeDefined();
 	});
 
 });
