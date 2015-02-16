@@ -37,21 +37,18 @@ var G = G || {};
 
 		var queue = [];
 
+		var winLines, bigWin, reels;
+
 		switch(gaffType) {
 			case "normal" :
-				 var winLinesComponent =_.find(this.gameComponents, function(component) {
-					 return component instanceof G.WinLinesComponent;
-				 });
+				 winLines = G.Utils.getGameComponentByClass(G.WinLinesComponent);
+				 bigWin = G.Utils.getGameComponentByClass(G.BigWinComponent);
 
-				 var bigWinComponent = _.find(this.gameComponents, function(component) {
-					return component instanceof G.BigWinComponent;
-				 });
-
-				 var bigWinCommand = new G.BigWinCommand();
-				 bigWinCommand.init(this.setup, bigWinComponent);
+				var bigWinCommand = new G.BigWinCommand();
+				 bigWinCommand.init(this.setup, bigWin);
 
 				 var winLineCommand = new G.WinLineCommand();
-				 winLineCommand.init(this.setup, winLinesComponent, [1,2,3,4,5]);
+				 winLineCommand.init(this.setup, winLines, [1,2,3,4,5]);
 				 queue.push(winLineCommand);
 				break;
 			case "lotsOfWin" :
@@ -59,7 +56,8 @@ var G = G || {};
 				break;
 			case "gaff_Line_M1" :
 
-
+				reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
+				reels.modifySymbolData();
 
 
 				break;

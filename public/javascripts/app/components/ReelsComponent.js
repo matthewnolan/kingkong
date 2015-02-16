@@ -98,6 +98,14 @@ var G = G || {};
 		return array;
 	};
 
+	p.modifySymbomodifySymbolDatalData = function() {
+		var i, len = this.reels.length, reel;
+		for (i = 0; i < len; i++) {
+			reel = this.reels[i];
+			reel.modifyReelData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+		}
+	};
+
 	/**
 	 * @method drawReels
 	 */
@@ -144,7 +152,7 @@ var G = G || {};
 			{
 				delay = getDelay(i);
 				reel = this.reels[i];
-				reel.spinInfinite(delay, -2);
+				reel.spinToIndex(0, delay);
 				reel.reelSpinEnd.add(this.reelSpinEnd, this);
 				this.reelsSpinning++;
 			}

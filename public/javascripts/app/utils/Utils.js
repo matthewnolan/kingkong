@@ -12,22 +12,21 @@ var G = G || {};
 	 */
 	var Utils = {};
 
-	var p = Utils.prototype;
-	//var Utils = function() {};
-	//var p = Utils.prototype;
-	//p.constructor = Utils;
-
 	/**
 	 * @property gameComponents
 	 * @type {G.GameComponent[]}
 	 */
-	p.gameComponents = [];
+	Utils.gameComponents = [];
 
 	/**
-	 *
+	 * @ method getGameComponentByClass - pass the type of component {eg. G.ReelsComponent} to return the component instance
+	 * @param {class} componentClass - must be the class type of a G.GameComponent
+	 * @returns {G.GameComponent} - the instance
 	 */
-	p.getGameComponent = function () {
-
+	Utils.getGameComponentByClass = function (componentClass) {
+		return _.find(Utils.gameComponents, function(component) {
+			return component instanceof componentClass;
+		});
 	};
 
 

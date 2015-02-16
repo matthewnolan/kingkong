@@ -164,8 +164,6 @@ this.G = this.G || {};
 		symbolWinsComponent.y = bezelMarginT;
 		this.stage.addChild(symbolWinsComponent);
 		symbolWinsComponent.drawSprites();
-		//symbolWinsComponent.drawDebug();
-		//symbolWinsComponent.runUnifiedSprites();
 		this.components.symbolWins = symbolWinsComponent;
 		this.gameComponents.push(symbolWinsComponent);
 
@@ -186,16 +184,13 @@ this.G = this.G || {};
 		this.stage.addChild(gaffMenu);
 		gaffMenu.x = bezelMarginL + (bezelW / 2);
 		gaffMenu.y = bezelMarginT + (bezelH / 2);
-		//gaffMenu.x = 185;
-		//gaffMenu.y = 348;
-
-
 
 		console.log('gaff', gaffMenu.x, gaffMenu.y);
 
 		this.components.gaff = gaffMenu;
 		this.gameComponents.push(gaffMenu);
 
+		G.Utils.gameComponents = this.gameComponents;
 
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
@@ -242,11 +237,11 @@ this.G = this.G || {};
 		});
 
 		mc.on('pinchin', function() {
-			self.components.gaff.show();
+			self.components.gaff.hide();
 		});
 
 		mc.on('pinchout', function() {
-			self.components.gaff.hide();
+			self.components.gaff.show();
 		});
 
 		if (!this.setup.domHelpers) {
