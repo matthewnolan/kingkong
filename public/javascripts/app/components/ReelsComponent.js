@@ -147,9 +147,7 @@ var G = G || {};
 			}
 		};
 
-		console.log('spinToIndex=', this.spinIndexEl.value);
-		var spinIndex = this.spinIndexEl? parseInt(this.spinIndexEl.value, 10) : 0;
-
+		var spinIndex = this.spinIndexEl ? parseInt(this.spinIndexEl.value, 10) : 0;
 
 		if (this.reelsSpinning === 0) {
 			createjs.Sound.play("spin1");
@@ -211,7 +209,6 @@ var G = G || {};
 		var gasPedal = document.querySelector('#gasPedal');
 		gasPedal.addEventListener("input", function() {
 			var newSpeed = gasPedal.value;
-			console.log('newSpeed', newSpeed);
 			self.updateSpinSpeed(newSpeed);
 		});
 

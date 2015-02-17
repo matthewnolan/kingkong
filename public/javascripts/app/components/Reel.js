@@ -254,7 +254,7 @@ var G = G || {};
 		var yPos = -(symbolH * index + symbolMarginB * index) + reelH;
 		var stopTime = this.getStopTime(index);
 		var easeAmp = 1 + index * 0.01;
-		var easeTime = 1 - index * 0.01;
+		var easeTime = 1 - index * 0.02;
 
 		setTimeout(function() {
 			createjs.Sound.play("reelstop1");
