@@ -152,6 +152,13 @@ var G = G || {};
 			{
 				delay = getDelay(i);
 				reel = this.reels[i];
+				if (i === 0) {
+					reel.logEnabled = true;
+				}
+
+
+
+
 				reel.spinToIndex(0, delay);
 				reel.reelSpinEnd.add(this.reelSpinEnd, this);
 				this.reelsSpinning++;

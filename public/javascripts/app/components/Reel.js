@@ -37,6 +37,8 @@ var G = G || {};
 		wraps: []
 	};
 
+	p.logEnabled = false;
+
 	p.scheduleSpinStop = -2;
 
 	/**
@@ -81,15 +83,15 @@ var G = G || {};
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
 		var distanceInPixels = symbolH * symbolsLen + symbolMarginB * symbolsLen;
-		var time = distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
-		return time;
+		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
 	};
 
 	p.getStopTime =function(index) {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
-		var yPos = (symbolH * index + symbolMarginB * index) + (symbolH * symbolsLen + symbolMarginB * symbolsLen);
+		var reelH = symbolsLen * symbolH + symbolsLen * symbolMarginB;
+		var yPos = (symbolH * index + symbolMarginB * index) + reelH;
 		var time = yPos / (this.speedPercentage * this.speedConstant / 1000);
 		return time;
 	};
@@ -111,6 +113,7 @@ var G = G || {};
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var container;
 		var l, j, sp, debugSh, gp;
+
 		for (l = 0; l < 2; l++) {
 			var wrap = new createjs.Container();
 			this.addChild(wrap);
@@ -120,10 +123,11 @@ var G = G || {};
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[j]]);
 				container.addChild(sp);
 				if (this.setup.devMode) {
+					var wrapColor = l === 0? "#00ff00" : "#ff0000";
 					debugSh = new createjs.Shape();
 					gp = debugSh.graphics;
-					gp.setStrokeStyle(3);
-					gp.beginStroke("#00ff00");
+					gp.setStrokeStyle(2);
+					gp.beginStroke(wrapColor);
 					gp.beginFill("rgba(128,3,95,0.3)");
 					gp.drawRect(0, 0, symbolW, symbolH);
 					gp.endFill().endStroke();
@@ -135,7 +139,6 @@ var G = G || {};
 					container.addChild(text);
 					container.addChild(text2);
 					text2.y = 14;
-
 				}
 				wrap.addChild(container);
 				container.y = (symbolH * j + symbolMarginB * j);
@@ -152,7 +155,6 @@ var G = G || {};
 	 * @param {Number} delay - Millis til this spin will start
 	 */
 	p.spinToIndex = function(index, delay) {
-		var self = this;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
@@ -161,17 +163,27 @@ var G = G || {};
 		this.spinResultIndex = index;
 		this.scheduleSpinStop = -1;
 
-		var yPos = (symbolH * symbolsLen + symbolMarginB * symbolsLen);
+		var yPos = symbolH * symbolsLen + symbolMarginB * symbolsLen;
+		var tweenTime = this.getTime();
+		this.y = 0;
+
+		if (this.logEnabled) {
+			console.log('Tween_Start:', this.y, yPos, tweenTime);
+			console.log('SymbolsHeight:', symbolH * symbolsLen + symbolMarginB * symbolsLen);
+		}
 
 		createjs.Tween.get(this)
-			.wait(spinDelay).play(
-			createjs.Tween.get(this, {loop: false, paused:true})
-				.to({y:yPos}, this.getTime(), createjs.Ease.getElasticIn(5,2))
-				.call(this.loopSpin)
+			.wait(delay)
+			.play(
+				createjs.Tween.get(this, {loop: false, paused:true})
+					.to({y:yPos}, tweenTime, createjs.Ease.getElasticIn(2,2))
+					.call(this.loopSpin)
+
 		);
 
+
 		this.stopTimeout = setTimeout(function() {
-			self.fastStop();
+			//self.fastStop();
 		}, this.setup.reelAnimation.duration + spinDelay);
 	};
 
@@ -179,20 +191,24 @@ var G = G || {};
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
+		var tweenTime = this.getTime();
 		var yPos;
-		var ease;
 		if (this.scheduleSpinStop === -1){
 			this.y = 0;
 			yPos = (symbolH * symbolsLen + symbolMarginB * symbolsLen);
-			ease = createjs.Ease.linear();
 		} else {
 			return;
 		}
 
+		if (this.logEnabled) {
+			console.log('Tween_Loop:', this.y, yPos, tweenTime);
+		}
+
 		createjs.Tween
 			.get(this, {override: true, loop: false })
-			.to({y: yPos}, this.getTime(), ease)
-				.call(this.loopSpin);
+			.to({y: yPos}, tweenTime, createjs.Ease.linear())
+			.call(this.loopSpin)
+			.on("change", this.onYPosUpdate);
 	};
 
 
@@ -201,8 +217,8 @@ var G = G || {};
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
-		var yPos = (symbolH * index + symbolMarginB * index);
-		//var yPos = (symbolH * index + symbolMarginB * index);
+		var reelH = (symbolH * symbolsLen) + (symbolMarginB * symbolsLen);
+		var yPos = (symbolH * index + symbolMarginB * index) + reelH;
 		var stopTime = this.getStopTime(index);
 
 		setTimeout(function() {
@@ -210,10 +226,25 @@ var G = G || {};
 		}, stopTime - 300);
 
 		this.y = 0;
+
+		if (this.logEnabled) {
+			console.log('Tween_Stop', this.y, yPos, stopTime);
+		}
+
 		createjs.Tween
 			.get(this, {override: true, loop:false})
-			.to({y: yPos}, stopTime, createjs.Ease.getElasticOut(3,2))
-			.call(this.handleSpinComplete);
+			.to({y: yPos}, stopTime, createjs.Ease.getElasticOut(1,2))
+			//.to({y: yPos}, stopTime)
+			.call(this.handleSpinComplete)
+			.on("change", this.onYPosUpdate);
+	};
+
+	p.onYPosUpdate = function() {
+		var self = this.target;
+		if (self.logEnabled) {
+			console.log('this.Container Y=', Math.round(self.y));
+		}
+
 	};
 
 	p.fastStop = function() {
