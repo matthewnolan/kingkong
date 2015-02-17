@@ -56,6 +56,8 @@ var G = G || {};
 	 */
 	p.reelsSpinning = 0;
 
+	p.spinIndexEl = null;
+
 	/**
 	 * @method init
 	 * @param setup {Object}
@@ -145,6 +147,10 @@ var G = G || {};
 			}
 		};
 
+		console.log('spinToIndex=', this.spinIndexEl.value);
+		var spinIndex = this.spinIndexEl? parseInt(this.spinIndexEl.value, 10) : 0;
+
+
 		if (this.reelsSpinning === 0) {
 			createjs.Sound.play("spin1");
 			this.signalDispatcher.reelSpinStart.dispatch();
@@ -152,18 +158,12 @@ var G = G || {};
 			{
 				delay = getDelay(i);
 				reel = this.reels[i];
-				if (i === 0) {
-					reel.logEnabled = true;
-				}
-
-
-
-
-				reel.spinToIndex(0, delay);
+				reel.spinToIndex(spinIndex, delay);
 				reel.reelSpinEnd.add(this.reelSpinEnd, this);
 				this.reelsSpinning++;
 			}
 		} else {
+
 			setTimeout(function() {
 					createjs.Sound.stop("spin1");
 				}, 200
@@ -214,6 +214,9 @@ var G = G || {};
 			console.log('newSpeed', newSpeed);
 			self.updateSpinSpeed(newSpeed);
 		});
+
+		this.spinIndexEl = document.querySelector('#spinToIndex');
+
 	};
 
 	G.ReelsComponent = createjs.promote(ReelsComponent, "GameComponent");

@@ -70,30 +70,12 @@ var G = G || {};
 
 	p.stopTimeout = 0;
 
-	p.spinResultIndex = null;
+	p.spinResultIndex = 0;
 
 	p.init = function(setup, symbolSprites, reelData) {
 		this.setup = setup;
 		this.symbolSprites = symbolSprites;
 		this.reelData = reelData;
-	};
-
-	p.getTime = function() {
-		var symbolH = this.setup.symbolH;
-		var symbolMarginB = this.setup.symbolMarginBottom;
-		var symbolsLen = this.reelData.length;
-		var distanceInPixels = symbolH * symbolsLen + symbolMarginB * symbolsLen;
-		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
-	};
-
-	p.getStopTime =function(index) {
-		var symbolH = this.setup.symbolH;
-		var symbolMarginB = this.setup.symbolMarginBottom;
-		var symbolsLen = this.reelData.length;
-		var reelH = symbolsLen * symbolH + symbolsLen * symbolMarginB;
-		var yPos = (symbolH * index + symbolMarginB * index) + reelH;
-		var time = yPos / (this.speedPercentage * this.speedConstant / 1000);
-		return time;
 	};
 
 	p.modifyReelData = function(reelData) {
@@ -111,14 +93,17 @@ var G = G || {};
 		var symbolW = this.setup.symbolW;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
-		var container;
-		var l, j, sp, debugSh, gp;
-
+		var container, len = this.reelData.length;
+		var l, j, sp, debugSh, gp, text, text2;
+		var reelHeight = this.reelData.length * symbolH + this.reelData.length * symbolMarginB;
+		var wrapPosY;
 		for (l = 0; l < 2; l++) {
+			//creates 2 reel wrappers
 			var wrap = new createjs.Container();
 			this.addChild(wrap);
 
-			for (j = 0; j < this.reelData.length; j++) {
+			for (j = 0; j < len; j++) {
+				//creates a symbol for every index in reelData array
 				container = new createjs.Container();
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[j]]);
 				container.addChild(sp);
@@ -132,9 +117,8 @@ var G = G || {};
 					gp.drawRect(0, 0, symbolW, symbolH);
 					gp.endFill().endStroke();
 					container.addChild(debugSh);
-
-					var text = new createjs.Text("SymbolIndex:" + j, "12px Arial", "#ffffff");
-					var text2 = new createjs.Text("Wrap:" + l, "12px Arial", "#ffffff");
+					text = new createjs.Text("SymbolIndex:" + j, "12px Arial", "#ffffff");
+					text2 = new createjs.Text("Wrap:" + l, "12px Arial", "#ffffff");
 					text.x = 0;
 					container.addChild(text);
 					container.addChild(text2);
@@ -143,8 +127,38 @@ var G = G || {};
 				wrap.addChild(container);
 				container.y = (symbolH * j + symbolMarginB * j);
 			}
-			wrap.y = -l * (symbolH * this.reelData.length + symbolMarginB * this.reelData.length);
+			wrapPosY = wrap.y = -l * reelHeight;
 			this.containers.wraps.push(wrap);
+
+			for (j = 0; j < 2; j++) {
+				//2 rows of symbols to buffer above and below the symbol wrappers
+				var symbolBufferWrap = new createjs.Container();
+				this.addChild(symbolBufferWrap);
+				container = new createjs.Container();
+				var tempSymbolIndex = len - 2 + j - (l * (len - 2));
+				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[tempSymbolIndex]]);
+				container.addChild(sp);
+				container.y = (symbolH * j + symbolMarginB * j);
+				symbolBufferWrap.addChild(container);
+				symbolBufferWrap.y = -reelHeight - 2 * (symbolH - symbolMarginB) + (l * (2 * (symbolH - symbolMarginB) + reelHeight * 2));
+				this.containers.wraps.push(symbolBufferWrap);
+
+				if (this.setup.devMode) {
+					debugSh = new createjs.Shape();
+					gp = debugSh.graphics;
+					gp.setStrokeStyle(2);
+					gp.beginStroke('#0000ff');
+					gp.drawRect(0,0,symbolW, symbolH);
+					gp.endFill().endStroke();
+					container.addChild(debugSh);
+					text = new createjs.Text("SymbolIndexBuffer", "12px Arial", "#ffffff");
+					text2 = new createjs.Text("Wrap:" + (l + 2), "12px Arial", "#ffffff");
+					text.x = 0;
+					container.addChild(text);
+					container.addChild(text2);
+					text2.y = 14;
+				}
+			}
 		}
 	};
 
@@ -155,17 +169,19 @@ var G = G || {};
 	 * @param {Number} delay - Millis til this spin will start
 	 */
 	p.spinToIndex = function(index, delay) {
+		var self = this;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
 		var spinDelay = delay || 0;
+		var reelH = symbolH * symbolsLen + symbolMarginB * symbolsLen;
+		var yPos = reelH;
+		var tweenTime = this.getTime();
+
+		this.y = -this.spinResultIndex * symbolH + -this.spinResultIndex * symbolMarginB;
 
 		this.spinResultIndex = index;
 		this.scheduleSpinStop = -1;
-
-		var yPos = symbolH * symbolsLen + symbolMarginB * symbolsLen;
-		var tweenTime = this.getTime();
-		this.y = 0;
 
 		if (this.logEnabled) {
 			console.log('Tween_Start:', this.y, yPos, tweenTime);
@@ -183,19 +199,28 @@ var G = G || {};
 
 
 		this.stopTimeout = setTimeout(function() {
-			//self.fastStop();
+			self.fastStop();
 		}, this.setup.reelAnimation.duration + spinDelay);
+	};
+
+	p.getTime = function() {
+		var symbolH = this.setup.symbolH;
+		var symbolMarginB = this.setup.symbolMarginBottom;
+		var symbolsLen = this.reelData.length;
+		var distanceInPixels = symbolH * symbolsLen + symbolMarginB * symbolsLen;
+		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
 	};
 
 	p.loopSpin = function() {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
+		var reelH = symbolH * symbolsLen + symbolMarginB * symbolsLen;
 		var tweenTime = this.getTime();
 		var yPos;
 		if (this.scheduleSpinStop === -1){
 			this.y = 0;
-			yPos = (symbolH * symbolsLen + symbolMarginB * symbolsLen);
+			yPos = reelH;
 		} else {
 			return;
 		}
@@ -211,6 +236,14 @@ var G = G || {};
 			.on("change", this.onYPosUpdate);
 	};
 
+	p.getStopTime =function(index) {
+		var symbolH = this.setup.symbolH;
+		var symbolMarginB = this.setup.symbolMarginBottom;
+		var symbolsLen = this.reelData.length;
+		var reelH = symbolsLen * symbolH + symbolsLen * symbolMarginB;
+		var distanceInPixels = (symbolH * index + symbolMarginB * index) + reelH;
+		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
+	};
 
 	p.stopSpin = function(index) {
 		this.scheduleSpinStop = -2;
@@ -218,8 +251,10 @@ var G = G || {};
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
 		var reelH = (symbolH * symbolsLen) + (symbolMarginB * symbolsLen);
-		var yPos = (symbolH * index + symbolMarginB * index) + reelH;
+		var yPos = -(symbolH * index + symbolMarginB * index) + reelH;
 		var stopTime = this.getStopTime(index);
+		var easeAmp = 1 + index * 0.01;
+		var easeTime = 1 - index * 0.01;
 
 		setTimeout(function() {
 			createjs.Sound.play("reelstop1");
@@ -228,12 +263,12 @@ var G = G || {};
 		this.y = 0;
 
 		if (this.logEnabled) {
-			console.log('Tween_Stop', this.y, yPos, stopTime);
+			console.log('Tween_Stop', this.y, yPos, stopTime, 'easeAmp=', easeAmp);
 		}
 
 		createjs.Tween
 			.get(this, {override: true, loop:false})
-			.to({y: yPos}, stopTime, createjs.Ease.getElasticOut(1,2))
+			.to({y: yPos}, stopTime, createjs.Ease.getElasticOut(easeAmp,easeTime))
 			//.to({y: yPos}, stopTime)
 			.call(this.handleSpinComplete)
 			.on("change", this.onYPosUpdate);
