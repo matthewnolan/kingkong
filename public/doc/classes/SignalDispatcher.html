@@ -42,6 +42,7 @@
                                 <li><a href="../classes/.html"></a></li>
                                 <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GaffButton.html">GaffButton</a></li>
+                                <li><a href="../classes/GaffMenuComponent.html">GaffMenuComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
@@ -52,6 +53,7 @@
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Utils.html">Utils</a></li>
                                 <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
@@ -157,6 +159,10 @@
 
                     <ul class="index-list methods">
                             <li class="index-item method">
+                                <a href="#method_handleGaffSelected">handleGaffSelected</a>
+
+                            </li>
+                            <li class="index-item method">
                                 <a href="#method_handleReelSpinStart">handleReelSpinStart</a>
 
                             </li>
@@ -175,6 +181,10 @@
                     <h3>Properties</h3>
 
                     <ul class="index-list properties">
+                            <li class="index-item property">
+                                <a href="#property_gaffSelect">gaffSelect</a>
+
+                            </li>
                             <li class="index-item property">
                                 <a href="#property_gameComponents">gameComponents</a>
 
@@ -200,6 +210,61 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
+<div id="method_handleGaffSelected" class="method item">
+    <h3 class="name"><code>handleGaffSelected</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>gaffType</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l96"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:96</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">gaffType</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <ul>
+<li>the menu option string</li>
+</ul>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
 <div id="method_handleReelSpinStart" class="method item">
     <h3 class="name"><code>handleReelSpinStart</code></h3>
 
@@ -215,7 +280,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l57"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:57</code></a>
+        <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l64"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:64</code></a>
         </p>
 
 
@@ -245,7 +310,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l76"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:76</code></a>
+        <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l84"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:84</code></a>
         </p>
 
 
@@ -284,7 +349,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l42"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:42</code></a>
+        <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l48"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:48</code></a>
         </p>
 
 
@@ -330,6 +395,30 @@
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
+                    <div id="property_gaffSelect" class="property item">
+                        <h3 class="name"><code>gaffSelect</code></h3>
+                        <span class="type">Signal</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l30"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:30</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
                     <div id="property_gameComponents" class="property item">
                         <h3 class="name"><code>gameComponents</code></h3>
                         <span class="type">G.GameComponent</span>
@@ -365,7 +454,7 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l30"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:30</code></a>
+                            <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l36"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:36</code></a>
                             </p>
                     
                     
@@ -389,7 +478,7 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l36"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:36</code></a>
+                            <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l42"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:42</code></a>
                             </p>
                     
                     

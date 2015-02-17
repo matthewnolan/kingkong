@@ -42,6 +42,7 @@
                                 <li><a href="../classes/.html"></a></li>
                                 <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GaffButton.html">GaffButton</a></li>
+                                <li><a href="../classes/GaffMenuComponent.html">GaffMenuComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
@@ -52,6 +53,7 @@
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Utils.html">Utils</a></li>
                                 <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
@@ -259,8 +261,6 @@ this.G = this.G || {};
 		symbolWinsComponent.y = bezelMarginT;
 		this.stage.addChild(symbolWinsComponent);
 		symbolWinsComponent.drawSprites();
-		//symbolWinsComponent.drawDebug();
-		//symbolWinsComponent.runUnifiedSprites();
 		this.components.symbolWins = symbolWinsComponent;
 		this.gameComponents.push(symbolWinsComponent);
 
@@ -271,6 +271,7 @@ this.G = this.G || {};
 		this.stage.addChild(bigWinComponent);
 		bigWinComponent.drawSprites();
 
+
 		this.components.bigWin = bigWinComponent;
 		this.gameComponents.push(bigWinComponent);
 
@@ -280,15 +281,13 @@ this.G = this.G || {};
 		this.stage.addChild(gaffMenu);
 		gaffMenu.x = bezelMarginL + (bezelW / 2);
 		gaffMenu.y = bezelMarginT + (bezelH / 2);
-		//gaffMenu.x = 185;
-		//gaffMenu.y = 348;
-
 
 		console.log(&#x27;gaff&#x27;, gaffMenu.x, gaffMenu.y);
 
 		this.components.gaff = gaffMenu;
 		this.gameComponents.push(gaffMenu);
 
+		G.Utils.gameComponents = this.gameComponents;
 
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
@@ -335,11 +334,11 @@ this.G = this.G || {};
 		});
 
 		mc.on(&#x27;pinchin&#x27;, function() {
-			this.components.gaff.show();
+			self.components.gaff.hide();
 		});
 
 		mc.on(&#x27;pinchout&#x27;, function() {
-			this.components.gaff.hide();
+			self.components.gaff.show();
 		});
 
 		if (!this.setup.domHelpers) {

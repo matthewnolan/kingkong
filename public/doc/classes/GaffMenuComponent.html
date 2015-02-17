@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>BigWinComponent - kingkong</title>
+    <title>GaffMenuComponent - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -91,21 +91,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>BigWinComponent Class</h1>
+<h1>GaffMenuComponent Class</h1>
 <div class="box meta">
-        <div class="uses">
-            Uses
-            <ul class="inline commas">
-                    <li><a href="createjs.Container.html">createjs.Container</a></li>
-            </ul>
-        </div>
 
-        <div class="extends">
-            Extends G.GameComponent
-        </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/public_javascripts_app_components_BigWinComponent.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;BigWinComponent.js:9</code></a>
+            Defined in: <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:9</code></a>
         </div>
 
 
@@ -113,15 +104,23 @@
 
 
 <div class="box intro">
-    
+    <p>A GaffMenu component which you can call show/hide from to show and hide the menu
+should also draw some buttons based on setup.json&#39;s gaffs</p>
+
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_BigWinComponent" class="method item">
-            <h3 class="name"><code>BigWinComponent</code></h3>
+        <div id="method_GaffMenuComponent" class="method item">
+            <h3 class="name"><code>GaffMenuComponent</code></h3>
         
-                <span class="paren">()</span>
+                <div class="args">
+                    <span class="paren">(</span><ul class="args-list inline commas">
+                        <li class="arg">
+                                <code>version</code>
+                        </li>
+                    </ul><span class="paren">)</span>
+                </div>
         
         
         
@@ -133,7 +132,7 @@
             <div class="meta">
                         <p>
                         Defined in
-                <a href="../files/public_javascripts_app_components_BigWinComponent.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;BigWinComponent.js:9</code></a>
+                <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:9</code></a>
                 </p>
         
         
@@ -144,6 +143,22 @@
                 
             </div>
         
+                <div class="params">
+                    <h4>Parameters:</h4>
+        
+                    <ul class="params-list">
+                        <li class="param">
+                                <code class="param-name">version</code>
+                                <span class="type">String</span>
+        
+        
+                            <div class="param-description">
+                                 
+                            </div>
+        
+                        </li>
+                    </ul>
+                </div>
         
         
         
@@ -165,17 +180,25 @@
                 <div class="index-section methods">
                     <h3>Methods</h3>
 
-                    <ul class="index-list methods extends">
+                    <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_drawSprites">drawSprites</a>
+                                <a href="#method_buttonClicked">buttonClicked</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_execute">execute</a>
+                                <a href="#method_deselectGaffButtons">deselectGaffButtons</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_execute">execute</a>
+                                <a href="#method_drawMenu">drawMenu</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_handleComplete">handleComplete</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_hide">hide</a>
 
                             </li>
                             <li class="index-item method">
@@ -183,7 +206,7 @@
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_playAnimation">playAnimation</a>
+                                <a href="#method_show">show</a>
 
                             </li>
                     </ul>
@@ -192,25 +215,13 @@
                 <div class="index-section properties">
                     <h3>Properties</h3>
 
-                    <ul class="index-list properties extends">
+                    <ul class="index-list properties">
                             <li class="index-item property">
-                                <a href="#property_animSprite;">animSprite;</a>
+                                <a href="#property_buttons">buttons</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_bigWinSprites;">bigWinSprites;</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_data">data</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_SCALE_FACTOR">SCALE_FACTOR</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_winLineIndexes">winLineIndexes</a>
+                                <a href="#property_version">version</a>
 
                             </li>
                     </ul>
@@ -222,8 +233,115 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_drawSprites" class="method item">
-    <h3 class="name"><code>drawSprites</code></h3>
+<div id="method_buttonClicked" class="method item">
+    <h3 class="name"><code>buttonClicked</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>button</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l125"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:125</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>dispatch to SignalDispatcher to update gaff type</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">button</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_deselectGaffButtons" class="method item">
+    <h3 class="name"><code>deselectGaffButtons</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code class="optional">[button]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l136"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:136</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name optional">[button]</code>
+                        <span class="type">G.GaffButton</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>do not deselect this button</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_drawMenu" class="method item">
+    <h3 class="name"><code>drawMenu</code></h3>
 
         <span class="paren">()</span>
 
@@ -237,7 +355,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_components_BigWinComponent.js.html#l51"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;BigWinComponent.js:51</code></a>
+        <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l47"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:47</code></a>
         </p>
 
 
@@ -252,8 +370,8 @@
 
 
 </div>
-<div id="method_execute" class="method item">
-    <h3 class="name"><code>execute</code></h3>
+<div id="method_handleComplete" class="method item">
+    <h3 class="name"><code>handleComplete</code></h3>
 
         <span class="paren">()</span>
 
@@ -267,7 +385,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_commands_SymbolAnimCommand.js.html#l33"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;SymbolAnimCommand.js:33</code></a>
+        <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l164"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:164</code></a>
         </p>
 
 
@@ -275,7 +393,7 @@
     </div>
 
     <div class="description">
-        <p>Hide Previously drawn winLines and show more winLines.</p>
+        <p>visible false</p>
 
     </div>
 
@@ -283,8 +401,8 @@
 
 
 </div>
-<div id="method_execute" class="method item">
-    <h3 class="name"><code>execute</code></h3>
+<div id="method_hide" class="method item">
+    <h3 class="name"><code>hide</code></h3>
 
         <span class="paren">()</span>
 
@@ -298,7 +416,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_commands_WinLineCommand.js.html#l34"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;WinLineCommand.js:34</code></a>
+        <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l172"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:172</code></a>
         </p>
 
 
@@ -306,7 +424,7 @@
     </div>
 
     <div class="description">
-        <p>Hide Previously drawn winLines and show more winLines.</p>
+        <p>Hides the gaff menu</p>
 
     </div>
 
@@ -338,7 +456,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_components_BigWinComponent.js.html#l40"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;BigWinComponent.js:40</code></a>
+        <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l38"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:38</code></a>
         </p>
 
 
@@ -346,8 +464,7 @@
     </div>
 
     <div class="description">
-        <p>Initialise component data</p>
-
+        
     </div>
 
         <div class="params">
@@ -366,7 +483,7 @@
                 </li>
                 <li class="param">
                         <code class="param-name">signalDispatcher</code>
-                        <span class="type">G.SignalDispatcher</span>
+                        <span class="type">Object</span>
 
 
                     <div class="param-description">
@@ -380,8 +497,8 @@
 
 
 </div>
-<div id="method_playAnimation" class="method item">
-    <h3 class="name"><code>playAnimation</code></h3>
+<div id="method_show" class="method item">
+    <h3 class="name"><code>show</code></h3>
 
         <span class="paren">()</span>
 
@@ -395,7 +512,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/public_javascripts_app_components_BigWinComponent.js.html#l74"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;BigWinComponent.js:74</code></a>
+        <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l150"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:150</code></a>
         </p>
 
 
@@ -403,7 +520,8 @@
     </div>
 
     <div class="description">
-        
+        <p>Shows the gaff menu</p>
+
     </div>
 
 
@@ -415,9 +533,9 @@
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-                    <div id="property_animSprite;" class="property item">
-                        <h3 class="name"><code>animSprite;</code></h3>
-                        <span class="type">Object</span>
+                    <div id="property_buttons" class="property item">
+                        <h3 class="name"><code>buttons</code></h3>
+                        <span class="type">G.GaffButton</span>
                     
                     
                     
@@ -426,96 +544,23 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_components_BigWinComponent.js.html#l27"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;BigWinComponent.js:27</code></a>
+                            <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l23"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:23</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_bigWinSprites;" class="property item">
-                        <h3 class="name"><code>bigWinSprites;</code></h3>
-                        <span class="type">createjs.Sprite</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/public_javascripts_app_components_BigWinComponent.js.html#l21"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;BigWinComponent.js:21</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_data" class="property item">
-                        <h3 class="name"><code>data</code></h3>
-                        <span class="type">Object</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/public_javascripts_app_commands_SymbolAnimCommand.js.html#l16"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;SymbolAnimCommand.js:16</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_SCALE_FACTOR" class="property item">
-                        <h3 class="name"><code>SCALE_FACTOR</code></h3>
-                        <span class="type">Number</span>
-                    
-                    
-                    
-                            <span class="flag final">final</span>
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/public_javascripts_app_components_BigWinComponent.js.html#l33"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;BigWinComponent.js:33</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>scale to affect the big win animation</p>
+                            <p>Store the buttons on the menu for deselection purposes</p>
                     
                         </div>
                     
                     
                     
                     </div>
-                    <div id="property_winLineIndexes" class="property item">
-                        <h3 class="name"><code>winLineIndexes</code></h3>
-                        <span class="type">Number</span>
+                    <div id="property_version" class="property item">
+                        <h3 class="name"><code>version</code></h3>
+                        <span class="type">String</span>
                     
                     
                     
@@ -524,18 +569,18 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/public_javascripts_app_commands_WinLineCommand.js.html#l15"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;WinLineCommand.js:15</code></a>
+                            <a href="../files/public_javascripts_app_components_GaffMenuComponent.js.html#l30"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffMenuComponent.js:30</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>this array defines the indexes of winLines to show in this command.  Based on setup.winLines</p>
+                            <p>A version number which can be shown on the menu.
+                    nb. do a grunt build:prod to generate the index.html and inject the version number from package.json.</p>
                     
                         </div>
                     
-                            <p><strong>Default:</strong> [0] - show the setup.winLines[0]</p>
                     
                     
                     </div>

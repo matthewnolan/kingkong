@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>public/javascripts/app/components/GameComponent.js - kingkong</title>
+    <title>public/javascripts/app/components/GaffMenuComponent.js - kingkong</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -91,11 +91,11 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: public/javascripts/app/components/GameComponent.js</h1>
+<h1 class="file-heading">File: public/javascripts/app/components/GaffMenuComponent.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/*! kingkong 0.0.6 - 2015-02-09
+/*! kingkong 0.0.6 - 2015-02-12
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
 var G = G || {};
@@ -104,45 +104,183 @@ var G = G || {};
 	&quot;use strict&quot;;
 
 	/**
-	 * Super class of any game component.  These game components are always initialised with the game&#x27;s setup file and a signal dispatcher.
-	 * This allows all game components (eg. ReelsComponent or WinLinesComponent) to access game setup and dispatch and receive events from other
-	 * areas of the application
-	 * @class GameComponent
+	 * A GaffMenu component which you can call show/hide from to show and hide the menu
+	 * should also draw some buttons based on setup.json&#x27;s gaffs
+	 * @class GaffMenuComponent
+	 * @param version {String}
 	 * @constructor
 	 */
-	var GameComponent = function() {
-		this.Container_constructor();
+	var GaffMenuComponent = function(version) {
+		this.version = version;
+		this.GameComponent_constructor();
 	};
-	var p = createjs.extend(GameComponent, createjs.Container);
-	p.constructor = GameComponent;
+	var p = createjs.extend(GaffMenuComponent, G.GameComponent);
+	p.constructor = GaffMenuComponent;
 
 	/**
-	 * Store for the SignalDispatcher allows us to dispatch and listen to Signals from the rest of the application
-	 * @property signalDispatcher
-	 * @required
-	 * @type {G.SignalDispatcher}
+	 * Store the buttons on the menu for deselection purposes
+	 * @property buttons
+	 * @type {G.GaffButton[]}
 	 */
-	p.signalDispatcher = null;
+	p.buttons = [];
 
 	/**
-	 * Store the Setup
-	 * @property Setup
-	 * @type {null}
+	 * A version number which can be shown on the menu.
+	 * nb. do a grunt build:prod to generate the index.html and inject the version number from package.json.
+	 * @property version
+	 * @type {string}
 	 */
-	p.setup = null;
+	p.version = &quot;&quot;;
 
 	/**
-	 * initialises the setup and signalDispatcher for the component.
 	 * @method init
-	 * @param {Object} setup
-	 * @param {G.SignalDispatcher} signalDispatcher
+	 * @param setup
+	 * @param signalDispatcher
 	 */
 	p.init = function(setup, signalDispatcher) {
-		this.setup = setup;
-		this.signalDispatcher = signalDispatcher;
+		this.GameComponent_init(setup, signalDispatcher);
 	};
 
-	G.GameComponent = createjs.promote(GameComponent, &quot;Container&quot;);
+	/**
+	 * @method drawMenu
+	 */
+	p.drawMenu = function(){
+		var self = this;
+		var w = this.setup.bezelW;
+		var h = this.setup.bezelH;
+
+		var shape, gp;
+		shape = new createjs.Shape();
+		gp = shape.graphics;
+		gp.setStrokeStyle(4);
+		gp.beginStroke(createjs.Graphics.getRGB(0, 20, 20, 0.9));
+		gp.beginFill(createjs.Graphics.getRGB(50, 100, 150, 0.75));
+		gp.drawRoundRect(0, 0, w ,h, 5);
+		gp.endFill();
+		gp.endStroke();
+
+		this.addChild(shape);
+
+		var closeButton = new createjs.Container();
+		shape = new createjs.Shape();
+		gp = shape.graphics;
+		gp.setStrokeStyle(4);
+		gp.beginStroke(createjs.Graphics.getRGB(50, 100, 150, 0.5));
+		gp.beginFill(createjs.Graphics.getRGB(0, 20, 20, 0.9));
+		gp.drawCircle(w, 0, 20);
+		gp.endFill();
+		gp.endStroke();
+
+		var closeTxt = new createjs.Text(&quot;x&quot;, &quot;20px Helvetica&quot;, createjs.Graphics.getRGB(255,255,126,1));
+		closeTxt.x = w - 5;
+		closeTxt.y = - 12;
+
+		var i, len = this.setup.playModesNew.length, button, data;
+		console.log(this.setup);
+		for (i = 0; i &lt; len; i++) {
+			data = this.setup.playModesNew[i];
+			console.log(&#x27;data&#x27;, data);
+			button = new G.GaffButton();
+			button.init(data.type, 100, 100, 10);
+			button.drawButton();
+			button.x = 20 + i * button.width + i * 10;
+			button.y = 40;
+			button.clicked.add(this.buttonClicked, this);
+			this.addChild(button);
+			this.buttons.push(button);
+		}
+
+
+		var labelTxt = new createjs.Text(&quot;Gaff Menu&quot;, &quot;17px Helvetica&quot;, createjs.Graphics.getRGB(255,255,126,1));
+		labelTxt.x = 5;
+		labelTxt.y = 5;
+		labelTxt.setBounds(0,0, this.setup.bezelW, this.setup.bezelH);
+		var bounds = labelTxt.getBounds();
+		labelTxt.filters = [new createjs.DropShadowFilter(3, 90, 0x00000,1, 4, 5, 5, 3, false, false, false)];
+		labelTxt.cache(bounds.x, bounds.y, bounds.width, bounds.height);
+
+		var versionTxt = new createjs.Text(&quot;Version:&quot; + this.version, &quot;12px sans-serif&quot;, createjs.Graphics.getRGB(255,255,255, 1));
+		versionTxt.x = w - 10 - versionTxt.getMeasuredWidth();
+		versionTxt.y = h - 10 - versionTxt.getMeasuredHeight();
+		this.addChild(versionTxt);
+
+		this.addChild(labelTxt);
+		this.addChild(closeButton);
+		closeButton.addChild(shape);
+		closeButton.addChild(closeTxt);
+
+		closeButton.on(&#x27;click&#x27;, function() {
+			self.hide();
+		});
+
+		this.regX = w / 2;
+		this.regY = h / 2;
+
+		this.visible = false;
+	};
+
+	/**
+	 * dispatch to SignalDispatcher to update gaff type
+	 * @method buttonClicked
+	 * @param button
+	 */
+	p.buttonClicked = function(button) {
+		this.deselectGaffButtons(button);
+		this.signalDispatcher.gaffSelect.dispatch(button.type);
+		this.hide();
+	};
+
+	/**
+	 * @method deselectGaffButtons
+	 * @param {G.GaffButton} [button] do not deselect this button
+	 */
+	p.deselectGaffButtons = function(button) {
+		var i, len = this.buttons.length, tempButton;
+		for (i  = 0; i &lt; len; i++) {
+			tempButton = this.buttons[i];
+			if (!button || button !== tempButton) {
+				tempButton.deselect();
+			}
+		}
+	};
+
+	/**
+	 * Shows the gaff menu
+	 * @method show
+	 */
+	p.show = function() {
+		this.visible = true;
+		this.alpha = 0;
+		this.scaleX = 0.01;
+		this.scaleY = 0.01;
+
+		createjs.Tween.get(this)
+			.to({alpha: 1, scaleX: 1, scaleY: 1}, 400, createjs.Ease.getElasticOut(4,2));
+	};
+
+	/**
+	 * visible false
+	 * @method handleComplete
+	 */
+	p.handleComplete = function() {
+		this.visible = false;
+	};
+
+	/**
+	 * Hides the gaff menu
+	 * @method hide
+	 */
+	p.hide = function() {
+		this.visible = true;
+		this.alpha = 1;
+
+		createjs.Tween.get(this)
+			.to({alpha: 0, scaleX: 0.01, scaleY: 0.01}, 400, createjs.Ease.getElasticIn(4,2))
+			.call(this.handleComplete);
+	};
+
+
+	G.GaffMenuComponent = createjs.promote(GaffMenuComponent, &quot;GameComponent&quot;);
 
 })();
     </pre>

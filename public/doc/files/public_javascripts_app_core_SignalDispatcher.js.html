@@ -42,6 +42,7 @@
                                 <li><a href="../classes/.html"></a></li>
                                 <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GaffButton.html">GaffButton</a></li>
+                                <li><a href="../classes/GaffMenuComponent.html">GaffMenuComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
@@ -52,6 +53,7 @@
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Utils.html">Utils</a></li>
                                 <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
@@ -123,6 +125,12 @@ var G = G || {};
 	p.setup = null;
 
 	/**
+	 * @property gaffSelect
+	 * @type {Signal}
+	 */
+	p.gaffSelect = new signals.Signal();
+
+	/**
 	 * @property reelSpinComplete
 	 * @type {Signal}
 	 */
@@ -147,6 +155,7 @@ var G = G || {};
 		this.commandQueue.init(setup, gameComponents);
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
 		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
+		this.gaffSelect.add(this.handleGaffSelected, this);
 	};
 
 	/**
@@ -164,6 +173,7 @@ var G = G || {};
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 		bigWinComponent.hideAnimation();
+		this.commandQueue.setupQueue();
 	};
 
 
@@ -172,9 +182,29 @@ var G = G || {};
 	 * @method handleReeSpinComplete
 	 */
 	p.handleReelSpinComplete = function() {
-
-		this.commandQueue.setupQueue();
 		this.commandQueue.play();
+		this.commandQueue.gaffType = &quot;default&quot;;
+		var gaffMenu = _.find(this.gameComponents, function(component) {
+			return component instanceof G.GaffMenuComponent;
+		});
+		gaffMenu.deselectGaffButtons();
+	};
+
+	/**
+	 * @method handleGaffSelected
+	 * @param {String} gaffType - the menu option string
+	 */
+	p.handleGaffSelected = function(gaffType) {
+
+		console.log(&#x27;handleGaffSelected&#x27;, gaffType);
+
+		this.commandQueue.gaffType = gaffType;
+
+		var reelsComponent = _.find(this.gameComponents, function(component) {
+			return component instanceof G.ReelsComponent;
+		});
+
+		reelsComponent.spinReels();
 	};
 
 	G.SignalDispatcher = SignalDispatcher;

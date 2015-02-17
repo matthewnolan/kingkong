@@ -5,20 +5,21 @@ body {
     overflow: hidden;
     position: absolute;
     width: 100%;
+    background-color: black;
 }
 
 #app {
     background-color: #000000;
-    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 #preloader {
     width: 667px;
     height: 350px;
     position: relative;
-
     background-color: black;
-
 }
 
 #preloader .content {
@@ -30,5 +31,8 @@ body {
 
 .vertical-center {
     display: inline-block;
+}
 
+.dom-helpers {
+    display: none;
 }

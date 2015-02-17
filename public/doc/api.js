@@ -4,6 +4,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "BigWinComponent",
         "CommandQueue",
         "GaffButton",
+        "GaffMenuComponent",
         "Game",
         "GameComponent",
         "Main",
@@ -13,6 +14,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "ReelsComponent",
         "ServerInterface",
         "SignalDispatcher",
+        "Utils",
         "WinLine",
         "WinLinesComponent",
         null

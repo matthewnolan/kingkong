@@ -140,7 +140,7 @@ TAG PRESENTATION
 		DRAW_SMART_LOOP:FALSE
 		// draw the bonus win animation on the Bonus Win Animations
 		HIDE_STATICS:FALSE
-		// dont worry about 
+		// dont worry about
 	END
 	TAG PRESHOW
 		SHOW:TRUE #"TRUE" means show all winning payline(s) before wincycle

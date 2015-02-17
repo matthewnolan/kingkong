@@ -42,6 +42,7 @@
                                 <li><a href="../classes/.html"></a></li>
                                 <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GaffButton.html">GaffButton</a></li>
+                                <li><a href="../classes/GaffMenuComponent.html">GaffMenuComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
@@ -52,6 +53,7 @@
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Utils.html">Utils</a></li>
                                 <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
@@ -133,10 +135,33 @@ var G = G || {};
 
 	p.textColor = &quot;#000000&quot;;
 
-	p.clickSignal = new signals.Signal();
+	p.clicked = new signals.Signal();
 
-	p.init = function() { 
+	/**
+	 *
+	 * @type {string}
+	 */
+	p.type = &quot;&quot;;
 
+	/**
+	 * Sets up button params
+	 * @method init
+	 * @param labelText
+	 * @param width
+	 * @param height
+	 * @param radius
+	 * @param strokeColor
+	 * @param fillColor
+	 * @param textColor
+	 */
+	p.init = function(labelText, width, height, radius,strokeColor, fillColor, textColor) {
+		this.type = this.labelText = labelText || this.labelTxt;
+		this.width = width || this.width;
+		this.height = height || this.height;
+		this.radius = radius || this.radius;
+		this.strokeColor = strokeColor || this.strokeColor;
+		this.fillColor = fillColor || this.fillColor;
+		this.textColor = textColor || this.textColor;
 	};
 
 	p.drawButton = function() {
@@ -146,7 +171,7 @@ var G = G || {};
 		var gp = shape.graphics;
 
 		gp.setStrokeStyle(3);
-		this.strokeCommand = gp.beginStroke(this.color).command;
+		this.strokeCommand = gp.beginStroke(this.strokeColor).command;
 		gp.beginFill(this.fillColor);
 		gp.drawRoundRect(0, 0, this.width, this.height, this.cornerRadius);
 		gp.endFill().endStroke();
@@ -160,7 +185,7 @@ var G = G || {};
 		labelText.y = 10;
 
 		this.on(&quot;click&quot;, function() {
-			self.clickSignal.dispatch(self);
+			self.clicked.dispatch(self);
 			self.select();
 		});
 	};

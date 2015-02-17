@@ -42,6 +42,7 @@
                                 <li><a href="../classes/.html"></a></li>
                                 <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GaffButton.html">GaffButton</a></li>
+                                <li><a href="../classes/GaffMenuComponent.html">GaffMenuComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
@@ -52,6 +53,7 @@
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Utils.html">Utils</a></li>
                                 <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
@@ -160,6 +162,14 @@ var G = G || {};
 	p.gameComponents = null;
 
 	/**
+	 * A special win animation is displayed according to setup.gaffs and QueueFactory
+	 * @property gaffType
+	 * @type {string}
+	 * @see G.QueueFactory
+	 */
+	p.gaffType = &quot;default&quot;;
+
+	/**
 	 * Saves reference to Setup and creates a QueueFactory
 	 * @method init
 	 * @param {Object} setup
@@ -178,22 +188,10 @@ var G = G || {};
 	 * @todo introduce playNow option
 	 */
 	p.setupQueue = function() {
-		createjs.Sound.play(&quot;bonusStop1&quot;);
 
-		var winLinesComponent =_.find(this.gameComponents, function(component) {
-			return component instanceof G.WinLinesComponent;
-		});
-
-		var bigWinComponent = _.find(this.gameComponents, function(component) {
-			return component instanceof G.BigWinComponent;
-		});
-
-		var bigWinCommand = new G.BigWinCommand();
-		bigWinCommand.init(this.setup, bigWinComponent);
-
-		var winLineCommand = new G.WinLineCommand();
-		winLineCommand.init(this.setup, winLinesComponent, [1,2,3,4,5]);
-		this.queue = [winLineCommand];
+		if (this.gaffType !== &quot;default&quot;) {
+			this.queue = this.queueFactory.generateGaff(this.gaffType);
+		}
 	};
 
 	/**

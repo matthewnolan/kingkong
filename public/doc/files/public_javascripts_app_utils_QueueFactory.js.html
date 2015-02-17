@@ -42,6 +42,7 @@
                                 <li><a href="../classes/.html"></a></li>
                                 <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GaffButton.html">GaffButton</a></li>
+                                <li><a href="../classes/GaffMenuComponent.html">GaffMenuComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
@@ -52,6 +53,7 @@
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Utils.html">Utils</a></li>
                                 <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
@@ -120,6 +122,49 @@ var G = G || {};
 	p.init = function(setup, gameComponents) {
 		this.setup = setup;
 		this.gameComponents = gameComponents;
+	};
+
+	/**
+	 * Generates a win animation accorind to gaffType
+	 * @method generateGaff
+	 * @param {String} gaffType - the gaff to generate a queue for
+	 * @returns Array
+	 */
+	p.generateGaff = function(gaffType) {
+
+		var queue = [];
+
+		var winLines, bigWin, reels;
+
+		switch(gaffType) {
+			case &quot;normal&quot; :
+				 winLines = G.Utils.getGameComponentByClass(G.WinLinesComponent);
+				 bigWin = G.Utils.getGameComponentByClass(G.BigWinComponent);
+
+				var bigWinCommand = new G.BigWinCommand();
+				 bigWinCommand.init(this.setup, bigWin);
+
+				 var winLineCommand = new G.WinLineCommand();
+				 winLineCommand.init(this.setup, winLines, [1,2,3,4,5]);
+				 queue.push(winLineCommand);
+				break;
+			case &quot;lotsOfWin&quot; :
+
+				break;
+			case &quot;gaff_Line_M1&quot; :
+
+				reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
+				reels.modifySymbolData();
+
+
+				break;
+			default :
+
+				break;
+		}
+
+		return queue;
+
 	};
 
 

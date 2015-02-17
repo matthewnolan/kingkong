@@ -1,4 +1,4 @@
-/*! kingkong 0.1.2 - 2015-02-13
+/*! kingkong 0.1.2 - 2015-02-17
 * Copyright (c) 2015 Licensed @HighFiveGames */
 /*!
 * EaselJS
@@ -52674,43 +52674,6 @@ k.id="msText";k.style.cssText="color:#0f0;font-family:Helvetica,Arial,sans-serif
 "block";d.style.display="none";break;case 1:a.style.display="none",d.style.display="block"}};return{REVISION:12,domElement:f,setMode:t,begin:function(){l=Date.now()},end:function(){var b=Date.now();g=b-l;n=Math.min(n,g);o=Math.max(o,g);k.textContent=g+" MS ("+n+"-"+o+")";var a=Math.min(30,30-30*(g/200));e.appendChild(e.firstChild).style.height=a+"px";r++;b>m+1E3&&(h=Math.round(1E3*r/(b-m)),p=Math.min(p,h),q=Math.max(q,h),i.textContent=h+" FPS ("+p+"-"+q+")",a=Math.min(30,30-30*(h/100)),c.appendChild(c.firstChild).style.height=
 a+"px",m=b,r=0);return b},update:function(){l=this.end()}}};"object"===typeof module&&(module.exports=Stats);
 
-/*! kingkong 0.0.1 - 2015-02-06
-* Copyright (c) 2015 Licensed @HighFiveGames */
-
-var G = G || {};
-
-(function () {
-	"use strict";
-
-	/**
-	 * Constructs queues for the CommandQueue for the purpose of displaying winning animations
-	 * @class QueueFactory
-	 * @constructor
-	 */
-	var QueueFactory = function() {};
-	var p = QueueFactory.prototype;
-	p.constructor = QueueFactory;
-
-
-	/**
-	 * Saves reference to Setup and GameComponents
-	 * @method init
-	 * @param {Object} setup
-	 * @param {G.GameComponent[]} gameComponents
-	 */
-	p.init = function(setup, gameComponents) {
-		this.setup = setup;
-		this.gameComponents = gameComponents;
-	};
-
-
-
-
-
-
-	G.QueueFactory = QueueFactory;
-
-})();
 /*! kingkong 0.0.1 - 2015-02-02
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
@@ -52877,8 +52840,6 @@ this.G = this.G || {};
 		symbolWinsComponent.y = bezelMarginT;
 		this.stage.addChild(symbolWinsComponent);
 		symbolWinsComponent.drawSprites();
-		//symbolWinsComponent.drawDebug();
-		//symbolWinsComponent.runUnifiedSprites();
 		this.components.symbolWins = symbolWinsComponent;
 		this.gameComponents.push(symbolWinsComponent);
 
@@ -52889,6 +52850,7 @@ this.G = this.G || {};
 		this.stage.addChild(bigWinComponent);
 		bigWinComponent.drawSprites();
 
+
 		this.components.bigWin = bigWinComponent;
 		this.gameComponents.push(bigWinComponent);
 
@@ -52898,15 +52860,13 @@ this.G = this.G || {};
 		this.stage.addChild(gaffMenu);
 		gaffMenu.x = bezelMarginL + (bezelW / 2);
 		gaffMenu.y = bezelMarginT + (bezelH / 2);
-		//gaffMenu.x = 185;
-		//gaffMenu.y = 348;
-
 
 		console.log('gaff', gaffMenu.x, gaffMenu.y);
 
 		this.components.gaff = gaffMenu;
 		this.gameComponents.push(gaffMenu);
 
+		G.Utils.gameComponents = this.gameComponents;
 
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
@@ -52953,11 +52913,11 @@ this.G = this.G || {};
 		});
 
 		mc.on('pinchin', function() {
-			this.components.gaff.show();
+			self.components.gaff.hide();
 		});
 
 		mc.on('pinchout', function() {
-			this.components.gaff.hide();
+			self.components.gaff.show();
 		});
 
 		if (!this.setup.domHelpers) {
@@ -53157,6 +53117,12 @@ var G = G || {};
 	p.setup = null;
 
 	/**
+	 * @property gaffSelect
+	 * @type {Signal}
+	 */
+	p.gaffSelect = new signals.Signal();
+
+	/**
 	 * @property reelSpinComplete
 	 * @type {Signal}
 	 */
@@ -53181,6 +53147,7 @@ var G = G || {};
 		this.commandQueue.init(setup, gameComponents);
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
 		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
+		this.gaffSelect.add(this.handleGaffSelected, this);
 	};
 
 	/**
@@ -53198,6 +53165,7 @@ var G = G || {};
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 		bigWinComponent.hideAnimation();
+		this.commandQueue.setupQueue();
 	};
 
 
@@ -53206,9 +53174,29 @@ var G = G || {};
 	 * @method handleReeSpinComplete
 	 */
 	p.handleReelSpinComplete = function() {
-
-		this.commandQueue.setupQueue();
 		this.commandQueue.play();
+		this.commandQueue.gaffType = "default";
+		var gaffMenu = _.find(this.gameComponents, function(component) {
+			return component instanceof G.GaffMenuComponent;
+		});
+		gaffMenu.deselectGaffButtons();
+	};
+
+	/**
+	 * @method handleGaffSelected
+	 * @param {String} gaffType - the menu option string
+	 */
+	p.handleGaffSelected = function(gaffType) {
+
+		console.log('handleGaffSelected', gaffType);
+
+		this.commandQueue.gaffType = gaffType;
+
+		var reelsComponent = _.find(this.gameComponents, function(component) {
+			return component instanceof G.ReelsComponent;
+		});
+
+		reelsComponent.spinReels();
 	};
 
 	G.SignalDispatcher = SignalDispatcher;
@@ -53424,6 +53412,14 @@ var G = G || {};
 	p.gameComponents = null;
 
 	/**
+	 * A special win animation is displayed according to setup.gaffs and QueueFactory
+	 * @property gaffType
+	 * @type {string}
+	 * @see G.QueueFactory
+	 */
+	p.gaffType = "default";
+
+	/**
 	 * Saves reference to Setup and creates a QueueFactory
 	 * @method init
 	 * @param {Object} setup
@@ -53442,22 +53438,10 @@ var G = G || {};
 	 * @todo introduce playNow option
 	 */
 	p.setupQueue = function() {
-		createjs.Sound.play("bonusStop1");
 
-		var winLinesComponent =_.find(this.gameComponents, function(component) {
-			return component instanceof G.WinLinesComponent;
-		});
-
-		var bigWinComponent = _.find(this.gameComponents, function(component) {
-			return component instanceof G.BigWinComponent;
-		});
-
-		var bigWinCommand = new G.BigWinCommand();
-		bigWinCommand.init(this.setup, bigWinComponent);
-
-		var winLineCommand = new G.WinLineCommand();
-		winLineCommand.init(this.setup, winLinesComponent, [1,2,3,4,5]);
-		this.queue = [winLineCommand];
+		if (this.gaffType !== "default") {
+			this.queue = this.queueFactory.generateGaff(this.gaffType);
+		}
 	};
 
 	/**
@@ -53602,6 +53586,7 @@ var G = G || {};
 	 * @method execute
 	 */
 	p.execute = function() {
+		createjs.Sound.play("bonusStop1");
 		this.gameComponent.hideWinLines();
 		this.gameComponent.showWinLineByIndexes(this.winLineIndexes);
 	};
@@ -53736,10 +53721,33 @@ var G = G || {};
 
 	p.textColor = "#000000";
 
-	p.clickSignal = new signals.Signal();
+	p.clicked = new signals.Signal();
 
-	p.init = function() { 
+	/**
+	 *
+	 * @type {string}
+	 */
+	p.type = "";
 
+	/**
+	 * Sets up button params
+	 * @method init
+	 * @param labelText
+	 * @param width
+	 * @param height
+	 * @param radius
+	 * @param strokeColor
+	 * @param fillColor
+	 * @param textColor
+	 */
+	p.init = function(labelText, width, height, radius,strokeColor, fillColor, textColor) {
+		this.type = this.labelText = labelText || this.labelTxt;
+		this.width = width || this.width;
+		this.height = height || this.height;
+		this.radius = radius || this.radius;
+		this.strokeColor = strokeColor || this.strokeColor;
+		this.fillColor = fillColor || this.fillColor;
+		this.textColor = textColor || this.textColor;
 	};
 
 	p.drawButton = function() {
@@ -53749,7 +53757,7 @@ var G = G || {};
 		var gp = shape.graphics;
 
 		gp.setStrokeStyle(3);
-		this.strokeCommand = gp.beginStroke(this.color).command;
+		this.strokeCommand = gp.beginStroke(this.strokeColor).command;
 		gp.beginFill(this.fillColor);
 		gp.drawRoundRect(0, 0, this.width, this.height, this.cornerRadius);
 		gp.endFill().endStroke();
@@ -53763,7 +53771,7 @@ var G = G || {};
 		labelText.y = 10;
 
 		this.on("click", function() {
-			self.clickSignal.dispatch(self);
+			self.clicked.dispatch(self);
 			self.select();
 		});
 	};
@@ -53788,6 +53796,13 @@ var G = G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * A GaffMenu component which you can call show/hide from to show and hide the menu
+	 * should also draw some buttons based on setup.json's gaffs
+	 * @class GaffMenuComponent
+	 * @param version {String}
+	 * @constructor
+	 */
 	var GaffMenuComponent = function(version) {
 		this.version = version;
 		this.GameComponent_constructor();
@@ -53795,20 +53810,38 @@ var G = G || {};
 	var p = createjs.extend(GaffMenuComponent, G.GameComponent);
 	p.constructor = GaffMenuComponent;
 
+	/**
+	 * Store the buttons on the menu for deselection purposes
+	 * @property buttons
+	 * @type {G.GaffButton[]}
+	 */
+	p.buttons = [];
 
-	p.version = null;
+	/**
+	 * A version number which can be shown on the menu.
+	 * nb. do a grunt build:prod to generate the index.html and inject the version number from package.json.
+	 * @property version
+	 * @type {string}
+	 */
+	p.version = "";
 
+	/**
+	 * @method init
+	 * @param setup
+	 * @param signalDispatcher
+	 */
 	p.init = function(setup, signalDispatcher) {
 		this.GameComponent_init(setup, signalDispatcher);
-
 	};
 
+	/**
+	 * @method drawMenu
+	 */
 	p.drawMenu = function(){
 		var self = this;
 		var w = this.setup.bezelW;
 		var h = this.setup.bezelH;
 
-		// console.log('Draw GaffMenu');
 		var shape, gp;
 		shape = new createjs.Shape();
 		gp = shape.graphics;
@@ -53831,10 +53864,24 @@ var G = G || {};
 		gp.endFill();
 		gp.endStroke();
 
-		var closeTxt = new createjs.Text("X", "19px Helvetica", createjs.Graphics.getRGB(100,100,100,0.75));
-		//closeButton.addChild(txt);
-		closeTxt.x = w - 6;
+		var closeTxt = new createjs.Text("x", "20px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
+		closeTxt.x = w - 5;
 		closeTxt.y = - 12;
+
+		var i, len = this.setup.playModesNew.length, button, data;
+		console.log(this.setup);
+		for (i = 0; i < len; i++) {
+			data = this.setup.playModesNew[i];
+			console.log('data', data);
+			button = new G.GaffButton();
+			button.init(data.type, 100, 100, 10);
+			button.drawButton();
+			button.x = 20 + i * button.width + i * 10;
+			button.y = 40;
+			button.clicked.add(this.buttonClicked, this);
+			this.addChild(button);
+			this.buttons.push(button);
+		}
 
 
 		var labelTxt = new createjs.Text("Gaff Menu", "17px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
@@ -53846,8 +53893,8 @@ var G = G || {};
 		labelTxt.cache(bounds.x, bounds.y, bounds.width, bounds.height);
 
 		var versionTxt = new createjs.Text("Version:" + this.version, "12px sans-serif", createjs.Graphics.getRGB(255,255,255, 1));
-		versionTxt.x = w - versionTxt.getMeasuredWidth();
-		versionTxt.y = h - versionTxt.getMeasuredHeight();
+		versionTxt.x = w - 10 - versionTxt.getMeasuredWidth();
+		versionTxt.y = h - 10 - versionTxt.getMeasuredHeight();
 		this.addChild(versionTxt);
 
 		this.addChild(labelTxt);
@@ -53856,7 +53903,6 @@ var G = G || {};
 		closeButton.addChild(closeTxt);
 
 		closeButton.on('click', function() {
-			console.log("mofo", self);
 			self.hide();
 		});
 
@@ -53866,6 +53912,35 @@ var G = G || {};
 		this.visible = false;
 	};
 
+	/**
+	 * dispatch to SignalDispatcher to update gaff type
+	 * @method buttonClicked
+	 * @param button
+	 */
+	p.buttonClicked = function(button) {
+		this.deselectGaffButtons(button);
+		this.signalDispatcher.gaffSelect.dispatch(button.type);
+		this.hide();
+	};
+
+	/**
+	 * @method deselectGaffButtons
+	 * @param {G.GaffButton} [button] do not deselect this button
+	 */
+	p.deselectGaffButtons = function(button) {
+		var i, len = this.buttons.length, tempButton;
+		for (i  = 0; i < len; i++) {
+			tempButton = this.buttons[i];
+			if (!button || button !== tempButton) {
+				tempButton.deselect();
+			}
+		}
+	};
+
+	/**
+	 * Shows the gaff menu
+	 * @method show
+	 */
 	p.show = function() {
 		this.visible = true;
 		this.alpha = 0;
@@ -53873,14 +53948,21 @@ var G = G || {};
 		this.scaleY = 0.01;
 
 		createjs.Tween.get(this)
-			.to({alpha: 1, scaleX: 1, scaleY: 1, visible:true}, 400, createjs.Ease.getElasticOut(4,2));
+			.to({alpha: 1, scaleX: 1, scaleY: 1}, 400, createjs.Ease.getElasticOut(4,2));
 	};
 
+	/**
+	 * visible false
+	 * @method handleComplete
+	 */
 	p.handleComplete = function() {
-		console.log('show gaff complete');
 		this.visible = false;
 	};
 
+	/**
+	 * Hides the gaff menu
+	 * @method hide
+	 */
 	p.hide = function() {
 		this.visible = true;
 		this.alpha = 1;
@@ -53917,6 +53999,11 @@ var G = G || {};
 	var p = createjs.extend(Reel, createjs.Container);
 	p.constructor = Reel;
 
+	/**
+	 * array of symbolData to map
+	 * @property reelData
+	 * @type {Array}
+	 */
 	p.reelData = [];
 
 	p.setup = null;
@@ -53927,6 +54014,8 @@ var G = G || {};
 		main: this,
 		wraps: []
 	};
+
+	p.logEnabled = false;
 
 	p.scheduleSpinStop = -2;
 
@@ -53939,10 +54028,16 @@ var G = G || {};
 
 	/**
 	 * Maximum Speed the reels can spin in pixels per second
+	 * @const speedConstant
+	 * @default 6000
 	 * @type {number}
 	 */
 	p.speedConstant = 6000;
 
+	/**
+	 * @property spriteMap
+	 * @type {string[]}
+	 */
 	p.spriteMap = ['ww','m1', 'm2', 'm3', 'm4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f0', 'd1', 'd2', 'd3', 'd4', 'b1', 'b2'];
 
 	p.tween = null;
@@ -53953,7 +54048,7 @@ var G = G || {};
 
 	p.stopTimeout = 0;
 
-	p.spinResultIndex = null;
+	p.spinResultIndex = 0;
 
 	p.init = function(setup, symbolSprites, reelData) {
 		this.setup = setup;
@@ -53961,104 +54056,208 @@ var G = G || {};
 		this.reelData = reelData;
 	};
 
+	p.modifyReelData = function(reelData) {
+		var i, j, symbolSprite;
+		for (i = 0; i < this.containers.wraps.length; i++) {
+			var wrap = this.containers.wraps[i];
+			for (j = 0; j < wrap.getNumChildren(); j++) {
+				symbolSprite = wrap.getChildAt(j);
+				symbolSprite.gotoAndStop(this.spriteMap[reelData[j]]);
+			}
+		}
+	};
+
+	p.drawReel = function() {
+		var symbolW = this.setup.symbolW;
+		var symbolH = this.setup.symbolH;
+		var symbolMarginB = this.setup.symbolMarginBottom;
+		var container, len = this.reelData.length;
+		var l, j, sp, debugSh, gp, text, text2;
+		var reelHeight = this.reelData.length * symbolH + this.reelData.length * symbolMarginB;
+		var wrapPosY;
+		for (l = 0; l < 2; l++) {
+			//creates 2 reel wrappers
+			var wrap = new createjs.Container();
+			this.addChild(wrap);
+
+			for (j = 0; j < len; j++) {
+				//creates a symbol for every index in reelData array
+				container = new createjs.Container();
+				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[j]]);
+				container.addChild(sp);
+				if (this.setup.devMode) {
+					var wrapColor = l === 0? "#00ff00" : "#ff0000";
+					debugSh = new createjs.Shape();
+					gp = debugSh.graphics;
+					gp.setStrokeStyle(2);
+					gp.beginStroke(wrapColor);
+					gp.beginFill("rgba(128,3,95,0.3)");
+					gp.drawRect(0, 0, symbolW, symbolH);
+					gp.endFill().endStroke();
+					container.addChild(debugSh);
+					text = new createjs.Text("SymbolIndex:" + j, "12px Arial", "#ffffff");
+					text2 = new createjs.Text("Wrap:" + l, "12px Arial", "#ffffff");
+					text.x = 0;
+					container.addChild(text);
+					container.addChild(text2);
+					text2.y = 14;
+				}
+				wrap.addChild(container);
+				container.y = (symbolH * j + symbolMarginB * j);
+			}
+			wrapPosY = wrap.y = -l * reelHeight;
+			this.containers.wraps.push(wrap);
+
+			for (j = 0; j < 2; j++) {
+				//2 rows of symbols to buffer above and below the symbol wrappers
+				var symbolBufferWrap = new createjs.Container();
+				this.addChild(symbolBufferWrap);
+				container = new createjs.Container();
+				var tempSymbolIndex = len - 2 + j - (l * (len - 2));
+				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[tempSymbolIndex]]);
+				container.addChild(sp);
+				container.y = (symbolH * j + symbolMarginB * j);
+				symbolBufferWrap.addChild(container);
+				symbolBufferWrap.y = -reelHeight - 2 * (symbolH - symbolMarginB) + (l * (2 * (symbolH - symbolMarginB) + reelHeight * 2));
+				this.containers.wraps.push(symbolBufferWrap);
+
+				if (this.setup.devMode) {
+					debugSh = new createjs.Shape();
+					gp = debugSh.graphics;
+					gp.setStrokeStyle(2);
+					gp.beginStroke('#0000ff');
+					gp.drawRect(0,0,symbolW, symbolH);
+					gp.endFill().endStroke();
+					container.addChild(debugSh);
+					text = new createjs.Text("SymbolIndexBuffer", "12px Arial", "#ffffff");
+					text2 = new createjs.Text("Wrap:" + (l + 2), "12px Arial", "#ffffff");
+					text.x = 0;
+					container.addChild(text);
+					container.addChild(text2);
+					text2.y = 14;
+				}
+			}
+		}
+	};
+
+	/**
+	 * Spin this reel to the specified index position with a given delay
+	 * @method spinToIndex
+	 * @param {Number} index - index of symbol on this reel to spin to (top left of reel should spin to this index)
+	 * @param {Number} delay - Millis til this spin will start
+	 */
+	p.spinToIndex = function(index, delay) {
+		var self = this;
+		var symbolH = this.setup.symbolH;
+		var symbolMarginB = this.setup.symbolMarginBottom;
+		var symbolsLen = this.reelData.length;
+		var spinDelay = delay || 0;
+		var reelH = symbolH * symbolsLen + symbolMarginB * symbolsLen;
+		var yPos = reelH;
+		var tweenTime = this.getTime();
+
+		this.y = -this.spinResultIndex * symbolH + -this.spinResultIndex * symbolMarginB;
+
+		this.spinResultIndex = index;
+		this.scheduleSpinStop = -1;
+
+		if (this.logEnabled) {
+			console.log('Tween_Start:', this.y, yPos, tweenTime);
+			console.log('SymbolsHeight:', symbolH * symbolsLen + symbolMarginB * symbolsLen);
+		}
+
+		createjs.Tween.get(this)
+			.wait(delay)
+			.play(
+				createjs.Tween.get(this, {loop: false, paused:true})
+					.to({y:yPos}, tweenTime, createjs.Ease.getElasticIn(2,2))
+					.call(this.loopSpin)
+
+		);
+
+
+		this.stopTimeout = setTimeout(function() {
+			self.fastStop();
+		}, this.setup.reelAnimation.duration + spinDelay);
+	};
+
 	p.getTime = function() {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
 		var distanceInPixels = symbolH * symbolsLen + symbolMarginB * symbolsLen;
-		var time = distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
-		return time;
-	};
-
-	p.getStopTime =function(index) {
-		var symbolH = this.setup.symbolH;
-		var symbolMarginB = this.setup.symbolMarginBottom;
-		var symbolsLen = this.reelData.length;
-		var yPos = (symbolH * index + symbolMarginB * index) + (symbolH * symbolsLen + symbolMarginB * symbolsLen);
-		var time = yPos / (this.speedPercentage * this.speedConstant / 1000);
-		return time;
-	};
-
-	p.drawReel = function() {
-		var symbolH = this.setup.symbolH;
-		var symbolMarginB = this.setup.symbolMarginBottom;
-		var l, j, sp;
-		for (l = 0; l < 2; l++) {
-			var wrap = new createjs.Container();
-			this.addChild(wrap);
-
-			for (j = 0; j < this.reelData.length; j++) {
-				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[j]]);
-				wrap.addChild(sp);
-				sp.y = (symbolH * j + symbolMarginB * j);
-			}
-			wrap.y = -l * (symbolH * this.reelData.length + symbolMarginB * this.reelData.length);
-			this.containers.wraps.push(wrap);
-		}
-	};
-
-	p.spinInfinite = function(delay, indexToFinish) {
-
-		var self = this;
-		var symbolH = this.setup.symbolH;
-		var symbolMarginB = this.setup.symbolMarginBottom;
-		var symbolsLen = this.reelData.length;
-
-		this.spinResultIndex = indexToFinish;
-		this.scheduleSpinStop = -1;
-
-		var yPos = (symbolH * symbolsLen + symbolMarginB * symbolsLen);
-
-		createjs.Tween.get(this)
-			.wait(delay).play(
-			createjs.Tween.get(this, {loop: false, paused:true})
-				.to({y:yPos}, this.getTime(), createjs.Ease.getElasticIn(2,5))
-				.call(this.loopSpin)
-		);
-
-		this.stopTimeout = setTimeout(function() {
-			self.fastStop();
-		}, this.setup.reelAnimation.duration + delay);
+		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
 	};
 
 	p.loopSpin = function() {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
+		var reelH = symbolH * symbolsLen + symbolMarginB * symbolsLen;
+		var tweenTime = this.getTime();
 		var yPos;
-		var ease;
 		if (this.scheduleSpinStop === -1){
 			this.y = 0;
-			yPos = (symbolH * symbolsLen + symbolMarginB * symbolsLen);
-			ease = createjs.Ease.linear();
+			yPos = reelH;
 		} else {
 			return;
 		}
 
+		if (this.logEnabled) {
+			console.log('Tween_Loop:', this.y, yPos, tweenTime);
+		}
+
 		createjs.Tween
 			.get(this, {override: true, loop: false })
-			.to({y: yPos}, this.getTime(), ease)
-				.call(this.loopSpin);
+			.to({y: yPos}, tweenTime, createjs.Ease.linear())
+			.call(this.loopSpin)
+			.on("change", this.onYPosUpdate);
 	};
 
+	p.getStopTime =function(index) {
+		var symbolH = this.setup.symbolH;
+		var symbolMarginB = this.setup.symbolMarginBottom;
+		var symbolsLen = this.reelData.length;
+		var reelH = symbolsLen * symbolH + symbolsLen * symbolMarginB;
+		var distanceInPixels = (symbolH * index + symbolMarginB * index) + reelH;
+		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
+	};
 
 	p.stopSpin = function(index) {
 		this.scheduleSpinStop = -2;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
-		var yPos = (symbolH * index + symbolMarginB * index) + (symbolH * symbolsLen + symbolMarginB * symbolsLen);
+		var reelH = (symbolH * symbolsLen) + (symbolMarginB * symbolsLen);
+		var yPos = -(symbolH * index + symbolMarginB * index) + reelH;
 		var stopTime = this.getStopTime(index);
+		var easeAmp = 1 + index * 0.01;
+		var easeTime = 1 - index * 0.02;
 
 		setTimeout(function() {
 			createjs.Sound.play("reelstop1");
 		}, stopTime - 300);
 
 		this.y = 0;
+
+		if (this.logEnabled) {
+			console.log('Tween_Stop', this.y, yPos, stopTime, 'easeAmp=', easeAmp);
+		}
+
 		createjs.Tween
 			.get(this, {override: true, loop:false})
-			.to({y: yPos}, stopTime, createjs.Ease.getElasticOut(2,5))
-			.call(this.handleSpinComplete);
+			.to({y: yPos}, stopTime, createjs.Ease.getElasticOut(easeAmp,easeTime))
+			//.to({y: yPos}, stopTime)
+			.call(this.handleSpinComplete)
+			.on("change", this.onYPosUpdate);
+	};
+
+	p.onYPosUpdate = function() {
+		var self = this.target;
+		if (self.logEnabled) {
+			console.log('this.Container Y=', Math.round(self.y));
+		}
+
 	};
 
 	p.fastStop = function() {
@@ -54143,6 +54342,8 @@ var G = G || {};
 	 */
 	p.reelsSpinning = 0;
 
+	p.spinIndexEl = null;
+
 	/**
 	 * @method init
 	 * @param setup {Object}
@@ -54185,6 +54386,14 @@ var G = G || {};
 		return array;
 	};
 
+	p.modifySymbomodifySymbolDatalData = function() {
+		var i, len = this.reels.length, reel;
+		for (i = 0; i < len; i++) {
+			reel = this.reels[i];
+			reel.modifyReelData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+		}
+	};
+
 	/**
 	 * @method drawReels
 	 */
@@ -54215,9 +54424,6 @@ var G = G || {};
 		var i, len = this.reels.length, reel, delay;
 		var maxDelay = this.setup.reelAnimation.delay.max;
 
-		createjs.Sound.play("spin1");
-		this.signalDispatcher.reelSpinStart.dispatch();
-
 		var getDelay = function(i) {
 			if (self.setup.reelAnimation.delay.random === true) {
 				return Math.random() * maxDelay;
@@ -54227,16 +54433,26 @@ var G = G || {};
 			}
 		};
 
+		var spinIndex = this.spinIndexEl ? parseInt(this.spinIndexEl.value, 10) : 0;
+
 		if (this.reelsSpinning === 0) {
+			createjs.Sound.play("spin1");
+			this.signalDispatcher.reelSpinStart.dispatch();
 			for (i = 0; i < len; i++)
 			{
 				delay = getDelay(i);
 				reel = this.reels[i];
-				reel.spinInfinite(delay, -2);
+				reel.spinToIndex(spinIndex, delay);
 				reel.reelSpinEnd.add(this.reelSpinEnd, this);
 				this.reelsSpinning++;
 			}
 		} else {
+
+			setTimeout(function() {
+					createjs.Sound.stop("spin1");
+				}, 200
+			);
+
 			for (i = 0; i < len; i++)
 			{
 				reel = this.reels[i];
@@ -54279,9 +54495,11 @@ var G = G || {};
 		var gasPedal = document.querySelector('#gasPedal');
 		gasPedal.addEventListener("input", function() {
 			var newSpeed = gasPedal.value;
-			console.log('newSpeed', newSpeed);
 			self.updateSpinSpeed(newSpeed);
 		});
+
+		this.spinIndexEl = document.querySelector('#spinToIndex');
+
 	};
 
 	G.ReelsComponent = createjs.promote(ReelsComponent, "GameComponent");
@@ -54353,7 +54571,7 @@ var G = G || {};
 				gp.beginFill("rgba(128,3,95,0.3)");
 				gp.drawRect(0, 0, symbolW, symbolH);
 				gp.endFill().endStroke();
-				//container.addChild(shape);
+				container.addChild(shape);
 				container.x = (i * symbolW) + (i * symbolMarginR);
 				container.y = (j * symbolH) + (j * symbolMarginB);
 			}
@@ -54766,7 +54984,7 @@ var G = G || {};
 		var marginL = this.setup.bezelMarginL;
 		var marginT = this.setup.bezelMarginT;
 		var winLines = this.setup.winLines;
-		var i, len = this.numLinesTotal = winLines.length;
+		var i, len = this.numLinesTotal = winLines.length, j;
 
 		this.el = document.querySelector("#preloader");
 
@@ -54776,8 +54994,12 @@ var G = G || {};
 			filters.push(this.glowFilter);
 		}
 
+		var winLine;
+
+
 		for (i = 0; i < len; i++) {
-			var winLine = new G.WinLine();
+
+			winLine = new G.WinLine();
 			winLine.init(this.setup, [0,0,0,0,0], winLines[i].data);
 			winLine.color = winLines[i].color;
 			this.addChild(winLine);
@@ -54787,6 +55009,17 @@ var G = G || {};
 			winLine.y = marginT;
 			winLine.visible = false;
 			this.winLines.push(winLine);
+
+			for (j = 0; j < 5; j++) {
+
+
+
+
+			}
+
+
+
+
 		}
 
 
@@ -54885,7 +55118,7 @@ this.G = this.G || {};
 
 		var stageW = 667;
 		var stageH = 375;
-		var stageScale = 1;
+		var stageScale = 0.75;
 
 		this.stage = new createjs.Stage("app");
 		this.stage.scaleX = stageScale;
@@ -54926,5 +55159,122 @@ this.G = this.G || {};
 
 
 	G.Main = Main;
+
+})();
+/*! kingkong 0.0.1 - 2015-02-06
+* Copyright (c) 2015 Licensed @HighFiveGames */
+
+var G = G || {};
+
+(function () {
+	"use strict";
+
+	/**
+	 * Constructs queues for the CommandQueue for the purpose of displaying winning animations
+	 * @class QueueFactory
+	 * @constructor
+	 */
+	var QueueFactory = function() {};
+	var p = QueueFactory.prototype;
+	p.constructor = QueueFactory;
+
+
+	/**
+	 * Saves reference to Setup and GameComponents
+	 * @method init
+	 * @param {Object} setup
+	 * @param {G.GameComponent[]} gameComponents
+	 */
+	p.init = function(setup, gameComponents) {
+		this.setup = setup;
+		this.gameComponents = gameComponents;
+	};
+
+	/**
+	 * Generates a win animation accorind to gaffType
+	 * @method generateGaff
+	 * @param {String} gaffType - the gaff to generate a queue for
+	 * @returns Array
+	 */
+	p.generateGaff = function(gaffType) {
+
+		var queue = [];
+
+		var winLines, bigWin, reels;
+
+		switch(gaffType) {
+			case "normal" :
+				 winLines = G.Utils.getGameComponentByClass(G.WinLinesComponent);
+				 bigWin = G.Utils.getGameComponentByClass(G.BigWinComponent);
+
+				var bigWinCommand = new G.BigWinCommand();
+				 bigWinCommand.init(this.setup, bigWin);
+
+				 var winLineCommand = new G.WinLineCommand();
+				 winLineCommand.init(this.setup, winLines, [1,2,3,4,5]);
+				 queue.push(winLineCommand);
+				break;
+			case "lotsOfWin" :
+
+				break;
+			case "gaff_Line_M1" :
+
+				reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
+				reels.modifySymbolData();
+
+
+				break;
+			default :
+
+				break;
+		}
+
+		return queue;
+
+	};
+
+
+
+
+
+
+	G.QueueFactory = QueueFactory;
+
+})();
+/*! kingkong 0.1.2 - 2015-02-13
+* Copyright (c) 2015 Licensed @HighFiveGames */
+
+var G = G || {};
+
+(function () {
+	"use strict";
+
+	/**
+	 * @class Utils
+	 * @static
+	 */
+	var Utils = {};
+
+	/**
+	 * @property gameComponents
+	 * @type {G.GameComponent[]}
+	 */
+	Utils.gameComponents = [];
+
+	/**
+	 * @ method getGameComponentByClass - pass the type of component {eg. G.ReelsComponent} to return the component instance
+	 * @param {class} componentClass - must be the class type of a G.GameComponent
+	 * @returns {G.GameComponent} - the instance
+	 */
+	Utils.getGameComponentByClass = function (componentClass) {
+		return _.find(Utils.gameComponents, function(component) {
+			return component instanceof componentClass;
+		});
+	};
+
+
+
+
+	G.Utils = Utils;
 
 })();

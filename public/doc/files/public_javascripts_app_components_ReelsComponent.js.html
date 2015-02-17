@@ -42,6 +42,7 @@
                                 <li><a href="../classes/.html"></a></li>
                                 <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GaffButton.html">GaffButton</a></li>
+                                <li><a href="../classes/GaffMenuComponent.html">GaffMenuComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
@@ -52,6 +53,7 @@
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Utils.html">Utils</a></li>
                                 <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
@@ -151,6 +153,8 @@ var G = G || {};
 	 */
 	p.reelsSpinning = 0;
 
+	p.spinIndexEl = null;
+
 	/**
 	 * @method init
 	 * @param setup {Object}
@@ -193,6 +197,14 @@ var G = G || {};
 		return array;
 	};
 
+	p.modifySymbomodifySymbolDatalData = function() {
+		var i, len = this.reels.length, reel;
+		for (i = 0; i &lt; len; i++) {
+			reel = this.reels[i];
+			reel.modifyReelData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+		}
+	};
+
 	/**
 	 * @method drawReels
 	 */
@@ -223,9 +235,6 @@ var G = G || {};
 		var i, len = this.reels.length, reel, delay;
 		var maxDelay = this.setup.reelAnimation.delay.max;
 
-		createjs.Sound.play(&quot;spin1&quot;);
-		this.signalDispatcher.reelSpinStart.dispatch();
-
 		var getDelay = function(i) {
 			if (self.setup.reelAnimation.delay.random === true) {
 				return Math.random() * maxDelay;
@@ -235,16 +244,26 @@ var G = G || {};
 			}
 		};
 
+		var spinIndex = this.spinIndexEl ? parseInt(this.spinIndexEl.value, 10) : 0;
+
 		if (this.reelsSpinning === 0) {
+			createjs.Sound.play(&quot;spin1&quot;);
+			this.signalDispatcher.reelSpinStart.dispatch();
 			for (i = 0; i &lt; len; i++)
 			{
 				delay = getDelay(i);
 				reel = this.reels[i];
-				reel.spinInfinite(delay, -2);
+				reel.spinToIndex(spinIndex, delay);
 				reel.reelSpinEnd.add(this.reelSpinEnd, this);
 				this.reelsSpinning++;
 			}
 		} else {
+
+			setTimeout(function() {
+					createjs.Sound.stop(&quot;spin1&quot;);
+				}, 200
+			);
+
 			for (i = 0; i &lt; len; i++)
 			{
 				reel = this.reels[i];
@@ -287,9 +306,11 @@ var G = G || {};
 		var gasPedal = document.querySelector(&#x27;#gasPedal&#x27;);
 		gasPedal.addEventListener(&quot;input&quot;, function() {
 			var newSpeed = gasPedal.value;
-			console.log(&#x27;newSpeed&#x27;, newSpeed);
 			self.updateSpinSpeed(newSpeed);
 		});
+
+		this.spinIndexEl = document.querySelector(&#x27;#spinToIndex&#x27;);
+
 	};
 
 	G.ReelsComponent = createjs.promote(ReelsComponent, &quot;GameComponent&quot;);

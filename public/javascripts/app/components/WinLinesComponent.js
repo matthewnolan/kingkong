@@ -72,7 +72,7 @@ var G = G || {};
 		var marginL = this.setup.bezelMarginL;
 		var marginT = this.setup.bezelMarginT;
 		var winLines = this.setup.winLines;
-		var i, len = this.numLinesTotal = winLines.length;
+		var i, len = this.numLinesTotal = winLines.length, j;
 
 		this.el = document.querySelector("#preloader");
 
@@ -82,8 +82,12 @@ var G = G || {};
 			filters.push(this.glowFilter);
 		}
 
+		var winLine;
+
+
 		for (i = 0; i < len; i++) {
-			var winLine = new G.WinLine();
+
+			winLine = new G.WinLine();
 			winLine.init(this.setup, [0,0,0,0,0], winLines[i].data);
 			winLine.color = winLines[i].color;
 			this.addChild(winLine);
@@ -93,6 +97,17 @@ var G = G || {};
 			winLine.y = marginT;
 			winLine.visible = false;
 			this.winLines.push(winLine);
+
+			for (j = 0; j < 5; j++) {
+
+
+
+
+			}
+
+
+
+
 		}
 
 

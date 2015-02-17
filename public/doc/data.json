@@ -63,6 +63,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "public/javascripts/app/components/GaffMenuComponent.js": {
+            "name": "public/javascripts/app/components/GaffMenuComponent.js",
+            "modules": {},
+            "classes": {
+                "GaffMenuComponent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "public/javascripts/app/components/GameComponent.js": {
             "name": "public/javascripts/app/components/GameComponent.js",
             "modules": {},
@@ -160,6 +169,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "public/javascripts/app/utils/Utils.js": {
+            "name": "public/javascripts/app/utils/Utils.js",
+            "modules": {},
+            "classes": {
+                "Utils": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "public/javascripts/app/Main.js": {
             "name": "public/javascripts/app/Main.js",
             "modules": {},
@@ -219,6 +237,26 @@
             "extends": "G.Container",
             "uses": [
                 "createjs.Container"
+            ],
+            "is_constructor": 1
+        },
+        "GaffMenuComponent": {
+            "name": "GaffMenuComponent",
+            "shortname": "GaffMenuComponent",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/components/GaffMenuComponent.js",
+            "line": 9,
+            "description": "A GaffMenu component which you can call show/hide from to show and hide the menu\nshould also draw some buttons based on setup.json's gaffs",
+            "params": [
+                {
+                    "name": "version",
+                    "description": "",
+                    "type": "String"
+                }
             ],
             "is_constructor": 1
         },
@@ -353,6 +391,18 @@
             "line": 9,
             "description": "Constructs queues for the CommandQueue for the purpose of displaying winning animations",
             "is_constructor": 1
+        },
+        "Utils": {
+            "name": "Utils",
+            "shortname": "Utils",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/javascripts/app/utils/Utils.js",
+            "line": 9,
+            "static": 1
         },
         "Main": {
             "name": "Main",
@@ -508,6 +558,18 @@
         {
             "file": "public/javascripts/app/commands/CommandQueue.js",
             "line": 67,
+            "description": "A special win animation is displayed according to setup.gaffs and QueueFactory",
+            "itemtype": "property",
+            "name": "gaffType",
+            "type": "{string}",
+            "see": [
+                "G.QueueFactory"
+            ],
+            "class": "CommandQueue"
+        },
+        {
+            "file": "public/javascripts/app/commands/CommandQueue.js",
+            "line": 75,
             "description": "Saves reference to Setup and creates a QueueFactory",
             "itemtype": "method",
             "name": "init",
@@ -527,7 +589,7 @@
         },
         {
             "file": "public/javascripts/app/commands/CommandQueue.js",
-            "line": 80,
+            "line": 88,
             "description": "Initialise a queue ready for playing",
             "itemtype": "method",
             "name": "setupQueue",
@@ -538,7 +600,7 @@
         },
         {
             "file": "public/javascripts/app/commands/CommandQueue.js",
-            "line": 104,
+            "line": 100,
             "description": "Plays the current queue, defined during setupQueue function.",
             "itemtype": "method",
             "name": "play",
@@ -546,7 +608,7 @@
         },
         {
             "file": "public/javascripts/app/commands/CommandQueue.js",
-            "line": 116,
+            "line": 112,
             "description": "executes the currently queued command and schedules a timeout to call the next in queue\nor finishes if at the end of the queue, or loops back (loops back to first command in queue with a loopIndex).",
             "itemtype": "method",
             "name": "executeNext",
@@ -554,7 +616,7 @@
         },
         {
             "file": "public/javascripts/app/commands/CommandQueue.js",
-            "line": 144,
+            "line": 140,
             "todo": [
                 "implement this"
             ],
@@ -564,7 +626,7 @@
         },
         {
             "file": "public/javascripts/app/commands/CommandQueue.js",
-            "line": 152,
+            "line": 148,
             "description": "clears any timeouts and prepares class for a new queue.",
             "itemtype": "method",
             "name": "flushQueue",
@@ -717,6 +779,145 @@
             "class": "GaffButton"
         },
         {
+            "file": "public/javascripts/app/components/GaffButton.js",
+            "line": 43,
+            "type": "{string}",
+            "class": "GaffButton"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffButton.js",
+            "line": 49,
+            "description": "Sets up button params",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "labelText",
+                    "description": ""
+                },
+                {
+                    "name": "width",
+                    "description": ""
+                },
+                {
+                    "name": "height",
+                    "description": ""
+                },
+                {
+                    "name": "radius",
+                    "description": ""
+                },
+                {
+                    "name": "strokeColor",
+                    "description": ""
+                },
+                {
+                    "name": "fillColor",
+                    "description": ""
+                },
+                {
+                    "name": "textColor",
+                    "description": ""
+                }
+            ],
+            "class": "GaffButton"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffMenuComponent.js",
+            "line": 23,
+            "description": "Store the buttons on the menu for deselection purposes",
+            "itemtype": "property",
+            "name": "buttons",
+            "type": "{G.GaffButton[]}",
+            "class": "GaffMenuComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffMenuComponent.js",
+            "line": 30,
+            "description": "A version number which can be shown on the menu.\nnb. do a grunt build:prod to generate the index.html and inject the version number from package.json.",
+            "itemtype": "property",
+            "name": "version",
+            "type": "{string}",
+            "class": "GaffMenuComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffMenuComponent.js",
+            "line": 38,
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "setup",
+                    "description": ""
+                },
+                {
+                    "name": "signalDispatcher",
+                    "description": ""
+                }
+            ],
+            "class": "GaffMenuComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffMenuComponent.js",
+            "line": 47,
+            "itemtype": "method",
+            "name": "drawMenu",
+            "class": "GaffMenuComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffMenuComponent.js",
+            "line": 125,
+            "description": "dispatch to SignalDispatcher to update gaff type",
+            "itemtype": "method",
+            "name": "buttonClicked",
+            "params": [
+                {
+                    "name": "button",
+                    "description": ""
+                }
+            ],
+            "class": "GaffMenuComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffMenuComponent.js",
+            "line": 136,
+            "itemtype": "method",
+            "name": "deselectGaffButtons",
+            "params": [
+                {
+                    "name": "button",
+                    "description": "do not deselect this button",
+                    "type": "G.GaffButton",
+                    "optional": true
+                }
+            ],
+            "class": "GaffMenuComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffMenuComponent.js",
+            "line": 150,
+            "description": "Shows the gaff menu",
+            "itemtype": "method",
+            "name": "show",
+            "class": "GaffMenuComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffMenuComponent.js",
+            "line": 164,
+            "description": "visible false",
+            "itemtype": "method",
+            "name": "handleComplete",
+            "class": "GaffMenuComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/GaffMenuComponent.js",
+            "line": 172,
+            "description": "Hides the gaff menu",
+            "itemtype": "method",
+            "name": "hide",
+            "class": "GaffMenuComponent"
+        },
+        {
             "file": "public/javascripts/app/components/GameComponent.js",
             "line": 22,
             "description": "Store for the SignalDispatcher allows us to dispatch and listen to Signals from the rest of the application",
@@ -757,16 +958,57 @@
         },
         {
             "file": "public/javascripts/app/components/Reel.js",
-            "line": 37,
+            "line": 24,
+            "description": "array of symbolData to map",
+            "itemtype": "property",
+            "name": "reelData",
+            "type": "{Array}",
+            "class": "Reel"
+        },
+        {
+            "file": "public/javascripts/app/components/Reel.js",
+            "line": 44,
             "description": "Dynamically alter the speed of reels by changing this percentage:\neg. 0.5 = half speed reels",
             "type": "{number}",
             "class": "Reel"
         },
         {
             "file": "public/javascripts/app/components/Reel.js",
-            "line": 44,
+            "line": 51,
             "description": "Maximum Speed the reels can spin in pixels per second",
+            "itemtype": "property",
+            "name": "speedConstant",
+            "final": "",
+            "default": "6000",
             "type": "{number}",
+            "class": "Reel"
+        },
+        {
+            "file": "public/javascripts/app/components/Reel.js",
+            "line": 59,
+            "itemtype": "property",
+            "name": "spriteMap",
+            "type": "{string[]}",
+            "class": "Reel"
+        },
+        {
+            "file": "public/javascripts/app/components/Reel.js",
+            "line": 165,
+            "description": "Spin this reel to the specified index position with a given delay",
+            "itemtype": "method",
+            "name": "spinToIndex",
+            "params": [
+                {
+                    "name": "index",
+                    "description": "- index of symbol on this reel to spin to (top left of reel should spin to this index)",
+                    "type": "Number"
+                },
+                {
+                    "name": "delay",
+                    "description": "- Millis til this spin will start",
+                    "type": "Number"
+                }
+            ],
             "class": "Reel"
         },
         {
@@ -812,7 +1054,7 @@
         },
         {
             "file": "public/javascripts/app/components/ReelsComponent.js",
-            "line": 59,
+            "line": 61,
             "itemtype": "method",
             "name": "init",
             "params": [
@@ -836,21 +1078,21 @@
         },
         {
             "file": "public/javascripts/app/components/ReelsComponent.js",
-            "line": 76,
+            "line": 78,
             "itemtype": "method",
             "name": "shuffleReels",
             "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/components/ReelsComponent.js",
-            "line": 101,
+            "line": 111,
             "itemtype": "method",
             "name": "drawReels",
             "class": "ReelsComponent"
         },
         {
             "file": "public/javascripts/app/components/ReelsComponent.js",
-            "line": 119,
+            "line": 129,
             "description": "Spins all reels with a delay configuration from setup.json\nStops reels if they are currently spinning.\nClear any winline/animation overlays\nPlay Spin Sound",
             "itemtype": "method",
             "name": "spinReels",
@@ -858,7 +1100,7 @@
         },
         {
             "file": "public/javascripts/app/components/ReelsComponent.js",
-            "line": 161,
+            "line": 178,
             "description": "method updateSpinSpeed",
             "params": [
                 {
@@ -871,7 +1113,7 @@
         },
         {
             "file": "public/javascripts/app/components/ReelsComponent.js",
-            "line": 174,
+            "line": 191,
             "description": "Signal dispatched when a reel spin is finished",
             "itemtype": "event",
             "name": "reelSpinEnd",
@@ -879,7 +1121,7 @@
         },
         {
             "file": "public/javascripts/app/components/ReelsComponent.js",
-            "line": 185,
+            "line": 202,
             "description": "DOM events\nfor development only",
             "itemtype": "method",
             "name": "initDomEvents",
@@ -1191,7 +1433,7 @@
         },
         {
             "file": "public/javascripts/app/components/WinLinesComponent.js",
-            "line": 110,
+            "line": 125,
             "description": "Hides all visible winLines",
             "itemtype": "method",
             "name": "hideWinLines",
@@ -1199,7 +1441,7 @@
         },
         {
             "file": "public/javascripts/app/components/WinLinesComponent.js",
-            "line": 123,
+            "line": 138,
             "description": "Shows all winlines at the passed indexes of setup.json winLines array",
             "itemtype": "method",
             "name": "showWinLinByIndexes",
@@ -1337,7 +1579,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 203,
+            "line": 200,
             "description": "User Control is initialised: Keyboard control / touch controls\nif User Control shouldn't be enabled during app initialisation phase, then execute this function later.",
             "todo": [
                 "- configure a way to turn on/off user interaction events."
@@ -1451,7 +1693,7 @@
             "file": "public/javascripts/app/core/SignalDispatcher.js",
             "line": 30,
             "itemtype": "property",
-            "name": "reelSpinComplete",
+            "name": "gaffSelect",
             "type": "{Signal}",
             "class": "SignalDispatcher"
         },
@@ -1459,13 +1701,21 @@
             "file": "public/javascripts/app/core/SignalDispatcher.js",
             "line": 36,
             "itemtype": "property",
-            "name": "reelSpinStart",
+            "name": "reelSpinComplete",
             "type": "{Signal}",
             "class": "SignalDispatcher"
         },
         {
             "file": "public/javascripts/app/core/SignalDispatcher.js",
             "line": 42,
+            "itemtype": "property",
+            "name": "reelSpinStart",
+            "type": "{Signal}",
+            "class": "SignalDispatcher"
+        },
+        {
+            "file": "public/javascripts/app/core/SignalDispatcher.js",
+            "line": 48,
             "itemtype": "method",
             "name": "init",
             "params": [
@@ -1484,16 +1734,30 @@
         },
         {
             "file": "public/javascripts/app/core/SignalDispatcher.js",
-            "line": 57,
+            "line": 64,
             "itemtype": "method",
             "name": "handleReelSpinStart",
             "class": "SignalDispatcher"
         },
         {
             "file": "public/javascripts/app/core/SignalDispatcher.js",
-            "line": 76,
+            "line": 84,
             "itemtype": "method",
             "name": "handleReeSpinComplete",
+            "class": "SignalDispatcher"
+        },
+        {
+            "file": "public/javascripts/app/core/SignalDispatcher.js",
+            "line": 96,
+            "itemtype": "method",
+            "name": "handleGaffSelected",
+            "params": [
+                {
+                    "name": "gaffType",
+                    "description": "- the menu option string",
+                    "type": "String"
+                }
+            ],
             "class": "SignalDispatcher"
         },
         {
@@ -1515,6 +1779,48 @@
                 }
             ],
             "class": "QueueFactory"
+        },
+        {
+            "file": "public/javascripts/app/utils/QueueFactory.js",
+            "line": 30,
+            "description": "Generates a win animation accorind to gaffType",
+            "itemtype": "method",
+            "name": "generateGaff",
+            "params": [
+                {
+                    "name": "gaffType",
+                    "description": "- the gaff to generate a queue for",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Array"
+            },
+            "class": "QueueFactory"
+        },
+        {
+            "file": "public/javascripts/app/utils/Utils.js",
+            "line": 15,
+            "itemtype": "property",
+            "name": "gameComponents",
+            "type": "{G.GameComponent[]}",
+            "class": "Utils"
+        },
+        {
+            "file": "public/javascripts/app/utils/Utils.js",
+            "line": 21,
+            "params": [
+                {
+                    "name": "componentClass",
+                    "description": "- must be the class type of a G.GameComponent",
+                    "type": "Class"
+                }
+            ],
+            "return": {
+                "description": "- the instance",
+                "type": "G.GameComponent"
+            },
+            "class": "Utils"
         },
         {
             "file": "public/javascripts/app/Main.js",
@@ -1574,6 +1880,14 @@
             "line": " public/javascripts/app/core/Preloader.js:21"
         },
         {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " public/javascripts/app/utils/QueueFactory.js:30"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " public/javascripts/app/utils/Utils.js:21"
+        },
+        {
             "message": "Missing item type",
             "line": " public/javascripts/app/commands/Command.js:45"
         },
@@ -1586,16 +1900,16 @@
             "line": " public/javascripts/app/commands/WinLineCommand.js:23"
         },
         {
-            "message": "Missing item type\nDynamically alter the speed of reels by changing this percentage:\neg. 0.5 = half speed reels",
-            "line": " public/javascripts/app/components/Reel.js:37"
+            "message": "Missing item type",
+            "line": " public/javascripts/app/components/GaffButton.js:43"
         },
         {
-            "message": "Missing item type\nMaximum Speed the reels can spin in pixels per second",
+            "message": "Missing item type\nDynamically alter the speed of reels by changing this percentage:\neg. 0.5 = half speed reels",
             "line": " public/javascripts/app/components/Reel.js:44"
         },
         {
             "message": "Missing item type\nmethod updateSpinSpeed",
-            "line": " public/javascripts/app/components/ReelsComponent.js:161"
+            "line": " public/javascripts/app/components/ReelsComponent.js:178"
         },
         {
             "message": "Missing item type\nStored reference to symbols, top left is 0 indexed Sprite, then go down to next row, until bottom symbols then continues to next reel",
@@ -1652,6 +1966,10 @@
         {
             "message": "Missing item type\nhandleAssetsLoaded - dispatch a Signal to Game containing loaded Assets",
             "line": " public/javascripts/app/core/Preloader.js:91"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public/javascripts/app/utils/Utils.js:21"
         }
     ]
 }

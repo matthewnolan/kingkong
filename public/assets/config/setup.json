@@ -2,7 +2,7 @@
   "gameTitle": "Shadow of the Panther",
   "env": "prod",
   "devMode": 0,
-  "domHelpers": 1,
+  "domHelpers": 0,
   "spinOnLoad": 0,
   "playWinAfterSpin": 1,
   "useLoader": 1,

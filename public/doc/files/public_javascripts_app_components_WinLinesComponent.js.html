@@ -42,6 +42,7 @@
                                 <li><a href="../classes/.html"></a></li>
                                 <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
                                 <li><a href="../classes/GaffButton.html">GaffButton</a></li>
+                                <li><a href="../classes/GaffMenuComponent.html">GaffMenuComponent</a></li>
                                 <li><a href="../classes/GameComponent.html">GameComponent</a></li>
                                 <li><a href="../classes/Reel.html">Reel</a></li>
                                 <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
@@ -52,6 +53,7 @@
                                 <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
                                 <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
                                 <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                                <li><a href="../classes/Utils.html">Utils</a></li>
                                 <li><a href="../classes/Main.html">Main</a></li>
                             </ul>
                 
@@ -167,7 +169,7 @@ var G = G || {};
 		var marginL = this.setup.bezelMarginL;
 		var marginT = this.setup.bezelMarginT;
 		var winLines = this.setup.winLines;
-		var i, len = this.numLinesTotal = winLines.length;
+		var i, len = this.numLinesTotal = winLines.length, j;
 
 		this.el = document.querySelector(&quot;#preloader&quot;);
 
@@ -177,8 +179,12 @@ var G = G || {};
 			filters.push(this.glowFilter);
 		}
 
+		var winLine;
+
+
 		for (i = 0; i &lt; len; i++) {
-			var winLine = new G.WinLine();
+
+			winLine = new G.WinLine();
 			winLine.init(this.setup, [0,0,0,0,0], winLines[i].data);
 			winLine.color = winLines[i].color;
 			this.addChild(winLine);
@@ -188,6 +194,17 @@ var G = G || {};
 			winLine.y = marginT;
 			winLine.visible = false;
 			this.winLines.push(winLine);
+
+			for (j = 0; j &lt; 5; j++) {
+
+
+
+
+			}
+
+
+
+
 		}
 
 
