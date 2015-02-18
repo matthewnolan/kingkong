@@ -7,8 +7,12 @@ var G = G || {};
 	"use strict";
 
 	/**
+	 * Responsible for drawing a winLine dynamically.
+	 * Many of these are drawn and cached inside WinLinesComponent, which shows and hides these winLines as required.
 	 * @class WinLine
 	 * @constructor
+	 * @extends createjs.Container
+	 * @uses createjs.Graphics
 	 */
 	var WinLine = function () {
 		this.Container_constructor();
@@ -104,8 +108,9 @@ var G = G || {};
 	};
 
 	/**
-	 * Draws the WinLine according to stored Data
-	 * @method draw
+	 * Draws and caches all WinLines according to setup.winLines
+	 * Also applies cheap shadow filter (looks ok but is very fast) or expensive DropShadow and GlowFilter (looks awesome but slow) if enabled in setup.
+	 * @method drawComponent
 	 */
 	p.drawComponent = function () {
 
@@ -161,6 +166,8 @@ var G = G || {};
 
 					if (this.symbolLocations[i + 1] === this.symbolLocations[i] - 1) {
 						//next reel is ont the row above
+						graph.moveTo(x + outlineW, y);
+						drawPoint.y = y - this.thickness * 2;
 					}
 				} else {
 					//draw a line
@@ -194,10 +201,16 @@ var G = G || {};
 			}
 			graph.lineTo(drawPoint.x, drawPoint.y);
 		}
+
+		//if enable winLineShadows is set to false, we can draw these cheaper shadows (which are built into easeljs) - they
+		//don't look as good as the winLineShadows, but they are drawn much much faster
 		if (this.setup.cheaperWinLineShadows && !this.setup.enableWinLineShadows) {
 			shape.shadow = new createjs.Shadow("#000000", 2,2,5);
 		}
 
+		//if enable winLineShadows is set to true, we draw these dropShadow and GlowFilters to make the winLines look much
+		//like the original flash version's. However, they are very expensive to draw, and can block an entire phone's cpu for a very
+		//long time.  So recommended to turn these off on mobile devices.
 		if (this.setup.enableWinLineShadows) {
 			var filters = [];
 			filters.push(this.dropShadow);

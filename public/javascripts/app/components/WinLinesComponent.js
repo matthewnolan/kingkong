@@ -84,33 +84,48 @@ var G = G || {};
 
 		var winLine;
 
-
 		for (i = 0; i < len; i++) {
 
-			winLine = new G.WinLine();
-			winLine.init(this.setup, [0,0,0,0,0], winLines[i].data);
-			winLine.color = winLines[i].color;
-			this.addChild(winLine);
-			winLine.drawComplete.add(this.onWinLineDrawn, this);
-			winLine.drawComponent();
-			winLine.x = marginL;
-			winLine.y = marginT;
-			winLine.visible = false;
-			this.winLines.push(winLine);
+			var tempWinLines = [];
+			this.winLines.push(tempWinLines);
+			for (j = 0; j < 6; j++) {
+				var tempArr;
+				switch(j) {
+					case 0 :
+						tempArr = [0,0,0,0,0];
+						break;
+					case 1 :
+						tempArr = [1,0,0,0,0];
+						break;
+					case 2 :
+						tempArr = [1,1,0,0,0];
+						break;
+					case 3 :
+						tempArr = [1,1,1,0,0];
+						break;
+					case 4 :
+						tempArr = [1,1,1,1,0];
+						break;
+					case 5 :
+						tempArr = [1,1,1,1,1];
+						break;
+				}
 
-			for (j = 0; j < 5; j++) {
-
-
-
-
+				winLine = new G.WinLine();
+				winLine.init(this.setup, tempArr, winLines[i].data);
+				winLine.color = winLines[i].color;
+				this.addChild(winLine);
+				winLine.drawComplete.add(this.onWinLineDrawn, this);
+				winLine.drawComponent();
+				winLine.x = marginL;
+				winLine.y = marginT;
+				winLine.visible = false;
+				tempWinLines.push(winLine);
 			}
-
-
-
 
 		}
 
-
+		this.showWinLineByIndexes([6]);
 
 		//this.hideWinLines();
 	};
@@ -129,7 +144,9 @@ var G = G || {};
 	p.hideWinLines = function() {
 
 		var hideWinLine = function(winLine) {
-			winLine.visible = false;
+			_.each(winLine, function(line) {
+				line.visible = false;
+			});
 		};
 
 		_.each(this.winLines, hideWinLine);
@@ -143,7 +160,7 @@ var G = G || {};
 	p.showWinLineByIndexes = function(indexes) {
 		var i, len = indexes.length;
 		for (i = 0; i < len; i++) {
-			this.winLines[indexes[i]].visible = true;
+			this.winLines[indexes[i]][4].visible = true;
 		}
 	};
 
