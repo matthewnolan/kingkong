@@ -152,7 +152,6 @@ var G = G || {};
 				line.visible = false;
 			});
 		};
-
 		_.each(this.winLines, hideWinLine);
 	};
 
@@ -160,14 +159,15 @@ var G = G || {};
 	 * Shows all winlines at the passed indexes of setup.json winLines array
 	 * @method showWinLinByIndexes
 	 * @param {Array} indexes show winlines at these indexes eg: [1,3,5] shows winlines 1,3,5 together at once;
+	 * @param {number} numSquares - number of winSquares to show on the winLine, 0 or absent draws a line
 	 */
-	p.showWinLineByIndexes = function(indexes) {
+	p.showWinLineByIndexes = function(indexes, numSquares) {
 		var i, len = indexes.length;
+		var squaresIndex = numSquares || 0;
 		for (i = 0; i < len; i++) {
-			this.winLines[indexes[i]][4].visible = true;
+			this.winLines[indexes[i]][squaresIndex].visible = true;
 		}
 	};
-
 
 	G.WinLinesComponent = createjs.promote(WinLinesComponent, "GameComponent");
 

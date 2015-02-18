@@ -20,9 +20,9 @@ this.G = this.G || {};
 
 	/**
 	 * Decides what scale mode is used to determine the scale and position of the canvas
-	 * @example "NO_SCALE";
-	 * @example "FULL_BROWSER";
-	 * @default 'FULL_ASPECT'
+	 * @example "NO_SCALE" - uses the default setup.json stageScale value;
+	 * @example "FULL_BROWSER" - stretches the app to the viewport size;
+	 * @default 'FULL_ASPECT - scales the app to the viewport, maintining aspect ratio'
 	 * @Property STAGE_SCALE_MODE
 	 * @type {string}
 	 */
@@ -129,7 +129,8 @@ this.G = this.G || {};
 		var stageH = this.setup.stageH || 375;
 		var browserW = window.innerWidth;
 		var browserH = window.innerHeight;
-		var stageScaleW = 1, stageScaleH = 1;
+		var stageScale = this.setup.stageScale || 1;
+		var stageScaleW = stageScale, stageScaleH = stageScale;
 		var appLeft = 0;
 		var appWidth = Math.floor(stageW * stageScaleW);
 		var appHeight = Math.floor(stageH * stageScaleH);

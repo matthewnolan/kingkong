@@ -38,7 +38,7 @@ var G = G || {};
 	p.execute = function() {
 		createjs.Sound.play("bonusStop1");
 		this.gameComponent.hideWinLines();
-		this.gameComponent.showWinLineByIndexes(this.winLineIndexes);
+		this.gameComponent.showWinLineByIndexes(this.winLineIndexes, 0);
 	};
 
 	G.WinLineCommand = createjs.promote(WinLineCommand, "Command");
