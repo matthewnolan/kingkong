@@ -95,7 +95,7 @@ var G = G || {};
 	 * @default 6000
 	 * @type {number}
 	 */
-	p.speedConstant = 6000;
+	p.speedConstant = 5000;
 
 	/**
 	 * @property spriteMap

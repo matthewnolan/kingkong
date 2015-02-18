@@ -100,15 +100,22 @@ var G = G || {};
 		return array;
 	};
 
-	p.modifySymbolData = function() {
+	/**
+	 * Takes an array of symbol ID's and passes them to each reel to modify symbol sprites at runtime on each reel
+	 * @method modifySymbolData
+	 * @param {number[]} reelData
+	 */
+	p.modifySymbolData = function(reelData) {
+		var modifiedReelData = reelData || [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11];
 		var i, len = this.reels.length, reel;
 		for (i = 0; i < len; i++) {
 			reel = this.reels[i];
-			reel.modifyReelData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+			reel.modifyReelData(modifiedReelData);
 		}
 	};
 
 	/**
+	 * Creates and initialises each reel, also drawing them to the display.  Call once during app initialisation only.
 	 * @method drawReels
 	 */
 	p.drawReels = function() {
