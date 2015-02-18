@@ -53,3 +53,33 @@ body {
 .dom-helpers {
     display: none;
 }
+
+
+@media screen and (max-width: 320px) {
+    #landscapeModal {
+        display: block !important;
+        width: 100%;
+        opacity: .9 !important;
+    }
+}
+@media screen and (min-width: 321px) and (max-width: 480px) {
+    #landscapeModal {
+        display: none;
+        opacity: 0 !important;
+    }
+}
+#landscapeModal {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: #000 url('../assets/img/landscape.png') center center no-repeat;
+    width: 100%;
+    height: 100%;
+    display: none;
+    opacity: 0.9;
+    text-align: center;
+    z-index: 444;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    -webkit-transition: opacity 1s ease-in-out;
+}

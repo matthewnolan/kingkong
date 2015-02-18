@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>King Kong</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1, user-scalable=yes, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -25,7 +25,7 @@
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Vendor -->
+    <!-- Vendor Deps -->
     <script src="javascripts/vendor/easeljs/easeljs-0.8.0.combined.js"></script>
     <script src="javascripts/vendor/createjs-preloadjs/preloadjs-0.6.0.combined.js"></script>
     <script src="javascripts/vendor/createjs-soundjs/soundjs-0.6.0.combined.js"></script>
@@ -35,7 +35,10 @@
     <script src="javascripts/vendor/js-signals/signals.js"></script>
     <script src="javascripts/vendor/hammerjs/hammer.js"></script>
     <script src="javascripts/vendor/lodash/lodash.js"></script>
-    <!-- Application Deps -->
+    <!-- for dev only will not be required in final app-->
+    <script src="javascripts/vendor/jquery/jquery.js"></script>
+
+    <!-- Application -->
     <script src="javascripts/app/Main.js"></script>
     <script src="javascripts/app/core/Preloader.js"></script>
     <script src="javascripts/app/core/Game.js"></script>
@@ -44,18 +47,14 @@
     <script src="javascripts/app/commands/Command.js"></script>
     <script src="javascripts/app/commands/CommandQueue.js"></script>
     <script src="javascripts/app/commands/WinLineCommand.js"></script>
-    <script src="javascripts/app/commands/BigWinCommand.js"></script>
     <script src="javascripts/app/components/GameComponent.js"></script>
     <script src="javascripts/app/components/Reel.js"></script>
     <script src="javascripts/app/components/ReelsComponent.js"></script>
     <script src="javascripts/app/components/SymbolWinsComponent.js"></script>
     <script src="javascripts/app/components/WinLinesComponent.js"></script>
     <script src="javascripts/app/components/WinLine.js"></script>
-    <script src="javascripts/app/components/BigWinComponent.js"></script>
-    <script src="javascripts/app/components/GaffMenuComponent.js"></script>
-    <script src="javascripts/app/components/GaffButton.js"></script>
     <script src="javascripts/app/utils/QueueFactory.js"></script>
-    <script src="javascripts/app/utils/Utils.js"></script>
+
 
     <link rel="stylesheet" href="stylesheets/style.css">
 </head>
@@ -72,11 +71,6 @@
             </div>
         </div>
     </div>
-    <div id="debug">
-        <div class="content">
-            <div id="console"></div>
-        </div>
-    </div>
 </div>
 
 
@@ -87,15 +81,12 @@
     <input type="range" id="gasPedal" min="0" value="50" max="100" step="1" onchange="window.updateSpeed(value)" oninput="window.updateSpeed(value)">
     <div class="spin-perc"></div>
     <div class="spin-speed"></div>
-    <label for="spinToIndex">Spin To Index</label>
-    <input id="spinToIndex" type="number" min="0" max="16" value="0" />
-    <div>
-        <a href="tests.html">Tests</a>
-        <a href="/doc/">Documentation</a>
-    </div>
 </div>
 
-
+<div>
+    <a href="tests.html">Tests</a>
+    <a href="/doc/">Documentation</a>
+</div>
 
 
 <script>
@@ -107,17 +98,20 @@
         main.init();
 
         /**
+         * Fix position of app on rotate
+         */
+        window.addEventListener('resize', function(e) {
+            window.scrollTo(0, 0);
+        }, true);
+
+        /**
          * DOM Events for development
          * @param val
          */
         window.updateSpeed = function(val) {
             currentSpinSpeed = Math.round(val/100 * 6000);
-
-            var spinPerc = document.querySelector('div.spin-perc');
-            var spinSpeed = document.querySelector('div.spin-speed');
-
-            spinPerc.innerHTML = val.toString() + "%";
-            spinSpeed.innerHTML = currentSpinSpeed.toString() + 'pps';
+            $('div.spin-perc').html(val + '%');
+            $('div.spin-speed').html(currentSpinSpeed + 'pps');
         };
         window.updateSpeed(50);
     })(window);

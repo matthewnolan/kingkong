@@ -52666,7 +52666,6 @@ return jQuery;
   }
 }.call(this));
 
-
 // stats.js - http://github.com/mrdoob/stats.js
 var Stats=function(){var l=Date.now(),m=l,g=0,n=Infinity,o=0,h=0,p=Infinity,q=0,r=0,s=0,f=document.createElement("div");f.id="stats";f.addEventListener("mousedown",function(b){b.preventDefault();t(++s%2)},!1);f.style.cssText="width:80px;opacity:0.9;cursor:pointer";var a=document.createElement("div");a.id="fps";a.style.cssText="padding:0 0 3px 3px;text-align:left;background-color:#002";f.appendChild(a);var i=document.createElement("div");i.id="fpsText";i.style.cssText="color:#0ff;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px";
 i.innerHTML="FPS";a.appendChild(i);var c=document.createElement("div");c.id="fpsGraph";c.style.cssText="position:relative;width:74px;height:30px;background-color:#0ff";for(a.appendChild(c);74>c.children.length;){var j=document.createElement("span");j.style.cssText="width:1px;height:30px;float:left;background-color:#113";c.appendChild(j)}var d=document.createElement("div");d.id="ms";d.style.cssText="padding:0 0 3px 3px;text-align:left;background-color:#020;display:none";f.appendChild(d);var k=document.createElement("div");
@@ -52801,8 +52800,8 @@ this.G = this.G || {};
 	};
 
 	p.rescale = function() {
-		var stageW = 667;
-		var stageH = 375;
+		var stageW = this.setup.stageW || 667;
+		var stageH = this.setup.stageH || 375;
 		var browserW = window.innerWidth;
 		var browserH = window.innerHeight;
 		var stageScaleW = 1, stageScaleH = 1;
@@ -52874,10 +52873,12 @@ this.G = this.G || {};
 			} else {
 				debugStr+="<br/>landscape mode";
 			}
+			//canvas console
 			//var debug = new createjs.Text("debug:\n" + debugStr, "14px Arial", "#ffffff");
 			//this.stage.addChild(debug);
 			//debug.y = 0;
 			//debug.x = 0;
+			//html console
 			var debug = document.querySelector("#console");
 			debug.innerHTML = debugStr;
 		}
@@ -54065,9 +54066,6 @@ var G = G || {};
 	 * @method hide
 	 */
 	p.hide = function() {
-		this.visible = true;
-		this.alpha = 1;
-
 		createjs.Tween.get(this)
 			.to({alpha: 0, scaleX: 0.01, scaleY: 0.01}, 400, createjs.Ease.getElasticIn(4,2))
 			.call(this.handleComplete);
@@ -54107,17 +54105,58 @@ var G = G || {};
 	 */
 	p.reelData = [];
 
+	/**
+	 * @property setup
+	 * @type {Object}
+	 */
 	p.setup = null;
 
+	/**
+	 * @property symbolSprites
+	 * @type {createjs.SpriteSheet}
+	 */
 	p.symbolSprites = null;
 
-	p.containers = {
-		main: this,
-		wraps: []
-	};
+	/**
+	 * wraps symbol sprites for easier modification there are 2 of these containers because each reel contains duplicate symbols
+	 * for wrapping purposes during spin.
+	 * @property wrap1
+	 * @type {createjs.Sprite[]}
+	 */
+	p.wrap1 = [];
 
+	/**
+	 * wraps symbol sprites for easier modification there are 2 of these containers because each reel contains duplicate symbols
+	 * @property wrap2
+	 * @type {createjs.Sprite[]}
+	 */
+	p.wrap2 = [];
+
+	/**
+	 * contains an extra row of symbol sprites which are appended above the first row of symbols, so there are some
+	 * visible sprites in case the reels are spun to first index position.
+	 * @type {createjs.Sprite[]}
+	 */
+	p.upperBuffer = [];
+
+	/**
+	 * @contains an extra 2 rows of symbols sprites which are appended to the last row of symbols, so there are some
+	 * visible sprites in case the reels are spun to last index position.
+	 * @type {Array}
+	 */
+	p.lowerBuffer = [];
+
+	/**
+	 * @property logEnabled
+	 * @type {boolean}
+	 */
 	p.logEnabled = false;
 
+	/**
+	 * Set this number to -2, to schedule the reel spin animation to stop, -1 will make the spin continue to loop for an infinite number spins.
+	 * @property sheduleSpinStop
+	 * @type {number}
+	 */
 	p.scheduleSpinStop = -2;
 
 	/**
@@ -54133,7 +54172,7 @@ var G = G || {};
 	 * @default 6000
 	 * @type {number}
 	 */
-	p.speedConstant = 6000;
+	p.speedConstant = 5000;
 
 	/**
 	 * @property spriteMap
@@ -54141,50 +54180,128 @@ var G = G || {};
 	 */
 	p.spriteMap = ['ww','m1', 'm2', 'm3', 'm4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f0', 'd1', 'd2', 'd3', 'd4', 'b1', 'b2'];
 
+	/**
+	 * Stores the current spin tween animation
+	 * @property tween
+	 * @type {null}
+	 */
 	p.tween = null;
 
-	p.scheduleSpeedChange = false;
-
+	/**
+	 * dispatched when a spin animation on this reel is completed
+	 * @property reelSpinEnd
+	 * @type {Signal}
+	 */
 	p.reelSpinEnd = new signals.Signal();
 
+	/**
+	 * setTimeout responsible for automatically stopping a reel spin animation.
+	 * @property stopTimeout
+	 * @type {number}
+	 */
 	p.stopTimeout = 0;
 
+	/**
+	 * The index position the reels must stop at.  Represents the index position inside this.reelsData where the top symbol will stop at.
+	 * @property spinResultIndex
+	 * @type {number}
+	 */
 	p.spinResultIndex = 0;
 
+	/**
+	 * @property scheduleSymbolUpdate
+	 * @type {boolean}
+	 */
+	p.scheduleSymbolUpdate = false;
+
+	/**
+	 * Initialise Class vars and passes in instance of setup, symbolSprites, and initial reelData
+	 * @method init
+	 * @param setup
+	 * @param symbolSprites
+	 * @param reelData
+	 */
 	p.init = function(setup, symbolSprites, reelData) {
 		this.setup = setup;
 		this.symbolSprites = symbolSprites;
 		this.reelData = reelData;
+		this.wrap1 = [];
+		this.wrap2 = [];
+		this.upperBuffer = [];
+		this.lowerBuffer = [];
 	};
 
+	/**
+	 * Call this when spin data is received.
+	 * The sprites on this reel will be scheduled to update according to the spin data after 1 spin loop.
+	 * @see updateSymbolSprites
+	 * @method modifyReelData
+	 * @param {Number[]} reelData
+	 */
 	p.modifyReelData = function(reelData) {
-		var i, j, symbolSprite;
-		for (i = 0; i < this.containers.wraps.length; i++) {
-			var wrap = this.containers.wraps[i];
-			for (j = 0; j < wrap.getNumChildren(); j++) {
-				symbolSprite = wrap.getChildAt(j);
-				symbolSprite.gotoAndStop(this.spriteMap[reelData[j]]);
+		if (reelData.length !== this.reelData.length) {
+			throw "reelData count mismatch: " + reelData.length + " should equal this.reelData.length: " + this.reelData.length;
+		}
+		this.scheduleSymbolUpdate = true;
+		this.reelData = reelData;
+	};
+
+	/**
+	 * If reelData has been modified then schedule this function on during the first spin 'loop'.
+	 * This will then update the reel sprites according to the new reelData array
+	 * @see modifyReelData
+	 * @method updateSymbolSprites
+	 */
+	p.updateSymbolSprites = function() {
+		if (this.scheduleSymbolUpdate) {
+			this.scheduleSymbolUpdate = false;
+			var i, l, j, len = this.reelData.length, symbolIndex;
+			for (i = 0; i < len; i++) {
+				symbolIndex = this.reelData[i];
+				this.wrap1[i].gotoAndStop(this.spriteMap[symbolIndex]);
+				this.wrap2[i].gotoAndStop(this.spriteMap[symbolIndex]);
+			}
+
+			for (l = 0; l < 2; l++) {
+				var buffer = l === 0 ? this.upperBuffer : this.lowerBuffer;
+				for (j = 0; j < 2; j++) {
+					symbolIndex = len - 2 + j - (l * (len - 2));
+					buffer[j].gotoAndStop(this.spriteMap[this.reelData[symbolIndex]]);
+				}
 			}
 		}
 	};
 
+	/**
+	 * Draws the current reelData symbols to this reel, Should be called once during app initialisation.
+	 * @method drawReel
+	 */
 	p.drawReel = function() {
+
 		var symbolW = this.setup.symbolW;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var container, len = this.reelData.length;
+
+		console.log('drawReel', len);
+
 		var l, j, sp, debugSh, gp, text, text2;
 		var reelHeight = this.reelData.length * symbolH + this.reelData.length * symbolMarginB;
 		var wrapPosY;
+		var spriteContainer;
 		for (l = 0; l < 2; l++) {
 			//creates 2 reel wrappers
 			var wrap = new createjs.Container();
 			this.addChild(wrap);
 
+			spriteContainer = l === 0? this.wrap1 : this.wrap2;
+
 			for (j = 0; j < len; j++) {
 				//creates a symbol for every index in reelData array
 				container = new createjs.Container();
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[j]]);
+				console.log('spriteContainer', spriteContainer.length);
+				spriteContainer.push(sp);
 				container.addChild(sp);
 				if (this.setup.devMode) {
 					var wrapColor = l === 0? "#00ff00" : "#ff0000";
@@ -54207,20 +54324,24 @@ var G = G || {};
 				container.y = (symbolH * j + symbolMarginB * j);
 			}
 			wrapPosY = wrap.y = -l * reelHeight;
-			this.containers.wraps.push(wrap);
+
+			var buffer = l === 0 ? this.upperBuffer : this.lowerBuffer;
 
 			for (j = 0; j < 2; j++) {
 				//2 rows of symbols to buffer above and below the symbol wrappers
+
 				var symbolBufferWrap = new createjs.Container();
 				this.addChild(symbolBufferWrap);
 				container = new createjs.Container();
 				var tempSymbolIndex = len - 2 + j - (l * (len - 2));
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[tempSymbolIndex]]);
 				container.addChild(sp);
+
 				container.y = (symbolH * j + symbolMarginB * j);
 				symbolBufferWrap.addChild(container);
 				symbolBufferWrap.y = -reelHeight - 2 * (symbolH - symbolMarginB) + (l * (2 * (symbolH - symbolMarginB) + reelHeight * 2));
-				this.containers.wraps.push(symbolBufferWrap);
+				//this.containers.wraps.push(symbolBufferWrap);
+				buffer.push(sp);
 
 				if (this.setup.devMode) {
 					debugSh = new createjs.Shape();
@@ -54273,7 +54394,6 @@ var G = G || {};
 				createjs.Tween.get(this, {loop: false, paused:true})
 					.to({y:yPos}, tweenTime, createjs.Ease.getElasticIn(2,2))
 					.call(this.loopSpin)
-
 		);
 
 
@@ -54282,6 +54402,11 @@ var G = G || {};
 		}, this.setup.reelAnimation.duration + spinDelay);
 	};
 
+	/**
+	 * Returns the time required to tween this reel through a set of this.reelData.length symbols
+	 * @method getTime
+	 * @returns {number}
+	 */
 	p.getTime = function() {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
@@ -54290,6 +54415,10 @@ var G = G || {};
 		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
 	};
 
+	/**
+	 * Begins a new loop of spinning animation beginning at this.y 0 and ending at the end of 1 set of symbols
+	 * @method loopSpin
+	 */
 	p.loopSpin = function() {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
@@ -54297,9 +54426,10 @@ var G = G || {};
 		var reelH = symbolH * symbolsLen + symbolMarginB * symbolsLen;
 		var tweenTime = this.getTime();
 		var yPos;
-		if (this.scheduleSpinStop === -1){
+		if (this.scheduleSpinStop === -1) {
 			this.y = 0;
 			yPos = reelH;
+			this.updateSymbolSprites();
 		} else {
 			return;
 		}
@@ -54315,6 +54445,12 @@ var G = G || {};
 			.on("change", this.onYPosUpdate);
 	};
 
+	/**
+	 * Returns the time required for the stop tween animation (from this.y 0 to the symbol stop index). Uses number of pixels as the distance
+	 * @method getStopTime
+	 * @param {number} index - the symbol index the tween animation is going to stop at
+	 * @returns {number}
+	 */
 	p.getStopTime =function(index) {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
@@ -54324,6 +54460,11 @@ var G = G || {};
 		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
 	};
 
+	/**
+	 * Starts the stop tween animation, beginning at this.y: 0 to the y position of the stop symbol index passed to this function.
+	 * @method stopSpin
+	 * @param {number} index
+	 */
 	p.stopSpin = function(index) {
 		this.scheduleSpinStop = -2;
 		var symbolH = this.setup.symbolH;
@@ -54348,19 +54489,26 @@ var G = G || {};
 		createjs.Tween
 			.get(this, {override: true, loop:false})
 			.to({y: yPos}, stopTime, createjs.Ease.getElasticOut(easeAmp,easeTime))
-			//.to({y: yPos}, stopTime)
 			.call(this.handleSpinComplete)
 			.on("change", this.onYPosUpdate);
 	};
 
+	/**
+	 * For debugging spin animation purposes
+	 * @method onYPosUpdate
+	 */
 	p.onYPosUpdate = function() {
 		var self = this.target;
 		if (self.logEnabled) {
 			console.log('this.Container Y=', Math.round(self.y));
 		}
-
 	};
 
+
+	/**
+	 * Manually stops the current spin animation - also called automatically by the stopTimeout.
+	 * @method fastStop
+	 */
 	p.fastStop = function() {
 		if (this.scheduleSpinStop > -2) {
 			clearInterval(this.stopTimeout);
@@ -54368,15 +54516,23 @@ var G = G || {};
 		}
 	};
 
+	/**
+	 * Dispatches the reelSpinEnd signal when the reel spin animation is completed.
+	 * @event handleSpinComplete
+	 */
 	p.handleSpinComplete = function() {
 		this.reelSpinEnd.dispatch();
 	};
 
-
+	/**
+	 * Modify the spin speed percentage value (accepts 0-100%);
+	 * Reels will spin at this perecentage of the speedConstant in pixels per second.
+	 * @method spinSpeedIncrement
+	 * @param val
+	 */
 	p.spinSpeedIncrement = function(val) {
 		if (this.speedPercentage !== val) {
 			this.speedPercentage = val;
-			this.scheduleSpeedChange = true;
 		}
 	};
 
@@ -54487,15 +54643,22 @@ var G = G || {};
 		return array;
 	};
 
-	p.modifySymbolData = function() {
+	/**
+	 * Takes an array of symbol ID's and passes them to each reel to modify symbol sprites at runtime on each reel
+	 * @method modifySymbolData
+	 * @param {number[]} reelData
+	 */
+	p.modifySymbolData = function(reelData) {
+		var modifiedReelData = reelData || [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11];
 		var i, len = this.reels.length, reel;
 		for (i = 0; i < len; i++) {
 			reel = this.reels[i];
-			reel.modifyReelData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+			reel.modifyReelData(modifiedReelData);
 		}
 	};
 
 	/**
+	 * Creates and initialises each reel, also drawing them to the display.  Call once during app initialisation only.
 	 * @method drawReels
 	 */
 	p.drawReels = function() {
@@ -54772,8 +54935,12 @@ var G = G || {};
 	"use strict";
 
 	/**
+	 * Responsible for drawing a winLine dynamically.
+	 * Many of these are drawn and cached inside WinLinesComponent, which shows and hides these winLines as required.
 	 * @class WinLine
 	 * @constructor
+	 * @extends createjs.Container
+	 * @uses createjs.Graphics
 	 */
 	var WinLine = function () {
 		this.Container_constructor();
@@ -54869,8 +55036,9 @@ var G = G || {};
 	};
 
 	/**
-	 * Draws the WinLine according to stored Data
-	 * @method draw
+	 * Draws and caches all WinLines according to setup.winLines
+	 * Also applies cheap shadow filter (looks ok but is very fast) or expensive DropShadow and GlowFilter (looks awesome but slow) if enabled in setup.
+	 * @method drawComponent
 	 */
 	p.drawComponent = function () {
 
@@ -54921,11 +55089,13 @@ var G = G || {};
 					if (this.symbolLocations[i + 1] === this.symbolLocations[i] + 1) {
 						//next reel is on row below
 						graph.moveTo(x + outlineW, y + outlineH);
-						drawPoint.y = y + outlineH + this.thickness * 2;
+						drawPoint.y = y + outlineH + this.thickness;
 					}
 
 					if (this.symbolLocations[i + 1] === this.symbolLocations[i] - 1) {
 						//next reel is ont the row above
+						graph.moveTo(x + outlineW, y);
+						drawPoint.y = y - this.thickness;
 					}
 				} else {
 					//draw a line
@@ -54943,7 +55113,7 @@ var G = G || {};
 					if (this.symbolLocations[i + 1] === this.symbolLocations[i] - 1) {
 						//draw straight line to row above
 						//modify drawPoint y pos
-						drawPoint.y = y - this.thickness / 2;
+						drawPoint.y = y - this.thickness;
 					}
 				}
 			} else if (i === len - 1) {
@@ -54960,6 +55130,15 @@ var G = G || {};
 			graph.lineTo(drawPoint.x, drawPoint.y);
 		}
 
+		//if enable winLineShadows is set to false, we can draw these cheaper shadows (which are built into easeljs) - they
+		//don't look as good as the winLineShadows, but they are drawn much much faster
+		if (this.setup.cheaperWinLineShadows && !this.setup.enableWinLineShadows) {
+			shape.shadow = new createjs.Shadow("#000000", 2,2,5);
+		}
+
+		//if enable winLineShadows is set to true, we draw these dropShadow and GlowFilters to make the winLines look much
+		//like the original flash version's. However, they are very expensive to draw, and can block an entire phone's cpu for a very
+		//long time.  So recommended to turn these off on mobile devices.
 		if (this.setup.enableWinLineShadows) {
 			var filters = [];
 			filters.push(this.dropShadow);
@@ -55097,37 +55276,56 @@ var G = G || {};
 
 		var winLine;
 
-
 		for (i = 0; i < len; i++) {
 
-			winLine = new G.WinLine();
-			winLine.init(this.setup, [0,0,0,0,0], winLines[i].data);
-			winLine.color = winLines[i].color;
-			this.addChild(winLine);
-			winLine.drawComplete.add(this.onWinLineDrawn, this);
-			winLine.drawComponent();
-			winLine.x = marginL;
-			winLine.y = marginT;
-			winLine.visible = false;
-			this.winLines.push(winLine);
+			var tempWinLines = [];
+			this.winLines.push(tempWinLines);
+			for (j = 0; j < 6; j++) {
+				var tempArr;
+				switch(j) {
+					case 0 :
+						tempArr = [0,0,0,0,0];
+						break;
+					case 1 :
+						tempArr = [1,0,0,0,0];
+						break;
+					case 2 :
+						tempArr = [1,1,0,0,0];
+						break;
+					case 3 :
+						tempArr = [1,1,1,0,0];
+						break;
+					case 4 :
+						tempArr = [1,1,1,1,0];
+						break;
+					case 5 :
+						tempArr = [1,1,1,1,1];
+						break;
+				}
 
-			for (j = 0; j < 5; j++) {
-
-
-
-
+				winLine = new G.WinLine();
+				winLine.init(this.setup, tempArr, winLines[i].data);
+				winLine.color = winLines[i].color;
+				this.addChild(winLine);
+				winLine.drawComplete.add(this.onWinLineDrawn, this);
+				winLine.drawComponent();
+				winLine.x = marginL;
+				winLine.y = marginT;
+				winLine.visible = false;
+				tempWinLines.push(winLine);
 			}
-
-
-
 
 		}
 
-
+		this.showWinLineByIndexes([6]);
 
 		//this.hideWinLines();
 	};
 
+	/**
+	 * Once all win Line initialisation is done, we can hide the preloader cover
+	 * @method onWinLineDrawn
+	 */
 	p.onWinLineDrawn = function() {
 		++this.numLinesDrawn;
 		if (this.numLinesDrawn === this.numLinesTotal) {
@@ -55142,7 +55340,9 @@ var G = G || {};
 	p.hideWinLines = function() {
 
 		var hideWinLine = function(winLine) {
-			winLine.visible = false;
+			_.each(winLine, function(line) {
+				line.visible = false;
+			});
 		};
 
 		_.each(this.winLines, hideWinLine);
@@ -55156,7 +55356,7 @@ var G = G || {};
 	p.showWinLineByIndexes = function(indexes) {
 		var i, len = indexes.length;
 		for (i = 0; i < len; i++) {
-			this.winLines[indexes[i]].visible = true;
+			this.winLines[indexes[i]][4].visible = true;
 		}
 	};
 
@@ -55305,7 +55505,7 @@ var G = G || {};
 			case "gaff_Line_M1" :
 
 				reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
-				//reels.modifySymbolData();
+				reels.modifySymbolData();
 
 
 				break;
