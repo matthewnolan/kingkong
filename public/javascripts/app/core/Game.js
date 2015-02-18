@@ -125,8 +125,8 @@ this.G = this.G || {};
 	};
 
 	p.rescale = function() {
-		var stageW = 667;
-		var stageH = 375;
+		var stageW = this.setup.stageW || 667;
+		var stageH = this.setup.stageH || 375;
 		var browserW = window.innerWidth;
 		var browserH = window.innerHeight;
 		var stageScaleW = 1, stageScaleH = 1;
@@ -198,10 +198,12 @@ this.G = this.G || {};
 			} else {
 				debugStr+="<br/>landscape mode";
 			}
+			//canvas console
 			//var debug = new createjs.Text("debug:\n" + debugStr, "14px Arial", "#ffffff");
 			//this.stage.addChild(debug);
 			//debug.y = 0;
 			//debug.x = 0;
+			//html console
 			var debug = document.querySelector("#console");
 			debug.innerHTML = debugStr;
 		}

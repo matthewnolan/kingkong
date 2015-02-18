@@ -174,9 +174,6 @@ var G = G || {};
 	 * @method hide
 	 */
 	p.hide = function() {
-		this.visible = true;
-		this.alpha = 1;
-
 		createjs.Tween.get(this)
 			.to({alpha: 0, scaleX: 0.01, scaleY: 0.01}, 400, createjs.Ease.getElasticIn(4,2))
 			.call(this.handleComplete);
