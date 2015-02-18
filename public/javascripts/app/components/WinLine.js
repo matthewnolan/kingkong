@@ -161,13 +161,13 @@ var G = G || {};
 					if (this.symbolLocations[i + 1] === this.symbolLocations[i] + 1) {
 						//next reel is on row below
 						graph.moveTo(x + outlineW, y + outlineH);
-						drawPoint.y = y + outlineH + this.thickness * 2;
+						drawPoint.y = y + outlineH + this.thickness;
 					}
 
 					if (this.symbolLocations[i + 1] === this.symbolLocations[i] - 1) {
 						//next reel is ont the row above
 						graph.moveTo(x + outlineW, y);
-						drawPoint.y = y - this.thickness * 2;
+						drawPoint.y = y - this.thickness;
 					}
 				} else {
 					//draw a line
@@ -185,7 +185,7 @@ var G = G || {};
 					if (this.symbolLocations[i + 1] === this.symbolLocations[i] - 1) {
 						//draw straight line to row above
 						//modify drawPoint y pos
-						drawPoint.y = y - this.thickness / 2;
+						drawPoint.y = y - this.thickness;
 					}
 				}
 			} else if (i === len - 1) {

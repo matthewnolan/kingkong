@@ -130,6 +130,10 @@ var G = G || {};
 		//this.hideWinLines();
 	};
 
+	/**
+	 * Once all win Line initialisation is done, we can hide the preloader cover
+	 * @method onWinLineDrawn
+	 */
 	p.onWinLineDrawn = function() {
 		++this.numLinesDrawn;
 		if (this.numLinesDrawn === this.numLinesTotal) {
