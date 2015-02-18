@@ -39,11 +39,13 @@ var G = G || {};
 
 		var winLines, bigWin, reels;
 
+		reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
+		winLines = G.Utils.getGameComponentByClass(G.WinLinesComponent);
+		bigWin = G.Utils.getGameComponentByClass(G.BigWinComponent);
+
 		switch(gaffType) {
 			case "normal" :
-				 winLines = G.Utils.getGameComponentByClass(G.WinLinesComponent);
-				 bigWin = G.Utils.getGameComponentByClass(G.BigWinComponent);
-
+				reels.modifySymbolData(null, true);
 				var bigWinCommand = new G.BigWinCommand();
 				 bigWinCommand.init(this.setup, bigWin);
 
@@ -55,8 +57,6 @@ var G = G || {};
 
 				break;
 			case "gaff_Line_M1" :
-
-				reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
 				reels.modifySymbolData();
 
 
