@@ -100,7 +100,7 @@ var G = G || {};
 		return array;
 	};
 
-	p.modifySymbomodifySymbolDatalData = function() {
+	p.modifySymbolData = function() {
 		var i, len = this.reels.length, reel;
 		for (i = 0; i < len; i++) {
 			reel = this.reels[i];

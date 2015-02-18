@@ -57,7 +57,7 @@ var G = G || {};
 			case "gaff_Line_M1" :
 
 				reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
-				reels.modifySymbolData();
+				//reels.modifySymbolData();
 
 
 				break;
