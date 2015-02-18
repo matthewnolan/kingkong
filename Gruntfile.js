@@ -1,4 +1,4 @@
-/*global module:false*/
+/*global module:false */
 var appTemplates = require('./modules/utils/appTemplates.js');
 var change = require('./node_modules/change-case/change-case.js');
 
@@ -43,7 +43,8 @@ module.exports = function (grunt) {
 					// So this list must sometimes be updated manually.
 					// This is a bit of a pain, which we could avoid if we used Require.js or similar
 					// i recommend we do this if (this pain > pain of refactoring modules to amd)
-					//includes
+
+					//includes to concat (depended files first)
 					'public/javascripts/vendor/easeljs/**/*.js',
 					'public/javascripts/vendor/**/*.js',
 					'public/javascripts/app/core/*.js',
@@ -54,7 +55,7 @@ module.exports = function (grunt) {
 					'public/javascripts/app/Main.js',
 					'public/javascripts/app/utils/*.js',
 
-					//excludes
+					//excludes (not required by application)
 					'!public/javascripts/vendor/jasmine/**/*.js',
 					'!public/javascripts/vendor/jasmine-signals/**/*.js',
 					'!public/javascripts/vendor/jasmine-sinon/**/*.js',
