@@ -1,7 +1,7 @@
 {
   "gameTitle": "Shadow of the Panther",
   "env": "prod",
-  "devMode": 0,
+  "devMode": 1,
   "htmlDebug": 0,
   "scale" : "FULL_ASPECT",
   "domHelpers": 0,

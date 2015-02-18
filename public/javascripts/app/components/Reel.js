@@ -28,17 +28,58 @@ var G = G || {};
 	 */
 	p.reelData = [];
 
+	/**
+	 * @property setup
+	 * @type {Object}
+	 */
 	p.setup = null;
 
+	/**
+	 * @property symbolSprites
+	 * @type {createjs.SpriteSheet}
+	 */
 	p.symbolSprites = null;
 
-	p.containers = {
-		main: this,
-		wraps: []
-	};
+	/**
+	 * wraps symbol sprites for easier modification there are 2 of these containers because each reel contains duplicate symbols
+	 * for wrapping purposes during spin.
+	 * @property wrap1
+	 * @type {createjs.Sprite[]}
+	 */
+	p.wrap1 = [];
 
+	/**
+	 * wraps symbol sprites for easier modification there are 2 of these containers because each reel contains duplicate symbols
+	 * @property wrap2
+	 * @type {createjs.Sprite[]}
+	 */
+	p.wrap2 = [];
+
+	/**
+	 * contains an extra row of symbol sprites which are appended above the first row of symbols, so there are some
+	 * visible sprites in case the reels are spun to first index position.
+	 * @type {createjs.Sprite[]}
+	 */
+	p.upperBuffer = [];
+
+	/**
+	 * @contains an extra 2 rows of symbols sprites which are appended to the last row of symbols, so there are some
+	 * visible sprites in case the reels are spun to last index position.
+	 * @type {Array}
+	 */
+	p.lowerBuffer = [];
+
+	/**
+	 * @property logEnabled
+	 * @type {boolean}
+	 */
 	p.logEnabled = false;
 
+	/**
+	 * Set this number to -2, to schedule the reel spin animation to stop, -1 will make the spin continue to loop for an infinite number spins.
+	 * @property sheduleSpinStop
+	 * @type {number}
+	 */
 	p.scheduleSpinStop = -2;
 
 	/**
@@ -62,50 +103,128 @@ var G = G || {};
 	 */
 	p.spriteMap = ['ww','m1', 'm2', 'm3', 'm4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f0', 'd1', 'd2', 'd3', 'd4', 'b1', 'b2'];
 
+	/**
+	 * Stores the current spin tween animation
+	 * @property tween
+	 * @type {null}
+	 */
 	p.tween = null;
 
-	p.scheduleSpeedChange = false;
-
+	/**
+	 * dispatched when a spin animation on this reel is completed
+	 * @property reelSpinEnd
+	 * @type {Signal}
+	 */
 	p.reelSpinEnd = new signals.Signal();
 
+	/**
+	 * setTimeout responsible for automatically stopping a reel spin animation.
+	 * @property stopTimeout
+	 * @type {number}
+	 */
 	p.stopTimeout = 0;
 
+	/**
+	 * The index position the reels must stop at.  Represents the index position inside this.reelsData where the top symbol will stop at.
+	 * @property spinResultIndex
+	 * @type {number}
+	 */
 	p.spinResultIndex = 0;
 
+	/**
+	 * @property scheduleSymbolUpdate
+	 * @type {boolean}
+	 */
+	p.scheduleSymbolUpdate = false;
+
+	/**
+	 * Initialise Class vars and passes in instance of setup, symbolSprites, and initial reelData
+	 * @method init
+	 * @param setup
+	 * @param symbolSprites
+	 * @param reelData
+	 */
 	p.init = function(setup, symbolSprites, reelData) {
 		this.setup = setup;
 		this.symbolSprites = symbolSprites;
 		this.reelData = reelData;
+		this.wrap1 = [];
+		this.wrap2 = [];
+		this.upperBuffer = [];
+		this.lowerBuffer = [];
 	};
 
+	/**
+	 * Call this when spin data is received.
+	 * The sprites on this reel will be scheduled to update according to the spin data after 1 spin loop.
+	 * @see updateSymbolSprites
+	 * @method modifyReelData
+	 * @param {Number[]} reelData
+	 */
 	p.modifyReelData = function(reelData) {
-		var i, j, symbolSprite;
-		for (i = 0; i < this.containers.wraps.length; i++) {
-			var wrap = this.containers.wraps[i];
-			for (j = 0; j < wrap.getNumChildren(); j++) {
-				symbolSprite = wrap.getChildAt(j);
-				symbolSprite.gotoAndStop(this.spriteMap[reelData[j]]);
+		if (reelData.length !== this.reelData.length) {
+			throw "reelData count mismatch: " + reelData.length + " should equal this.reelData.length: " + this.reelData.length;
+		}
+		this.scheduleSymbolUpdate = true;
+		this.reelData = reelData;
+	};
+
+	/**
+	 * If reelData has been modified then schedule this function on during the first spin 'loop'.
+	 * This will then update the reel sprites according to the new reelData array
+	 * @see modifyReelData
+	 * @method updateSymbolSprites
+	 */
+	p.updateSymbolSprites = function() {
+		if (this.scheduleSymbolUpdate) {
+			this.scheduleSymbolUpdate = false;
+			var i, l, j, len = this.reelData.length, symbolIndex;
+			for (i = 0; i < len; i++) {
+				symbolIndex = this.reelData[i];
+				this.wrap1[i].gotoAndStop(this.spriteMap[symbolIndex]);
+				this.wrap2[i].gotoAndStop(this.spriteMap[symbolIndex]);
+			}
+
+			for (l = 0; l < 2; l++) {
+				var buffer = l === 0 ? this.upperBuffer : this.lowerBuffer;
+				for (j = 0; j < 2; j++) {
+					symbolIndex = len - 2 + j - (l * (len - 2));
+					buffer[j].gotoAndStop(this.spriteMap[this.reelData[symbolIndex]]);
+				}
 			}
 		}
 	};
 
+	/**
+	 * Draws the current reelData symbols to this reel, Should be called once during app initialisation.
+	 * @method drawReel
+	 */
 	p.drawReel = function() {
+
 		var symbolW = this.setup.symbolW;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var container, len = this.reelData.length;
+
+		console.log('drawReel', len);
+
 		var l, j, sp, debugSh, gp, text, text2;
 		var reelHeight = this.reelData.length * symbolH + this.reelData.length * symbolMarginB;
 		var wrapPosY;
+		var spriteContainer;
 		for (l = 0; l < 2; l++) {
 			//creates 2 reel wrappers
 			var wrap = new createjs.Container();
 			this.addChild(wrap);
 
+			spriteContainer = l === 0? this.wrap1 : this.wrap2;
+
 			for (j = 0; j < len; j++) {
 				//creates a symbol for every index in reelData array
 				container = new createjs.Container();
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[j]]);
+				console.log('spriteContainer', spriteContainer.length);
+				spriteContainer.push(sp);
 				container.addChild(sp);
 				if (this.setup.devMode) {
 					var wrapColor = l === 0? "#00ff00" : "#ff0000";
@@ -128,20 +247,24 @@ var G = G || {};
 				container.y = (symbolH * j + symbolMarginB * j);
 			}
 			wrapPosY = wrap.y = -l * reelHeight;
-			this.containers.wraps.push(wrap);
+
+			var buffer = l === 0 ? this.upperBuffer : this.lowerBuffer;
 
 			for (j = 0; j < 2; j++) {
 				//2 rows of symbols to buffer above and below the symbol wrappers
+
 				var symbolBufferWrap = new createjs.Container();
 				this.addChild(symbolBufferWrap);
 				container = new createjs.Container();
 				var tempSymbolIndex = len - 2 + j - (l * (len - 2));
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[tempSymbolIndex]]);
 				container.addChild(sp);
+
 				container.y = (symbolH * j + symbolMarginB * j);
 				symbolBufferWrap.addChild(container);
 				symbolBufferWrap.y = -reelHeight - 2 * (symbolH - symbolMarginB) + (l * (2 * (symbolH - symbolMarginB) + reelHeight * 2));
-				this.containers.wraps.push(symbolBufferWrap);
+				//this.containers.wraps.push(symbolBufferWrap);
+				buffer.push(sp);
 
 				if (this.setup.devMode) {
 					debugSh = new createjs.Shape();
@@ -194,7 +317,6 @@ var G = G || {};
 				createjs.Tween.get(this, {loop: false, paused:true})
 					.to({y:yPos}, tweenTime, createjs.Ease.getElasticIn(2,2))
 					.call(this.loopSpin)
-
 		);
 
 
@@ -203,6 +325,11 @@ var G = G || {};
 		}, this.setup.reelAnimation.duration + spinDelay);
 	};
 
+	/**
+	 * Returns the time required to tween this reel through a set of this.reelData.length symbols
+	 * @method getTime
+	 * @returns {number}
+	 */
 	p.getTime = function() {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
@@ -211,6 +338,10 @@ var G = G || {};
 		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
 	};
 
+	/**
+	 * Begins a new loop of spinning animation beginning at this.y 0 and ending at the end of 1 set of symbols
+	 * @method loopSpin
+	 */
 	p.loopSpin = function() {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
@@ -218,9 +349,10 @@ var G = G || {};
 		var reelH = symbolH * symbolsLen + symbolMarginB * symbolsLen;
 		var tweenTime = this.getTime();
 		var yPos;
-		if (this.scheduleSpinStop === -1){
+		if (this.scheduleSpinStop === -1) {
 			this.y = 0;
 			yPos = reelH;
+			this.updateSymbolSprites();
 		} else {
 			return;
 		}
@@ -236,6 +368,12 @@ var G = G || {};
 			.on("change", this.onYPosUpdate);
 	};
 
+	/**
+	 * Returns the time required for the stop tween animation (from this.y 0 to the symbol stop index). Uses number of pixels as the distance
+	 * @method getStopTime
+	 * @param {number} index - the symbol index the tween animation is going to stop at
+	 * @returns {number}
+	 */
 	p.getStopTime =function(index) {
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
@@ -245,6 +383,11 @@ var G = G || {};
 		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
 	};
 
+	/**
+	 * Starts the stop tween animation, beginning at this.y: 0 to the y position of the stop symbol index passed to this function.
+	 * @method stopSpin
+	 * @param {number} index
+	 */
 	p.stopSpin = function(index) {
 		this.scheduleSpinStop = -2;
 		var symbolH = this.setup.symbolH;
@@ -269,19 +412,26 @@ var G = G || {};
 		createjs.Tween
 			.get(this, {override: true, loop:false})
 			.to({y: yPos}, stopTime, createjs.Ease.getElasticOut(easeAmp,easeTime))
-			//.to({y: yPos}, stopTime)
 			.call(this.handleSpinComplete)
 			.on("change", this.onYPosUpdate);
 	};
 
+	/**
+	 * For debugging spin animation purposes
+	 * @method onYPosUpdate
+	 */
 	p.onYPosUpdate = function() {
 		var self = this.target;
 		if (self.logEnabled) {
 			console.log('this.Container Y=', Math.round(self.y));
 		}
-
 	};
 
+
+	/**
+	 * Manually stops the current spin animation - also called automatically by the stopTimeout.
+	 * @method fastStop
+	 */
 	p.fastStop = function() {
 		if (this.scheduleSpinStop > -2) {
 			clearInterval(this.stopTimeout);
@@ -289,15 +439,23 @@ var G = G || {};
 		}
 	};
 
+	/**
+	 * Dispatches the reelSpinEnd signal when the reel spin animation is completed.
+	 * @event handleSpinComplete
+	 */
 	p.handleSpinComplete = function() {
 		this.reelSpinEnd.dispatch();
 	};
 
-
+	/**
+	 * Modify the spin speed percentage value (accepts 0-100%);
+	 * Reels will spin at this perecentage of the speedConstant in pixels per second.
+	 * @method spinSpeedIncrement
+	 * @param val
+	 */
 	p.spinSpeedIncrement = function(val) {
 		if (this.speedPercentage !== val) {
 			this.speedPercentage = val;
-			this.scheduleSpeedChange = true;
 		}
 	};
 
