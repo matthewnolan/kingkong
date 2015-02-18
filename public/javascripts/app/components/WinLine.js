@@ -194,6 +194,9 @@ var G = G || {};
 			}
 			graph.lineTo(drawPoint.x, drawPoint.y);
 		}
+		if (this.setup.cheaperWinLineShadows && !this.setup.enableWinLineShadows) {
+			shape.shadow = new createjs.Shadow("#000000", 2,2,5);
+		}
 
 		if (this.setup.enableWinLineShadows) {
 			var filters = [];
