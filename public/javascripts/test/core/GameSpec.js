@@ -95,6 +95,8 @@ describe("Game Test", function () {
 
 		var data = "setupJson";
 
+		spyOn(this.class, 'rescale');
+
 		this.class.onSetupLoaded(data);
 
 		expect(this.class.setup).toBe("setupJson");

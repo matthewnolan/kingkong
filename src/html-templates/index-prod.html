@@ -42,6 +42,11 @@
             </div>
         </div>
     </div>
+    <div id="debug">
+        <div class="content">
+            <div id="console"></div>
+        </div>
+    </div>
 </div>
 
 
@@ -54,6 +59,10 @@
     <div class="spin-speed"></div>
     <label for="spinToIndex">Spin To Index</label>
     <input id="spinToIndex" type="number" min="0" max="16" value="0" />
+    <div>
+        <a href="tests.html">Tests</a>
+        <a href="/doc/">Documentation</a>
+    </div>
 </div>
 
 <div>
@@ -69,13 +78,6 @@
          * */
         var main = new G.Main();
         main.init();
-
-        /**
-         * Fix position of app on rotate
-         */
-        window.addEventListener('resize', function(e) {
-            window.scrollTo(0, 0);
-        }, true);
 
         /**
          * DOM Events for development

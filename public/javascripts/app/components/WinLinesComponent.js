@@ -76,7 +76,7 @@ var G = G || {};
 
 		this.el = document.querySelector("#preloader");
 
-		if (this.setup.enableShadowsOnDesktop) {
+		if (this.setup.enableWinLineShadows) {
 			var filters = [];
 			filters.push(this.dropShadow);
 			filters.push(this.glowFilter);

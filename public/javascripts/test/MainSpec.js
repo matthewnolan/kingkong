@@ -64,7 +64,11 @@ describe("Main Test", function () {
 
 	it("Main init should create a Stage and initialise it with the correct", function() {
 		// spies let us test a function is called
-		spyOn(createjs, "Stage");
+		spyOn(createjs, "Stage").and.returnValue({
+			addChild: function() {
+
+			}
+		});
 		this.class.init();
 		expect(createjs.Stage).toHaveBeenCalledWith("app");
 	});

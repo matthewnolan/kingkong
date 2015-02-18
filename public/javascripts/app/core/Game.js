@@ -19,6 +19,16 @@ this.G = this.G || {};
 	p.constructor = Game;
 
 	/**
+	 * Decides what scale mode is used to determine the scale and position of the canvas
+	 * @example "NO_SCALE";
+	 * @example "FULL_BROWSER";
+	 * @default 'FULL_ASPECT'
+	 * @Property STAGE_SCALE_MODE
+	 * @type {string}
+	 */
+	p.STAGE_SCALE_MODE = "FULL_ASPECT";
+
+	/**
 	 * AUTO_GENERATED in all grunt builds
 	 * @property version
 	 * @type {string}
@@ -97,6 +107,7 @@ this.G = this.G || {};
 	 */
 	p.onSetupLoaded = function(setup) {
 		this.setup = setup;
+		this.rescale();
 	};
 
 	/**
@@ -111,6 +122,89 @@ this.G = this.G || {};
 		this.signalDispatcher = new G.SignalDispatcher();
 		this.setupDisplay();
 		this.initUIEvents();
+	};
+
+	p.rescale = function() {
+		var stageW = 667;
+		var stageH = 375;
+		var browserW = window.innerWidth;
+		var browserH = window.innerHeight;
+		var stageScaleW = 1, stageScaleH = 1;
+		var appLeft = 0;
+		var appWidth = Math.floor(stageW * stageScaleW);
+		var appHeight = Math.floor(stageH * stageScaleH);
+
+		if (this.setup.scale) {
+			this.STAGE_SCALE_MODE = this.setup.scale;
+		}
+
+		switch(this.STAGE_SCALE_MODE) {
+			case "FULL_ASPECT" :
+				stageScaleH = stageScaleW = browserH / stageH;
+				appWidth = Math.floor(stageW * stageScaleW);
+				appHeight = Math.floor(stageH * stageScaleH);
+
+				if (appWidth > browserW) {
+					stageScaleW = stageScaleH = browserW / stageW;
+				}
+
+
+				appLeft = Math.floor(browserW / 2 - appWidth /2);
+				break;
+			case "FULL_BROWSER" :
+				stageScaleH = browserH / stageH;
+				stageScaleW = browserW / stageW;
+				appWidth = Math.floor(stageW * stageScaleW);
+				appHeight = Math.floor(stageH * stageScaleH);
+				break;
+			case "NO_SCALE" :
+				//defaults are fine
+				break;
+			default :
+
+				break;
+		}
+
+		this.stage.scaleX = stageScaleW;
+		this.stage.scaleY = stageScaleH;
+
+		//No negative left
+		appLeft = appLeft < 0? 0 : appLeft;
+
+		var styleWidth = appWidth.toString() + "px";
+		var styleHeight = appHeight.toString() + "px";
+		var styleLeft = appLeft.toString() + "px";
+
+		var preloaderCover = document.querySelector("#preloader");
+		preloaderCover.style.width = styleWidth;
+		preloaderCover.style.height = styleHeight;
+
+		var mainCanvas = document.querySelector("#app");
+		mainCanvas.setAttribute("width", styleWidth );
+		mainCanvas.setAttribute("height", styleHeight);
+		mainCanvas.style.left = styleLeft;
+
+		//html console (useful for mobile debug)
+		if (this.setup.htmlDebug) {
+			console.log('window.screen.availHeight=', window.screen.availHeight);
+			var debugStr = "setup.htmlDebug:" + this.setup.htmlDebug;
+			debugStr += "<br/>availHeight=" + window.screen.availHeight;
+			debugStr += "<br/>availWidth=" + window.screen.availWidth;
+			debugStr+= "<br/>innerHeight=" + window.innerHeight;
+			debugStr+= "<br/>innerWidth=" + window.innerWidth;
+
+			if (window.innerHeight > window.innerWidth) {
+				debugStr+="<br/>portrait mode";
+			} else {
+				debugStr+="<br/>landscape mode";
+			}
+			//var debug = new createjs.Text("debug:\n" + debugStr, "14px Arial", "#ffffff");
+			//this.stage.addChild(debug);
+			//debug.y = 0;
+			//debug.x = 0;
+			var debug = document.querySelector("#console");
+			debug.innerHTML = debugStr;
+		}
 	};
 
 	/**
@@ -204,8 +298,15 @@ this.G = this.G || {};
 	 * @method initUIEvents
 	 */
 	p.initUIEvents = function() {
-
 		var self = this;
+		/**
+		 * Fix position of app on rotate
+		 */
+		window.addEventListener('resize', function() {
+			window.scrollTo(0, 0);
+			self.rescale();
+		}, true);
+
 		window.document.onkeydown = function(e) {
 			switch(e.keyCode) {
 				//space //enter
