@@ -5,3 +5,4 @@ bower_components/
 node_modules/
 _SpecRunner.html
 public/doc/
+npm-debug.log

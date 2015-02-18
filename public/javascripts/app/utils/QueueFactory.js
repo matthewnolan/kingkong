@@ -57,7 +57,8 @@ var G = G || {};
 
 				break;
 			case "gaff_Line_M1" :
-				reels.modifySymbolData();
+				reels.modifySymbolData([11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11]);
+
 
 
 				break;

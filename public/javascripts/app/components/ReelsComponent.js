@@ -106,7 +106,7 @@ var G = G || {};
 	 * @param {number[]} reelData
 	 */
 	p.modifySymbolData = function(reelData, reset) {
-		var modifiedReelData = reelData || [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11];
+		var modifiedReelData = reelData || [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 		var i, len = this.reels.length, reel;
 		for (i = 0; i < len; i++) {
 			reel = this.reels[i];
