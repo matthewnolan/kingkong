@@ -36,6 +36,11 @@ describe("Game Test", function () {
 		expect(this.class.assets).toBeNull();
 	});
 
+	it("Check version injection string is set correctly", function() {
+		console.warn("this test will fail if tested against the minified source code");
+		expect(this.class.version).toEqual("{{ VERSION }}");
+	});
+
 	it("init function should set a passed serverInterface", function () {
 		var mockServerInterface = {
 			mock: "server"
