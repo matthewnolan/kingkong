@@ -99,7 +99,7 @@ describe("CommandQueue Test", function () {
 			this.class.queue = [myCommand];
 			myCommand.loopIndex = 1;
 			this.class.executeNext();
-			expect(this.class.loopReturnIndex).toBe(1);
+			expect(this.class.loopReturnIndex).toBe(0);
 
 		});
 

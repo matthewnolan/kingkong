@@ -1,4 +1,4 @@
-/*! kingkong 0.2.0 - 2015-02-19
+/*! kingkong 0.2.0 - 2015-02-20
 * Copyright (c) 2015 Licensed @HighFiveGames */
 /*!
 * EaselJS
@@ -52911,16 +52911,8 @@ this.G = this.G || {};
 		reelsComponent.y = bezelMarginT;
 		this.stage.addChild(reelsComponent);
 
-		//init winLines
-		var winLinesComponet = new G.WinLinesComponent();
-		winLinesComponet.init(this.setup, this.signalDispatcher);
-		this.stage.addChild(winLinesComponet);
-		winLinesComponet.drawComponent();
-
 		//store components
 		this.components.reels = reelsComponent;
-		this.components.winLines = winLinesComponet;
-		this.gameComponents.push(reelsComponent, winLinesComponet);
 		this.signalDispatcher.init(this.setup, this.gameComponents);
 
 		//init mask
@@ -52947,7 +52939,13 @@ this.G = this.G || {};
 		this.stage.addChild(bigWinComponent);
 		bigWinComponent.drawSprites();
 
-
+		//init winLines
+		var winLinesComponet = new G.WinLinesComponent();
+		winLinesComponet.init(this.setup, this.signalDispatcher);
+		this.stage.addChild(winLinesComponet);
+		winLinesComponet.drawComponent();
+		this.components.winLines = winLinesComponet;
+		this.gameComponents.push(reelsComponent, winLinesComponet);
 		this.components.bigWin = bigWinComponent;
 		this.gameComponents.push(bigWinComponent);
 
@@ -53258,17 +53256,14 @@ var G = G || {};
 	 * @method handleReelSpinStart
 	 */
 	p.handleReelSpinStart = function() {
-		var winLinesComponent = _.find(this.gameComponents, function(component) {
-			return component instanceof G.WinLinesComponent;
-		});
-
-		var bigWinComponent = _.find(this.gameComponents, function(component) {
-			return component instanceof G.BigWinComponent;
-		});
+		var winLinesComponent = G.Utils.getGameComponentByClass(G.WinLinesComponent);
+		var bigWinComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
+		var symbolWinsComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 		bigWinComponent.hideAnimation();
+		symbolWinsComponent.hideAll();
 		this.commandQueue.setupQueue();
 	};
 
@@ -53315,7 +53310,8 @@ var G = G || {};
 	"use strict";
 
 	/**
-	 * @class
+	 * @class Command
+	 * @abstract
 	 * @constructor
 	 */
 	var Command = function() {};
@@ -53360,6 +53356,10 @@ var G = G || {};
 		this.gameComponent = gameComponent;
 	};
 
+	/**
+	 * Ususally overridden by a particular game command
+	 * @method execute
+	 */
 	p.execute = function() {
 		//console.log("Command execute");
 	};
@@ -53425,25 +53425,47 @@ var G = G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * @class G.BigWinCommand
+	 * @extends G.Command
+	 * @uses G.BigWinComponent
+	 * @constructor
+	 */
 	var BigWinCommand = function() {
 		this.Command_constructor();
 	};
 	var p = createjs.extend(BigWinCommand, G.Command);
 	p.constructor = BigWinCommand;
 
+	/**
+	 * Set this flag to true if this command should remove a previously played big win
+	 * @property shouldClearExisting
+	 * @type {boolean}
+	 */
+	p.shouldClearExisting = false;
 
 	/**
-	 * initialise game data and component
+	 * initialise game data and component, and vars
 	 * @method init
-	 * @param setup
-	 * @param gameComponent
+	 * @param {Object} setup
+	 * @param {G.BigWinComponent} gameComponent
+	 * @param {boolean} shouldClearExisting
 	 */
-	p.init = function(setup, gameComponent) {
+	p.init = function(setup, gameComponent, shouldClearExisting) {
 		this.Command_init(setup, gameComponent);
+		this.shouldClearExisting = shouldClearExisting;
 	};
 
+	/**
+	 * Executes the command payload which in this case should either show or hide a BigWin animation
+	 * @method execute
+	 */
 	p.execute = function() {
-		this.gameComponent.playAnimation();
+		if (this.shouldClearExisting) {
+			this.gameComponent.hideAnimation();
+		} else {
+			this.gameComponent.playAnimation();
+		}
 	};
 
 	G.BigWinCommand = createjs.promote(BigWinCommand, "Command");
@@ -53570,13 +53592,14 @@ var G = G || {};
 		var command = this.queue[this.currentIndex];
 		command.execute();
 		if (command.loopIndex) {
-			this.loopReturnIndex = command.loopIndex;
+			this.loopReturnIndex = this.currentIndex;
+			this.shouldLoop = true;
 		}
 
 		if (this.currentIndex ++ === this.queue.length - 1)
 		{
 			if (this.shouldLoop) {
-				this.currentIndex = 0;
+				this.currentIndex = this.loopReturnIndex;
 			} else {
 				this.flushQueue();
 				return;
@@ -53604,6 +53627,7 @@ var G = G || {};
 		clearTimeout(this.timeout);
 		this.currentIndex = 0;
 		this.queue = [];
+		this.shouldLoop = false;
 	};
 
 	G.CommandQueue = CommandQueue;
@@ -53646,13 +53670,17 @@ var G = G || {};
 	 * @method init
 	 * @param {Object} setup
 	 * @param {G.SymbolWinsComponent} gameComponent
-	 * @param {Array} winLineData
+	 * @param {Array} winLineIndexes
 	 * @param {Number} numSquares
 	 * @param {String} animId
 	 */
-	p.init = function(setup, gameComponent, winLineData, numSquares, animId) {
+	p.init = function(setup, gameComponent, winLineIndexes, numSquares, animId) {
 		this.Command_init(setup, gameComponent);
-		this.winLineData = winLineData;
+		this.winLineData = [];
+		var i, len = winLineIndexes.length;
+		for (i = 0; i < len; i++) {
+			this.winLineData.push(this.setup.winLines[winLineIndexes[i]].data);
+		}
 		this.numSquares = numSquares;
 		this.animId = animId;
 	};
@@ -53662,7 +53690,7 @@ var G = G || {};
 	 * @method execute
 	 */
 	p.execute = function() {
-		this.gameComponent.clearAllAnims();
+		this.gameComponent.hideAll();
 		this.gameComponent.showAnimsOnWinline(this.winLineData, this.numSquares, this.animId);
 	};
 
@@ -53692,14 +53720,33 @@ var G = G || {};
 	p.winLineIndexes = [0];
 
 	/**
-	 *
+	 * number of squares to display on these winLines
+	 * @property numSquares - eg. 4 will display 4 squares and a line over 5 reels
+	 * @type {number}
+	 */
+	p.numSquares = 0;
+
+	/**
+	 * If an animation id is defined, then we'll attempt to play a symbol win animation on the correct win square
+	 * @property playAnimId
+	 * @type {string}
+	 */
+	p.playAnimId = "";
+
+	/**
+	 * Initialises this command's required data
+	 * @method init
 	 * @param {Object} setup
 	 * @param {G.WinLinesComponent} gameComponent
-	 * @param {Number[]} winLineIndexes - indexes of winLines based on setup.winLines which we'd like to show
+	 * @param {number[]} winLineIndexes - indexes of winLines based on setup.winLines which we'd like to show
+	 * @param {number} numSquares - number of win squares to display on win line
+	 * @param {string} playAnimId - play the symbol animation on this square pass "blink" to make a blinking symbol
 	 */
-	p.init = function(setup, gameComponent, winLineIndexes) {
+	p.init = function(setup, gameComponent, winLineIndexes, numSquares, playAnimId) {
 		this.Command_init(setup, gameComponent);
 		this.winLineIndexes = winLineIndexes || this.winLineIndexes;
+		this.numSquares = numSquares || this.numSquares;
+		this.playAnimId = playAnimId || this.playAnimId;
 	};
 
 	/**
@@ -53707,9 +53754,26 @@ var G = G || {};
 	 * @method execute
 	 */
 	p.execute = function() {
-		createjs.Sound.play("bonusStop1");
+		//createjs.Sound.play("bonusStop1");
+
+		console.log('show win line command', this.winLineIndexes);
+
+		var symbolWins = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
+		symbolWins.hideAll();
+
 		this.gameComponent.hideWinLines();
-		this.gameComponent.showWinLineByIndexes(this.winLineIndexes, 0);
+		this.gameComponent.showWinLineByIndexes(this.winLineIndexes, this.numSquares);
+
+		var winLineData, i, len = this.winLineIndexes.length;
+
+		if (this.numSquares && this.playAnimId) {
+			for (i = 0; i < len; i++) {
+				winLineData = this.setup.winLines[this.winLineIndexes[i]].data;
+				symbolWins.showAnimsOnWinLine2(winLineData, this.numSquares, this.playAnimId);
+			}
+		}
+
+
 	};
 
 	G.WinLineCommand = createjs.promote(WinLineCommand, "Command");
@@ -53776,10 +53840,14 @@ var G = G || {};
 		sprite.y = 0;
 		sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
 		this.addChild(sprite);
-		//sprite.on("animationend", this.handleAnimationEnd);
+		sprite.on("animationend", this.handleAnimationEnd, this);
 		sprite.visible = false;
 		this.bigWins.push(sprite);
 		//this.playAnimation();
+	};
+
+	p.handleAnimationEnd = function() {
+		this.hideAnimation();
 	};
 
 	p.hideAnimation = function() {
@@ -54921,9 +54989,9 @@ var G = G || {};
 
 	/**
 	 * Clears and hides all currently playing sprites
-	 * @method clearAllAnims
+	 * @method hideAll
 	 */
-	p.clearAllAnims = function() {
+	p.hideAll = function() {
 		var i, len = this.currentlyPlayingSprites.length;
 		for (i = 0; i < len; i++) {
 			this.hideThisSprite(this.currentlyPlayingSprites[i]);
@@ -54962,18 +55030,47 @@ var G = G || {};
 	 * @param {string} id
 	 */
 	p.showAnimsOnWinline = function(winLineData, winSquaresNum, id) {
-		var i;
+		var i, j, len = winLineData.length, lineData;
 
-		if (winSquaresNum > winLineData.length) {
+		console.log('winLineData=', winLineData);
+
+		for (i = 0; i < len; i++) {
+			lineData = winLineData[i];
+
+			if (winSquaresNum > lineData.length) {
+				throw "Maximum number of winSquares exceeded";
+			}
+
+			for (j = 0; j < winSquaresNum; j++) {
+
+				console.log('lineData', j, 'this.symbolsMatrix', this.symbolsMatrix[j], 'lineData', lineData[j]);
+
+				this.playThisSprite(
+					this.symbolsMatrix[j][lineData[j]], id
+				);
+
+
+			}
+
+		}
+	};
+
+	/**
+	 * @method showAnimsOnWinLine2
+	 * @param winLineData
+	 * @param winSquaresNum
+	 * @param id
+	 */
+	p.showAnimsOnWinLine2 = function(winLineData, winSquaresNum, id) {
+		var i, len = winLineData.length, lineIndex;
+		if (winSquaresNum > len) {
 			throw "Maximum number of winSquares exceeded";
 		}
 
 		for (i = 0; i < winSquaresNum; i++) {
-
-			this.playThisSprite(
-				this.symbolsMatrix[i][winLineData[i]], id
-			);
-
+			lineIndex = winLineData[i];
+			var sprite = this.symbolsMatrix[i][lineIndex];
+			this.playThisSprite(sprite, id);
 		}
 	};
 
@@ -55538,7 +55635,7 @@ var G = G || {};
 	 */
 	p.generateGaff = function(gaffType) {
 
-		var queue = [], command;
+		var queue = [], command, i, len;
 		var winLines, bigWin, reels, symbolWins;
 
 		reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
@@ -55561,12 +55658,43 @@ var G = G || {};
 
 				break;
 			case "gaff_Line_M1" :
-				reels.modifySymbolData([11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11]);
+				reels.modifySymbolData([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
 
 				command = new G.SymbolAnimCommand();
-				command.init(this.setup, symbolWins, [0,1,2], 5, 'd1-sprite__000');
-
+				command.init(this.setup, symbolWins, [0,1,2], 5, 'm1-sprite__short');
+				command.callNextDelay = 600;
 				queue.push(command);
+
+				command = new G.BigWinCommand();
+				command.init(this.setup, bigWin);
+				queue.push(command);
+
+				command = new G.SymbolAnimCommand();
+				command.init(this.setup, symbolWins, [0,1,2], 5, 'm1-sprite__resume');
+				queue.push(command);
+
+				var winLineIndexes = [];
+				var winningLines = this.setup.winLines;
+				len = winningLines.length;
+				for (i = 0; i < len; i++) {
+					winLineIndexes.push(i);
+				}
+
+				command = new G.WinLineCommand();
+				command.init(this.setup, winLines, winLineIndexes, 0);
+				queue.push(command);
+
+				for (i = 0; i < winningLines.length; i++) {
+					command = new G.WinLineCommand();
+					command.init(this.setup, winLines, [i], 5, "m1-sprite__000");
+					if (i === 0) {
+						command.loopIndex = 1;
+					}
+					queue.push(command);
+				}
+
+
+
 
 
 				break;
