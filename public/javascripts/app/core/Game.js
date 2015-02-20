@@ -33,7 +33,7 @@ this.G = this.G || {};
 	 * @property version
 	 * @type {string}
 	 */
-	p.version = "0.2.0";
+	p.version = "{{ VERSION }}";
 
 	/**
 	 * @property setup
