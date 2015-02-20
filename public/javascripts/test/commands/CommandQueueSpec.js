@@ -211,9 +211,9 @@ describe("CommandQueue Test", function () {
 
 	//todo fix this
 	xit("flushQueue should stop the timeouts in progress", function() {
-		//this.class.timeout = 5;
-		//this.class.flushQueue();
-		//expect(window.clearTimeout).toHaveBeenCalledWith(5);
+		this.class.timeout = 5;
+		this.class.flushQueue();
+		expect(window.clearTimeout).toHaveBeenCalledWith(5);
 	});
 
 
