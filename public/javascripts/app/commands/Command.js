@@ -7,7 +7,8 @@ var G = G || {};
 	"use strict";
 
 	/**
-	 * @class
+	 * @class Command
+	 * @abstract
 	 * @constructor
 	 */
 	var Command = function() {};
@@ -52,6 +53,10 @@ var G = G || {};
 		this.gameComponent = gameComponent;
 	};
 
+	/**
+	 * Ususally overridden by a particular game command
+	 * @method execute
+	 */
 	p.execute = function() {
 		//console.log("Command execute");
 	};

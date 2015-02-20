@@ -21,14 +21,33 @@ var G = G || {};
 	p.winLineIndexes = [0];
 
 	/**
-	 *
+	 * number of squares to display on these winLines
+	 * @property numSquares - eg. 4 will display 4 squares and a line over 5 reels
+	 * @type {number}
+	 */
+	p.numSquares = 0;
+
+	/**
+	 * If an animation id is defined, then we'll attempt to play a symbol win animation on the correct win square
+	 * @property playAnimId
+	 * @type {string}
+	 */
+	p.playAnimId = "";
+
+	/**
+	 * Initialises this command's required data
+	 * @method init
 	 * @param {Object} setup
 	 * @param {G.WinLinesComponent} gameComponent
-	 * @param {Number[]} winLineIndexes - indexes of winLines based on setup.winLines which we'd like to show
+	 * @param {number[]} winLineIndexes - indexes of winLines based on setup.winLines which we'd like to show
+	 * @param {number} numSquares - number of win squares to display on win line
+	 * @param {string} playAnimId - play the symbol animation on this square pass "blink" to make a blinking symbol
 	 */
-	p.init = function(setup, gameComponent, winLineIndexes) {
+	p.init = function(setup, gameComponent, winLineIndexes, numSquares, playAnimId) {
 		this.Command_init(setup, gameComponent);
 		this.winLineIndexes = winLineIndexes || this.winLineIndexes;
+		this.numSquares = numSquares || this.numSquares;
+		this.playAnimId = playAnimId || this.playAnimId;
 	};
 
 	/**
@@ -36,9 +55,26 @@ var G = G || {};
 	 * @method execute
 	 */
 	p.execute = function() {
-		createjs.Sound.play("bonusStop1");
+		//createjs.Sound.play("bonusStop1");
+
+		console.log('show win line command', this.winLineIndexes);
+
+		var symbolWins = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
+		symbolWins.hideAll();
+
 		this.gameComponent.hideWinLines();
-		this.gameComponent.showWinLineByIndexes(this.winLineIndexes, 0);
+		this.gameComponent.showWinLineByIndexes(this.winLineIndexes, this.numSquares);
+
+		var winLineData, i, len = this.winLineIndexes.length;
+
+		if (this.numSquares && this.playAnimId) {
+			for (i = 0; i < len; i++) {
+				winLineData = this.setup.winLines[this.winLineIndexes[i]].data;
+				symbolWins.showAnimsOnWinLine2(winLineData, this.numSquares, this.playAnimId);
+			}
+		}
+
+
 	};
 
 	G.WinLineCommand = createjs.promote(WinLineCommand, "Command");

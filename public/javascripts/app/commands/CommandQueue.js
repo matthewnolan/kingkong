@@ -119,13 +119,14 @@ var G = G || {};
 		var command = this.queue[this.currentIndex];
 		command.execute();
 		if (command.loopIndex) {
-			this.loopReturnIndex = command.loopIndex;
+			this.loopReturnIndex = this.currentIndex;
+			this.shouldLoop = true;
 		}
 
 		if (this.currentIndex ++ === this.queue.length - 1)
 		{
 			if (this.shouldLoop) {
-				this.currentIndex = 0;
+				this.currentIndex = this.loopReturnIndex;
 			} else {
 				this.flushQueue();
 				return;
@@ -153,6 +154,7 @@ var G = G || {};
 		clearTimeout(this.timeout);
 		this.currentIndex = 0;
 		this.queue = [];
+		this.shouldLoop = false;
 	};
 
 	G.CommandQueue = CommandQueue;

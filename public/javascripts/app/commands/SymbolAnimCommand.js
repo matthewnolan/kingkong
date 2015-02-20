@@ -12,30 +12,51 @@ var G = G || {};
 	var p = createjs.extend(SymbolAnimCommand, G.Command);
 	p.constructor = SymbolAnimCommand;
 
-
 	/**
-	 * @property data
-	 * @type {Object}
+	 * @property winLineData
+	 * @type {Array}
 	 */
-	p.data = null;
+	p.winLineData = [];
 
 	/**
-	 *
+	 * @property numSquares
+	 * @type {number}
+	 */
+	p.numSquares = 0;
+
+	/**
+	 * @property animId - Should match a key from symbol_anims.json['animations']
+	 * @type {string}
+	 */
+	p.animId = "";
+
+	/**
+	 * initialise setup, gameComponent and command data
+	 * @method init
 	 * @param {Object} setup
-	 * @param {G.WinLinesComponent} gameComponent
-	 * @param {Object} data
+	 * @param {G.SymbolWinsComponent} gameComponent
+	 * @param {Array} winLineIndexes
+	 * @param {Number} numSquares
+	 * @param {String} animId
 	 */
-	p.init = function(setup, gameComponent, data) {
+	p.init = function(setup, gameComponent, winLineIndexes, numSquares, animId) {
 		this.Command_init(setup, gameComponent);
-		this.data = data || this.data;
+		this.winLineData = [];
+		var i, len = winLineIndexes.length;
+		for (i = 0; i < len; i++) {
+			this.winLineData.push(this.setup.winLines[winLineIndexes[i]].data);
+		}
+		this.numSquares = numSquares;
+		this.animId = animId;
 	};
 
 	/**
-	 * Hide Previously drawn winLines and show more winLines.
+	 * Hide Previously drawn anims / winLines and show symbol anims.
 	 * @method execute
 	 */
 	p.execute = function() {
-
+		this.gameComponent.hideAll();
+		this.gameComponent.showAnimsOnWinline(this.winLineData, this.numSquares, this.animId);
 	};
 
 	G.SymbolAnimCommand = createjs.promote(SymbolAnimCommand, "Command");

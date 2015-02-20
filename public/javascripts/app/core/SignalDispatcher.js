@@ -65,17 +65,14 @@ var G = G || {};
 	 * @method handleReelSpinStart
 	 */
 	p.handleReelSpinStart = function() {
-		var winLinesComponent = _.find(this.gameComponents, function(component) {
-			return component instanceof G.WinLinesComponent;
-		});
-
-		var bigWinComponent = _.find(this.gameComponents, function(component) {
-			return component instanceof G.BigWinComponent;
-		});
+		var winLinesComponent = G.Utils.getGameComponentByClass(G.WinLinesComponent);
+		var bigWinComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
+		var symbolWinsComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 		bigWinComponent.hideAnimation();
+		symbolWinsComponent.hideAll();
 		this.commandQueue.setupQueue();
 	};
 

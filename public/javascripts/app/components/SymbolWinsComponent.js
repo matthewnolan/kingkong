@@ -6,6 +6,17 @@ var G = G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * This GameComponent is responsible for showing and hiding symbol animations.
+	 * SpriteSheet driven animations are stored as 2D Array (symbolsMatrix), 1st level of the array represents each reel
+	 * and this reel array stores a sprite for each visible symbol on that reel.
+	 * Sprites are arranged over each visible symbol.
+	 * Playing and Hiding of animations should be called via the G.SymbolAnimCommand.
+	 * @class SymbolWinsComponent
+	 * @constructor
+	 * @extends G.GameComponent
+	 * @uses createjs.Container
+	 */
 	var SymbolWinsComponent = function() {
 		this.GameComponent_constructor();
 	};
@@ -28,15 +39,25 @@ var G = G || {};
 	p.SCALE_FACTOR = (1 / 0.9375);
 
 	/**
-	 * Stored reference to symbols, top left is 0 indexed Sprite, then go down to next row, until bottom symbols then continues to next reel
-	 * @type {createjs.Sprite}
+	 * @property symbolsMatrix
+	 * @type {createjs.Sprite[][]}
 	 */
-	p.symbols = [];
+	p.symbolsMatrix = [];
 
 	/**
-	 * @param setup
-	 * @param signalDispatcher
-	 * @param symbolAnims
+	 * Store a reference to any sprite currently playing an animation.
+	 * Helps remove them later
+	 * @property currentlyPlayingSprites
+	 * @type {Array}
+	 */
+	p.currentlyPlayingSprites = [];
+
+	/**
+	 * init the game component vars.
+	 * @method init
+	 * @param {Object} setup
+	 * @param {G.SignalDispatcher} signalDispatcher
+	 * @param {createjs.SpriteSheet} symbolAnims - the data object returned by the preloader when loading this symbol_anims.json
 	 */
 	p.init = function(setup, signalDispatcher, symbolAnims) {
 		this.GameComponent_init(setup, signalDispatcher);
@@ -44,6 +65,7 @@ var G = G || {};
 	};
 
 	/**
+	 * Call this function if you'd like to see a visual representation of where invisible sprites are located on the reels
 	 * @method drawDebug
 	 */
 	p.drawDebug = function() {
@@ -54,7 +76,9 @@ var G = G || {};
 
 		var i, j, reelsLen = this.setup.numberOfReels, symbolsLen = this.setup.symbolsPerReel, container;
 		for (i = 0; i < reelsLen; i++) {
+
 			for (j = 0; j < symbolsLen; j++) {
+
 				container = new createjs.Container();
 				this.addChild(container);
 				var shape = new createjs.Shape();
@@ -86,70 +110,108 @@ var G = G || {};
 		var symbolMarginB = this.setup.symbolMarginBottom;
 
 		for (i = 0; i < reelLen; i++) {
+
+			this.symbolsMatrix.push([]);
+
 			for (j = 0; j < symbolLen; j++) {
 				sprite = new createjs.Sprite(spritesheet, 0);
 				sprite.x = i * symbolW + i * reelMarginR;
 				sprite.y = j * symbolH + j * symbolMarginB;
 				sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
 				this.addChild(sprite);
+				this.symbolsMatrix[i].push(sprite);
 				//sprite.on("animationend", this.handleAnimationEnd);
 				sprite.visible = false;
-				this.symbols.push(sprite);
 			}
 		}
 	};
 
 	/**
-	 * hide animation at the end of one play
-	 * @method handleAnimationEnd
-	 * @param e
+	 * Clears and hides all currently playing sprites
+	 * @method hideAll
 	 */
-	/*
-	p.handleAnimationEnd = function(e) {
-		//var sprite = e.target;
-		//sprite.visible = false;
-	};
-	*/
-
-	p.hideSymbolAnim = function(symbolIndex) {
-		this.symbols[symbolIndex].visible = false;
+	p.hideAll = function() {
+		var i, len = this.currentlyPlayingSprites.length;
+		for (i = 0; i < len; i++) {
+			this.hideThisSprite(this.currentlyPlayingSprites[i]);
+		}
+		this.currentlyPlayingSprites = [];
 	};
 
 	/**
-	 * test symbol anims here
+	 * Helper method to hide a passed sprite
+	 * @method hideThisSprite
+	 * @param {createjs.Sprite} sprite
 	 */
-	p.runUnifiedSprites = function() {
-
-		this.runAnimationBySymbolIndex(0, 'd1-sprite__000');
-		this.runAnimationBySymbolIndex(1, 'd1-sprite__000');
-		this.runAnimationBySymbolIndex(2, 'd1-sprite__000');
-		this.runAnimationBySymbolIndex(3, 'm1-sprite__000');
-		this.runAnimationBySymbolIndex(4, 'm1-sprite__000');
-		this.runAnimationBySymbolIndex(5, 'm1-sprite__000');
-		this.runAnimationBySymbolIndex(6, 'd2-sprite__000');
-		this.runAnimationBySymbolIndex(7, 'd2-sprite__000');
-		this.runAnimationBySymbolIndex(8, 'd2-sprite__000');
-
+	p.hideThisSprite = function(sprite) {
+		sprite.gotoAndStop(0);
+		sprite.visible = false;
 	};
 
 	/**
-	 *
-	 * @param {Number} symbolIndex - index in the array where the sprite is stored. Stored in this order reel[0]: t, m, b, reel[1]: t, m, b eg... this.symbols[4] = top symbol in second reel
-	 * @param {String} id - id of animation -see symbol_anims.json 'animations'.
+	 * Helper method to show and play a passed sprite.  Animation is defined in the id parameter
+	 * @param {createjs.Sprite} sprite
+	 * @param {string} id - Matching string to a particular symbol_anims.json['animations']
 	 */
-	p.runAnimationBySymbolIndex = function(symbolIndex, id) {
-		this.symbols[symbolIndex].visible = true;
-		this.symbols[symbolIndex].gotoAndPlay(id);
+	p.playThisSprite = function(sprite, id) {
+		sprite.visible = true;
+		sprite.gotoAndPlay(id);
+		this.currentlyPlayingSprites.push(sprite);
 	};
 
+	/**
+	 * Plays a number of symbol animations according to a winLine and number of squares
+	 * Pass a winLine data array (eg. [1,2,1,0,0]), a winSquaresNum (eg, 2 would play anims on first two reels of the winLine) and
+	 * an id which should match with the animation id from symbol_anims.json
+	 * @method showAnimsOnWinline
+	 * @param {Array} winLineData
+	 * @param {number} winSquaresNum
+	 * @param {string} id
+	 */
+	p.showAnimsOnWinline = function(winLineData, winSquaresNum, id) {
+		var i, j, len = winLineData.length, lineData;
+
+		console.log('winLineData=', winLineData);
+
+		for (i = 0; i < len; i++) {
+			lineData = winLineData[i];
+
+			if (winSquaresNum > lineData.length) {
+				throw "Maximum number of winSquares exceeded";
+			}
+
+			for (j = 0; j < winSquaresNum; j++) {
+
+				console.log('lineData', j, 'this.symbolsMatrix', this.symbolsMatrix[j], 'lineData', lineData[j]);
+
+				this.playThisSprite(
+					this.symbolsMatrix[j][lineData[j]], id
+				);
 
 
+			}
 
+		}
+	};
 
+	/**
+	 * @method showAnimsOnWinLine2
+	 * @param winLineData
+	 * @param winSquaresNum
+	 * @param id
+	 */
+	p.showAnimsOnWinLine2 = function(winLineData, winSquaresNum, id) {
+		var i, len = winLineData.length, lineIndex;
+		if (winSquaresNum > len) {
+			throw "Maximum number of winSquares exceeded";
+		}
 
-
-
-
+		for (i = 0; i < winSquaresNum; i++) {
+			lineIndex = winLineData[i];
+			var sprite = this.symbolsMatrix[i][lineIndex];
+			this.playThisSprite(sprite, id);
+		}
+	};
 
 
 	G.SymbolWinsComponent = createjs.promote(SymbolWinsComponent, "GameComponent");

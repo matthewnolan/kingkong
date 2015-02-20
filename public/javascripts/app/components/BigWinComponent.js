@@ -59,10 +59,14 @@ var G = G || {};
 		sprite.y = 0;
 		sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
 		this.addChild(sprite);
-		//sprite.on("animationend", this.handleAnimationEnd);
+		sprite.on("animationend", this.handleAnimationEnd, this);
 		sprite.visible = false;
 		this.bigWins.push(sprite);
 		//this.playAnimation();
+	};
+
+	p.handleAnimationEnd = function() {
+		this.hideAnimation();
 	};
 
 	p.hideAnimation = function() {

@@ -33,7 +33,7 @@ this.G = this.G || {};
 	 * @property version
 	 * @type {string}
 	 */
-	p.version = "{{ VERSION }}";
+	p.version = "0.2.0";
 
 	/**
 	 * @property setup
@@ -208,7 +208,7 @@ this.G = this.G || {};
 			var debug = document.querySelector("#console");
 			debug.innerHTML = debugStr;
 		}
-	};
+	}; 
 
 	/**
 	 * setupDisplay: Start layering Containers and GameComponents.  Mask the stage for reels.
@@ -235,16 +235,8 @@ this.G = this.G || {};
 		reelsComponent.y = bezelMarginT;
 		this.stage.addChild(reelsComponent);
 
-		//init winLines
-		var winLinesComponet = new G.WinLinesComponent();
-		winLinesComponet.init(this.setup, this.signalDispatcher);
-		this.stage.addChild(winLinesComponet);
-		winLinesComponet.drawComponent();
-
 		//store components
 		this.components.reels = reelsComponent;
-		this.components.winLines = winLinesComponet;
-		this.gameComponents.push(reelsComponent, winLinesComponet);
 		this.signalDispatcher.init(this.setup, this.gameComponents);
 
 		//init mask
@@ -271,7 +263,13 @@ this.G = this.G || {};
 		this.stage.addChild(bigWinComponent);
 		bigWinComponent.drawSprites();
 
-
+		//init winLines
+		var winLinesComponet = new G.WinLinesComponent();
+		winLinesComponet.init(this.setup, this.signalDispatcher);
+		this.stage.addChild(winLinesComponet);
+		winLinesComponet.drawComponent();
+		this.components.winLines = winLinesComponet;
+		this.gameComponents.push(reelsComponent, winLinesComponet);
 		this.components.bigWin = bigWinComponent;
 		this.gameComponents.push(bigWinComponent);
 

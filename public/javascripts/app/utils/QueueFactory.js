@@ -35,13 +35,14 @@ var G = G || {};
 	 */
 	p.generateGaff = function(gaffType) {
 
-		var queue = [];
-
-		var winLines, bigWin, reels;
+		var queue = [], command, i, len;
+		var winLines, bigWin, reels, symbolWins;
 
 		reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
 		winLines = G.Utils.getGameComponentByClass(G.WinLinesComponent);
 		bigWin = G.Utils.getGameComponentByClass(G.BigWinComponent);
+		symbolWins = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
+
 
 		switch(gaffType) {
 			case "normal" :
@@ -57,7 +58,42 @@ var G = G || {};
 
 				break;
 			case "gaff_Line_M1" :
-				reels.modifySymbolData([11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11]);
+				reels.modifySymbolData([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
+
+				command = new G.SymbolAnimCommand();
+				command.init(this.setup, symbolWins, [0,1,2], 5, 'm1-sprite__short');
+				command.callNextDelay = 600;
+				queue.push(command);
+
+				command = new G.BigWinCommand();
+				command.init(this.setup, bigWin);
+				queue.push(command);
+
+				command = new G.SymbolAnimCommand();
+				command.init(this.setup, symbolWins, [0,1,2], 5, 'm1-sprite__resume');
+				queue.push(command);
+
+				var winLineIndexes = [];
+				var winningLines = this.setup.winLines;
+				len = winningLines.length;
+				for (i = 0; i < len; i++) {
+					winLineIndexes.push(i);
+				}
+
+				command = new G.WinLineCommand();
+				command.init(this.setup, winLines, winLineIndexes, 0);
+				queue.push(command);
+
+				for (i = 0; i < winningLines.length; i++) {
+					command = new G.WinLineCommand();
+					command.init(this.setup, winLines, [i], 5, "m1-sprite__000");
+					if (i === 0) {
+						command.loopIndex = 1;
+					}
+					queue.push(command);
+				}
+
+
 
 
 
