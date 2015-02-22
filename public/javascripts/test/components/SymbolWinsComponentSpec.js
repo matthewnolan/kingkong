@@ -3,9 +3,12 @@
 
 describe("SymbolWinsComponent Test", function () {
 
+
+
 	beforeEach(function () {
 
 		this.class = new G.SymbolWinsComponent();
+		this.addMatchers(imagediff.jasmine);
 
 	});
 
@@ -17,5 +20,14 @@ describe("SymbolWinsComponent Test", function () {
 	xit("Class vars are initialised correctly", function () {
 		expect(this.class.classVar).toBeDefined();
 	});
+
+	it("Correct M1 animation frame 000 is shown", function() {
+
+		var stage = new createjs.Stage(imagediff.createCanvas(116, 103));
+
+
+
+	});
+
 
 });

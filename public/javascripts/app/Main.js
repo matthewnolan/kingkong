@@ -55,7 +55,7 @@ this.G = this.G || {};
 		this.stage = new createjs.Stage("app");
 
 		createjs.Ticker.on("tick", this.handleTick, this);
-		createjs.Ticker.setFPS(60);
+		createjs.Ticker.setFPS(30);
 
 		var serverInterface = new G.ServerInterface();
 		serverInterface.init();

@@ -62,11 +62,13 @@ var G = G || {};
 
 				command = new G.SymbolAnimCommand();
 				command.init(this.setup, symbolWins, [0,1,2], 5, 'm1-sprite__short');
-				command.callNextDelay = 600;
+				command.callNextDelay = 1000;
 				queue.push(command);
 
 				command = new G.BigWinCommand();
+				command.callNextDelay = 3000;
 				command.init(this.setup, bigWin);
+
 				queue.push(command);
 
 				command = new G.SymbolAnimCommand();
