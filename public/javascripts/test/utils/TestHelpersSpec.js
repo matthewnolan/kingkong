@@ -7,7 +7,6 @@ describe("TestHelpers Test", function () {
 
 	beforeEach(function (done) {
 		var self = this;
-		this.assetsBasePath = "_assets/art/";
 		var assetsPath = "assets/sprites/symbol_anims.json";
 
 		this.stage = new createjs.Stage(imagediff.createCanvas(116, 103));
@@ -16,7 +15,8 @@ describe("TestHelpers Test", function () {
 		img.onload = function () {
 			self.assetsLoader = new createjs.LoadQueue(true);
 			self.assetsLoader.on("error", function() {
-				console.warn('load error: ' + assetsPath);
+				fail(assetsPath + ' failed to load');
+				done();
 			});
 			self.assetsLoader.on("complete", function() {
 				done();
@@ -31,7 +31,7 @@ describe("TestHelpers Test", function () {
 			fail(img.src + ' failed to load');
 			done();
 		};
-		img.src = this.assetsBasePath + "daisy.png";
+		img.src = "javascripts/test/assets/m1-sprite__000.png";
 		jasmine.addMatchers(imagediff.jasmine);
 
 		this.compareImage = function (path, done, expect, pixelTolerance) {
@@ -54,7 +54,7 @@ describe("TestHelpers Test", function () {
 
 
 	it("SymbolAnims are loaded", function () {
-		expect(this.assetsLoader.getResult('symbolAnims')).toBeDefined();
+		expect(this.assetsLoader.getResult('symbolAnims')).toEqual(jasmine.any(Object));
 	});
 
 	it("Can draw a symbol", function(done) {
@@ -66,7 +66,7 @@ describe("TestHelpers Test", function () {
 		this.stage.addChild(sprite);
 		//Give some time for the sprite to update to stage
 		setTimeout(function() {
-			sprite.gotoAndStop(260);
+			sprite.gotoAndStop(256);
 			self.compareImage("/javascripts/test/assets/m1-sprite__000.png", done, expect, 0.01);
 		}, 100);
 
