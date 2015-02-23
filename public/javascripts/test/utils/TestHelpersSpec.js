@@ -6,6 +6,8 @@ describe("TestHelpers Test", function () {
 	var SCALE_FACTOR = (1 / 0.9375);
 
 	beforeEach(function (done) {
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
+
 		var self = this;
 		var assetsPath = "assets/sprites/symbol_anims.json";
 
@@ -57,7 +59,7 @@ describe("TestHelpers Test", function () {
 		expect(this.assetsLoader.getResult('symbolAnims')).toEqual(jasmine.any(Object));
 	});
 
-	it("Can draw a symbol", function(done) {
+	xit("Can draw a symbol", function(done) {
 		var self = this;
 		var spriteSheet = new createjs.SpriteSheet(this.assetsLoader.getResult('symbolAnims'));
 		var sprite = new createjs.Sprite(spriteSheet, 0);
@@ -66,8 +68,8 @@ describe("TestHelpers Test", function () {
 		this.stage.addChild(sprite);
 		//Give some time for the sprite to update to stage
 		setTimeout(function() {
-			sprite.gotoAndStop(258);
-			self.compareImage("/javascripts/test/assets/m1-sprite__000.png", done, expect, 0.01);
+			sprite.gotoAndStop(256);
+			self.compareImage("javascripts/test/assets/m1-sprite__000.png", done, expect, 0.01);
 		}, 100);
 
 

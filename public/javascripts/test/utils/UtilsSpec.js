@@ -1,7 +1,7 @@
 /*! kingkong 0.1.2 - 2015-02-13
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
-describe("Utils Test", function () {
+xdescribe("Utils Test", function () {
 
 	beforeEach(function () {
 

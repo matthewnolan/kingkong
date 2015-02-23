@@ -32,6 +32,57 @@ module.exports = function (grunt) {
 			}
 		},
 
+		// Task configuration.
+		// load order of source files is important, so start with any Super Types then load the whole app src
+		jasmine: {
+			src: [
+				'public/javascripts/app/commands/Command.js',
+				'public/javascripts/app/components/GameComponent.js',
+				'public/javascript/app/utils/*.js',
+				'public/javascripts/app/**/*.js'],
+			options: {
+				specs: 'public/javascripts/test/**/*.js',
+				helpers: [
+					"public/javascripts/vendor/js-imagediff/imagediff.js"
+				],
+				vendor: ['public/javascripts/vendor/easeljs/easeljs-0.8.0.combined.js', 'public/javascripts/vendor/**/*.js'],
+
+				version: '2.1.3',
+				host : 'http://127.0.0.1:<%=connect.phantom.options.port%>/',
+				outfile : 'public/_SpecRunner.html',
+				keepRunner: true
+			}
+		},
+
+		connect: {
+			serve: {
+				options: {
+					keepalive: false,
+					base: [{
+						path: __dirname,
+						options:{
+							index: 'public/_SpecRunner.html'
+						}
+					}, '..'],
+					useAvailablePort: true,
+					port: 8000,
+					open: true
+				}
+			},
+			phantom: {
+				options: {
+					base: [{
+						path: __dirname,
+						options:{
+							index: '_SpecRunner.html'
+						}
+					}, '..'],
+					useAvailablePort: true,
+					port: 8000
+				}
+			}
+		},
+
 		concat: {
 			options: {
 				banner: '<%= banner %>',
@@ -129,27 +180,6 @@ module.exports = function (grunt) {
 				spawn: true
 			}
 		},
-
-		// Task configuration.
-		// load order of source files is important, so start with any Super Types then load the whole app src
-		jasmine: {
-			src: [
-				'public/javascripts/app/commands/Command.js',
-				'public/javascripts/app/components/GameComponent.js',
-				'public/javascript/app/utils/*.js',
-				'public/javascripts/app/**/*.js'],
-			options: {
-				specs: 'public/javascripts/test/**/*.js',
-				helpers: [
-					"public/javascripts/vendor/js-imagediff/imagediff.js"
-				],
-				vendor: ['public/javascripts/vendor/easeljs/easeljs-0.8.0.combined.js', 'public/javascripts/vendor/**/*.js'],
-
-				version: '2.1.3',
-				keepRunner: false
-			}
-		},
-
 
 		yuidoc: {
 			compile: {
@@ -299,7 +329,6 @@ module.exports = function (grunt) {
 
 	//Defualt build tasks
 	grunt.registerTask('default', 		['jshint', 'jasmine']);
-	grunt.registerTask('test', 			['jshint', 'jasmine']);
 	grunt.registerTask('build', 		['jasmine', 'jshint', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
 	grunt.registerTask('build:prod', 	['jasmine', 'jshint', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
 	//Do a build with bumped version numbers
@@ -314,6 +343,11 @@ module.exports = function (grunt) {
 	grunt.registerTask('doc', ['yuidoc']);
 	grunt.registerTask('docs', ['yuidoc']);
 	grunt.registerTask('add', ['prompt:file-creator', 'file-creator']);
+
+	//Tests Only
+	grunt.registerTask("headless", "phantom");
+	grunt.registerTask("phantom", "Launches phantom-based tests", ["connect:phantom", "jasmine"]);
+	grunt.registerTask('test', 			['jasmine']);
 
 
 };
