@@ -94,18 +94,11 @@ var G = G || {};
 			this.gaffButtons.push(button);
 		}
 
-		var fpsLabel = new createjs.Text("FPS:", "14px Helvetica", createjs.Graphics.getRGB(0,0,0,0.7));
-		this.addChild(fpsLabel);
-		fpsLabel.x = 20;
-		fpsLabel.y = h - fpsLabel.getMeasuredHeight() - 14;
-		fpsLabel.mouseEnabled = false;
-		fpsLabel.mouseChildren = false;
-
 		var fpsSwitch = new G.GaffButton();
-		fpsSwitch.init("30", 50, 40, 10);
+		fpsSwitch.init("30", 70, 60, 10);
 		fpsSwitch.drawButton();
-		fpsSwitch.x = 100;
-		fpsSwitch.y = h - fpsSwitch.height - 10;
+		fpsSwitch.x = w - fpsSwitch.width - 20;
+		fpsSwitch.y = h - fpsSwitch.height -30;
 		this.addChild(fpsSwitch);
 		fpsSwitch.on("click", this.fpsClicked, this);
 		//fpsSwitch.clicked.addOnce(this.fpsClicked, this);
@@ -142,7 +135,7 @@ var G = G || {};
 	/**
 	 * dispatch to SignalDispatcher to update gaff type
 	 * @method buttonClicked
-	 * @param button
+	 * @param e
 	 */
 	p.buttonClicked = function(e) {
 		console.log('buttonClicked', this, e.currentTarget);

@@ -59,7 +59,7 @@ describe("TestHelpers Test", function () {
 		expect(this.assetsLoader.getResult('symbolAnims')).toEqual(jasmine.any(Object));
 	});
 
-	xit("Can draw a symbol", function(done) {
+	it("Can draw a symbol", function(done) {
 		var self = this;
 		var spriteSheet = new createjs.SpriteSheet(this.assetsLoader.getResult('symbolAnims'));
 		var sprite = new createjs.Sprite(spriteSheet, 0);
@@ -69,12 +69,8 @@ describe("TestHelpers Test", function () {
 		//Give some time for the sprite to update to stage
 		setTimeout(function() {
 			sprite.gotoAndStop(256);
-			self.compareImage("javascripts/test/assets/m1-sprite__000.png", done, expect, 0.01);
+			self.compareImage("javascripts/test/assets/m1-sprite__000.png", done, expect, 0.5);
 		}, 100);
-
-
-
-
 	});
 
 
