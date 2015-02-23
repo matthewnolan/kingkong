@@ -99,6 +99,10 @@ var G = G || {};
 		this.addChild(this.labelTF);
 		this.labelTF.x = 8;
 		this.labelTF.y = 3;
+		this.labelTF.mouseEnabled = false;
+
+		this.mouseChildren = false;
+
 
 		//this.on("click", this.handleClick, this);
 	};

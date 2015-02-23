@@ -66,7 +66,7 @@ var G = G || {};
 				queue.push(command);
 
 				command = new G.BigWinCommand();
-				command.callNextDelay = 3000;
+				command.callNextDelay = 2500;
 				command.init(this.setup, bigWin);
 
 				queue.push(command);

@@ -98,11 +98,13 @@ var G = G || {};
 		this.addChild(fpsLabel);
 		fpsLabel.x = 20;
 		fpsLabel.y = h - fpsLabel.getMeasuredHeight() - 14;
+		fpsLabel.mouseEnabled = false;
+		fpsLabel.mouseChildren = false;
 
 		var fpsSwitch = new G.GaffButton();
-		fpsSwitch.init("30", 30, 20, 10);
+		fpsSwitch.init("30", 50, 40, 10);
 		fpsSwitch.drawButton();
-		fpsSwitch.x = 60;
+		fpsSwitch.x = 100;
 		fpsSwitch.y = h - fpsSwitch.height - 10;
 		this.addChild(fpsSwitch);
 		fpsSwitch.on("click", this.fpsClicked, this);
@@ -134,6 +136,7 @@ var G = G || {};
 		this.regY = h / 2;
 
 		this.visible = false;
+
 	};
 
 	/**
@@ -150,9 +153,10 @@ var G = G || {};
 	};
 
 	p.fpsClicked = function(e) {
-		console.log("fpsClicked", this, e);
+		//console.log("fpsClicked", this, e);
 		this.signalDispatcher.fpsSwitched.dispatch();
 		var button = e.currentTarget;
+
 		if (button.selected) {
 			button.deselect();
 			button.changeLabel("30");
