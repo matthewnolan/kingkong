@@ -108,6 +108,8 @@ module.exports = function (grunt) {
 					"beforeEach" : false,
 					"after"      : false,
 					"afterEach"  : false,
+					"imagediff"  : false,
+					"fail" : false,
 					"require" : false,
 					"console" : false,
 					"Hammer" : true
@@ -138,7 +140,11 @@ module.exports = function (grunt) {
 				'public/javascripts/app/**/*.js'],
 			options: {
 				specs: 'public/javascripts/test/**/*.js',
+				helpers: [
+					"public/javascripts/vendor/js-imagediff/imagediff.js"
+				],
 				vendor: ['public/javascripts/vendor/easeljs/easeljs-0.8.0.combined.js', 'public/javascripts/vendor/**/*.js'],
+
 				version: '2.1.3',
 				keepRunner: false
 			}

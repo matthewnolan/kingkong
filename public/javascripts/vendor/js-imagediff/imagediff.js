@@ -24,7 +24,6 @@
 })('imagediff', function (root, name, Canvas) {
 
   var
-    TYPE_ARRAY        = /\[object Array\]/i,
     TYPE_CANVAS       = /\[object (Canvas|HTMLCanvasElement)\]/i,
     TYPE_CONTEXT      = /\[object CanvasRenderingContext2D\]/i,
     TYPE_IMAGE        = /\[object (Image|HTMLImageElement)\]/i,
@@ -52,10 +51,6 @@
     canvas.height = height;
     context.clearRect(0, 0, width, height);
     return context.createImageData(width, height);
-  }
-  // expost canvas module
-  function getCanvasRef() {
-    return Canvas;
   }
 
 
@@ -190,8 +185,7 @@
       bData   = b.data,
       cData   = c.data,
       length  = cData.length,
-      row, column,
-      i, j, k, v;
+      i;
 
     for (i = 0; i < length; i += 4) {
       cData[i] = Math.abs(aData[i] - bData[i]);
@@ -215,7 +209,7 @@
       rowOffset,
       columnOffset,
       row, column,
-      i, j, k, v;
+      i, j;
 
 
     for (i = cData.length - 1; i > 0; i = i - 4) {
@@ -285,52 +279,71 @@
     return element;
   }
 
+  function imageDiffEqualMessage (actual, expected) {
+    return function () {
+      var
+        div     = get('div'),
+        a       = get('div', '<div>Actual:</div>'),
+        b       = get('div', '<div>Expected:</div>'),
+        c       = get('div', '<div>Diff:</div>'),
+        diff    = imagediff.diff(actual, expected),
+        canvas  = getCanvas(),
+        context;
+
+      canvas.height = diff.height;
+      canvas.width  = diff.width;
+
+      div.style.overflow = 'hidden';
+      a.style.float = 'left';
+      b.style.float = 'left';
+      c.style.float = 'left';
+
+      context = canvas.getContext('2d');
+      context.putImageData(diff, 0, 0);
+
+      a.appendChild(toCanvas(actual));
+      b.appendChild(toCanvas(expected));
+      c.appendChild(canvas);
+
+      div.appendChild(a);
+      div.appendChild(b);
+      div.appendChild(c);
+
+      return div;
+    };
+  }
+
   jasmine = {
 
     toBeImageData : function () {
-      return imagediff.isImageData(this.actual);
+      return {
+        compare: function (actual) {
+          return {
+            pass: imagediff.isImageData(actual)
+          };
+        }
+      };
     },
 
-    toImageDiffEqual : function (expected, tolerance) {
-
-      if (typeof (document) !== UNDEFINED) {
-        this.message = function () {
+    toImageDiffEqual: function () {
+      return {
+        compare: function (actual, expected, tolerance) {
           var
-            div     = get('div'),
-            a       = get('div', '<div>Actual:</div>'),
-            b       = get('div', '<div>Expected:</div>'),
-            c       = get('div', '<div>Diff:</div>'),
-            diff    = imagediff.diff(this.actual, expected),
-            canvas  = getCanvas(),
-            context;
+            result = {};
 
-          canvas.height = diff.height;
-          canvas.width  = diff.width;
-
-          div.style.overflow = 'hidden';
-          a.style.float = 'left';
-          b.style.float = 'left';
-          c.style.float = 'left';
-
-          context = canvas.getContext('2d');
-          context.putImageData(diff, 0, 0);
-
-          a.appendChild(toCanvas(this.actual));
-          b.appendChild(toCanvas(expected));
-          c.appendChild(canvas);
-
-          div.appendChild(a);
-          div.appendChild(b);
-          div.appendChild(c);
-
-          return [
-            div,
-            "Expected not to be equal."
-          ];
-        };
-      }
-
-      return imagediff.equal(this.actual, expected, tolerance);
+          result.pass = imagediff.equal(actual, expected, tolerance);
+          if (typeof (document) !== UNDEFINED) {
+            result.message = imageDiffEqualMessage(actual, expected);
+          }
+          return result;
+        },
+        negativeCompare: function (actual, expected, tolerance) {
+          return {
+            pass: !imagediff.equal(actual, expected, tolerance),
+            message: 'Expected not to be equal.'
+          };
+        }
+      };
     }
   };
 
@@ -356,7 +369,6 @@
 
     createCanvas : getCanvas,
     createImageData : getImageData,
-    getCanvasRef: getCanvasRef,
 
     isImage : isImage,
     isCanvas : isCanvas,

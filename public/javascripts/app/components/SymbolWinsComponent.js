@@ -187,10 +187,7 @@ var G = G || {};
 				this.playThisSprite(
 					this.symbolsMatrix[j][lineData[j]], id
 				);
-
-
 			}
-
 		}
 	};
 
