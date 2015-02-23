@@ -46,6 +46,12 @@ var G = G || {};
 	p.reelSpinStart = new signals.Signal();
 
 	/**
+	 * @property fpsSwitched
+	 * @type {Signal}
+	 */
+	p.fpsSwitched = new signals.Signal();
+
+	/**
 	 *
 	 * @method init
 	 * @param {Object} setup
@@ -59,6 +65,7 @@ var G = G || {};
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
 		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
 		this.gaffSelect.add(this.handleGaffSelected, this);
+		//this.fpsSwitched.add(this.handleFpsSwitch, this);
 	};
 
 	/**
@@ -106,6 +113,7 @@ var G = G || {};
 
 		reelsComponent.spinReels();
 	};
+
 
 	G.SignalDispatcher = SignalDispatcher;
 

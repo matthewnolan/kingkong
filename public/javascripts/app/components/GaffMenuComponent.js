@@ -25,7 +25,7 @@ var G = G || {};
 	 * @property buttons
 	 * @type {G.GaffButton[]}
 	 */
-	p.buttons = [];
+	p.gaffButtons = [];
 
 	/**
 	 * A version number which can be shown on the menu.
@@ -88,11 +88,25 @@ var G = G || {};
 			button.drawButton();
 			button.x = 20 + i * button.width + i * 10;
 			button.y = 40;
-			button.clicked.add(this.buttonClicked, this);
+			button.on("click", this.buttonClicked, this);
+			//button.clicked.addOnce(this.buttonClicked, this);
 			this.addChild(button);
-			this.buttons.push(button);
+			this.gaffButtons.push(button);
 		}
 
+		var fpsLabel = new createjs.Text("FPS:", "14px Helvetica", createjs.Graphics.getRGB(0,0,0,0.7));
+		this.addChild(fpsLabel);
+		fpsLabel.x = 20;
+		fpsLabel.y = h - fpsLabel.getMeasuredHeight() - 14;
+
+		var fpsSwitch = new G.GaffButton();
+		fpsSwitch.init("30", 30, 20, 10);
+		fpsSwitch.drawButton();
+		fpsSwitch.x = 60;
+		fpsSwitch.y = h - fpsSwitch.height - 10;
+		this.addChild(fpsSwitch);
+		fpsSwitch.on("click", this.fpsClicked, this);
+		//fpsSwitch.clicked.addOnce(this.fpsClicked, this);
 
 		var labelTxt = new createjs.Text("Gaff Menu", "17px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
 		labelTxt.x = 5;
@@ -127,10 +141,25 @@ var G = G || {};
 	 * @method buttonClicked
 	 * @param button
 	 */
-	p.buttonClicked = function(button) {
+	p.buttonClicked = function(e) {
+		console.log('buttonClicked', this, e.currentTarget);
+		var button = e.currentTarget;
 		this.deselectGaffButtons(button);
 		this.signalDispatcher.gaffSelect.dispatch(button.type);
 		this.hide();
+	};
+
+	p.fpsClicked = function(e) {
+		console.log("fpsClicked", this, e);
+		this.signalDispatcher.fpsSwitched.dispatch();
+		var button = e.currentTarget;
+		if (button.selected) {
+			button.deselect();
+			button.changeLabel("30");
+		} else {
+			button.changeLabel("60");
+			button.select();
+		}
 	};
 
 	/**
@@ -138,11 +167,13 @@ var G = G || {};
 	 * @param {G.GaffButton} [button] do not deselect this button
 	 */
 	p.deselectGaffButtons = function(button) {
-		var i, len = this.buttons.length, tempButton;
+		var i, len = this.gaffButtons.length, tempButton;
 		for (i  = 0; i < len; i++) {
-			tempButton = this.buttons[i];
+			tempButton = this.gaffButtons[i];
 			if (!button || button !== tempButton) {
 				tempButton.deselect();
+			} else {
+				tempButton.select();
 			}
 		}
 	};

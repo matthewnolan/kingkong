@@ -77,6 +77,12 @@ this.G = this.G || {};
 	};
 
 	/**
+	 * @property fpsSwitcher
+	 * @type {Signal}
+	 */
+	p.fpsSwitcher = new signals.Signal();
+
+	/**
 	 * @property gameComponents
 	 * @type {G.GameComponent[]}
 	 */
@@ -120,8 +126,13 @@ this.G = this.G || {};
 	p.onAssetsLoadComplete = function(assets) {
 		this.assets = assets;
 		this.signalDispatcher = new G.SignalDispatcher();
+		this.signalDispatcher.fpsSwitched.add(this.handleFpsSwitch, this);
 		this.setupDisplay();
 		this.initUIEvents();
+	};
+
+	p.handleFpsSwitch = function() {
+		this.fpsSwitcher.dispatch();
 	};
 
 	p.rescale = function() {

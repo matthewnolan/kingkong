@@ -74,7 +74,7 @@ module.exports = function (grunt) {
 					base: [{
 						path: __dirname,
 						options:{
-							index: '_SpecRunner.html'
+							index: 'public/_SpecRunner.html'
 						}
 					}, '..'],
 					useAvailablePort: true,
@@ -139,6 +139,7 @@ module.exports = function (grunt) {
 				eqnull: true,
 				browser: true,
 				globals: {
+					"__dirname" : true,
 					"G": true,
 					"_" : true,
 					"createjs" : true,
@@ -328,16 +329,16 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
 	//Defualt build tasks
-	grunt.registerTask('default', 		['jshint', 'jasmine']);
-	grunt.registerTask('build', 		['jasmine', 'jshint', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
-	grunt.registerTask('build:prod', 	['jasmine', 'jshint', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
-	//Do a build with bumped version numbers
-	grunt.registerTask('patch', 		['jasmine', 'jshint', 'bump:patch', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
-	grunt.registerTask('patch:prod', 	['jasmine', 'jshint', 'bump:patch', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
-	grunt.registerTask('feature', 		['jasmine', 'jshint', 'bump:minor', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
-	grunt.registerTask('feature:prod', 	['jasmine', 'jshint', 'bump:minor', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
-	grunt.registerTask('release', 		['jasmine', 'jshint', 'bump:major', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
-	grunt.registerTask('release:prod', 	['jasmine', 'jshint', 'bump:major', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
+	grunt.registerTask('default', 		['jshint']);
+	grunt.registerTask('build', 		['jshint', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
+	grunt.registerTask('build:prod', 	['jshint', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
+	//Do a build with bumped version numb
+	grunt.registerTask('patch', 		['jshint', 'bump:patch', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
+	grunt.registerTask('patch:prod', 	['jshint', 'bump:patch', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
+	grunt.registerTask('feature', 		['jshint', 'bump:minor', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
+	grunt.registerTask('feature:prod', 	['jshint', 'bump:minor', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
+	grunt.registerTask('release', 		['jshint', 'bump:major', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
+	grunt.registerTask('release:prod', 	['jshint', 'bump:major', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
 	//development support
 	grunt.registerTask('texture', ['easel-packer']);
 	grunt.registerTask('doc', ['yuidoc']);

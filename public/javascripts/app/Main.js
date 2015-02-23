@@ -62,6 +62,20 @@ this.G = this.G || {};
 
 		this.game = new G.Game();
 		this.game.init(this.stage, serverInterface);
+		this.game.fpsSwitcher.add(this.fpsSwitch, this);
+	};
+
+	p.fpsSwitch = function() {
+
+		var currentFrameRate = Math.round(createjs.Ticker.framerate);
+		console.log('fpsSwitch: ', currentFrameRate);
+
+		if (currentFrameRate <= 30) {
+			createjs.Ticker.setFPS(60);
+		} else {
+			createjs.Ticker.setFPS(30);
+		}
+
 
 	};
 

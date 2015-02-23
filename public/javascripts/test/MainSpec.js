@@ -20,7 +20,10 @@ describe("Main Test", function () {
 		spyOn(createjs.Ticker, "on");
 
 		spyOn(G, "Game").and.returnValue({
-			init: jasmine.createSpy("game.init")
+			init: jasmine.createSpy("game.init"),
+			fpsSwitcher: {
+				add: jasmine.createSpy('signal spy')
+			}
 		});
 		sinon.stub(window, "addEventListener");
 		sinon.stub(window, "Stats").returns({
@@ -62,7 +65,7 @@ describe("Main Test", function () {
 		expect(this.class.game).toBeNull();
 	});
 
-	it("Main init should create a Stage and initialise it with the correct", function() {
+	it("Main init should create a Stage and initialise it with the correct values", function() {
 		// spies let us test a function is called
 		spyOn(createjs, "Stage").and.returnValue({
 			addChild: function() {

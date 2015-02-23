@@ -40,6 +40,14 @@ var G = G || {};
 
 	p.clicked = new signals.Signal();
 
+	p.selected = false;
+
+	/**
+	 * property labelTF
+	 * @type {createjs.Text}
+	 */
+	p.labelTF = null;
+
 	/**
 	 *
 	 * @type {string}
@@ -65,6 +73,11 @@ var G = G || {};
 		this.strokeColor = strokeColor || this.strokeColor;
 		this.fillColor = fillColor || this.fillColor;
 		this.textColor = textColor || this.textColor;
+
+		//this.removeAllEventListeners();
+
+		console.log('clicked Signal:', this.clicked);
+		//this.clicked.addOnce();
 	};
 
 	p.drawButton = function() {
@@ -82,23 +95,32 @@ var G = G || {};
 
 		this.addChild(shape);
 
-		var labelText = new createjs.Text(this.labelText, "12px Arial", this.textColor);
-		this.addChild(labelText);
-		labelText.x = 10;
-		labelText.y = 10;
+		this.labelTF = new createjs.Text(this.labelText, "12px Arial", this.textColor);
+		this.addChild(this.labelTF);
+		this.labelTF.x = 8;
+		this.labelTF.y = 3;
 
-		this.on("click", function() {
-			self.clicked.dispatch(self);
-			self.select();
-		});
+		//this.on("click", this.handleClick, this);
+	};
+
+	p.handleClick = function() {
+		console.log('handleClick', this.labelText);
+		this.clicked.dispatch(this);
+		//self.select();
+	};
+
+	p.changeLabel = function(str) {
+		this.labelTF.text = str;
 	};
 
 
 	p.select = function() {
+		this.selected = true;
 		this.strokeCommand.style = '#00ff00';
 	};
 
 	p.deselect = function() {
+		this.selected = false;
 		this.strokeCommand.style = this.strokeColor;
 	};
 
