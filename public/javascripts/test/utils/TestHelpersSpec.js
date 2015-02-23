@@ -3,6 +3,7 @@
 
 describe("TestHelpers Test", function () {
 
+	//This needs to match the scale factor that sprite sheets are scaled to in TexturePacker.
 	var SCALE_FACTOR = (1 / 0.9375);
 
 	beforeEach(function (done) {
@@ -69,7 +70,7 @@ describe("TestHelpers Test", function () {
 		//Give some time for the sprite to update to stage
 		setTimeout(function() {
 			sprite.gotoAndStop(256);
-			self.compareImage("javascripts/test/assets/m1-sprite__000.png", done, expect, 0.5);
+			self.compareImage("javascripts/test/assets/m1-sprite__000.png", done, expect, 0.02);
 		}, 100);
 	});
 
