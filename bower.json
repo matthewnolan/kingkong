@@ -25,7 +25,8 @@
     "easeljs": "~0.8.0",
     "stats.js": "*",
     "lodash": "~3.1.0",
-    "hammerjs": "~2.0.4"
+    "hammerjs": "~2.0.4",
+    "proton": "*"
   },
   "install": {
     "path": "public/javascripts/vendor",
