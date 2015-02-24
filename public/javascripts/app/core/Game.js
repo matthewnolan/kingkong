@@ -83,6 +83,18 @@ this.G = this.G || {};
 	p.fpsSwitcher = new signals.Signal();
 
 	/**
+	 * @property displayInitialised
+	 * @type {Signal}
+	 */
+	p.displayInitialised = new signals.Signal();
+
+	/**
+	 * @property daisyShowerStarted
+	 * @type {Signal}
+	 */
+	p.daisyShowerStarted = new signals.Signal();
+
+	/**
 	 * @property gameComponents
 	 * @type {G.GameComponent[]}
 	 */
@@ -97,6 +109,8 @@ this.G = this.G || {};
 	p.init = function(stage, serverInterface) {
 		this.serverInterface = serverInterface;
 		this.stage = stage;
+
+		this.signalDispatcher = new G.SignalDispatcher();
 
 		var preloader = new G.Preloader();
 		preloader.init(this, this.SETUP_URL);
@@ -125,14 +139,9 @@ this.G = this.G || {};
 	 */
 	p.onAssetsLoadComplete = function(assets) {
 		this.assets = assets;
-		this.signalDispatcher = new G.SignalDispatcher();
-		this.signalDispatcher.fpsSwitched.add(this.handleFpsSwitch, this);
+
 		this.setupDisplay();
 		this.initUIEvents();
-	};
-
-	p.handleFpsSwitch = function() {
-		this.fpsSwitcher.dispatch();
 	};
 
 	p.rescale = function() {
@@ -301,6 +310,8 @@ this.G = this.G || {};
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
 		}
+
+		this.displayInitialised.dispatch();
 	};
 
 	/**

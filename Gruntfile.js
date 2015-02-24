@@ -140,6 +140,7 @@ module.exports = function (grunt) {
 				browser: true,
 				globals: {
 					"__dirname" : true,
+					"Proton": true,
 					"G": true,
 					"_" : true,
 					"createjs" : true,

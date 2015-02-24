@@ -39,6 +39,30 @@ this.G = this.G || {};
 	p.game = null;
 
 	/**
+	 * proton
+	 * @type {Proton}
+	 */
+	p.proton = null;
+
+	/**
+	 *
+	 * @type {null}
+	 */
+	p.emitter = null;
+
+	/**
+	 *
+	 * @type {HTMLElement}
+	 */
+	p.canvas = null;
+
+	/**
+	 *
+	 * @type {boolean}
+	 */
+	p.isShower = false;
+
+	/**
 	 * Application entry point initialises the canvas viewport (currently createjs) and the Game
 	 * @method init
 	 *
@@ -54,15 +78,60 @@ this.G = this.G || {};
 
 		this.stage = new createjs.Stage("app");
 
-		createjs.Ticker.on("tick", this.handleTick, this);
-		createjs.Ticker.setFPS(30);
-
 		var serverInterface = new G.ServerInterface();
 		serverInterface.init();
 
 		this.game = new G.Game();
 		this.game.init(this.stage, serverInterface);
-		this.game.fpsSwitcher.add(this.fpsSwitch, this);
+		this.game.displayInitialised.add(this.displayInitialised, this);
+		//for gaff buttons
+		this.game.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);
+		this.game.signalDispatcher.daisyShowerStarted.add(this.handleDaisyShowerStart, this);
+	};
+
+	p.displayInitialised = function() {
+		this.canvas = document.querySelector("#app");
+
+		this.createProton();
+
+		createjs.Ticker.on("tick", this.handleTick, this);
+		createjs.Ticker.setFPS(30);
+	};
+
+	p.createProton = function() {
+		var bitmap = new createjs.Bitmap('javascripts/test/assets/daisy.png');
+
+		this.proton = new Proton();
+		this.emitter = new Proton.Emitter();
+		this.emitter.rate = new Proton.Rate(new Proton.Span(30, 40), new Proton.Span(0.5, 2));
+		this.emitter.addInitialize(new Proton.ImageTarget(bitmap));
+		this.emitter.addInitialize(new Proton.Mass(1, 5));
+		this.emitter.addInitialize(new Proton.Radius(20));
+		this.emitter.addInitialize(new Proton.Position(new Proton.LineZone(0, -40, this.canvas.width, -40)));
+		this.emitter.addInitialize(new Proton.V(0, new Proton.Span(0.1, 1)));
+
+		this.emitter.addBehaviour(new Proton.CrossZone(new Proton.LineZone(0, this.canvas.height, this.canvas.width, this.canvas.height + 20, 'down'), 'dead'));
+		this.emitter.addBehaviour(new Proton.Rotate(new Proton.Span(0, 360), new Proton.Span(-0.5, 0.5), 'add'));
+		this.emitter.addBehaviour(new Proton.Scale(new Proton.Span(0.2, 1)));
+		this.emitter.addBehaviour(new Proton.RandomDrift(5, 0, 0.15));
+		this.emitter.addBehaviour(new Proton.Gravity(0.9));
+		this.emitter.emit();
+		this.proton.addEmitter(this.emitter);
+		this.renderer = new Proton.Renderer('easel', this.proton, this.stage);
+	};
+
+	p.handleDaisyShowerStart = function() {
+		if (this.isShower) {
+			this.isShower = false;
+
+			//this.emitter.addBehaviour(new Proton.Gravity(-1000000));
+			//this.emitter.stop();
+			this.emitter.stopEmit();
+		} else {
+			this.isShower = true;
+			this.renderer.start();
+			this.emitter.emit();
+		}
 	};
 
 	p.fpsSwitch = function() {
@@ -75,8 +144,6 @@ this.G = this.G || {};
 		} else {
 			createjs.Ticker.setFPS(30);
 		}
-
-
 	};
 
 	/**
@@ -85,6 +152,7 @@ this.G = this.G || {};
 	 */
 	p.handleTick = function() {
 		this.stats.begin();
+		this.proton.update();
 		this.stage.update();
 		this.stats.end();
 	};

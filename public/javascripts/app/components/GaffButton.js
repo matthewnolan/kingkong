@@ -81,7 +81,6 @@ var G = G || {};
 	};
 
 	p.drawButton = function() {
-		var self = this;
 		console.log('button draw', this.labelText);
 		var shape = new createjs.Shape();
 		var gp = shape.graphics;

@@ -53,6 +53,12 @@ var G = G || {};
 
 	/**
 	 *
+	 * @type {Signal}
+	 */
+	p.daisyShowerStarted = new signals.Signal();
+
+	/**
+	 *
 	 * @method init
 	 * @param {Object} setup
 	 * @param {G.GameComponent[]} gameComponents

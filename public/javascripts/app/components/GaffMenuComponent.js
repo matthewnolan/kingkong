@@ -101,6 +101,15 @@ var G = G || {};
 		fpsSwitch.y = h - fpsSwitch.height -30;
 		this.addChild(fpsSwitch);
 		fpsSwitch.on("click", this.fpsClicked, this);
+
+		var showerSwitch = new G.GaffButton();
+		showerSwitch.init("Off", 70, 60, 10);
+		showerSwitch.drawButton();
+		showerSwitch.x = w - fpsSwitch.width - 50 - showerSwitch.width;
+		showerSwitch.y = h - showerSwitch.height - 30;
+		this.addChild(showerSwitch);
+		showerSwitch.on("click", this.showerSwitched, this);
+
 		//fpsSwitch.clicked.addOnce(this.fpsClicked, this);
 
 		var labelTxt = new createjs.Text("Gaff Menu", "17px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
@@ -156,6 +165,20 @@ var G = G || {};
 		} else {
 			button.changeLabel("60");
 			button.select();
+		}
+	};
+
+	p.showerSwitched = function(e) {
+		this.signalDispatcher.daisyShowerStarted.dispatch();
+		var button = e.currentTarget;
+
+		if (button.selected) {
+			button.deselect();
+			button.changeLabel("Off");
+		} else {
+			button.changeLabel("ON!");
+			button.select();
+			this.hide();
 		}
 	};
 
