@@ -44,8 +44,8 @@ $ vagrant up
 
 ## Current bugs / features working on:
 
-v.0.2.3
--------
+###v.0.2.3
+----------
 
 - Moved ServerInterface to Game
 - Implement celebration Fireworks
