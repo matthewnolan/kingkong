@@ -95,12 +95,13 @@ var G = G || {};
 		}
 
 		var fpsSwitch = new G.GaffButton();
-		fpsSwitch.init("30", 70, 60, 10);
+		fpsSwitch.init("60", 70, 60, 10);
 		fpsSwitch.drawButton();
 		fpsSwitch.x = w - fpsSwitch.width - 20;
 		fpsSwitch.y = h - fpsSwitch.height -30;
 		this.addChild(fpsSwitch);
 		fpsSwitch.on("click", this.fpsClicked, this);
+		fpsSwitch.select();
 
 		var showerSwitch = new G.GaffButton();
 		showerSwitch.init("Off", 70, 60, 10);

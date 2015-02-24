@@ -95,7 +95,7 @@ this.G = this.G || {};
 		this.createProton();
 
 		createjs.Ticker.on("tick", this.handleTick, this);
-		createjs.Ticker.setFPS(30);
+		createjs.Ticker.setFPS(60);
 	};
 
 	p.createProton = function() {
