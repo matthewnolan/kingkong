@@ -63,12 +63,11 @@ this.G = this.G || {};
 	p.isShower = false;
 
 	/**
-	 * Application entry point initialises the canvas viewport (currently createjs) and the Game
+	 * Application entry point initialises the stage canvas and G.Game
 	 * @method init
 	 *
 	 */
 	p.init = function() {
-
 		this.stats = new Stats();
 		this.stats.setMode(0); // 0: fps, 1: ms
 		this.stats.domElement.style.position = 'absolute';
@@ -81,11 +80,14 @@ this.G = this.G || {};
 		this.game = new G.Game();
 		this.game.init(this.stage);
 		this.game.displayInitialised.add(this.displayInitialised, this);
-		//for gaff buttons
 		this.game.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);
 		this.game.signalDispatcher.daisyShowerStarted.add(this.handleDaisyShowerStart, this);
 	};
 
+	/**
+	 * @signalHandler
+	 * @method displayInitialised
+	 */
 	p.displayInitialised = function() {
 		this.canvas = document.querySelector("#app");
 
@@ -120,9 +122,6 @@ this.G = this.G || {};
 	p.handleDaisyShowerStart = function() {
 		if (this.isShower) {
 			this.isShower = false;
-
-			//this.emitter.addBehaviour(new Proton.Gravity(-1000000));
-			//this.emitter.stop();
 			this.emitter.stopEmit();
 		} else {
 			this.isShower = true;

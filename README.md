@@ -21,6 +21,31 @@ Initiate Vagrant box for sharing
 $ vagrant up
 ```
 
+## Browser Testing:
+http://localhost:3000 - runs application.
+
+    Controls:
+    ---------
+    Shift-G,
+    Pinch Out (touch): Show Gaff Menu
+    Pinch In (touch): Hides Gaff Menu
+    Space,
+    Swipe Down (touch) : Spin Reels
+
+    Gaff Menu Features:
+    -------------------
+    Play Normal win animation with spin
+    Show M1 Gaff Win animation with spin
+    Switch between 30/60 FPS
+    Switch particle shower on for profiling
+
+
+
+http://localhost:3000/test - runs app unit tests (jasmine)
+
+http://localhost:3000/docs - runs app documentation
+
+
 ## gruntTasks
 
     default      : runs tests and jsLint
