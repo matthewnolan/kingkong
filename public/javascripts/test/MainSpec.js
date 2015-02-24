@@ -96,28 +96,6 @@ describe("Main Test", function () {
 		expect(createjs.Ticker.on).toHaveBeenCalledWith("tick", this.class.handleTick, this.class);
 	});
 
-	it("Main init should create a ServerInterface", function() {
-		spyOn(G, "ServerInterface").and.returnValue({
-			init: function() {
-				//do nothing
-			}
-
-		});
-		this.class.init();
-		expect(G.ServerInterface).toHaveBeenCalled();
-	});
-
-	it("ServerInterface should be initialised", function() {
-		var spiedObj, Constructor = G.ServerInterface;
-		spyOn(G, "ServerInterface").and.callFake(function() {
-			spiedObj = new Constructor();
-			spyOn(spiedObj, "init");
-			return spiedObj;
-		});
-		this.class.init();
-		expect(spiedObj.init).toHaveBeenCalled();
-	});
-
 	it("Main init should create a Game and initialise it", function() {
 		this.class.init();
 

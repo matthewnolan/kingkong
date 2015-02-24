@@ -78,11 +78,8 @@ this.G = this.G || {};
 
 		this.stage = new createjs.Stage("app");
 
-		var serverInterface = new G.ServerInterface();
-		serverInterface.init();
-
 		this.game = new G.Game();
-		this.game.init(this.stage, serverInterface);
+		this.game.init(this.stage);
 		this.game.displayInitialised.add(this.displayInitialised, this);
 		//for gaff buttons
 		this.game.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);

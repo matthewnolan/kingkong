@@ -104,11 +104,12 @@ this.G = this.G || {};
 	 * init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.
 	 * Starts Preloading of assets
 	 * @param {createjs.Stage} stage - The root Display Container which is added to Canvas
-	 * @param {ServerInterface} serverInterface - Interface for incoming and outgoing server requests
 	 */
-	p.init = function(stage, serverInterface) {
-		this.serverInterface = serverInterface;
+	p.init = function(stage) {
 		this.stage = stage;
+
+		var serverInterface = new G.ServerInterface();
+		serverInterface.init();
 
 		this.signalDispatcher = new G.SignalDispatcher();
 
