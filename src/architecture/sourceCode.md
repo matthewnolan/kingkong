@@ -1,4 +1,4 @@
-##In perforce:
+##Client Code
 //Social_Games/Main/client/bin/public_html/Social/games/1014/
 n  Config.xml
 n  Assets.xml
@@ -11,4 +11,9 @@ n  Assets.xml
 o   SlotEnginePlus / SlotEngineBasic
 o   SlotDocument
 
- 
+##Server
+Core UGP AS3 API source:
+//UGP/ugpdev-clientapi-updates/CasinoEngine/client/
+
+H5C casino extension to core:
+//UGP/ugpdev-clientapi-updates/Casinos/High5/client/

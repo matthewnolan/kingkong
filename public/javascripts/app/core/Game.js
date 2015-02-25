@@ -332,6 +332,7 @@ this.G = this.G || {};
 		}, true);
 
 		window.document.onkeydown = function(e) {
+
 			switch(e.keyCode) {
 				//space //enter
 				case 32:
@@ -341,6 +342,9 @@ this.G = this.G || {};
 				////shift+g
 				case 71 :
 					self.components.gaff.show();
+					break;
+				case 70 :
+					self.signalDispatcher.daisyShowerStarted.dispatch();
 					break;
 			}
 		};
