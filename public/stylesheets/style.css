@@ -72,7 +72,7 @@ body {
     position: fixed;
     top: 0px;
     left: 0px;
-    background: #000 url('../assets/img/landscape.png') center center no-repeat;
+    background: #000 url('/assets/images/landscape.png') center center no-repeat;
     width: 100%;
     height: 100%;
     display: none;
