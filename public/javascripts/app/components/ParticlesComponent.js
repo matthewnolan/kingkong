@@ -55,6 +55,12 @@ var G = G || {};
 	 */
 	p.timeout = 1;
 
+	/**
+	 *
+	 * @type {number}
+	 */
+	p.animationDurationTimeout = 1;
+
 
 	/**
 	 * initialise GameComponent
@@ -74,18 +80,38 @@ var G = G || {};
 		this.proton = proton;
 		this.renderer = renderer;
 		this.renderer.start();
-		this.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);
 		this.signalDispatcher.daisyShowerStarted.add(this.handleDaisyShowerStart, this);
 	};
 
-	p.smokeOn = function() {
+	/**
+	 * Start a firework animation for ms milliseconds. (or continuously if no ms param)
+	 * @method smokeOn
+	 * @param {number} ms - animation duration in milliseconds
+	 */
+	p.smokeOn = function(ms) {
 		var self = this;
+
+		if (ms) {
+			this.animationDurationTimeout = setTimeout(function() {
+				self.smokeOff();
+			}, ms);
+		}
+		console.log('smoke on');
+
 		this.timeout = setInterval(function() {
 			self.launchFirework();
-		}, 450);
+		}, 650);
 	};
 
+	/**
+	 * Ends a currently playing fireworks animatino
+	 * @method smokeOff
+	 */
 	p.smokeOff = function() {
+
+		console.log('smoke off', this);
+
+		clearTimeout(this.animationDurationTimeout);
 		clearInterval(this.timeout);
 	};
 
@@ -110,9 +136,14 @@ var G = G || {};
 		this.renderer = new Proton.Renderer('easel', this.proton, this.stage);
 	};
 
-
+	/**
+	 * Launches a firework with smoke effect.
+	 * Each firework creates an emitter which emits 1 particle (the firework), when created, a new emitter is created and it's position is updated
+	 * with the firework position, allowing a smoke trail effect to be emitted from the firework.
+	 * @method launchFirework
+	 */
 	p.launchFirework = function() {
-		var bitmap = new createjs.Bitmap('javascripts/test/assets/daisy.png');
+		var bitmap = new createjs.Bitmap('https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/v/t1.0-1/p100x100/10304347_10152895118476083_5148744991483702606_n.jpg?oh=e723cd84f8f59a0ea3da8954b451cd49&oe=558B01E6&__gda__=1435612535_f5af30338f28856ab43f2157773ef0db');
 		var emitter = new Proton.Emitter();
 		var proton = this.proton;
 		var canvas = this.canvas;
@@ -176,17 +207,7 @@ var G = G || {};
 		this.launchFirework();
 	};
 
-	p.fpsSwitch = function() {
 
-		var currentFrameRate = Math.round(createjs.Ticker.framerate);
-		console.log('fpsSwitch: ', currentFrameRate);
-
-		if (currentFrameRate <= 30) {
-			createjs.Ticker.setFPS(60);
-		} else {
-			createjs.Ticker.setFPS(30);
-		}
-	};
 
 
 

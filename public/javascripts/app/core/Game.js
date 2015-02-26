@@ -144,6 +144,7 @@ this.G = this.G || {};
 		serverInterface.init();
 
 		this.signalDispatcher = new G.SignalDispatcher();
+		this.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);
 
 		var preloader = new G.Preloader();
 		preloader.init(this, this.SETUP_URL);
@@ -186,6 +187,11 @@ this.G = this.G || {};
 		//this.rescale();
 	};
 
+	/**
+	 * Scales Application according to setup scale data
+	 * this.STAGE_SCALE_MODE: "FULL ASPECT" || "FULL_BROWSER" || "NO_SCALE" any other value forces the app to not scale.
+	 * @method rescale
+	 */
 	p.rescale = function() {
 		var stageW = this.setup.stageW || 667;
 		var stageH = this.setup.stageH || 375;
@@ -440,10 +446,27 @@ this.G = this.G || {};
 		}
 	};
 
+	/**
+	 * Initialise Proton particle system and pass the info to the particles
+	 * @method createProton
+	 */
 	p.createProton = function() {
 		this.proton = new Proton();
 		this.renderer = new Proton.Renderer('easel', this.proton, this.stage);
 		this.particlesComponent.init(this.setup, this.signalDispatcher, this.canvas, this.stageScale, this.proton, this.renderer);
+	};
+
+	/**
+	 * Switch between 30 and 60fps
+	 * @method fpsSwitch
+	 */
+	p.fpsSwitch = function() {
+		var currentFrameRate = Math.round(createjs.Ticker.framerate);
+		if (currentFrameRate <= 30) {
+			createjs.Ticker.setFPS(60);
+		} else {
+			createjs.Ticker.setFPS(30);
+		}
 	};
 
 	G.Game = Game;

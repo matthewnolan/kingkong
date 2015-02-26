@@ -89,9 +89,8 @@ var G = G || {};
 				command.init(this.setup, winLines, winLineIndexes, 0);
 				queue.push(command);
 
-
 				command = new G.FireworksCommand();
-				command.init(this.setup, particles);
+				command.init(this.setup, particles, false, 5000);
 				queue.push(command);
 
 				for (i = 0; i < winningLines.length; i++) {

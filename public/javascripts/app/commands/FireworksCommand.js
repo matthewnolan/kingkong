@@ -14,12 +14,19 @@ var G = G || {};
 
 	p.shouldStopExisting = false;
 
+	/**
+	 *
+	 * @type {number}
+	 */
+	p.animationDuration = 5000;
 
-	p.init = function(setup, gameComponent, shouldStopExisting) {
+
+	p.init = function(setup, gameComponent, shouldStopExisting, animationDuration) {
 		this.Command_init(setup, gameComponent);
 
 		this.callNextDelay = 0;
 		this.shouldStopExisting = shouldStopExisting || this.shouldStopExisting;
+		this.animationDuration = animationDuration || this.animationDuration;
 	};
 
 	p.execute = function() {
@@ -27,7 +34,7 @@ var G = G || {};
 		if (this.shouldStopExisting) {
 			this.gameComponent.smokeOff();
 		} else {
-			this.gameComponent.smokeOn();
+			this.gameComponent.smokeOn(this.animationDuration);
 		}
 
 
