@@ -26,7 +26,8 @@
     "stats.js": "*",
     "lodash": "~3.1.0",
     "hammerjs": "~2.0.4",
-    "proton": "*"
+    "proton": "*",
+    "devicejs": "~0.2.4"
   },
   "install": {
     "path": "public/javascripts/vendor",
@@ -43,7 +44,9 @@
           }
         ]
       },
-      "easeljs-filters": "bower_components/easeljs-filters/lib/filters-for-easeljs-0.2.0.min.js"
+      "easeljs-filters": "bower_components/easeljs-filters/lib/filters-for-easeljs-0.2.0.min.js",
+      "devicejs": "bower_components/devicejs/lib/device.min.js"
+
     }
   },
   "resolutions": {
