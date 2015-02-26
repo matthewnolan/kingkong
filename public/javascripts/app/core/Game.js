@@ -179,7 +179,9 @@ this.G = this.G || {};
 
 		this.setupDisplay();
 		this.initUIEvents();
-		this.displayInitialised();
+
+		createjs.Ticker.on("tick", this.handleTick, this);
+		createjs.Ticker.setFPS(60);
 	};
 
 	p.rescale = function() {
@@ -357,18 +359,6 @@ this.G = this.G || {};
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
 		}
-	};
-
-	/**
-	 * @signalHandler
-	 * @method displayInitialised
-	 */
-	p.displayInitialised = function() {
-		this.createProton();
-		this.launchFirework();
-
-		createjs.Ticker.on("tick", this.handleTick, this);
-		createjs.Ticker.setFPS(60);
 	};
 
 	/**

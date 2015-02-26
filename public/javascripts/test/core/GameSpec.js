@@ -201,14 +201,11 @@ describe("Game Test", function () {
 
 	});
 
-	it("Main displayInitialised should setup the Ticker correctly", function() {
-		spyOn(this.class, "createProton");
-		spyOn(this.class, "launchFirework");
-		//spyOn(this.class, "createFireWorks");
-		//this.class.displayInitialised.restore();
+	it("When assets are loaded to the Game, then setup the Ticker correctly", function() {
+		this.class.onAssetsLoadComplete();
 
-		this.class.displayInitialised();
 		expect(createjs.Ticker.on).toHaveBeenCalledWith("tick", this.class.handleTick, this.class);
+
 	});
 
 
