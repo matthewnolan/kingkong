@@ -36,12 +36,15 @@ var G = G || {};
 	p.generateGaff = function(gaffType) {
 
 		var queue = [], command, i, len;
-		var winLines, bigWin, reels, symbolWins;
+		var winLines, bigWin, reels, symbolWins, particles;
 
 		reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
 		winLines = G.Utils.getGameComponentByClass(G.WinLinesComponent);
 		bigWin = G.Utils.getGameComponentByClass(G.BigWinComponent);
 		symbolWins = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
+		particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
+
+		console.log('generateGaff=', particles);
 
 
 		switch(gaffType) {
@@ -66,7 +69,7 @@ var G = G || {};
 				queue.push(command);
 
 				command = new G.BigWinCommand();
-				command.callNextDelay = 2500;
+				command.callNextDelay = 1750;
 				command.init(this.setup, bigWin);
 
 				queue.push(command);
@@ -86,6 +89,11 @@ var G = G || {};
 				command.init(this.setup, winLines, winLineIndexes, 0);
 				queue.push(command);
 
+
+				command = new G.FireworksCommand();
+				command.init(this.setup, particles);
+				queue.push(command);
+
 				for (i = 0; i < winningLines.length; i++) {
 					command = new G.WinLineCommand();
 					command.init(this.setup, winLines, [i], 5, "m1-sprite__000");
@@ -94,11 +102,6 @@ var G = G || {};
 					}
 					queue.push(command);
 				}
-
-
-
-
-
 				break;
 			default :
 

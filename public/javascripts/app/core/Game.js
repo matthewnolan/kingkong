@@ -126,10 +126,10 @@ this.G = this.G || {};
 	p.canvas = null;
 
 	/**
-	 *
-	 * @type {boolean}
+	 * @property particlesComponent
+	 * @type {G.ParticlesComponent}
 	 */
-	p.isShower = false;
+	p.particlesComponent = false;
 
 	/**
 	 * init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.
@@ -152,8 +152,6 @@ this.G = this.G || {};
 		preloader.startLoad();
 
 		//this.displayInitialised.add(this.displayInitialised, this);
-		this.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);
-		this.signalDispatcher.daisyShowerStarted.add(this.handleDaisyShowerStart, this);
 	};
 
 
@@ -164,7 +162,6 @@ this.G = this.G || {};
 	 */
 	p.onSetupLoaded = function(setup) {
 		this.setup = setup;
-		this.rescale();
 	};
 
 	/**
@@ -177,11 +174,16 @@ this.G = this.G || {};
 	p.onAssetsLoadComplete = function(assets) {
 		this.assets = assets;
 
+		this.rescale();
 		this.setupDisplay();
 		this.initUIEvents();
+		this.createProton();
+
 
 		createjs.Ticker.on("tick", this.handleTick, this);
 		createjs.Ticker.setFPS(60);
+
+		//this.rescale();
 	};
 
 	p.rescale = function() {
@@ -201,15 +203,13 @@ this.G = this.G || {};
 
 		switch(this.STAGE_SCALE_MODE) {
 			case "FULL_ASPECT" :
-				stageScaleH = stageScaleW = browserH / stageH;
+				stageScaleH = this.stageScale = stageScaleW = browserH / stageH;
 				appWidth = Math.floor(stageW * stageScaleW);
 				appHeight = Math.floor(stageH * stageScaleH);
 
 				if (appWidth > browserW) {
-					stageScaleW = stageScaleH = browserW / stageW;
+					stageScaleW = this.stageScale = stageScaleH = browserW / stageW;
 				}
-
-
 				appLeft = Math.floor(browserW / 2 - appWidth /2);
 				break;
 			case "FULL_BROWSER" :
@@ -217,6 +217,7 @@ this.G = this.G || {};
 				stageScaleW = browserW / stageW;
 				appWidth = Math.floor(stageW * stageScaleW);
 				appHeight = Math.floor(stageH * stageScaleH);
+				this.stageScale = stageScaleW;
 				break;
 			case "NO_SCALE" :
 				//defaults are fine
@@ -226,10 +227,10 @@ this.G = this.G || {};
 				break;
 		}
 
-		this.stage.scaleX = this.stageScale = stageScaleW;
+		this.stage.scaleX = stageScaleW;
 		this.stage.scaleY = stageScaleH;
 
-		//No negative left
+		//No negative left cropping
 		appLeft = appLeft < 0? 0 : appLeft;
 
 		var styleWidth = appWidth.toString() + "px";
@@ -349,6 +350,9 @@ this.G = this.G || {};
 		gaffMenu.x = bezelMarginL + (bezelW / 2);
 		gaffMenu.y = bezelMarginT + (bezelH / 2);
 
+		this.particlesComponent = new G.ParticlesComponent();
+		this.gameComponents.push(this.particlesComponent);
+
 		console.log('gaff', gaffMenu.x, gaffMenu.y);
 
 		this.components.gaff = gaffMenu;
@@ -431,8 +435,6 @@ this.G = this.G || {};
 		});
 
 		if (!this.setup.domHelpers) {
-			//$('.dom-helpers').remove();
-
 			var domHelpers = document.querySelector(".dom-helpers");
 			domHelpers.parentNode.removeChild(domHelpers);
 		}
@@ -441,112 +443,8 @@ this.G = this.G || {};
 	p.createProton = function() {
 		this.proton = new Proton();
 		this.renderer = new Proton.Renderer('easel', this.proton, this.stage);
-		this.renderer.onProtonUpdate = function() {
-
-		};
-		this.renderer.start();
+		this.particlesComponent.init(this.setup, this.signalDispatcher, this.canvas, this.stageScale, this.proton, this.renderer);
 	};
-
-	p.createDaisyShower = function() {
-		var bitmap = new createjs.Bitmap('javascripts/test/assets/daisy.png');
-
-		this.emitter = new Proton.Emitter();
-		this.emitter.rate = new Proton.Rate(new Proton.Span(30, 40), new Proton.Span(0.5, 2));
-		this.emitter.addInitialize(new Proton.ImageTarget(bitmap));
-		this.emitter.addInitialize(new Proton.Mass(1, 5));
-		this.emitter.addInitialize(new Proton.Radius(20));
-		this.emitter.addInitialize(new Proton.Position(new Proton.LineZone(0, -40, this.canvas.width, -40)));
-		this.emitter.addInitialize(new Proton.V(0, new Proton.Span(0.1, 1)));
-
-		this.emitter.addBehaviour(new Proton.CrossZone(new Proton.LineZone(0, this.canvas.height, this.canvas.width, this.canvas.height + 20, 'down'), 'dead'));
-		this.emitter.addBehaviour(new Proton.Rotate(new Proton.Span(0, 360), new Proton.Span(-0.5, 0.5), 'add'));
-		this.emitter.addBehaviour(new Proton.Scale(new Proton.Span(0.2, 1)));
-		this.emitter.addBehaviour(new Proton.RandomDrift(5, 0, 0.15));
-		this.emitter.addBehaviour(new Proton.Gravity(0.9));
-		this.emitter.emit();
-		this.proton.addEmitter(this.emitter);
-		this.renderer = new Proton.Renderer('easel', this.proton, this.stage);
-	};
-
-
-	p.launchFirework = function() {
-		var bitmap = new createjs.Bitmap('javascripts/test/assets/daisy.png');
-		var emitter = new Proton.Emitter();
-		var proton = this.proton;
-		var canvas = this.canvas;
-
-		//emitter.rate = new Proton.Rate(1, new Proton.Span(0.1, 2));
-		emitter.addInitialize(new Proton.ImageTarget(bitmap));
-		emitter.addInitialize(new Proton.Mass(1));
-		emitter.addInitialize(new Proton.Radius(1, 12));
-		emitter.addInitialize(new Proton.Life(2));
-		emitter.addInitialize(new Proton.Velocity(new Proton.Span(8, 15), new Proton.Span(-30, 30), 'polar'));
-		emitter.addBehaviour(new Proton.RandomDrift(100, 100, 0.05));
-		emitter.addBehaviour(new Proton.Color('ff0000', 'random', Infinity, Proton.easeOutQuart));
-		emitter.addBehaviour(new Proton.Scale(1, 0.7));
-
-		emitter.p.x = (canvas.width / this.stageScale) / 2;
-		emitter.p.y = canvas.height / this.stageScale;
-
-		console.log('emitter start:', emitter.p);
-
-		proton.addEmitter(emitter);
-		emitter.emit("once", true);
-
-		var self = this;
-		var subEmitter;
-
-		emitter.addEventListener(Proton.PARTICLE_UPDATE, function(e) {
-			subEmitter.p.x = e.particle.p.x;
-			subEmitter.p.y = e.particle.p.y;
-		});
-
-		emitter.addEventListener(Proton.PARTICLE_DEAD, function(e) {
-			emitter.destroy();
-			subEmitter.stopEmit();
-		});
-
-		emitter.addEventListener(Proton.PARTICLE_CREATED, function(e) {
-			//console.log('Smoke on');
-			var particle = e.particle;
-			bitmap = new createjs.Bitmap('assets/images/particle.png');
-			subEmitter = new Proton.Emitter();
-			subEmitter.rate = new Proton.Rate(new Proton.Span(5, 10), new Proton.Span(0.005, 0.025));
-			subEmitter.addInitialize(new Proton.ImageTarget(bitmap, 32));
-			subEmitter.addInitialize(new Proton.Mass(1));
-			subEmitter.addInitialize(new Proton.Radius(1, 12));
-			subEmitter.addInitialize(new Proton.Life(1));
-			subEmitter.addInitialize(new Proton.V(new Proton.Span(1, 3), new Proton.Span(170, 190), 'polar'));
-			subEmitter.addBehaviour(new Proton.RandomDrift(10, 10, 0.05));
-			subEmitter.addBehaviour(new Proton.Alpha(1, 0.1));
-
-			subEmitter.addBehaviour(new Proton.Scale(0.1, 2));
-			subEmitter.p.x = particle.x;//canvas.width / 2;
-			subEmitter.p.y = particle.y;//canvas.height / 2;
-			subEmitter.emit();
-			proton.addEmitter(subEmitter);
-		});
-	};
-
-
-	p.handleDaisyShowerStart = function() {
-		this.launchFirework();
-	};
-
-	p.fpsSwitch = function() {
-
-		var currentFrameRate = Math.round(createjs.Ticker.framerate);
-		console.log('fpsSwitch: ', currentFrannmeRate);
-
-		if (currentFrameRate <= 30) {
-			createjs.Ticker.setFPS(60);
-		} else {
-			createjs.Ticker.setFPS(30);
-		}
-	};
-
-
-
 
 	G.Game = Game;
 

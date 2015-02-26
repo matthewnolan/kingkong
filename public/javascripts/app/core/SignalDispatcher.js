@@ -81,11 +81,13 @@ var G = G || {};
 		var winLinesComponent = G.Utils.getGameComponentByClass(G.WinLinesComponent);
 		var bigWinComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
 		var symbolWinsComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
+		var particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
 
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 		bigWinComponent.hideAnimation();
 		symbolWinsComponent.hideAll();
+		particles.smokeOff();
 		this.commandQueue.setupQueue();
 	};
 

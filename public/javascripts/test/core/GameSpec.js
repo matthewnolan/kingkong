@@ -176,7 +176,8 @@ describe("Game Test", function () {
 		 this.displayInitialised();
 		 */
 
-		spyOn(this.class, "displayInitialised");
+		spyOn(this.class, "createProton");
+		spyOn(this.class, "rescale");
 
 		this.class.onAssetsLoadComplete(data);
 
@@ -185,7 +186,8 @@ describe("Game Test", function () {
 
 	it("when assets are loaded to Game, then setup the display", function() {
 
-		spyOn(this.class, "displayInitialised");
+		spyOn(this.class, "createProton");
+		spyOn(this.class, "rescale");
 
 		this.class.onAssetsLoadComplete();
 
@@ -193,7 +195,8 @@ describe("Game Test", function () {
 	});
 
 	it("when assets are loaded to Game, then initialse User Interface Events", function() {
-		spyOn(this.class, "displayInitialised");
+		spyOn(this.class, "createProton");
+		spyOn(this.class, "rescale");
 
 		this.class.onAssetsLoadComplete();
 
@@ -202,6 +205,9 @@ describe("Game Test", function () {
 	});
 
 	it("When assets are loaded to the Game, then setup the Ticker correctly", function() {
+		spyOn(this.class, "createProton");
+		spyOn(this.class, "rescale");
+
 		this.class.onAssetsLoadComplete();
 
 		expect(createjs.Ticker.on).toHaveBeenCalledWith("tick", this.class.handleTick, this.class);
