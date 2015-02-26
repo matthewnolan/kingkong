@@ -16,14 +16,51 @@ describe("Game Test", function () {
 			startLoad: jasmine.createSpy("preloader.startLoad")
 		});
 
+		sinon.stub(document.body, "appendChild");
+		sinon.stub(document, "querySelector").returns({
+			setAttribute: function() {
+				//do nothing
+			},
+			style: {
+				width: 100,
+				height: 100
+			}
+		});
+
+
 		spyOn(this.class, "setupDisplay");
 		spyOn(this.class, "initUIEvents");
+		spyOn(createjs.Ticker, "on");
+
+		sinon.stub(window, "addEventListener");
+		sinon.stub(window, "Stats").returns({
+			setMode: function() {
+
+			},
+			begin: jasmine.createSpy("stats.begin"),
+			end: jasmine.createSpy("stats.end"),
+			domElement: {
+				style: {
+					position: "",
+					bottom: "",
+					left: ""
+				}
+			}
+		});
+
+		this.class.proton = {
+			update: jasmine.createSpy('proton.update')
+		};
 
 	});
 
 	afterEach(function () {
 		this.class = null;
 		G.Preloader.restore();
+		window.Stats.restore();
+		document.body.appendChild.restore();
+		document.querySelector.restore();
+		window.addEventListener.restore();
 	});
 
 	it("Class is instantiated", function () {
@@ -148,6 +185,33 @@ describe("Game Test", function () {
 
 	});
 
+	it("Main displayInitialised should setup the Ticker correctly", function() {
+		spyOn(this.class, "createProton");
+		spyOn(this.class, "launchFirework");
+		//spyOn(this.class, "createFireWorks");
+
+		this.class.displayInitialised();
+		expect(createjs.Ticker.on).toHaveBeenCalledWith("tick", this.class.handleTick, this.class);
+	});
+
+
+	it("Ticker Handler should render the stage", function() {
+		this.class.init();
+
+		spyOn(this.class.stage, "update");
+		//spyOn(this.class.proton, "update");
+
+		this.class.handleTick();
+
+		expect(this.class.stats.begin).toHaveBeenCalled();
+		expect(this.class.proton.update).toHaveBeenCalled();
+		expect(this.class.stage.update).toHaveBeenCalled();
+		expect(this.class.stats.end).toHaveBeenCalled();
+	});
+
+
+
+
 	xdescribe("setupDisplay function", function() {
 
 		beforeEach(function() {
@@ -163,6 +227,8 @@ describe("Game Test", function () {
 		});
 
 	});
+
+
 
 
 
