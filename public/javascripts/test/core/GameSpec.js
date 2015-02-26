@@ -29,7 +29,9 @@ describe("Game Test", function () {
 
 
 		spyOn(this.class, "setupDisplay");
+
 		spyOn(this.class, "initUIEvents");
+
 		spyOn(createjs.Ticker, "on");
 
 		sinon.stub(window, "addEventListener");
@@ -101,14 +103,6 @@ describe("Game Test", function () {
 	});
 
 
-	it("init function should set a passed stage object", function () {
-		var mockStage = {
-			mock: "stage"
-		};
-		this.class.init(mockStage, null);
-		expect(this.class.stage).toEqual(mockStage);
-	});
-
 	it("init function should create a new Preloader and initialise it", function () {
 
 		var fakeLoader = new G.Preloader();
@@ -148,6 +142,17 @@ describe("Game Test", function () {
 		expect(this.class.onAssetsLoadComplete).toHaveBeenCalled();
 	});
 
+	it("Main init should create a Stage and initialise it with the correct values", function() {
+		// spies let us test a function is called
+		spyOn(createjs, "Stage").and.returnValue({
+			addChild: function() {
+
+			}
+		});
+		this.class.init();
+		expect(createjs.Stage).toHaveBeenCalledWith("app");
+	});
+
 	it("onSetupLoaded function should save the setup in this class", function() {
 
 		var data = "setupJson";
@@ -165,6 +170,14 @@ describe("Game Test", function () {
 
 		var data = "fakeAssets";
 
+		/*
+		 this.setupDisplay();
+		 this.initUIEvents();
+		 this.displayInitialised();
+		 */
+
+		spyOn(this.class, "displayInitialised");
+
 		this.class.onAssetsLoadComplete(data);
 
 		expect(this.class.assets).toBe("fakeAssets");
@@ -172,12 +185,15 @@ describe("Game Test", function () {
 
 	it("when assets are loaded to Game, then setup the display", function() {
 
+		spyOn(this.class, "displayInitialised");
+
 		this.class.onAssetsLoadComplete();
 
 		expect(this.class.setupDisplay).toHaveBeenCalled();
 	});
 
 	it("when assets are loaded to Game, then initialse User Interface Events", function() {
+		spyOn(this.class, "displayInitialised");
 
 		this.class.onAssetsLoadComplete();
 
@@ -189,6 +205,7 @@ describe("Game Test", function () {
 		spyOn(this.class, "createProton");
 		spyOn(this.class, "launchFirework");
 		//spyOn(this.class, "createFireWorks");
+		//this.class.displayInitialised.restore();
 
 		this.class.displayInitialised();
 		expect(createjs.Ticker.on).toHaveBeenCalledWith("tick", this.class.handleTick, this.class);
@@ -199,7 +216,6 @@ describe("Game Test", function () {
 		this.class.init();
 
 		spyOn(this.class.stage, "update");
-		//spyOn(this.class.proton, "update");
 
 		this.class.handleTick();
 
