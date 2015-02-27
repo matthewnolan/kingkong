@@ -65,11 +65,11 @@ var G = G || {};
 
 				command = new G.SymbolAnimCommand();
 				command.init(this.setup, symbolWins, [0,1,2], 5, 'm1-sprite__short');
-				command.callNextDelay = 1000;
+				command.callNextDelay = 650;
 				queue.push(command);
 
 				command = new G.BigWinCommand();
-				command.callNextDelay = 1750;
+				command.callNextDelay = 1150;
 				command.init(this.setup, bigWin);
 
 				queue.push(command);
@@ -90,14 +90,22 @@ var G = G || {};
 				queue.push(command);
 
 				command = new G.FireworksCommand();
-				command.init(this.setup, particles, false, 5000);
+				command.init(this.setup, particles, false, 10000);
+				command.loopIndex = 1;
 				queue.push(command);
 
 				for (i = 0; i < winningLines.length; i++) {
+
+					if (i > 0 && i % 10 === 0) {
+						command = new G.FireworksCommand();
+						command.init(this.setup, particles, false, 10000);
+						queue.push(command);
+					}
+
 					command = new G.WinLineCommand();
 					command.init(this.setup, winLines, [i], 5, "m1-sprite__000");
 					if (i === 0) {
-						command.loopIndex = 1;
+						//command.loopIndex = 1;
 					}
 					queue.push(command);
 				}

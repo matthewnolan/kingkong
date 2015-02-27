@@ -52,7 +52,6 @@ var G = G || {};
 	 * @method drawSprites
 	 */
 	p.drawSprites = function() {
-
 		var spritesheet = new createjs.SpriteSheet(this.bigWinSprites);
 		var sprite = new createjs.Sprite(spritesheet, 0);
 		sprite.x = 0;
@@ -62,10 +61,13 @@ var G = G || {};
 		sprite.on("animationend", this.handleAnimationEnd, this);
 		sprite.visible = false;
 		this.bigWins.push(sprite);
-		//this.playAnimation();
+		this.playAnimation();
 	};
 
-	p.handleAnimationEnd = function() {
+	p.handleAnimationEnd = function(e) {
+		var sprite = e.target;
+		sprite.off("animationend", this.handleAnimationEnd);
+		this.cacheCompleted.dispatch();
 		this.hideAnimation();
 	};
 

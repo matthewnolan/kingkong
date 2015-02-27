@@ -170,7 +170,7 @@ var G = G || {};
 	};
 
 	p.showerSwitched = function(e) {
-		this.signalDispatcher.daisyShowerStarted.dispatch();
+		this.signalDispatcher.fireworkLaunched.dispatch();
 		var button = e.currentTarget;
 
 		if (button.selected) {

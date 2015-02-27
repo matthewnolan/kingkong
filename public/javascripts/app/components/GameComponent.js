@@ -35,6 +35,13 @@ var G = G || {};
 	p.setup = null;
 
 	/**
+	 * Dispatch a signal when graphics caching has completed.
+	 * @property cacheCompleted
+	 * @type {Signal}
+	 */
+	p.cacheCompleted = new signals.Signal();
+
+	/**
 	 * initialises the setup and signalDispatcher for the component.
 	 * @method init
 	 * @param {Object} setup

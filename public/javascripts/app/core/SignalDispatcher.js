@@ -55,7 +55,7 @@ var G = G || {};
 	 *
 	 * @type {Signal}
 	 */
-	p.daisyShowerStarted = new signals.Signal();
+	p.fireworkLaunched = new signals.Signal();
 
 	/**
 	 *

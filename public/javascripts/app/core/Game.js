@@ -74,16 +74,6 @@ this.G = this.G || {};
 	p.signalDispatcher = null;
 
 	/**
-	 * GameComponents stored here
-	 * @property components
-	 * @type {{reels: null, winLines: null}}
-	 */
-	p.components = {
-		reels: null,
-		winLines: null
-	};
-
-	/**
 	 * @property fpsSwitcher
 	 * @type {Signal}
 	 */
@@ -99,7 +89,7 @@ this.G = this.G || {};
 	 * @property daisyShowerStarted
 	 * @type {Signal}
 	 */
-	p.daisyShowerStarted = new signals.Signal();
+	p.fireworkLaunched = new signals.Signal();
 
 	/**
 	 * @property gameComponents
@@ -129,7 +119,32 @@ this.G = this.G || {};
 	 * @property particlesComponent
 	 * @type {G.ParticlesComponent}
 	 */
-	p.particlesComponent = false;
+	p.particlesComponent = null;
+
+	/**
+	 * @property reelsComponent
+	 * @type {G.ReelsComponent}
+	 */
+	p.reelsComponent = null;
+
+	/**
+	 * @property reelsComponent
+	 * @type {G.GaffMenuComponent}
+	 */
+	p.gaffMenu = null;
+
+	/**
+	 * Number of initialised game components to check have initialised before loader is removed
+	 * @property initialisedNum
+	 * @type {number}
+	 */
+	p.initailisedNum = 3;
+
+	/**
+	 * @property preloaderEl
+	 * @type {HTMLElement}
+	 */
+	p.preloaderEl = null;
 
 	/**
 	 * init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.
@@ -151,6 +166,8 @@ this.G = this.G || {};
 		preloader.setupComplete.add(this.onSetupLoaded, this);
 		preloader.assetsLoaded.add(this.onAssetsLoadComplete, this);
 		preloader.startLoad();
+
+		this.preloaderEl = document.querySelector("#preloader");
 
 		//this.displayInitialised.add(this.displayInitialised, this);
 	};
@@ -179,7 +196,6 @@ this.G = this.G || {};
 		this.setupDisplay();
 		this.initUIEvents();
 		this.createProton();
-
 
 		createjs.Ticker.on("tick", this.handleTick, this);
 		createjs.Ticker.setFPS(60);
@@ -232,20 +248,18 @@ this.G = this.G || {};
 
 				break;
 		}
-
 		this.stage.scaleX = stageScaleW;
 		this.stage.scaleY = stageScaleH;
 
 		//No negative left cropping
 		appLeft = appLeft < 0? 0 : appLeft;
-
 		var styleWidth = appWidth.toString() + "px";
 		var styleHeight = appHeight.toString() + "px";
 		var styleLeft = appLeft.toString() + "px";
-
-		var preloaderCover = document.querySelector("#preloader");
-		preloaderCover.style.width = styleWidth;
-		preloaderCover.style.height = styleHeight;
+		//var preloaderCover = document.querySelector("#preloader");
+		this.preloaderEl.style.width = styleWidth;
+		this.preloaderEl.style.height = styleHeight;
+		this.preloaderEl.style.left = styleLeft;
 
 		var mainCanvas = document.querySelector("#app");
 		mainCanvas.setAttribute("width", styleWidth );
@@ -253,6 +267,11 @@ this.G = this.G || {};
 		mainCanvas.style.left = styleLeft;
 
 		this.canvas = mainCanvas;
+
+		if (this.particlesComponent) {
+			this.particlesComponent.stageScale = this.stageScale;
+			this.particlesComponent.canvas = mainCanvas;
+		}
 
 		//html console (useful for mobile debug)
 		if (this.setup.htmlDebug) {
@@ -312,7 +331,7 @@ this.G = this.G || {};
 		this.stage.addChild(reelsComponent);
 
 		//store components
-		this.components.reels = reelsComponent;
+		this.reelsComponent = reelsComponent;
 		this.signalDispatcher.init(this.setup, this.gameComponents);
 
 		//init mask
@@ -325,28 +344,28 @@ this.G = this.G || {};
 		//init symbolWins
 		var symbolWinsComponent = new G.SymbolWinsComponent();
 		symbolWinsComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetSymbolAnims);
+		symbolWinsComponent.cacheCompleted.add(this.checkCacheInitialised, this);
 		symbolWinsComponent.x = bezelMarginL;
 		symbolWinsComponent.y = bezelMarginT;
 		this.stage.addChild(symbolWinsComponent);
 		symbolWinsComponent.drawSprites();
-		this.components.symbolWins = symbolWinsComponent;
 		this.gameComponents.push(symbolWinsComponent);
 
 		var bigWinComponent = new G.BigWinComponent();
 		bigWinComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetBigWin);
+		bigWinComponent.cacheCompleted.add(this.checkCacheInitialised, this);
 		bigWinComponent.x = bezelMarginL;
 		bigWinComponent.y = bezelMarginT;
 		this.stage.addChild(bigWinComponent);
 		bigWinComponent.drawSprites();
 
 		//init winLines
-		var winLinesComponet = new G.WinLinesComponent();
-		winLinesComponet.init(this.setup, this.signalDispatcher);
-		this.stage.addChild(winLinesComponet);
-		winLinesComponet.drawComponent();
-		this.components.winLines = winLinesComponet;
-		this.gameComponents.push(reelsComponent, winLinesComponet);
-		this.components.bigWin = bigWinComponent;
+		var winLinesComponent = new G.WinLinesComponent();
+		winLinesComponent.init(this.setup, this.signalDispatcher);
+		winLinesComponent.cacheCompleted.add(this.checkCacheInitialised, this);
+		this.stage.addChild(winLinesComponent);
+		winLinesComponent.drawComponent();
+		this.gameComponents.push(reelsComponent, winLinesComponent);
 		this.gameComponents.push(bigWinComponent);
 
 		var gaffMenu = new G.GaffMenuComponent(this.version);
@@ -355,19 +374,27 @@ this.G = this.G || {};
 		this.stage.addChild(gaffMenu);
 		gaffMenu.x = bezelMarginL + (bezelW / 2);
 		gaffMenu.y = bezelMarginT + (bezelH / 2);
+		this.gaffMenu = gaffMenu;
 
 		this.particlesComponent = new G.ParticlesComponent();
 		this.gameComponents.push(this.particlesComponent);
-
-		console.log('gaff', gaffMenu.x, gaffMenu.y);
-
-		this.components.gaff = gaffMenu;
 		this.gameComponents.push(gaffMenu);
 
 		G.Utils.gameComponents = this.gameComponents;
 
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
+		}
+	};
+
+	/**
+	 * When initialisedNum has reduced to 0, all game components requiring async initialisation and graphics caching has completed
+	 * @method checkInitialised
+	 */
+	p.checkCacheInitialised = function() {
+		console.log('checkCacheInitialised', this.initailisedNum);
+		if (--this.initailisedNum === 0) {
+			this.preloaderEl.style.visibility = "hidden";
 		}
 	};
 
@@ -398,25 +425,25 @@ this.G = this.G || {};
 			self.rescale();
 		}, true);
 
+		createjs.Touch.enable(this.stage);
+
 		window.document.onkeydown = function(e) {
 
 			switch(e.keyCode) {
 				//space //enter
 				case 32:
 				case 0:
-					self.components.reels.spinReels();
+					self.reelsComponent.spinReels();
 					break;
 				////shift+g
 				case 71 :
-					self.components.gaff.show();
+					self.gaffMenu.show();
 					break;
 				case 70 :
-					self.signalDispatcher.daisyShowerStarted.dispatch();
+					self.signalDispatcher.fireworkLaunched.dispatch();
 					break;
 			}
 		};
-
-		createjs.Touch.enable(this.stage);
 
 		var myElement = document.querySelector('#app');
 		var mc = new Hammer(myElement);
@@ -429,15 +456,15 @@ this.G = this.G || {};
 		});
 
 		mc.on('swipe', function() {
-			self.components.reels.spinReels();
+			self.reelsComponent.spinReels();
 		});
 
 		mc.on('pinchin', function() {
-			self.components.gaff.hide();
+			self.gaffMenu.hide();
 		});
 
 		mc.on('pinchout', function() {
-			self.components.gaff.show();
+			self.gaffMenu.show();
 		});
 
 		if (!this.setup.domHelpers) {

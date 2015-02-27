@@ -12,7 +12,7 @@ describe("Main Test", function () {
 				fpsSwitched: {
 					add: jasmine.createSpy('signal spy')
 				},
-				daisyShowerStarted: {
+				fireworkLaunched: {
 					add: jasmine.createSpy('signal spy')
 				}
 			},

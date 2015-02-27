@@ -80,7 +80,7 @@ var G = G || {};
 		this.proton = proton;
 		this.renderer = renderer;
 		this.renderer.start();
-		this.signalDispatcher.daisyShowerStarted.add(this.handleDaisyShowerStart, this);
+		this.signalDispatcher.fireworkLaunched.add(this.handleDaisyShowerStart, this);
 	};
 
 	/**
@@ -100,7 +100,7 @@ var G = G || {};
 
 		this.timeout = setInterval(function() {
 			self.launchFirework();
-		}, 650);
+		}, 550);
 	};
 
 	/**
@@ -143,7 +143,7 @@ var G = G || {};
 	 * @method launchFirework
 	 */
 	p.launchFirework = function() {
-		var bitmap = new createjs.Bitmap('https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/v/t1.0-1/p100x100/10304347_10152895118476083_5148744991483702606_n.jpg?oh=e723cd84f8f59a0ea3da8954b451cd49&oe=558B01E6&__gda__=1435612535_f5af30338f28856ab43f2157773ef0db');
+		var bitmap = new createjs.Bitmap('javascripts/test/assets/daisy.png');
 		var emitter = new Proton.Emitter();
 		var proton = this.proton;
 		var canvas = this.canvas;
@@ -160,8 +160,8 @@ var G = G || {};
 		var scaleMin = 0.25 * this.stageScale;
 		var scaleMax = 0.75 * this.stageScale;
 		emitter.addBehaviour(new Proton.Scale(scaleMin, scaleMax));
-		emitter.p.x = (canvas.width / this.stageScale) / 2;
-		emitter.p.y = canvas.height / this.stageScale;
+		emitter.p.x = this.setup.stageW / 2;
+		emitter.p.y = this.setup.stageH;
 
 		console.log('o=', emitter.p);
 

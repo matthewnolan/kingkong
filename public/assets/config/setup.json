@@ -46,6 +46,12 @@
 
   "reelMap" : ["ww","m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2"],
 
+  "imageDataManifest" : [
+    "assets/sprites/bigwin_1.png",
+    "assets/sprites/static-images.png",
+    "assets/sprites/symbol_anims.png"
+  ],
+
   "spritesManifest" : [
     {"src": "assets/sprites/bigwin_1.json", "id": "bigWinAnim"},
     {"src": "assets/sprites/static-images.json", "id": "staticImages"},

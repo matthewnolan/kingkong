@@ -53,6 +53,12 @@ var G = G || {};
 	p.currentlyPlayingSprites = [];
 
 	/**
+	 * initialisedSpritesNum
+	 * @type {number}
+	 */
+	p.initialisedSpritesNum = 0;
+
+	/**
 	 * init the game component vars.
 	 * @method init
 	 * @param {Object} setup
@@ -108,7 +114,7 @@ var G = G || {};
 		var symbolH = this.setup.symbolH;
 		var reelMarginR = this.setup.reelMarginRight;
 		var symbolMarginB = this.setup.symbolMarginBottom;
-
+		var self = this;
 		for (i = 0; i < reelLen; i++) {
 
 			this.symbolsMatrix.push([]);
@@ -120,8 +126,12 @@ var G = G || {};
 				sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
 				this.addChild(sprite);
 				this.symbolsMatrix[i].push(sprite);
-				//sprite.on("animationend", this.handleAnimationEnd);
+				sprite.on("animationend", this.handleAnimationEnd, this);
 				sprite.visible = false;
+				setTimeout(function(sprite) {
+					self.playThisSprite(sprite, 0)
+				}(sprite), 0);
+				this.initialisedSpritesNum++;
 			}
 		}
 	};
@@ -157,6 +167,16 @@ var G = G || {};
 		sprite.visible = true;
 		sprite.gotoAndPlay(id);
 		this.currentlyPlayingSprites.push(sprite);
+	};
+
+	p.handleAnimationEnd = function(e) {
+		var sprite = e.target;
+		sprite.off("animationend", this.handleAnimationEnd);
+		this.hideThisSprite(sprite);
+		console.log('handleAnimEnd', this.initialisedSpritesNum);
+		if (--this.initialisedSpritesNum === 0) {
+			this.cacheCompleted.dispatch();
+		}
 	};
 
 	/**

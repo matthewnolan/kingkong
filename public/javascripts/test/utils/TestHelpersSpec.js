@@ -8,7 +8,6 @@ describe("TestHelpers Test", function () {
 
 	beforeEach(function (done) {
 		jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
-
 		var self = this;
 		var assetsPath = "assets/sprites/symbol_anims.json";
 
@@ -22,6 +21,7 @@ describe("TestHelpers Test", function () {
 				done();
 			});
 			self.assetsLoader.on("complete", function() {
+				console.log('test assets loaded');
 				done();
 			});
 			self.assetsLoader.loadManifest(
@@ -54,7 +54,6 @@ describe("TestHelpers Test", function () {
 			};
 		};
 	});
-
 
 	it("SymbolAnims are loaded", function () {
 		expect(this.assetsLoader.getResult('symbolAnims')).toEqual(jasmine.any(Object));
