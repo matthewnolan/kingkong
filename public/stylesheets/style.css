@@ -16,7 +16,7 @@ body {
 #preloader {
     width: 667px;
     height: 100px;
-    position: relative;
+    position: absolute;
     background-color: black;
 }
 #preloader .content {
@@ -78,8 +78,8 @@ body.layoutDesktop {
     background: url('/assets/images/bg-desktop.png') no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    overflow: auto;
 }
-
 body.layoutDesktop #appContainer {
 }
 body #appContainer #desktopControls {
@@ -99,8 +99,14 @@ body.layoutDesktop #appContainer #desktopControls {
     background-color: rgba(0, 0, 0, .7);
     color:#fff;
     margin: 20px auto;
+    padding: 10px;
     width: 773px;  
 }
 body.layoutDesktop #appContainer #canvasHolder #app {
     position: relative;
+}
+
+body.layoutDesktop #appContainer #qrcode {
+    text-align: center;
+    width:200px;
 }

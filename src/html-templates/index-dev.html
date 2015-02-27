@@ -37,6 +37,8 @@
     <script src="javascripts/vendor/lodash/lodash.js"></script>
     <script src="javascripts/vendor/proton/proton-1.0.0.min.js"></script>
     <script src="javascripts/vendor/devicejs/device.min.js"></script>
+    <script src="javascripts/vendor/qrcodejs/qrcode.min.js"></script>
+    
     <!-- Application Deps -->
     <script src="javascripts/app/Main.js"></script>
     <script src="javascripts/app/core/Preloader.js"></script>
@@ -65,33 +67,35 @@
     <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body>
-
-<div id="landscapeModal">
-    <p><b>Rotate Device to Landscape</b></p>
-</div>
-
-<div id="appContainer">
-    <div id="canvasHolder">
-        <canvas id="app"></canvas>
+    <div id="landscapeModal">
+        <p><b>Rotate Device to Landscape</b>
+        </p>
     </div>
-    <div id="desktopControls">stuff</div>
-    <div id="preloader">
-        <div class="content">
-            <div class="vertical-center">
-                <div id="loadState">Loading...</div>
-                <div id="loadPercentage">0%</div>
-                <div id="initializeState"></div>
+
+    <div id="appContainer">
+        <div id="canvasHolder">
+            <canvas id="app"></canvas>
+        </div>
+        <div id="desktopControls">
+            <div id="qrcode">
+                <p>Try it on your phone</p>
+            </div>
+        </div>
+        <div id="preloader">
+            <div class="content">
+                <div class="vertical-center">
+                    <div id="loadState">Loading...</div>
+                    <div id="loadPercentage">0%</div>
+                    <div id="initializeState"></div>
+                </div>
+            </div>
+        </div>
+        <div id="debug">
+            <div class="content">
+                <div id="console"></div>
             </div>
         </div>
     </div>
-    <div id="debug">
-        <div class="content">
-            <div id="console"></div>
-        </div>
-    </div>
-</div>
-
-
 
 <div class="dom-helpers">
     <h4>Spin Demo (Press space to spin - again to stop)</h4>
