@@ -4,6 +4,7 @@
   "devMode": 0,
   "htmlDebug": 0,
   "scale" : "FULL_ASPECT", 
+  "enableDesktopView": 1,
   "domHelpers": 0,
   "spinOnLoad": 0,
   "playWinAfterSpin": 1,

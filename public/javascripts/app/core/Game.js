@@ -159,6 +159,12 @@ this.G = this.G || {};
 			this.STAGE_SCALE_MODE = this.setup.scale;
 		}
 
+		if (this.setup.enableDesktopView && device.desktop() ) {
+			this.STAGE_SCALE_MODE = "NO_SCALE";
+			var body = document.querySelector("body");
+			body.className = body.className + " layoutDesktop"
+		}
+
 		switch(this.STAGE_SCALE_MODE) {
 			case "FULL_ASPECT" :
 				stageScaleH = stageScaleW = browserH / stageH;
@@ -168,7 +174,6 @@ this.G = this.G || {};
 				if (appWidth > browserW) {
 					stageScaleW = stageScaleH = browserW / stageW;
 				}
-
 
 				appLeft = Math.floor(browserW / 2 - appWidth /2);
 				break;
