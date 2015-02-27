@@ -46,7 +46,6 @@
       },
       "easeljs-filters": "bower_components/easeljs-filters/lib/filters-for-easeljs-0.2.0.min.js",
       "devicejs": "bower_components/devicejs/lib/device.min.js"
-
     }
   },
   "resolutions": {
