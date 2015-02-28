@@ -62,6 +62,11 @@ var G = G || {};
 	p.animationDurationTimeout = 1;
 
 
+	p.fireWorkSpawnPosition = {
+		x: 0,
+		y: 0
+	};
+
 	/**
 	 * initialise GameComponent
 	 * @method init
@@ -80,7 +85,10 @@ var G = G || {};
 		this.proton = proton;
 		this.renderer = renderer;
 		this.renderer.start();
-		this.signalDispatcher.fireworkLaunched.add(this.handleDaisyShowerStart, this);
+		this.signalDispatcher.fireworkLaunched.add(this.launchFirework, this);
+
+		this.fireWorkSpawnPosition.x = this.setup.stageW/2;
+		this.fireWorkSpawnPosition.y = this.setup.stageH;
 	};
 
 	/**
@@ -100,7 +108,9 @@ var G = G || {};
 
 		this.timeout = setInterval(function() {
 			self.launchFirework();
-		}, 550);
+			self.launchFirework();
+			self.launchFirework();
+		}, 800);
 	};
 
 	/**
@@ -143,72 +153,65 @@ var G = G || {};
 	 * @method launchFirework
 	 */
 	p.launchFirework = function() {
-		var bitmap = new createjs.Bitmap('javascripts/test/assets/daisy.png');
+		var bitmap = new createjs.Bitmap('assets/images/firework_particle20x20.png');
 		var emitter = new Proton.Emitter();
 		var proton = this.proton;
 		var canvas = this.canvas;
+		var self = this;
 
-		//emitter.rate = new Proton.Rate(1, new Proton.Span(0.1, 2));
-		emitter.addInitialize(new Proton.ImageTarget(bitmap));
+		//removing bitmap until figured out the positioning bug
+		//emitter.addInitialize(new Proton.ImageTarget(bitmap));
 		emitter.addInitialize(new Proton.Mass(1));
-		//emitter.addInitialize(new Proton.Radius(1, 12));
-		emitter.addInitialize(new Proton.Life(2));
-		emitter.addInitialize(new Proton.Velocity(new Proton.Span(8, 15), new Proton.Span(-30, 30), 'polar'));
-		//emitter.addBehaviour(new Proton.Scale(new Proton.Span(0.01, 0.2)));
-		emitter.addBehaviour(new Proton.RandomDrift(100, 100, 0.05));
-		emitter.addBehaviour(new Proton.Color('ff0000', 'random', Infinity, Proton.easeOutQuart));
-		var scaleMin = 0.25 * this.stageScale;
-		var scaleMax = 0.75 * this.stageScale;
-		emitter.addBehaviour(new Proton.Scale(scaleMin, scaleMax));
-		emitter.p.x = this.setup.stageW / 2;
-		emitter.p.y = this.setup.stageH;
-
-		console.log('o=', emitter.p);
-
-		proton.addEmitter(emitter);
-		emitter.emit("once", true);
+		var minRadius = 1;
+		var maxRadius = 12;
+		var scaleA = 1.5 * G.Utils.currentScale;
+		var scaleB = 8 * G.Utils.currentScale;
+		emitter.addInitialize(new Proton.Radius(1));
+		emitter.addInitialize(new Proton.Life(1,3));
+		emitter.addInitialize(new Proton.Velocity(new Proton.Span(3, 12), new Proton.Span(-30, 30), 'polar'));
+		emitter.addBehaviour(new Proton.RandomDrift(100, 50, 0.05));
+		emitter.addBehaviour(new Proton.Scale(scaleA, scaleB));
+		emitter.p.x = this.fireWorkSpawnPosition.x;
+		emitter.p.y = this.fireWorkSpawnPosition.y;
 
 		var subEmitter;
 
 		emitter.addEventListener(Proton.PARTICLE_CREATED, function(e) {
-			//console.log('Smoke on');
 			var particle = e.particle;
-			bitmap = new createjs.Bitmap('assets/images/particle.png');
+			bitmap = new createjs.Bitmap('assets/images/sparkle.png');
 			subEmitter = new Proton.Emitter();
 			subEmitter.rate = new Proton.Rate(new Proton.Span(5, 10), new Proton.Span(0.005, 0.025));
-			subEmitter.addInitialize(new Proton.ImageTarget(bitmap, 32));
+			subEmitter.addInitialize(new Proton.ImageTarget(bitmap));
 			subEmitter.addInitialize(new Proton.Mass(1));
-			subEmitter.addInitialize(new Proton.Radius(1, 12));
+			subEmitter.addInitialize(new Proton.Radius(1));
 			subEmitter.addInitialize(new Proton.Life(1));
 			subEmitter.addInitialize(new Proton.V(new Proton.Span(1, 3), new Proton.Span(170, 190), 'polar'));
 			subEmitter.addBehaviour(new Proton.RandomDrift(10, 10, 0.05));
 			subEmitter.addBehaviour(new Proton.Alpha(1, 0.1));
-
-			subEmitter.addBehaviour(new Proton.Scale(0.1, 2));
-			subEmitter.p.x = particle.x;//canvas.width / 2;
-			subEmitter.p.y = particle.y;//canvas.height / 2;
+			subEmitter.addBehaviour(new Proton.Scale(1.1 * G.Utils.currentScale, 0.2 * G.Utils.currentScale));
+			subEmitter.addBehaviour(new Proton.Color('ff0000', 'random', Infinity, Proton.easeOutQuart));
+			subEmitter.p.x = particle.p.x;
+			subEmitter.p.y = particle.p.y;
 			subEmitter.emit();
 			proton.addEmitter(subEmitter);
 		});
 
 		emitter.addEventListener(Proton.PARTICLE_UPDATE, function(e) {
-			subEmitter.p.x = e.particle.p.x;
-			subEmitter.p.y = e.particle.p.y;
+			var pos = e.particle.p;
+			subEmitter.p.x = pos.x;
+			subEmitter.p.y = pos.y;
 		});
 
 		emitter.addEventListener(Proton.PARTICLE_DEAD, function() {
+			emitter.removeAllEventListeners();
 			emitter.destroy();
 			subEmitter.stopEmit();
+			emitter = null;
 		});
+
+		proton.addEmitter(emitter);
+		emitter.emit("once", true);
 	};
-
-
-	p.handleDaisyShowerStart = function() {
-		this.launchFirework();
-	};
-
-
-
 
 
 

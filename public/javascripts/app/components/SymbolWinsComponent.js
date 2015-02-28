@@ -126,11 +126,13 @@ var G = G || {};
 				sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
 				this.addChild(sprite);
 				this.symbolsMatrix[i].push(sprite);
-				sprite.on("animationend", this.handleAnimationEnd, this);
 				sprite.visible = false;
-				setTimeout(function(sprite) {
-					self.playThisSprite(sprite, 0)
-				}(sprite), 0);
+				if (this.setup.failSafeInitisalisation) {
+					sprite.on("animationend", this.handleAnimationEnd, this);
+					setTimeout(function(sprite) {
+						self.playThisSprite(sprite, 0)
+					}(sprite), 0);
+				}
 				this.initialisedSpritesNum++;
 			}
 		}
@@ -170,8 +172,8 @@ var G = G || {};
 	};
 
 	p.handleAnimationEnd = function(e) {
-		var sprite = e.target;
-		sprite.off("animationend", this.handleAnimationEnd);
+		var sprite = e.currentTarget;
+		sprite.removeAllEventListeners();
 		this.hideThisSprite(sprite);
 		console.log('handleAnimEnd', this.initialisedSpritesNum);
 		if (--this.initialisedSpritesNum === 0) {

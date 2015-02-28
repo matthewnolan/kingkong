@@ -68,9 +68,11 @@ http://localhost:3000/docs - runs app documentation
 ----------
 
 
-## Current bugs / features working on:
+## Changelog
 
 ###v.0.2.3
 
-- Moved ServerInterface to Game
-- Implement celebration Fireworks
+- Moved Game Setup into Game.js
+- Implemented celebration Fireworks
+- Implemented Failsafe Loading (longer initialisation for more reliable anim loading)
+- Added Tests and Docs to Gaff

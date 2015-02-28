@@ -19,6 +19,14 @@ var G = G || {};
 	Utils.gameComponents = [];
 
 	/**
+	 * Access value the app is currently scaled to.
+	 * It is modified when the app is rescaled.
+	 * @property currentScale
+	 * @type {number}
+	 */
+	Utils.currentScale = 1;
+
+	/**
 	 * @ method getGameComponentByClass - pass the type of component {eg. G.ReelsComponent} to return the component instance
 	 * @param {class} componentClass - must be the class type of a G.GameComponent
 	 * @returns {G.GameComponent} - the instance

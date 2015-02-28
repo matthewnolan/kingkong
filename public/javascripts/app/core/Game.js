@@ -180,6 +180,9 @@ this.G = this.G || {};
 	 */
 	p.onSetupLoaded = function(setup) {
 		this.setup = setup;
+		if (!setup.failSafeInitisalisation) {
+			this.initailisedNum = 1;
+		}
 	};
 
 	/**
@@ -198,9 +201,8 @@ this.G = this.G || {};
 		this.createProton();
 
 		createjs.Ticker.on("tick", this.handleTick, this);
+		createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
 		createjs.Ticker.setFPS(60);
-
-		//this.rescale();
 	};
 
 	/**
@@ -268,10 +270,7 @@ this.G = this.G || {};
 
 		this.canvas = mainCanvas;
 
-		if (this.particlesComponent) {
-			this.particlesComponent.stageScale = this.stageScale;
-			this.particlesComponent.canvas = mainCanvas;
-		}
+		G.Utils.currentScale = this.stageScale;
 
 		//html console (useful for mobile debug)
 		if (this.setup.htmlDebug) {
@@ -394,7 +393,7 @@ this.G = this.G || {};
 	p.checkCacheInitialised = function() {
 		console.log('checkCacheInitialised', this.initailisedNum);
 		if (--this.initailisedNum === 0) {
-			this.preloaderEl.style.visibility = "hidden";
+			this.preloaderEl.style.display = "none";
 		}
 	};
 
@@ -402,7 +401,8 @@ this.G = this.G || {};
 	 * Render Tick which updates Stage and any profiling tool.
 	 * @method handleTick
 	 */
-	p.handleTick = function() {
+	p.handleTick = function(event) {
+
 		this.stats.begin();
 		this.proton.update();
 		this.stage.update();
@@ -488,6 +488,8 @@ this.G = this.G || {};
 	 * @method fpsSwitch
 	 */
 	p.fpsSwitch = function() {
+		console.log('fpsSwitched');
+
 		var currentFrameRate = Math.round(createjs.Ticker.framerate);
 		if (currentFrameRate <= 30) {
 			createjs.Ticker.setFPS(60);

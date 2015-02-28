@@ -58,15 +58,17 @@ var G = G || {};
 		sprite.y = 0;
 		sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
 		this.addChild(sprite);
-		sprite.on("animationend", this.handleAnimationEnd, this);
 		sprite.visible = false;
 		this.bigWins.push(sprite);
-		this.playAnimation();
+		sprite.on("animationend", this.handleAnimationEnd, this);
+		if (this.setup.failSafeInitisalisation) {
+			this.playAnimation();
+		}
 	};
 
 	p.handleAnimationEnd = function(e) {
 		var sprite = e.target;
-		sprite.off("animationend", this.handleAnimationEnd);
+		//sprite.off("animationend", this.handleAnimationEnd);
 		this.cacheCompleted.dispatch();
 		this.hideAnimation();
 	};

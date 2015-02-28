@@ -154,13 +154,10 @@ describe("Game Test", function () {
 	});
 
 	it("onSetupLoaded function should save the setup in this class", function() {
-
 		var data = "setupJson";
-
 		spyOn(this.class, 'rescale');
 
 		this.class.onSetupLoaded(data);
-
 		expect(this.class.setup).toBe("setupJson");
 
 	});
