@@ -66,8 +66,8 @@ var G = G || {};
 		}
 	};
 
-	p.handleAnimationEnd = function(e) {
-		var sprite = e.target;
+	p.handleAnimationEnd = function() {
+		//var sprite = e.target;
 		//sprite.off("animationend", this.handleAnimationEnd);
 		this.cacheCompleted.dispatch();
 		this.hideAnimation();

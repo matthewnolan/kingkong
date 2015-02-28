@@ -121,7 +121,7 @@ var G = G || {};
 		testButton.y = uaButton.y;
 		this.addChild(testButton);
 		testButton.on("click", function() {
-			window.open("/test","_blank")
+			window.open("/test","_blank");
 		});
 
 		var docsButton = new G.GaffButton();

@@ -101,6 +101,7 @@ var G = G || {};
 		}
 	};
 
+
 	/**
 	 * Draws a symbol sprite on each visible symbol on the reels
 	 * @method drawSprites
@@ -114,7 +115,7 @@ var G = G || {};
 		var symbolH = this.setup.symbolH;
 		var reelMarginR = this.setup.reelMarginRight;
 		var symbolMarginB = this.setup.symbolMarginBottom;
-		var self = this;
+
 		for (i = 0; i < reelLen; i++) {
 
 			this.symbolsMatrix.push([]);
@@ -129,9 +130,7 @@ var G = G || {};
 				sprite.visible = false;
 				if (this.setup.failSafeInitisalisation) {
 					sprite.on("animationend", this.handleAnimationEnd, this);
-					setTimeout(function(sprite) {
-						self.playThisSprite(sprite, 0)
-					}(sprite), 0);
+					G.Utils.callLater(this.playThisSprite, [sprite, 0], this, 0);
 				}
 				this.initialisedSpritesNum++;
 			}
@@ -166,6 +165,7 @@ var G = G || {};
 	 * @param {string} id - Matching string to a particular symbol_anims.json['animations']
 	 */
 	p.playThisSprite = function(sprite, id) {
+		console.log('>>>playThisSprite:', sprite, id);
 		sprite.visible = true;
 		sprite.gotoAndPlay(id);
 		this.currentlyPlayingSprites.push(sprite);

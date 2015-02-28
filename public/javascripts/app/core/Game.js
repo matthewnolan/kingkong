@@ -187,7 +187,6 @@ this.G = this.G || {};
 			this.STAGE_SCALE_MODE = "NO_SCALE";
 			var body = document.querySelector("body");
 			body.className = body.className + " layoutDesktop";
-
 			if (QRCode){
 				new QRCode(document.getElementById("qrcode"), {
 					text: window.location.href,
@@ -417,10 +416,10 @@ this.G = this.G || {};
 
 	/**
 	 * Render Tick which updates Stage and any profiling tool.
+	 * @see  http://createjs.com/tutorials/Animation%20and%20Ticker
 	 * @method handleTick
 	 */
-	p.handleTick = function(event) {
-
+	p.handleTick = function() {
 		this.stats.begin();
 		this.proton.update();
 		this.stage.update();

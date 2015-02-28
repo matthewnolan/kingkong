@@ -156,14 +156,10 @@ var G = G || {};
 		var bitmap = new createjs.Bitmap('assets/images/firework_particle20x20.png');
 		var emitter = new Proton.Emitter();
 		var proton = this.proton;
-		var canvas = this.canvas;
-		var self = this;
 
 		//removing bitmap until figured out the positioning bug
 		//emitter.addInitialize(new Proton.ImageTarget(bitmap));
 		emitter.addInitialize(new Proton.Mass(1));
-		var minRadius = 1;
-		var maxRadius = 12;
 		var scaleA = 1.5 * G.Utils.currentScale;
 		var scaleB = 8 * G.Utils.currentScale;
 		emitter.addInitialize(new Proton.Radius(1));
