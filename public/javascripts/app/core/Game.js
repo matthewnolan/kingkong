@@ -1,5 +1,5 @@
 /*! kingkong 0.0.1 - 2015-02-02
-* Copyright (c) 2015 Licensed @HighFiveGames */
+ * Copyright (c) 2015 Licensed @HighFiveGames */
 
 this.G = this.G || {};
 
@@ -183,6 +183,24 @@ this.G = this.G || {};
 		if (!setup.failSafeInitisalisation) {
 			this.initailisedNum = 1;
 		}
+		if (this.setup.enableDesktopView && device.desktop()) {
+			this.STAGE_SCALE_MODE = "NO_SCALE";
+			var body = document.querySelector("body");
+			body.className = body.className + " layoutDesktop";
+
+			if (QRCode){
+				new QRCode(document.getElementById("qrcode"), {
+					text: window.location.href,
+					width: 200,
+					height: 200
+				});
+			}
+		}
+	};
+
+	p.detectDesktop = function() {
+		// this.setup = setup;
+		// for enabling desktop view.
 	};
 
 	/**

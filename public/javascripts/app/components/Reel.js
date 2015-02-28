@@ -206,7 +206,7 @@ var G = G || {};
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var container, len = this.reelData.length;
 
-		console.log('drawReel', len);
+		// console.log('drawReel', len);
 
 		var l, j, sp, debugSh, gp, text, text2;
 		var reelHeight = this.reelData.length * symbolH + this.reelData.length * symbolMarginB;
@@ -223,7 +223,7 @@ var G = G || {};
 				//creates a symbol for every index in reelData array
 				container = new createjs.Container();
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[j]]);
-				console.log('spriteContainer', spriteContainer.length);
+				// console.log('spriteContainer', spriteContainer.length);
 				spriteContainer.push(sp);
 				container.addChild(sp);
 				if (this.setup.devMode) {

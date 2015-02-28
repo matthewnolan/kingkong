@@ -76,12 +76,12 @@ var G = G || {};
 
 		//this.removeAllEventListeners();
 
-		console.log('clicked Signal:', this.clicked);
+		// console.log('clicked Signal:', this.clicked);
 		//this.clicked.addOnce();
 	};
 
 	p.drawButton = function() {
-		console.log('button draw', this.labelText);
+		// console.log('button draw', this.labelText);
 		var shape = new createjs.Shape();
 		var gp = shape.graphics;
 

@@ -72,4 +72,13 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get update
   #   sudo apt-get install -y apache2
   # SHELL
+
+  config.vm.network "private_network", type: "dhcp"
+  # config.vm.synced_folder ".", "/vagrant", type: "nfs"
+  # config.vm.synced_folder ".", "/vagrant", :nfs => { :mount_options => ["dmode=777","fmode=777"] }
+
+  config.vm.synced_folder ".", "/vagrant", :type => :nfs, :mount_options => ['nolock,vers=3,udp,noatime,actimeo=1']
+
 end
+
+
