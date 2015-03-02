@@ -85,14 +85,18 @@ var G = G || {};
 
 	/**
 	 * Signal Handler for updating balance text field
-	 *
+	 * Currently unused, but should be called via SignalDispatcher with
+	 * @todo Server Integration
 	 * @method handleBalanceUpdate
 	 * @param {number} balance
 	 */
 	p.handleBalanceUpdate = function(balance, withRollup) {
-		//G.thisGame.currentCredits = G.thisGame.currentCredits - G.setup.defaultBet;
-		//G.util.updateTotal("totalCredits", G.thisGame.currentCredits);
-		if (withRollup) this.rollUp(balance);
+		if (withRollup) {
+			this.rollUp(balance);
+		} else {
+			this.tempBalance = balance;
+			this.handleRollUpChange(this.tempBalance);
+		}
 
 	};
 
@@ -132,6 +136,13 @@ var G = G || {};
 		}
 	};
 
+	/**
+	 * Call this method to rollUp balance text field value with argument newVal
+	 * Starts a createjs.Tween which updates this.tempBalance.  Actual textfield update handled by tween's change event
+	 *
+	 * @method rollUp
+	 * @param {number} newVal
+	 */
 	p.rollUp = function(newVal) {
 		var animDuration = 500;
 		createjs.Tween.get(this, { loop: false, override: true  })
@@ -139,6 +150,11 @@ var G = G || {};
 			.on("change", this.handleRollUpChange, this);
 	};
 
+	/**
+	 * change event handler for rollUp tween, responsible for updating the balance text field.
+	 *
+	 * @method handleRollUpChange
+	 */
 	p.handleRollUpChange = function() {
 		var updateBalance = Math.floor(this.tempBalance);
 		this.creditText.text = "Credits: " + updateBalance.toString();
