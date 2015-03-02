@@ -16,6 +16,7 @@ var G = G || {};
 	var GameComponent = function() {
 		this.Container_constructor();
 	};
+
 	var p = createjs.extend(GameComponent, createjs.Container);
 	p.constructor = GameComponent;
 

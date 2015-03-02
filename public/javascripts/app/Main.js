@@ -8,7 +8,10 @@ this.G = this.G || {};
 
 	/**
 	 * The Main Class should give the app its entry point.
+	 * The Main Class is instantiated by the Index.html and it's init function called by this in a way that ensures all
+	 * dependencies are loaded.
 	 * No other entry points should be used by the index.html
+	 *
 	 * @class Main
 	 * @constructor
 	 */
@@ -17,14 +20,14 @@ this.G = this.G || {};
 	p.constructor = Main;
 
 	/**
-	 * Stores a reference to G.Game, Everything a KingKong game is created by this Object or passed into it during initialisation.
+	 * Stores a reference to G.Game, Everything a King Kong game is created by this.
 	 * @property game
 	 * @type {G.Game}
 	 */
 	p.game = null;
 
 	/**
-	 * Application entry point initialises the stage canvas and G.Game
+	 * Application entry point initialises Game
 	 * @method init
 	 *
 	 */

@@ -180,11 +180,8 @@ this.G = this.G || {};
 	 */
 	p.onSetupLoaded = function(setup) {
 		this.setup = setup;
-		if (!setup.failSafeInitisalisation) {
-			this.initailisedNum = 1;
-		}
 		if (this.setup.enableDesktopView && device.desktop()) {
-			this.STAGE_SCALE_MODE = "NO_SCALE";
+			//this.STAGE_SCALE_MODE = "NO_SCALE";
 			var body = document.querySelector("body");
 			body.className = body.className + " layoutDesktop";
 			if (QRCode){
@@ -195,10 +192,12 @@ this.G = this.G || {};
 				});
 			}
 		}
+		if (!setup.failSafeInitisalisation) {
+			this.initailisedNum = 1;
+		}
 	};
 
 	p.detectDesktop = function() {
-		// this.setup = setup;
 		// for enabling desktop view.
 	};
 
