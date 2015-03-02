@@ -129,6 +129,7 @@ this.G = this.G || {};
     p.onSetupLoaded = function(setup) {
         this.setup = setup;
 
+        // its here for now. should be in detectDesktop
         if (this.setup.enableDesktopView && device.desktop()) {
             this.STAGE_SCALE_MODE = "NO_SCALE";
             var body = document.querySelector("body");
@@ -142,7 +143,7 @@ this.G = this.G || {};
 	            });
             }
         }        
-        
+
         this.rescale();
     };
 
