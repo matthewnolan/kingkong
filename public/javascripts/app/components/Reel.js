@@ -35,6 +35,12 @@ var G = G || {};
 	p.setup = null;
 
 	/**
+	 * @property signalDispatcher
+	 * @type {G.SignalDispatcher}
+	 */
+	p.signalDispatcher = null;
+
+	/**
 	 * @property symbolSprites
 	 * @type {createjs.SpriteSheet}
 	 */
@@ -141,17 +147,20 @@ var G = G || {};
 	 * Initialise Class vars and passes in instance of setup, symbolSprites, and initial reelData
 	 * @method init
 	 * @param setup
+	 * @param signalDispatcher
 	 * @param symbolSprites
 	 * @param reelData
 	 */
-	p.init = function(setup, symbolSprites, reelData) {
+	p.init = function(setup, signalDispatcher, symbolSprites, reelData) {
 		this.setup = setup;
+		this.signalDispatcher = signalDispatcher;
 		this.symbolSprites = symbolSprites;
 		this.reelData = reelData;
 		this.wrap1 = [];
 		this.wrap2 = [];
 		this.upperBuffer = [];
 		this.lowerBuffer = [];
+
 	};
 
 	/**
@@ -390,6 +399,7 @@ var G = G || {};
 	 */
 	p.stopSpin = function(index) {
 		this.scheduleSpinStop = -2;
+		var self = this;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
@@ -402,6 +412,7 @@ var G = G || {};
 		//todo move all Sound.play to DJ and dispatch a Signal here
 		setTimeout(function() {
 			createjs.Sound.play("reelstop1");
+			self.signalDispatcher.playSound.dispatch("reelStop1");
 		}, stopTime - 300);
 
 		this.y = 0;

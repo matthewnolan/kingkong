@@ -389,6 +389,11 @@ this.G = this.G || {};
 		this.stage.addChild(meterComponent);
 		this.gameComponents.push(meterComponent);
 
+        // init Dj
+        var djComponent = new G.Dj();
+        djComponent.init(this.setup, this.signalDispatcher);
+        // djComponent.nameDrop("doc");
+        this.gameComponents.push(djComponent);
 
 		var gaffMenu = new G.GaffMenuComponent(this.version);
 		gaffMenu.init(this.setup, this.signalDispatcher);

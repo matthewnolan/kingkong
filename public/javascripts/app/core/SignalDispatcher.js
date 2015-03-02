@@ -66,6 +66,14 @@ var G = G || {};
 	p.balanceChanged = new signals.Signal();
 
 	/**
+	 * dispatch this signal for sound.
+	 *
+	 * @property alterSound
+	 * @type {Signal}
+	 */
+	p.playSound = new signals.Signal();
+
+	/**
 	 *
 	 * @method init
 	 * @param {Object} setup
@@ -91,6 +99,7 @@ var G = G || {};
 		var symbolWinsComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		var particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
 		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
+		// var dj = G.Utils.getGameComponentByClass(G.Dj);
 
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
@@ -101,9 +110,8 @@ var G = G || {};
 
 		//todo replace mock functions during server integration
 		meter.mockSpinPayment();
-
-
 	};
+
 
 
 
@@ -118,9 +126,6 @@ var G = G || {};
 
 		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
 		meter.checkMockWin();
-
-
-
 	};
 
 	/**
