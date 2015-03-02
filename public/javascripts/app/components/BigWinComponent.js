@@ -60,15 +60,16 @@ var G = G || {};
 		this.addChild(sprite);
 		sprite.visible = false;
 		this.bigWins.push(sprite);
-		sprite.on("animationend", this.handleAnimationEnd, this);
+
 		if (this.setup.failSafeInitisalisation) {
+			sprite.on("animationend", this.handleAnimationEnd, this);
 			this.playAnimation();
 		}
 	};
 
-	p.handleAnimationEnd = function() {
-		//var sprite = e.target;
-		//sprite.off("animationend", this.handleAnimationEnd);
+	p.handleAnimationEnd = function(e) {
+		var sprite = e.target;
+		sprite.removeAllEventListeners();
 		this.cacheCompleted.dispatch();
 		this.hideAnimation();
 	};

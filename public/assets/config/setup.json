@@ -34,6 +34,7 @@
   "spinState": "init",
   "isMobile": "deprecated",
   "defaultBet": 5,
+  "defaultBigWin" : 1000,
   "defaultCredits": 1337,
 
   "reelAnimation" : {

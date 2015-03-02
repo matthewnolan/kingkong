@@ -48,6 +48,12 @@ var G = G || {};
 	p.currentBalance = 0;
 
 	/**
+	 *
+	 * @type {number}
+	 */
+	p.mockWin = 0;
+
+	/**
 	 * @method init
 	 * @param setup
 	 * @param signalDispatcher
@@ -55,6 +61,8 @@ var G = G || {};
 	p.init = function(setup, signalDispatcher) {
 		this.GameComponent_init(setup, signalDispatcher);
 		this.signalDispatcher.balanceChanged.add(this.handleBalanceUpdate, this);
+
+		this.currentBalance = this.setup.defaultCredits;
 	};
 
 	/**
@@ -69,10 +77,10 @@ var G = G || {};
 		winText.y = 6;
 		this.addChild(winText);
 
-		var creditText = new createjs.Text("Credits: " + this.setup.defaultCredits, "19px Arial", "#FFCC00");
-		creditText.x = this.setup.bezelMarginL - 10;
-		creditText.y = 6;
-		this.addChild(creditText);
+		this.creditText = new createjs.Text("Credits: " + this.currentBalance, "19px Arial", "#FFCC00");
+		this.creditText.x = this.setup.bezelMarginL - 10;
+		this.creditText.y = 6;
+		this.addChild(this.creditText);
 	};
 
 	/**
@@ -88,14 +96,52 @@ var G = G || {};
 
 	};
 
-	p.rollUp = function(newVal) {
-		createjs.Tween.get(this, { loop: false, override: true  })
-			.to({ "tempBalance": newVal }, 1000, createjs.Ease.Linear)
-			.addEventListener("change", handleRollupChange);
+	/**
+	 * @todo Replace with Server Integration
+	 * @method mockSpinPayment
+	 */
+	p.mockSpinPayment = function() {
+		var oldBalance = this.currentBalance;
+		var newBalance = oldBalance - this.setup.defaultBet;
+		this.tempBalance = oldBalance;
+		this.currentBalance = newBalance;
+		this.rollUp(this.currentBalance);
 	};
 
-	p.handleRollUpChange = function(e) {
-		console.log(this, e);
+	/**
+	 * todo Replace with Server Integration
+	 * @method prepareMockWin
+	 * @param winAmount
+	 */
+	p.prepareMockWin = function(winAmount) {
+		this.mockWin = winAmount;
+	};
+
+	/**
+	 * @todo Replace with Server Integration
+	 * @method mockGaffM1
+	 */
+	p.checkMockWin = function() {
+		if (this.mockWin > 0) {
+			var oldBalance = this.currentBalance;
+			var newBalance = oldBalance + this.mockWin;
+			this.tempBalance = oldBalance;
+			this.currentBalance = newBalance;
+			this.rollUp(this.currentBalance);
+			this.mockWin = 0;
+		}
+	};
+
+	p.rollUp = function(newVal) {
+		var animDuration = 500;
+		createjs.Tween.get(this, { loop: false, override: true  })
+			.to({ "tempBalance": newVal }, animDuration, createjs.Ease.getPowOut(2.2))
+			.on("change", this.handleRollUpChange, this);
+	};
+
+	p.handleRollUpChange = function() {
+		var updateBalance = Math.floor(this.tempBalance);
+		this.creditText.text = "Credits: " + updateBalance.toString();
 	};
 
 

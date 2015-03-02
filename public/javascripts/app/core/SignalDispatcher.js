@@ -90,6 +90,7 @@ var G = G || {};
 		var bigWinComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
 		var symbolWinsComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		var particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
+		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
 
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
@@ -98,7 +99,8 @@ var G = G || {};
 		particles.smokeOff();
 		this.commandQueue.setupQueue();
 
-		//fake balance spend
+		//todo replace mock functions during server integration
+		meter.mockSpinPayment();
 
 
 	};
@@ -111,10 +113,14 @@ var G = G || {};
 	p.handleReelSpinComplete = function() {
 		this.commandQueue.play();
 		this.commandQueue.gaffType = "default";
-		var gaffMenu = _.find(this.gameComponents, function(component) {
-			return component instanceof G.GaffMenuComponent;
-		});
+		var gaffMenu = G.Utils.getGameComponentByClass(G.GaffMenuComponent);
 		gaffMenu.deselectGaffButtons();
+
+		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
+		meter.checkMockWin();
+
+
+
 	};
 
 	/**
