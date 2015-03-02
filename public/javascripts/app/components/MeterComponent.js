@@ -36,12 +36,25 @@ var G = G || {};
 	p.creditText = null;
 
 	/**
+	 *
+	 * @type {number}
+	 */
+	p.tempBalance = 0;
+
+	/**
+	 *
+	 * @type {number}
+	 */
+	p.currentBalance = 0;
+
+	/**
 	 * @method init
 	 * @param setup
 	 * @param signalDispatcher
 	 */
 	p.init = function(setup, signalDispatcher) {
 		this.GameComponent_init(setup, signalDispatcher);
+		this.signalDispatcher.balanceChanged.add(this.handleBalanceUpdate, this);
 	};
 
 	/**
@@ -71,9 +84,18 @@ var G = G || {};
 	p.handleBalanceUpdate = function(balance, withRollup) {
 		//G.thisGame.currentCredits = G.thisGame.currentCredits - G.setup.defaultBet;
 		//G.util.updateTotal("totalCredits", G.thisGame.currentCredits);
+		if (withRollup) this.rollUp(balance);
 
-		
+	};
 
+	p.rollUp = function(newVal) {
+		createjs.Tween.get(this, { loop: false, override: true  })
+			.to({ "tempBalance": newVal }, 1000, createjs.Ease.Linear)
+			.addEventListener("change", handleRollupChange);
+	};
+
+	p.handleRollUpChange = function(e) {
+		console.log(this, e);
 	};
 
 

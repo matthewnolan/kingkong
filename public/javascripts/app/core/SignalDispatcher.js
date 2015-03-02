@@ -58,6 +58,14 @@ var G = G || {};
 	p.fireworkLaunched = new signals.Signal();
 
 	/**
+	 * dispatch this signal with the new balance.
+	 *
+	 * @property balanceChanged
+	 * @type {Signal}
+	 */
+	p.balanceChanged = new signals.Signal();
+
+	/**
 	 *
 	 * @method init
 	 * @param {Object} setup
@@ -89,6 +97,10 @@ var G = G || {};
 		symbolWinsComponent.hideAll();
 		particles.smokeOff();
 		this.commandQueue.setupQueue();
+
+		//fake balance spend
+
+
 	};
 
 
