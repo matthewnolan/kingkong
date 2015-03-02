@@ -71,6 +71,7 @@ this.G = this.G || {};
 	 * loadGameAssets - loads spritesheets defined in Setup
 	 */
 	p.loadGameAssets = function() {
+		//this.assetsLoader.loadManifest(this.game.setup.imageDataManifest);
 		this.assetsLoader.loadManifest(this.game.setup.spritesManifest);
 		this.assetsLoader.loadManifest(this.game.setup.soundsManifest);
 	};

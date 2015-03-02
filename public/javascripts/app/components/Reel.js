@@ -399,6 +399,7 @@ var G = G || {};
 		var easeAmp = 1 + index * 0.01;
 		var easeTime = 1 - index * 0.02;
 
+		//todo move all Sound.play to DJ and dispatch a Signal here
 		setTimeout(function() {
 			createjs.Sound.play("reelstop1");
 		}, stopTime - 300);

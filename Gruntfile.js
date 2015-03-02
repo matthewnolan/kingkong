@@ -139,14 +139,16 @@ module.exports = function (grunt) {
 				eqnull: true,
 				browser: true,
 				globals: {
-					"__dirname" : true,
-					"Proton": true,
 					"G": true,
-					"_" : true,
-					"createjs" : true,
-					"Stats" : true,
-					"signals" : true,
+					"device" : false,
+					"QRCode" : false,
+					"__dirname" : false,
 					"jasmine" : false,
+					"Proton": false,
+					"_" : false,
+					"createjs" : false,
+					"Stats" : false,
+					"signals" : false,
 					"sinon" : false,
 					"spyOn" : false,
 					"spyOnSignal" : false,
@@ -165,7 +167,8 @@ module.exports = function (grunt) {
 					"fail" : false,
 					"require" : false,
 					"console" : false,
-					"Hammer" : true
+					"Hammer" : false,
+					"alert" : false
 				}
 			},
 			all: ['public/javascripts/app/**/*.js', 'public/javascripts/test/**/*.js'],
@@ -191,7 +194,7 @@ module.exports = function (grunt) {
 				url: '<%= pkg.homepage %>',
 				options: {
 					paths: 'public/javascripts/app/',
-					themedir: 'src/yuidoc/themes/',
+					themedir: 'src/yuidoc/themes/simple-kong/',
 					outdir: 'public/doc/'
 				}
 			}

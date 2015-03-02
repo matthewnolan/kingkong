@@ -53,6 +53,12 @@ var G = G || {};
 	p.currentlyPlayingSprites = [];
 
 	/**
+	 * initialisedSpritesNum
+	 * @type {number}
+	 */
+	p.initialisedSpritesNum = 0;
+
+	/**
 	 * init the game component vars.
 	 * @method init
 	 * @param {Object} setup
@@ -95,6 +101,7 @@ var G = G || {};
 		}
 	};
 
+
 	/**
 	 * Draws a symbol sprite on each visible symbol on the reels
 	 * @method drawSprites
@@ -120,8 +127,12 @@ var G = G || {};
 				sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
 				this.addChild(sprite);
 				this.symbolsMatrix[i].push(sprite);
-				//sprite.on("animationend", this.handleAnimationEnd);
 				sprite.visible = false;
+				if (this.setup.failSafeInitisalisation) {
+					sprite.on("animationend", this.handleAnimationEnd, this);
+					G.Utils.callLater(this.playThisSprite, [sprite, 0], this, 0);
+				}
+				this.initialisedSpritesNum++;
 			}
 		}
 	};
@@ -154,9 +165,20 @@ var G = G || {};
 	 * @param {string} id - Matching string to a particular symbol_anims.json['animations']
 	 */
 	p.playThisSprite = function(sprite, id) {
+		console.log('>>>playThisSprite:', sprite, id);
 		sprite.visible = true;
 		sprite.gotoAndPlay(id);
 		this.currentlyPlayingSprites.push(sprite);
+	};
+
+	p.handleAnimationEnd = function(e) {
+		var sprite = e.currentTarget;
+		sprite.removeAllEventListeners();
+		this.hideThisSprite(sprite);
+		console.log('handleAnimEnd', this.initialisedSpritesNum);
+		if (--this.initialisedSpritesNum === 0) {
+			this.cacheCompleted.dispatch();
+		}
 	};
 
 	/**

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head lang="en">
     <meta charset="UTF-8">
     <title>King Kong</title>
@@ -39,6 +38,7 @@
     <script src="javascripts/vendor/proton/proton-1.0.0.min.js"></script>
     <script src="javascripts/vendor/devicejs/device.min.js"></script>
     <script src="javascripts/vendor/qrcodejs/qrcode.min.js"></script>
+    
     <!-- Application Deps -->
     <script src="javascripts/app/Main.js"></script>
     <script src="javascripts/app/core/Preloader.js"></script>
@@ -50,6 +50,7 @@
     <script src="javascripts/app/commands/WinLineCommand.js"></script>
     <script src="javascripts/app/commands/BigWinCommand.js"></script>
     <script src="javascripts/app/commands/SymbolAnimCommand.js"></script>
+    <script src="javascripts/app/commands/FireworksCommand.js"></script>
     <script src="javascripts/app/components/GameComponent.js"></script>
     <script src="javascripts/app/components/Reel.js"></script>
     <script src="javascripts/app/components/ReelsComponent.js"></script>
@@ -58,15 +59,15 @@
     <script src="javascripts/app/components/WinLine.js"></script>
     <script src="javascripts/app/components/BigWinComponent.js"></script>
     <script src="javascripts/app/components/GaffMenuComponent.js"></script>
+    <script src="javascripts/app/components/ParticlesComponent.js"></script>
     <script src="javascripts/app/components/GaffButton.js"></script>
+    <script src="javascripts/app/components/MeterComponent.js"></script>
     <script src="javascripts/app/utils/QueueFactory.js"></script>
     <script src="javascripts/app/utils/Utils.js"></script>
 
     <link rel="stylesheet" href="stylesheets/style.css">
 </head>
-
 <body>
-
     <div id="landscapeModal">
         <p><b>Rotate Device to Landscape</b>
         </p>
@@ -97,26 +98,24 @@
         </div>
     </div>
 
-
-
-    <div class="dom-helpers">
-        <h4>Spin Demo (Press space to spin - again to stop)</h4>
-        <label for="gasPedal">Spin Speed</label>
-        <input type="range" id="gasPedal" min="0" value="50" max="100" step="1" onchange="window.updateSpeed(value)" oninput="window.updateSpeed(value)">
-        <div class="spin-perc"></div>
-        <div class="spin-speed"></div>
-        <label for="spinToIndex">Spin To Index</label>
-        <input id="spinToIndex" type="number" min="0" max="16" value="0" />
-        <div>
-            <a href="tests.html">Tests</a>
-            <a href="/doc/">Documentation</a>
-        </div>
+<div class="dom-helpers">
+    <h4>Spin Demo (Press space to spin - again to stop)</h4>
+    <label for="gasPedal">Spin Speed</label>
+    <input type="range" id="gasPedal" min="0" value="50" max="100" step="1" onchange="window.updateSpeed(value)" oninput="window.updateSpeed(value)">
+    <div class="spin-perc"></div>
+    <div class="spin-speed"></div>
+    <label for="spinToIndex">Spin To Index</label>
+    <input id="spinToIndex" type="number" min="0" max="16" value="0" />
+    <div>
+        <a href="tests.html">Tests</a>
+        <a href="/doc/">Documentation</a>
     </div>
+</div>
 
 
 
 
-    <script>
+<script>
     (function(window) {
         /**
          * Application Entry Point
@@ -129,7 +128,7 @@
          * @param val
          */
         window.updateSpeed = function(val) {
-            currentSpinSpeed = Math.round(val / 100 * 6000);
+            currentSpinSpeed = Math.round(val/100 * 6000);
 
             var spinPerc = document.querySelector('div.spin-perc');
             var spinSpeed = document.querySelector('div.spin-speed');
@@ -139,7 +138,6 @@
         };
         window.updateSpeed(50);
     })(window);
-    </script>
+</script>
 </body>
-
 </html>

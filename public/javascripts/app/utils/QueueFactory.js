@@ -36,12 +36,16 @@ var G = G || {};
 	p.generateGaff = function(gaffType) {
 
 		var queue = [], command, i, len;
-		var winLines, bigWin, reels, symbolWins;
+		var winLines, bigWin, reels, symbolWins, particles, meter;
 
 		reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
 		winLines = G.Utils.getGameComponentByClass(G.WinLinesComponent);
 		bigWin = G.Utils.getGameComponentByClass(G.BigWinComponent);
 		symbolWins = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
+		particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
+		meter = G.Utils.getGameComponentByClass(G.MeterComponent);
+
+		console.log('generateGaff=', particles);
 
 
 		switch(gaffType) {
@@ -59,15 +63,22 @@ var G = G || {};
 				break;
 			case "gaff_Line_M1" :
 				reels.modifySymbolData([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
+				meter.prepareMockWin(this.setup.defaultBigWin);
 
 				command = new G.SymbolAnimCommand();
 				command.init(this.setup, symbolWins, [0,1,2], 5, 'm1-sprite__short');
-				command.callNextDelay = 1000;
+				command.callNextDelay = 500;
 				queue.push(command);
 
 				command = new G.BigWinCommand();
-				command.callNextDelay = 2500;
+				command.callNextDelay = 1500;
 				command.init(this.setup, bigWin);
+
+				queue.push(command);
+
+				command = new G.BigWinCommand();
+				command.callNextDelay = 0;
+				command.init(this.setup, bigWin,true);
 
 				queue.push(command);
 
@@ -86,19 +97,26 @@ var G = G || {};
 				command.init(this.setup, winLines, winLineIndexes, 0);
 				queue.push(command);
 
+				command = new G.FireworksCommand();
+				command.init(this.setup, particles, false, 10000);
+				command.loopIndex = 1;
+				queue.push(command);
+
 				for (i = 0; i < winningLines.length; i++) {
+
+					if (i > 0 && i % 10 === 0) {
+						command = new G.FireworksCommand();
+						command.init(this.setup, particles, false, 10000);
+						queue.push(command);
+					}
+
 					command = new G.WinLineCommand();
 					command.init(this.setup, winLines, [i], 5, "m1-sprite__000");
 					if (i === 0) {
-						command.loopIndex = 1;
+						//command.loopIndex = 1;
 					}
 					queue.push(command);
 				}
-
-
-
-
-
 				break;
 			default :
 

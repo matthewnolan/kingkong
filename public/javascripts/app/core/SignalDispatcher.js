@@ -55,7 +55,15 @@ var G = G || {};
 	 *
 	 * @type {Signal}
 	 */
-	p.daisyShowerStarted = new signals.Signal();
+	p.fireworkLaunched = new signals.Signal();
+
+	/**
+	 * dispatch this signal with the new balance.
+	 *
+	 * @property balanceChanged
+	 * @type {Signal}
+	 */
+	p.balanceChanged = new signals.Signal();
 
 	/**
 	 *
@@ -81,12 +89,20 @@ var G = G || {};
 		var winLinesComponent = G.Utils.getGameComponentByClass(G.WinLinesComponent);
 		var bigWinComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
 		var symbolWinsComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
+		var particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
+		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
 
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 		bigWinComponent.hideAnimation();
 		symbolWinsComponent.hideAll();
+		particles.smokeOff();
 		this.commandQueue.setupQueue();
+
+		//todo replace mock functions during server integration
+		meter.mockSpinPayment();
+
+
 	};
 
 
@@ -97,10 +113,14 @@ var G = G || {};
 	p.handleReelSpinComplete = function() {
 		this.commandQueue.play();
 		this.commandQueue.gaffType = "default";
-		var gaffMenu = _.find(this.gameComponents, function(component) {
-			return component instanceof G.GaffMenuComponent;
-		});
+		var gaffMenu = G.Utils.getGameComponentByClass(G.GaffMenuComponent);
 		gaffMenu.deselectGaffButtons();
+
+		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
+		meter.checkMockWin();
+
+
+
 	};
 
 	/**

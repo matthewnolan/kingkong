@@ -16,6 +16,7 @@ var G = G || {};
 	var GameComponent = function() {
 		this.Container_constructor();
 	};
+
 	var p = createjs.extend(GameComponent, createjs.Container);
 	p.constructor = GameComponent;
 
@@ -35,6 +36,13 @@ var G = G || {};
 	p.setup = null;
 
 	/**
+	 * Dispatch a signal when graphics caching has completed.
+	 * @property cacheCompleted
+	 * @type {Signal}
+	 */
+	p.cacheCompleted = new signals.Signal();
+
+	/**
 	 * initialises the setup and signalDispatcher for the component.
 	 * @method init
 	 * @param {Object} setup
@@ -43,6 +51,30 @@ var G = G || {};
 	p.init = function(setup, signalDispatcher) {
 		this.setup = setup;
 		this.signalDispatcher = signalDispatcher;
+	};
+
+	/**
+	 * Once a component is initialised correctly, it's display object are ready to be drawn (added) to the stage object
+	 * Do this by calling this function.
+	 *
+	 * @method drawComponent
+	 */
+	p.drawCompoent = function() {
+
+	};
+
+	/**
+	 * Some Vector drawn assets, and Bitmap sprite animations should be played during app initialisation to ensure they are ready to run at runtime.
+	 * Call this function once this process is completed, and it will signal to the game that this component's drawing/anim is ready to play.
+	 * For Vectors, call this after Vector drawing is done.
+	 * For Bitmap sprites, make sure that it's animations have played once then call this.
+	 * When adding a component requiring this type of caching, you must add 1 to the Game's initailisedNum.
+	 * nb. Caching only takes place when setup.json's failSafeDelay is used.
+	 *
+	 * @method cacheComplete
+	 */
+	p.cacheComplete = function() {
+		this.cacheCompleted.dispatch();
 	};
 
 	G.GameComponent = createjs.promote(GameComponent, "Container");

@@ -95,7 +95,7 @@ var G = G || {};
 		}
 
 		var fpsSwitch = new G.GaffButton();
-		fpsSwitch.init("60", 70, 60, 10);
+		fpsSwitch.init("60 FPS", 70, 60, 10);
 		fpsSwitch.drawButton();
 		fpsSwitch.x = w - fpsSwitch.width - 20;
 		fpsSwitch.y = h - fpsSwitch.height -30;
@@ -103,15 +103,37 @@ var G = G || {};
 		fpsSwitch.on("click", this.fpsClicked, this);
 		fpsSwitch.select();
 
-		var showerSwitch = new G.GaffButton();
-		showerSwitch.init("Off", 70, 60, 10);
-		showerSwitch.drawButton();
-		showerSwitch.x = w - fpsSwitch.width - 50 - showerSwitch.width;
-		showerSwitch.y = h - showerSwitch.height - 30;
-		this.addChild(showerSwitch);
-		showerSwitch.on("click", this.showerSwitched, this);
+		var uaButton = new G.GaffButton();
+		uaButton.init("UA", 70, 60, 10);
+		uaButton.drawButton();
+		uaButton.x = fpsSwitch.x - uaButton.width - 20;
+		uaButton.y = fpsSwitch.y;
+		this.addChild(uaButton);
+		uaButton.on("click", function() {
+			alert(window.navigator.userAgent + "\nScale:" + G.Utils.currentScale);
+		}, this);
 
 		//fpsSwitch.clicked.addOnce(this.fpsClicked, this);
+		var testButton = new G.GaffButton();
+		testButton.init("Test", 70, 60, 10);
+		testButton.drawButton();
+		testButton.x = uaButton.x - testButton.width - 20;
+		testButton.y = uaButton.y;
+		this.addChild(testButton);
+		testButton.on("click", function() {
+			window.open("/test","_blank");
+		});
+
+		var docsButton = new G.GaffButton();
+		docsButton.init("Docs", 70, 60, 10);
+		docsButton.drawButton();
+		docsButton.x = testButton.x - docsButton.width - 20;
+		docsButton.y = testButton.y;
+		this.addChild(docsButton);
+		docsButton.on("click", function() {
+			window.open("/doc", "_blank");
+		});
+
 
 		var labelTxt = new createjs.Text("Gaff Menu", "17px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
 		labelTxt.x = 5;
@@ -137,7 +159,6 @@ var G = G || {};
 
 		this.regX = w / 2;
 		this.regY = h / 2;
-
 		this.visible = false;
 
 	};
@@ -162,15 +183,15 @@ var G = G || {};
 
 		if (button.selected) {
 			button.deselect();
-			button.changeLabel("30");
+			button.changeLabel("30 FPS");
 		} else {
-			button.changeLabel("60");
+			button.changeLabel("60 FPS");
 			button.select();
 		}
 	};
 
 	p.showerSwitched = function(e) {
-		this.signalDispatcher.daisyShowerStarted.dispatch();
+		this.signalDispatcher.fireworkLaunched.dispatch();
 		var button = e.currentTarget;
 
 		if (button.selected) {

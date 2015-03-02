@@ -38,13 +38,19 @@ var G = G || {};
 	p.setup = null;
 
 	/**
+	 * The primary G.GameComponent which this Command should act on.
 	 * @property gameComponent
 	 * @type {G.GameComponent}
 	 */
 	p.gameComponent = null;
 
 	/**
+	 * Initialise all date required by this Command to execute.
+	 * Override this method in the Command, but ensure super.init is called.
+	 * The primary game component that this command will call a function on should be passed in as the gameComponent parameter.
+	 * Other GameComponents may be used by the Command, but should be accessed by the G.Utils.getComponentByClass method.
 	 *
+	 * @method init
 	 * @param {Object} setup
 	 * @param {G.GameComponent} gameComponent
 	 */
@@ -54,11 +60,17 @@ var G = G || {};
 	};
 
 	/**
-	 * Ususally overridden by a particular game command
+	 * Executes the Command.
+	 * Override this method in the particular Command.
 	 * @method execute
 	 */
 	p.execute = function() {
-		//console.log("Command execute");
+		if (!this.setup) {
+			throw "No setup object found, ensure Command is initialised correctly";
+		}
+		if (!this.gameComponent) {
+			throw "No primary gameComponent found, ensure Command is initialised correctly";
+		}
 	};
 
 	G.Command = Command;

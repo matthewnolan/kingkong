@@ -41,17 +41,10 @@ var G = G || {};
 	p.numLinesDrawn = 0;
 
 	/**
-	 * @property el
-	 * @type {HTMLElement}
-	 */
-	p.el = null;
-
-	/**
 	 *
 	 * @type {Number}
 	 */
 	p.loadPercentage = 0;
-
 
 	/**
 	 * Stores passed setup data
@@ -73,8 +66,6 @@ var G = G || {};
 		var marginT = this.setup.bezelMarginT;
 		var winLines = this.setup.winLines;
 		var i, len = this.numLinesTotal = winLines.length, j;
-
-		this.el = document.querySelector("#preloader");
 
 		if (this.setup.enableWinLineShadows) {
 			var filters = [];
@@ -124,10 +115,6 @@ var G = G || {};
 			}
 
 		}
-
-		this.showWinLineByIndexes([6]);
-
-		//this.hideWinLines();
 	};
 
 	/**
@@ -137,7 +124,7 @@ var G = G || {};
 	p.onWinLineDrawn = function() {
 		++this.numLinesDrawn;
 		if (this.numLinesDrawn === this.numLinesTotal) {
-			this.el.style.visibility = "hidden";
+			this.cacheCompleted.dispatch();
 		}
 	};
 

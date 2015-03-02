@@ -3,7 +3,8 @@
   "env": "prod",
   "devMode": 0,
   "htmlDebug": 0,
-  "scale" : "FULL_ASPECT", 
+  "scale" : "FULL_ASPECT",
+  "failSafeInitisalisation": 0,
   "enableDesktopView": 1,
   "domHelpers": 0,
   "spinOnLoad": 0,
@@ -33,6 +34,7 @@
   "spinState": "init",
   "isMobile": "deprecated",
   "defaultBet": 5,
+  "defaultBigWin" : 1000,
   "defaultCredits": 1337,
 
   "reelAnimation" : {
@@ -46,6 +48,12 @@
   },
 
   "reelMap" : ["ww","m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2"],
+
+  "imageDataManifest" : [
+    "assets/sprites/bigwin_1.png",
+    "assets/sprites/static-images.png",
+    "assets/sprites/symbol_anims.png"
+  ],
 
   "spritesManifest" : [
     {"src": "assets/sprites/bigwin_1.json", "id": "bigWinAnim"},

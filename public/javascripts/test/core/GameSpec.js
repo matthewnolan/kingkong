@@ -16,14 +16,53 @@ describe("Game Test", function () {
 			startLoad: jasmine.createSpy("preloader.startLoad")
 		});
 
+		sinon.stub(document.body, "appendChild");
+		sinon.stub(document, "querySelector").returns({
+			setAttribute: function() {
+				//do nothing
+			},
+			style: {
+				width: 100,
+				height: 100
+			}
+		});
+
+
 		spyOn(this.class, "setupDisplay");
+
 		spyOn(this.class, "initUIEvents");
+
+		spyOn(createjs.Ticker, "on");
+
+		sinon.stub(window, "addEventListener");
+		sinon.stub(window, "Stats").returns({
+			setMode: function() {
+
+			},
+			begin: jasmine.createSpy("stats.begin"),
+			end: jasmine.createSpy("stats.end"),
+			domElement: {
+				style: {
+					position: "",
+					bottom: "",
+					left: ""
+				}
+			}
+		});
+
+		this.class.proton = {
+			update: jasmine.createSpy('proton.update')
+		};
 
 	});
 
 	afterEach(function () {
 		this.class = null;
 		G.Preloader.restore();
+		window.Stats.restore();
+		document.body.appendChild.restore();
+		document.querySelector.restore();
+		window.addEventListener.restore();
 	});
 
 	it("Class is instantiated", function () {
@@ -41,21 +80,28 @@ describe("Game Test", function () {
 		expect(this.class.version).toEqual("{{ VERSION }}");
 	});
 
-	it("init function should set a passed serverInterface", function () {
-		var mockServerInterface = {
-			mock: "server"
-		};
-		this.class.init(null, mockServerInterface);
-		expect(this.class.serverInterface).toEqual(mockServerInterface);
+	it("Main init should create a ServerInterface", function() {
+		spyOn(G, "ServerInterface").and.returnValue({
+			init: function() {
+				//do nothing
+			}
+
+		});
+		this.class.init();
+		expect(G.ServerInterface).toHaveBeenCalled();
 	});
 
-	it("init function should set a passed stage object", function () {
-		var mockStage = {
-			mock: "stage"
-		};
-		this.class.init(mockStage, null);
-		expect(this.class.stage).toEqual(mockStage);
+	it("ServerInterface should be initialised", function() {
+		var spiedObj, Constructor = G.ServerInterface;
+		spyOn(G, "ServerInterface").and.callFake(function() {
+			spiedObj = new Constructor();
+			spyOn(spiedObj, "init");
+			return spiedObj;
+		});
+		this.class.init();
+		expect(spiedObj.init).toHaveBeenCalled();
 	});
+
 
 	it("init function should create a new Preloader and initialise it", function () {
 
@@ -96,14 +142,22 @@ describe("Game Test", function () {
 		expect(this.class.onAssetsLoadComplete).toHaveBeenCalled();
 	});
 
+	it("Main init should create a Stage and initialise it with the correct values", function() {
+		// spies let us test a function is called
+		spyOn(createjs, "Stage").and.returnValue({
+			addChild: function() {
+
+			}
+		});
+		this.class.init();
+		expect(createjs.Stage).toHaveBeenCalledWith("app");
+	});
+
 	it("onSetupLoaded function should save the setup in this class", function() {
-
 		var data = "setupJson";
-
 		spyOn(this.class, 'rescale');
 
 		this.class.onSetupLoaded(data);
-
 		expect(this.class.setup).toBe("setupJson");
 
 	});
@@ -113,6 +167,15 @@ describe("Game Test", function () {
 
 		var data = "fakeAssets";
 
+		/*
+		 this.setupDisplay();
+		 this.initUIEvents();
+		 this.displayInitialised();
+		 */
+
+		spyOn(this.class, "createProton");
+		spyOn(this.class, "rescale");
+
 		this.class.onAssetsLoadComplete(data);
 
 		expect(this.class.assets).toBe("fakeAssets");
@@ -120,18 +183,50 @@ describe("Game Test", function () {
 
 	it("when assets are loaded to Game, then setup the display", function() {
 
+		spyOn(this.class, "createProton");
+		spyOn(this.class, "rescale");
+
 		this.class.onAssetsLoadComplete();
 
 		expect(this.class.setupDisplay).toHaveBeenCalled();
 	});
 
 	it("when assets are loaded to Game, then initialse User Interface Events", function() {
+		spyOn(this.class, "createProton");
+		spyOn(this.class, "rescale");
 
 		this.class.onAssetsLoadComplete();
 
 		expect(this.class.initUIEvents).toHaveBeenCalled();
 
 	});
+
+	it("When assets are loaded to the Game, then setup the Ticker correctly", function() {
+		spyOn(this.class, "createProton");
+		spyOn(this.class, "rescale");
+
+		this.class.onAssetsLoadComplete();
+
+		expect(createjs.Ticker.on).toHaveBeenCalledWith("tick", this.class.handleTick, this.class);
+
+	});
+
+
+	it("Ticker Handler should render the stage", function() {
+		this.class.init();
+
+		spyOn(this.class.stage, "update");
+
+		this.class.handleTick();
+
+		expect(this.class.stats.begin).toHaveBeenCalled();
+		expect(this.class.proton.update).toHaveBeenCalled();
+		expect(this.class.stage.update).toHaveBeenCalled();
+		expect(this.class.stats.end).toHaveBeenCalled();
+	});
+
+
+
 
 	xdescribe("setupDisplay function", function() {
 
@@ -148,6 +243,8 @@ describe("Game Test", function () {
 		});
 
 	});
+
+
 
 
 

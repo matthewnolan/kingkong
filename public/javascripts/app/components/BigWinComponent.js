@@ -52,20 +52,25 @@ var G = G || {};
 	 * @method drawSprites
 	 */
 	p.drawSprites = function() {
-
 		var spritesheet = new createjs.SpriteSheet(this.bigWinSprites);
 		var sprite = new createjs.Sprite(spritesheet, 0);
 		sprite.x = 0;
 		sprite.y = 0;
 		sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
 		this.addChild(sprite);
-		sprite.on("animationend", this.handleAnimationEnd, this);
 		sprite.visible = false;
 		this.bigWins.push(sprite);
-		//this.playAnimation();
+
+		if (this.setup.failSafeInitisalisation) {
+			sprite.on("animationend", this.handleAnimationEnd, this);
+			this.playAnimation();
+		}
 	};
 
-	p.handleAnimationEnd = function() {
+	p.handleAnimationEnd = function(e) {
+		var sprite = e.target;
+		sprite.removeAllEventListeners();
+		this.cacheCompleted.dispatch();
 		this.hideAnimation();
 	};
 

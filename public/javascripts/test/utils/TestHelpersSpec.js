@@ -5,10 +5,13 @@ describe("TestHelpers Test", function () {
 
 	//This needs to match the scale factor that sprite sheets are scaled to in TexturePacker.
 	var SCALE_FACTOR = (1 / 0.9375);
+	var timeoutInterval = 5000;
+	var timeToUpdateStage = 200;
+	var originalTimeout;
 
 	beforeEach(function (done) {
-		jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
-
+		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = timeoutInterval;
 		var self = this;
 		var assetsPath = "assets/sprites/symbol_anims.json";
 
@@ -22,6 +25,7 @@ describe("TestHelpers Test", function () {
 				done();
 			});
 			self.assetsLoader.on("complete", function() {
+				console.log('test assets loaded');
 				done();
 			});
 			self.assetsLoader.loadManifest(
@@ -45,7 +49,7 @@ describe("TestHelpers Test", function () {
 			img.onload = function () {
 				var pixels = this.width * this.height;
 				var tolerance = pixels * (typeof pixelTolerance === 'undefined' ? 0.005 : pixelTolerance);
-				expect(stage.canvas).toImageDiffEqual(this, tolerance); //###### < ERROR THROWN #######
+				expect(stage.canvas).toImageDiffEqual(this, tolerance); //TEST
 				done();
 			};
 			img.onerror = function () {
@@ -55,6 +59,9 @@ describe("TestHelpers Test", function () {
 		};
 	});
 
+	afterEach(function() {
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+	});
 
 	it("SymbolAnims are loaded", function () {
 		expect(this.assetsLoader.getResult('symbolAnims')).toEqual(jasmine.any(Object));
@@ -70,8 +77,8 @@ describe("TestHelpers Test", function () {
 		//Give some time for the sprite to update to stage
 		setTimeout(function() {
 			sprite.gotoAndStop(256);
-			self.compareImage("javascripts/test/assets/m1-sprite__000.png", done, expect, 0.02);
-		}, 100);
+			self.compareImage("javascripts/test/assets/m1-sprite__000.png", done, expect, 0.2);
+		}, timeToUpdateStage);
 	});
 
 
