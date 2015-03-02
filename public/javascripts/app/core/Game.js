@@ -380,8 +380,14 @@ this.G = this.G || {};
 		winLinesComponent.cacheCompleted.add(this.checkCacheInitialised, this);
 		this.stage.addChild(winLinesComponent);
 		winLinesComponent.drawComponent();
-		this.gameComponents.push(reelsComponent, winLinesComponent);
-		this.gameComponents.push(bigWinComponent);
+		this.gameComponents.push(reelsComponent, winLinesComponent, bigWinComponent);
+
+		var meterComponent = new G.MeterComponent();
+		meterComponent.init(this.setup, this.signalDispatcher);
+		meterComponent.drawComponent();
+		this.stage.addChild(meterComponent);
+		this.gameComponents.push(meterComponent);
+
 
 		var gaffMenu = new G.GaffMenuComponent(this.version);
 		gaffMenu.init(this.setup, this.signalDispatcher);
