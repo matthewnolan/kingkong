@@ -7,8 +7,8 @@
   "failSafeInitisalisation": 1,
   "enableDesktopView": 0,
   "domHelpers": 0,
-  "spinOnLoad": 0,
-  "playWinAfterSpin": 1,
+  "spinOnLoad": "deprecated",
+  "playWinAfterSpin": "deprecated",
   "useLoader": "deprecated",
   "soundVolume": 1,
   "enableWinLineShadows": 0,
@@ -33,9 +33,9 @@
 
   "spinState": "deprecated",
   "isMobile": "deprecated",
-  "defaultBet": 5,
-  "defaultBigWin" : 1000,
-  "defaultCredits": 1337,
+  "defaultBet": 50,
+  "defaultBigWin" : 140000,
+  "defaultCredits": 10340,
   "currencySymbol": "$",
 
   "reelAnimation" : {

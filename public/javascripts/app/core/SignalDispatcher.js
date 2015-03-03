@@ -90,17 +90,12 @@ var G = G || {};
 		var bigWinComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
 		var symbolWinsComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		var particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
-		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
-
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 		bigWinComponent.hideAnimation();
 		symbolWinsComponent.hideAll();
 		particles.smokeOff();
 		this.commandQueue.setupQueue();
-
-
-
 	};
 
 

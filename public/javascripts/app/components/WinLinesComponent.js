@@ -75,17 +75,8 @@ var G = G || {};
 	 * @method drawComponent
 	 */
 	p.drawComponent = function() {
-
-		var marginL = this.setup.bezelMarginL;
-		var marginT = this.setup.bezelMarginT;
 		var winLines = this.setup.winLines;
-		var i, len = this.numLinesTotal = winLines.length, j;
-
-		if (this.setup.enableWinLineShadows) {
-			var filters = [];
-			filters.push(this.dropShadow);
-			filters.push(this.glowFilter);
-		}
+		var i, len = this.numLinesTotal = winLines.length, j, reelsLen = this.setup.numberOfReels + 1;
 
 		this.spriteSheetBuilder = new createjs.SpriteSheetBuilder();
 
@@ -93,7 +84,7 @@ var G = G || {};
 
 		for (i = 0; i < len; i++) {
 			var winLineFrames = [];
-			for (j = 0; j < 6; j++) {
+			for (j = 0; j < reelsLen; j++) {
 				var tempArr;
 				switch(j) {
 					case 0 :
@@ -139,10 +130,7 @@ var G = G || {};
 		++this.numLinesDrawn;
 		if (this.numLinesDrawn === this.numLinesTotal) {
 			//todo consider async spritesheet build
-
 			this.spriteSheet = this.spriteSheetBuilder.build();
-			//document.body.appendChild(this.spriteSheet._images[0]);
-			//console.log('onWinLineDrawn', this.spriteSheet);
 
 			this.drawWinLines();
 			this.cacheComplete();
@@ -178,10 +166,6 @@ var G = G || {};
 				});
 			}
 		}
-
-		console.log("winLines",this.winLines);
-
-		this.showWinLineByIndexes([0,1,2], 1);
 	};
 
 	/**
