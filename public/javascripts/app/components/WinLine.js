@@ -91,6 +91,7 @@ var G = G || {};
 	 */
 	p.drawComplete = new signals.Signal();
 
+
 	/**
 	 * Stores the WinLine Data in preparation for drawing
 	 * @method init
@@ -102,7 +103,6 @@ var G = G || {};
 		this.setup = setup;
 		this.winLineSquares = winLineSquares || this.winLineSquares;
 		this.symbolLocations = symbolLocations || this.symbolLocations;
-
 		this.setupDropShadow();
 		this.setupGlowFilter();
 	};
@@ -112,7 +112,7 @@ var G = G || {};
 	 * Also applies cheap shadow filter (looks ok but is very fast) or expensive DropShadow and GlowFilter (looks awesome but slow) if enabled in setup.
 	 * @method drawComponent
 	 */
-	p.drawComponent = function () {
+	p.getShape = function () {
 
 		var symbolW = this.setup.symbolW;
 		var symbolH = this.setup.symbolH;
@@ -121,12 +121,12 @@ var G = G || {};
 
 		var shape = new createjs.Shape();
 		var graph = shape.graphics;
-
+		shape.setBounds(0,0, this.setup.bezelW, this.setup.bezelH);
 		graph.setStrokeStyle(this.thickness);
 		graph.beginStroke(this.color);
 		graph.moveTo(0, 0);
 
-		this.addChild(shape);
+		//this.addChild(shape);
 
 		var i, len = this.symbolLocations.length;
 		for (i = 0; i < len; i++) {
@@ -200,6 +200,7 @@ var G = G || {};
 				}
 			}
 			graph.lineTo(drawPoint.x, drawPoint.y);
+
 		}
 
 		//if enable winLineShadows is set to false, we can draw these cheaper shadows (which are built into easeljs) - they
@@ -216,12 +217,11 @@ var G = G || {};
 			filters.push(this.dropShadow);
 			filters.push(this.glowFilter);
 			shape.filters = filters;
-			shape.setBounds(0,0, this.setup.bezelW, this.setup.bezelH);
 			var bounds = shape.getBounds();
 			shape.cache(bounds.x, bounds.y, bounds.width, bounds.height);
 		}
 
-		this.drawComplete.dispatch();
+		return shape;
 	};
 
 	/**

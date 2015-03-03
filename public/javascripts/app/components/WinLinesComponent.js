@@ -47,6 +47,20 @@ var G = G || {};
 	p.loadPercentage = 0;
 
 	/**
+	 * @property spriteSheetBuilder
+	 * @default null
+	 * @type {createjs.SpriteSheetBuilder}
+	 */
+	p.spriteSheetBuilder = null;
+
+	/**
+	 * @property spriteSheet
+	 * @default = null
+	 * @type {createjs.Sprite}
+	 */
+	p.spriteSheet = null;
+
+	/**
 	 * Stores passed setup data
 	 * @method init
 	 * @param {Object} setup
@@ -73,12 +87,12 @@ var G = G || {};
 			filters.push(this.glowFilter);
 		}
 
+		this.spriteSheetBuilder = new createjs.SpriteSheetBuilder();
+
 		var winLine;
 
 		for (i = 0; i < len; i++) {
-
-			var tempWinLines = [];
-			this.winLines.push(tempWinLines);
+			var winLineFrames = [];
 			for (j = 0; j < 6; j++) {
 				var tempArr;
 				switch(j) {
@@ -105,16 +119,16 @@ var G = G || {};
 				winLine = new G.WinLine();
 				winLine.init(this.setup, tempArr, winLines[i].data);
 				winLine.color = winLines[i].color;
-				this.addChild(winLine);
-				winLine.drawComplete.add(this.onWinLineDrawn, this);
-				winLine.drawComponent();
-				winLine.x = marginL;
-				winLine.y = marginT;
-				winLine.visible = false;
-				tempWinLines.push(winLine);
+				var winLineShape = winLine.getShape();
+				var frameIndex = this.spriteSheetBuilder.addFrame(winLineShape, winLineShape.getBounds());
+				winLineFrames.push(frameIndex);
 			}
-
+			console.log('drawWinLine', i, winLineFrames);
+			this.spriteSheetBuilder.addAnimation("winLine" + i, winLineFrames);
+			this.onWinLineDrawn();
 		}
+
+
 	};
 
 	/**
@@ -124,8 +138,50 @@ var G = G || {};
 	p.onWinLineDrawn = function() {
 		++this.numLinesDrawn;
 		if (this.numLinesDrawn === this.numLinesTotal) {
-			this.cacheCompleted.dispatch();
+			//todo consider async spritesheet build
+
+			this.spriteSheet = this.spriteSheetBuilder.build();
+			//document.body.appendChild(this.spriteSheet._images[0]);
+			//console.log('onWinLineDrawn', this.spriteSheet);
+
+			this.drawWinLines();
+			this.cacheComplete();
 		}
+	};
+
+
+	/**
+	 *
+	 */
+	p.drawWinLines = function() {
+		var marginL = this.setup.bezelMarginL;
+		var marginT = this.setup.bezelMarginT;
+		var winLines = this.setup.winLines;
+		var i, iLen = this.numLinesTotal = winLines.length, j, jLen = this.setup.numberOfReels + 1;
+
+		var count = 0;
+
+		for (i = 0; i < iLen; i++) {
+			var tempWinLines = [];
+			this.winLines.push(tempWinLines);
+			for (j = 0; j < jLen; j++) {
+				var sprite = new createjs.Sprite(this.spriteSheet, 0);
+				this.addChild(sprite);
+				sprite.gotoAndStop(0);
+				console.log(count, sprite);
+				sprite.visible = false;
+				sprite.x = marginL;
+				sprite.y = marginT;
+				tempWinLines.push({
+					frameId: count++,
+					sprite: sprite
+				});
+			}
+		}
+
+		console.log("winLines",this.winLines);
+
+		this.showWinLineByIndexes([0,1,2], 1);
 	};
 
 	/**
@@ -136,7 +192,9 @@ var G = G || {};
 
 		var hideWinLine = function(winLine) {
 			_.each(winLine, function(line) {
-				line.visible = false;
+				line.sprite.visible = false;
+				line.sprite.gotoAndStop(0);
+
 			});
 		};
 		_.each(this.winLines, hideWinLine);
@@ -152,7 +210,17 @@ var G = G || {};
 		var i, len = indexes.length;
 		var squaresIndex = numSquares || 0;
 		for (i = 0; i < len; i++) {
-			this.winLines[indexes[i]][squaresIndex].visible = true;
+			console.log('ShowWinLine:', indexes[i], squaresIndex);
+
+			var winLineObj = this.winLines[indexes[i]][squaresIndex];
+
+			console.log('winLineObj', winLineObj);
+
+			winLineObj.sprite.gotoAndStop(winLineObj.frameId);
+			winLineObj.sprite.visible = true;
+
+			//this.winLines[indexes[i]][squaresIndex].sprite.visible = true;
+			//this.winLines[indexes[i]][squaresIndex].sprite.gotoA = true;
 		}
 	};
 
