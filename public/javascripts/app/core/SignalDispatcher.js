@@ -66,6 +66,14 @@ var G = G || {};
 	p.balanceChanged = new signals.Signal();
 
 	/**
+	 * dispatch this signal for sound.
+	 *
+	 * @property alterSound
+	 * @type {Signal}
+	 */
+	p.playSound = new signals.Signal();
+
+	/**
 	 *
 	 * @method init
 	 * @param {Object} setup
@@ -79,7 +87,6 @@ var G = G || {};
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
 		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
 		this.gaffSelect.add(this.handleGaffSelected, this);
-		//this.fpsSwitched.add(this.handleFpsSwitch, this);
 	};
 
 	/**
@@ -96,7 +103,9 @@ var G = G || {};
 		symbolWinsComponent.hideAll();
 		particles.smokeOff();
 		this.commandQueue.setupQueue();
+
 	};
+
 
 
 
@@ -111,9 +120,6 @@ var G = G || {};
 
 		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
 		meter.checkMockWin();
-
-
-
 	};
 
 	/**

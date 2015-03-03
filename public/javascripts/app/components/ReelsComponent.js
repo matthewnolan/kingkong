@@ -128,7 +128,7 @@ var G = G || {};
 
 		for (i = 0; i < len; i++) {
 			reel = new G.Reel();
-			reel.init(this.setup, this.symbolSprites, this.reelsData[i]);
+			reel.init(this.setup, this.signalDispatcher, this.symbolSprites, this.reelsData[i]);
 			this.addChild(reel);
 			reel.drawReel();
 			this.reels.push(reel);

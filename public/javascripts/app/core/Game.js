@@ -187,8 +187,9 @@ this.G = this.G || {};
 	 */
 	p.onSetupLoaded = function(setup) {
 		this.setup = setup;
+
 		if (this.setup.enableDesktopView && device.desktop()) {
-			//this.STAGE_SCALE_MODE = "NO_SCALE";
+			this.STAGE_SCALE_MODE = "NO_SCALE";
 			var body = document.querySelector("body");
 			body.className = body.className + " layoutDesktop";
 			if (QRCode){
@@ -240,7 +241,7 @@ this.G = this.G || {};
 		var appWidth = Math.floor(stageW * stageScaleW);
 		var appHeight = Math.floor(stageH * stageScaleH);
 
-		if (this.setup.scale) {
+		if (this.setup.scale && !this.setup.enableDesktopView) {
 			this.STAGE_SCALE_MODE = this.setup.scale;
 		}
 
@@ -391,6 +392,11 @@ this.G = this.G || {};
 		this.stage.addChild(meterComponent);
 		this.gameComponents.push(meterComponent);
 
+        // init Dj
+        var djComponent = new G.Dj();
+        djComponent.init(this.setup, this.signalDispatcher);
+        // djComponent.nameDrop("doc");
+        this.gameComponents.push(djComponent);
 
 		var gaffMenu = new G.GaffMenuComponent(this.version);
 		gaffMenu.init(this.setup, this.signalDispatcher);
@@ -457,7 +463,8 @@ this.G = this.G || {};
 			switch(e.keyCode) {
 				//space //enter
 				case 32:
-				case 0:
+                case 0:
+                    e.preventDefault();
 					self.reelsComponent.spinReels();
 					break;
 				////shift+g
