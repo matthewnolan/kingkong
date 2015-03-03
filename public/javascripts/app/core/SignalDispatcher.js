@@ -74,6 +74,14 @@ var G = G || {};
 	p.playSound = new signals.Signal();
 
 	/**
+	 * dispatch this signal for sound.
+	 *
+	 * @property alterSound
+	 * @type {Signal}
+	 */
+	p.stopSound = new signals.Signal();
+
+	/**
 	 *
 	 * @method init
 	 * @param {Object} setup
