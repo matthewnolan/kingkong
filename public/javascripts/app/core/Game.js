@@ -151,8 +151,6 @@ this.G = this.G || {};
 	 * Starts Preloading of assets
 	 */
 	p.init = function() {
-		this.stage = new createjs.Stage("app");
-
 		this.stats = new Stats();
 
 		var serverInterface = new G.ServerInterface();
@@ -161,6 +159,13 @@ this.G = this.G || {};
 		this.signalDispatcher = new G.SignalDispatcher();
 		this.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);
 
+		this.stage = new createjs.Stage("app");
+		createjs.Ticker.on("tick", this.handleTick, this);
+		createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
+		createjs.Ticker.setFPS(60);
+
+		this.proton = new Proton();
+
 		var preloader = new G.Preloader();
 		preloader.init(this, this.SETUP_URL);
 		preloader.setupComplete.add(this.onSetupLoaded, this);
@@ -168,6 +173,8 @@ this.G = this.G || {};
 		preloader.startLoad();
 
 		this.preloaderEl = document.querySelector("#preloader");
+
+
 
 		//this.displayInitialised.add(this.displayInitialised, this);
 	};
@@ -215,10 +222,6 @@ this.G = this.G || {};
 		this.setupDisplay();
 		this.initUIEvents();
 		this.createProton();
-
-		createjs.Ticker.on("tick", this.handleTick, this);
-		createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
-		createjs.Ticker.setFPS(60);
 	};
 
 	/**
@@ -500,7 +503,7 @@ this.G = this.G || {};
 	 * @method createProton
 	 */
 	p.createProton = function() {
-		this.proton = new Proton();
+
 		this.renderer = new Proton.Renderer('easel', this.proton, this.stage);
 		this.particlesComponent.init(this.setup, this.signalDispatcher, this.canvas, this.stageScale, this.proton, this.renderer);
 	};

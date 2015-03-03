@@ -4,7 +4,7 @@
   "devMode": 0,
   "htmlDebug": 0,
   "scale" : "FULL_ASPECT",
-  "failSafeInitisalisation": 0,
+  "failSafeInitisalisation": 1,
   "enableDesktopView": 0,
   "domHelpers": 0,
   "spinOnLoad": 0,
@@ -31,11 +31,12 @@
   "symbolMarginBottom": 0,
   "reelMarginRight": 5,
 
-  "spinState": "init",
+  "spinState": "deprecated",
   "isMobile": "deprecated",
   "defaultBet": 5,
   "defaultBigWin" : 1000,
   "defaultCredits": 1337,
+  "currencySymbol": "$",
 
   "reelAnimation" : {
     "duration" : 2000,

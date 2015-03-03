@@ -130,7 +130,7 @@ var G = G || {};
 				sprite.visible = false;
 				if (this.setup.failSafeInitisalisation) {
 					sprite.on("animationend", this.handleAnimationEnd, this);
-					G.Utils.callLater(this.playThisSprite, [sprite, 0], this, 0);
+					G.Utils.callLater(this.playThisSprite, [sprite, "m1-sprite__000"], this, 0);
 				}
 				this.initialisedSpritesNum++;
 			}
@@ -162,10 +162,9 @@ var G = G || {};
 	/**
 	 * Helper method to show and play a passed sprite.  Animation is defined in the id parameter
 	 * @param {createjs.Sprite} sprite
-	 * @param {string} id - Matching string to a particular symbol_anims.json['animations']
+	 * @param {string} id - Matching string to a particular symbol_anims.json animations
 	 */
 	p.playThisSprite = function(sprite, id) {
-		console.log('>>>playThisSprite:', sprite, id);
 		sprite.visible = true;
 		sprite.gotoAndPlay(id);
 		this.currentlyPlayingSprites.push(sprite);

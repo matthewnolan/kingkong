@@ -99,8 +99,6 @@ var G = G || {};
 		particles.smokeOff();
 		this.commandQueue.setupQueue();
 
-		//todo replace mock functions during server integration
-		meter.mockSpinPayment();
 
 
 	};

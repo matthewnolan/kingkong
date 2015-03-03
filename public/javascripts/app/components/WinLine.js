@@ -206,7 +206,8 @@ var G = G || {};
 		//if enable winLineShadows is set to false, we can draw these cheaper shadows (which are built into easeljs) - they
 		//don't look as good as the winLineShadows, but they are drawn much much faster
 		if (this.setup.cheaperWinLineShadows && !this.setup.enableWinLineShadows) {
-			shape.shadow = new createjs.Shadow("#000000", 2,2,5);
+			console.log('drawShadow');
+			shape.shadow = new createjs.Shadow("#000000", 4,4,4);
 		}
 
 		//if enable winLineShadows is set to true, we draw these dropShadow and GlowFilters to make the winLines look much
