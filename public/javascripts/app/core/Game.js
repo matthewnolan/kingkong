@@ -161,7 +161,7 @@ this.G = this.G || {};
 
 		this.stage = new createjs.Stage("app");
 		createjs.Ticker.on("tick", this.handleTick, this);
-		createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
+		createjs.Ticker.timingMode = createjs.Ticker.RAF;
 		createjs.Ticker.setFPS(60);
 
 		this.proton = new Proton();

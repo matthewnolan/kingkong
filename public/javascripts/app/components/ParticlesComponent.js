@@ -105,12 +105,19 @@ var G = G || {};
 			}, ms);
 		}
 		console.log('smoke on');
+		self.launchFirework(0.2);
+		self.launchFirework(0.3);
+		self.launchFirework(0.5);
+		self.launchFirework(0.7);
+		self.launchFirework(0.8);
 
 		this.timeout = setInterval(function() {
-			self.launchFirework();
-			self.launchFirework();
-			self.launchFirework();
-		}, 800);
+			self.launchFirework(0.2);
+			self.launchFirework(0.3);
+			self.launchFirework(0.5);
+			self.launchFirework(0.7);
+			self.launchFirework(0.8);
+		}, 2000);
 	};
 
 	/**
@@ -152,21 +159,23 @@ var G = G || {};
 	 * with the firework position, allowing a smoke trail effect to be emitted from the firework.
 	 * @method launchFirework
 	 */
-	p.launchFirework = function() {
+	p.launchFirework = function(spawnPos) {
+
 		var bitmap = new createjs.Bitmap('assets/images/firework_particle20x20.png');
 		var emitter = new Proton.Emitter();
 		var proton = this.proton;
+		this.fireWorkSpawnPosition.x = spawnPos ? spawnPos * this.setup.stageW : this.fireWorkSpawnPosition.x;
 
 		//removing bitmap until figured out the positioning bug
 		//emitter.addInitialize(new Proton.ImageTarget(bitmap));
-		emitter.addInitialize(new Proton.Mass(1));
-		var scaleA = 1.5 * G.Utils.currentScale;
-		var scaleB = 8 * G.Utils.currentScale;
+		//emitter.addInitialize(new Proton.Mass(1));
+		//var scaleA = 1.5 * G.Utils.currentScale;
+		//var scaleB = 8 * G.Utils.currentScale;
 		emitter.addInitialize(new Proton.Radius(1));
 		emitter.addInitialize(new Proton.Life(1,3));
 		emitter.addInitialize(new Proton.Velocity(new Proton.Span(3, 12), new Proton.Span(-30, 30), 'polar'));
 		emitter.addBehaviour(new Proton.RandomDrift(100, 50, 0.05));
-		emitter.addBehaviour(new Proton.Scale(scaleA, scaleB));
+		//emitter.addBehaviour(new Proton.Scale(scaleA, scaleB));
 		emitter.p.x = this.fireWorkSpawnPosition.x;
 		emitter.p.y = this.fireWorkSpawnPosition.y;
 
@@ -184,7 +193,7 @@ var G = G || {};
 			subEmitter.addInitialize(new Proton.V(new Proton.Span(1, 3), new Proton.Span(170, 190), 'polar'));
 			subEmitter.addBehaviour(new Proton.RandomDrift(10, 10, 0.05));
 			subEmitter.addBehaviour(new Proton.Alpha(1, 0.1));
-			subEmitter.addBehaviour(new Proton.Scale(1.1 * G.Utils.currentScale, 0.2 * G.Utils.currentScale));
+			subEmitter.addBehaviour(new Proton.Scale(3 * G.Utils.currentScale, 0.5 * G.Utils.currentScale));
 			subEmitter.addBehaviour(new Proton.Color('ff0000', 'random', Infinity, Proton.easeOutQuart));
 			subEmitter.p.x = particle.p.x;
 			subEmitter.p.y = particle.p.y;

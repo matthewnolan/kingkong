@@ -18,7 +18,7 @@ var G = G || {};
 	 *
 	 * @type {number}
 	 */
-	p.animationDuration = 5000;
+	p.animationDuration = 6000;
 
 
 	p.init = function(setup, gameComponent, shouldStopExisting, animationDuration) {
