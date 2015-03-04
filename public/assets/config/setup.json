@@ -11,7 +11,7 @@
   "playWinAfterSpin": "deprecated",
   "useLoader": "deprecated",
   "soundVolume": 1,
-  "enableWinLineShadows": 0,
+  "enableWinLineShadows": 1,
   "cheaperWinLineShadows": 0,
   "winAnimDelay": 3000,
   "stageW": 667,

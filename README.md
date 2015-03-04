@@ -84,4 +84,5 @@ http://localhost:3000/docs - runs app documentation
 - Moved Game Setup into Game.js
 - Implemented celebration Fireworks
 - Implemented Failsafe Loading (longer initialisation for more reliable anim loading)
-- Added Tests and Docs to Gaff
+- Added Tests and Docs Links to Gaff Menu
+- Added MeterComponent consisting of balance/win rollups
