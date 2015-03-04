@@ -15,15 +15,17 @@ body {
 }
 #preloader {
     width: 667px;
-    height: 100px;
+    height: 375px;
     position: absolute;
     background-color: black;
 }
 #preloader .content {
     position: absolute;
     width: 100%;
-    color: #5ba490;
-    font-size: 18px;
+    color: #fff;
+    font-size: 21px;
+    text-align: center;
+    margin: 10px 0 0 0;
 }
 #debug {
     bottom: 0;
@@ -88,6 +90,7 @@ body #appContainer #desktopControls {
 body.layoutDesktop #appContainer #canvasHolder {
     display: block;
     background: url('/assets/images/bg-phone.png') no-repeat 0px 0px;
+    position: relative;
     margin: 10px auto;
     width: 773px;
     height: 400px;
@@ -103,7 +106,13 @@ body.layoutDesktop #appContainer #desktopControls {
     width: 773px;  
 }
 body.layoutDesktop #appContainer #canvasHolder #app {
-    position: relative;
+    top:28px;
+    left:108px !important;
+}
+
+body.layoutDesktop #appContainer #canvasHolder #preloader {
+    top:28px;
+    left:108px !important;
 }
 
 body.layoutDesktop #appContainer #qrcode {
