@@ -25,7 +25,7 @@ var G = G || {};
 	 * @default null
 	 * @type {createjs.Text}
 	 */
-	p.winText = new createjs.Text();
+	p.winText = null;
 
 	/**
 	 *
@@ -42,10 +42,21 @@ var G = G || {};
 	p.tempBalance = 0;
 
 	/**
+	 * @type {number}
+	 */
+	p.tempWinAmount = 0;
+
+	/**
 	 *
 	 * @type {number}
 	 */
 	p.currentBalance = 0;
+
+	/**
+	 *
+	 * @type {number}
+	 */
+	p.currentWinAmount = 0;
 
 	/**
 	 *
@@ -61,8 +72,22 @@ var G = G || {};
 	p.init = function(setup, signalDispatcher) {
 		this.GameComponent_init(setup, signalDispatcher);
 		this.signalDispatcher.balanceChanged.add(this.handleBalanceUpdate, this);
-
+		this.signalDispatcher.reelSpinStart.add(this.handleReelSpinStarted, this);
 		this.currentBalance = this.setup.defaultCredits;
+	};
+
+	/**
+	 * @method handleReelSpinStarted
+	 */
+	p.handleReelSpinStarted = function() {
+		this.resetWinAmount();
+		//todo replace mock functions during server integration
+		this.mockSpinPayment();
+	};
+
+	p.resetWinAmount = function() {
+		this.tempWinAmount = 0;
+		this.handleWinAmountChange();
 	};
 
 	/**
@@ -71,11 +96,11 @@ var G = G || {};
 	 * @method drawComponent
 	 */
 	p.drawComponent = function() {
-		var winText = new createjs.Text("$0", "19px Arial", "#FFCC00");
-		winText.textAlign = "right";
-		winText.x = this.setup.stageW - this.setup.bezelMarginL + 9;
-		winText.y = 6;
-		this.addChild(winText);
+		this.winText = new createjs.Text(this.setup.currencySymbol + "0", "19px Arial", "#FFCC00");
+		this.winText.textAlign = "right";
+		this.winText.x = this.setup.stageW - this.setup.bezelMarginL + 9;
+		this.winText.y = 6;
+		this.addChild(this.winText);
 
 		this.creditText = new createjs.Text("Credits: " + this.currentBalance, "19px Arial", "#FFCC00");
 		this.creditText.x = this.setup.bezelMarginL - 10;
@@ -97,7 +122,6 @@ var G = G || {};
 			this.tempBalance = balance;
 			this.handleRollUpChange(this.tempBalance);
 		}
-
 	};
 
 	/**
@@ -132,6 +156,7 @@ var G = G || {};
 			this.tempBalance = oldBalance;
 			this.currentBalance = newBalance;
 			this.rollUp(this.currentBalance);
+			this.rollUpWinAmount(this.mockWin);
 			this.mockWin = 0;
 		}
 	};
@@ -144,9 +169,9 @@ var G = G || {};
 	 * @param {number} newVal
 	 */
 	p.rollUp = function(newVal) {
-		var animDuration = 500;
-		createjs.Tween.get(this, { loop: false, override: true  })
-			.to({ "tempBalance": newVal }, animDuration, createjs.Ease.getPowOut(2.2))
+		var animDuration = 700;
+		createjs.Tween.get(this, { loop: false, override: false  })
+			.to({ "tempBalance": newVal }, animDuration, createjs.Ease.getPowOut(3))
 			.on("change", this.handleRollUpChange, this);
 	};
 
@@ -158,6 +183,23 @@ var G = G || {};
 	p.handleRollUpChange = function() {
 		var updateBalance = Math.floor(this.tempBalance);
 		this.creditText.text = "Credits: " + updateBalance.toString();
+	};
+
+	p.rollUpWinAmount = function(newVal) {
+		var animDuration = 700;
+		createjs.Tween.get(this, {loop: false, override: false})
+			.to({ "tempWinAmount": newVal }, animDuration, createjs.Ease.getPowOut(3))
+			.on("change", this.handleWinAmountChange, this);
+	};
+
+	/**
+	 * change event handler for rollUpWinAmount win amount text field
+	 *
+	 * @method handlWinAmountChange
+	 */
+	p.handleWinAmountChange = function() {
+		var updateWinAmount = Math.floor(this.tempWinAmount);
+		this.winText.text = this.setup.currencySymbol + updateWinAmount.toString();
 	};
 
 

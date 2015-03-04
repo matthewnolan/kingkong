@@ -10,7 +10,9 @@ var G = G || {};
 	 * Super class of any game component.  These game components are always initialised with the game's setup file and a signal dispatcher.
 	 * This allows all game components (eg. ReelsComponent or WinLinesComponent) to access game setup and dispatch and receive events from other
 	 * areas of the application
+	 *
 	 * @class GameComponent
+	 * @extends createjs.Container
 	 * @constructor
 	 */
 	var GameComponent = function() {

@@ -67,7 +67,7 @@ var G = G || {};
 
 				command = new G.SymbolAnimCommand();
 				command.init(this.setup, symbolWins, [0,1,2], 5, 'm1-sprite__short');
-				command.callNextDelay = 500;
+				command.callNextDelay = 1500;
 				queue.push(command);
 
 				command = new G.BigWinCommand();
@@ -112,9 +112,6 @@ var G = G || {};
 
 					command = new G.WinLineCommand();
 					command.init(this.setup, winLines, [i], 5, "m1-sprite__000");
-					if (i === 0) {
-						//command.loopIndex = 1;
-					}
 					queue.push(command);
 				}
 				break;

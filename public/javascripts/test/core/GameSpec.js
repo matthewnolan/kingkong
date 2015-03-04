@@ -202,10 +202,10 @@ describe("Game Test", function () {
 	});
 
 	it("When assets are loaded to the Game, then setup the Ticker correctly", function() {
-		spyOn(this.class, "createProton");
-		spyOn(this.class, "rescale");
+		//spyOn(this.class, "createProton");
+		//spyOn(this.class, "rescale");
 
-		this.class.onAssetsLoadComplete();
+		this.class.init();
 
 		expect(createjs.Ticker.on).toHaveBeenCalledWith("tick", this.class.handleTick, this.class);
 
@@ -220,7 +220,7 @@ describe("Game Test", function () {
 		this.class.handleTick();
 
 		expect(this.class.stats.begin).toHaveBeenCalled();
-		expect(this.class.proton.update).toHaveBeenCalled();
+		//expect(this.class.proton.update).toHaveBeenCalled();
 		expect(this.class.stage.update).toHaveBeenCalled();
 		expect(this.class.stats.end).toHaveBeenCalled();
 	});

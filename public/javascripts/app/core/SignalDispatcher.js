@@ -95,7 +95,6 @@ var G = G || {};
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
 		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
 		this.gaffSelect.add(this.handleGaffSelected, this);
-		//this.fpsSwitched.add(this.handleFpsSwitch, this);
 	};
 
 	/**
@@ -106,9 +105,6 @@ var G = G || {};
 		var bigWinComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
 		var symbolWinsComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		var particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
-		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
-		// var dj = G.Utils.getGameComponentByClass(G.Dj);
-
 		this.commandQueue.flushQueue();
 		winLinesComponent.hideWinLines();
 		bigWinComponent.hideAnimation();
@@ -116,8 +112,6 @@ var G = G || {};
 		particles.smokeOff();
 		this.commandQueue.setupQueue();
 
-		//todo replace mock functions during server integration
-		meter.mockSpinPayment();
 	};
 
 
