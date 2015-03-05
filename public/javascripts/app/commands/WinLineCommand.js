@@ -63,8 +63,9 @@ var G = G || {};
 	 * @method execute
 	 */
 	p.execute = function() {
-		// createjs.Sound.play("bonusStop1");
-		// this.signalDispatcher.playSound.dispatch("bonusStop1");
+
+		var dj = G.Utils.getGameComponentByClass(G.Dj);
+		dj.playSound("bonusStop1")
 
 		console.log('show win line command', this.winLineIndexes);
 

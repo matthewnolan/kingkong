@@ -131,7 +131,7 @@ var G = G || {};
 		if (this.numLinesDrawn === this.numLinesTotal) {
 			//todo consider async spritesheet build
 			this.spriteSheet = this.spriteSheetBuilder.build();
-
+			// document.body.appendChild(this.spriteSheet._images[0]);
 			this.drawWinLines();
 			this.cacheComplete();
 		}
@@ -183,6 +183,8 @@ var G = G || {};
 		};
 		_.each(this.winLines, hideWinLine);
 	};
+
+
 
 	/**
 	 * Shows all winlines at the passed indexes of setup.json winLines array

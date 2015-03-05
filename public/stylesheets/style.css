@@ -18,6 +18,7 @@ body {
     height: 375px;
     position: absolute;
     background-color: black;
+    /*display: none !important;*/
 }
 #preloader .content {
     position: absolute;
