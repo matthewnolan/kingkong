@@ -164,6 +164,66 @@ var G = G || {};
 	};
 
 	/**
+	 pointers: Array[1],
+	 changedPointers: Array[1],
+	 pointerType: "touch",
+	 srcEvent: TouchEvent,
+	 isFirst: false…}
+	 angle: 74.98163936884933
+	 center: Object
+	 	x: 523
+	 	y: 369
+	 __proto__: Object
+	 changedPointers: Array[1]
+	 0: Touchlength: 1
+	 __proto__: Array[0]
+	 deltaTime: 2838
+	 deltaX: 44
+	 deltaY: 164
+	 direction: 16
+	 distance: 169.799882214329
+	 eventType: 4isFinal: true
+	 isFirst: false
+	 offset
+	 Direction: 8
+	 pointerType: "touch"
+	 pointers: Array[1]
+	 0: Touch
+	 clientX: 523.43798828125
+	 clientY: 369.1409912109375
+	 force: 1
+	 identifier: 0
+	 pageX: 523.43798828125
+	 pageY: 369.1409912109375
+	 radiusX: 22.460935592651367
+	 radiusY: 22.460935592651367
+	 screenX: 302screenY: 386
+	 target: canvas#app
+	 webkitForce: 1
+	 webkitRadiusX: 22.460935592651367
+	 webkitRadiusY: 22.460935592651367
+	 webkitRotationAngle: 0
+	 __proto__: Touchlength: 1
+	 __proto__: Array[0]
+	 preventDefault: function () {
+	 rotation: 0
+	 scale: 1srcEvent: TouchEvent
+	 target: canvas#app
+	 timeStamp: 1425492270324
+	 type: "swipe"
+	 velocity: -0.7142857142857143
+	 velocityX: 0
+	 velocityY: -0.7142857142857143
+
+	 * @param e
+	 */
+	/*
+	p.hammerSwipeEvent = function(e) {
+		//alert(e);
+		//alert(e.deltaX);
+	};*/
+
+	/**
 	 * dispatch to SignalDispatcher to update gaff type
 	 * @method buttonClicked
 	 * @param e

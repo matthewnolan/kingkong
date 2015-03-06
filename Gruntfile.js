@@ -140,6 +140,7 @@ module.exports = function (grunt) {
 				browser: true,
 				globals: {
 					"G": true,
+					"fetch" : false,
 					"device" : false,
 					"QRCode" : false,
 					"__dirname" : false,

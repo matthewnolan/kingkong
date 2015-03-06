@@ -49,6 +49,7 @@ this.G = this.G || {};
 		this.assetsLoader.on("progress", this.handleAssetsProgress, this);
 		this.assetsLoader.on("complete", this.handleAssetsLoaded, this);
 		this.assetsLoader.installPlugin(createjs.Sound);
+
 	};
 
 	/**
@@ -111,7 +112,9 @@ this.G = this.G || {};
 
 		setTimeout(function(){
 			self.assetsLoaded.dispatch(assets);
+
 		}, 50);
+
 
 
 	};

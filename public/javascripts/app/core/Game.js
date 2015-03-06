@@ -136,15 +136,30 @@ this.G = this.G || {};
 	/**
 	 * Number of initialised game components to check have initialised before loader is removed
 	 * @property initialisedNum
+	 * @default 3
 	 * @type {number}
 	 */
 	p.initailisedNum = 3;
 
 	/**
 	 * @property preloaderEl
+	 * @default null
 	 * @type {HTMLElement}
 	 */
 	p.preloaderEl = null;
+
+	/**
+	 * @property serverInterface
+	 * @default null
+	 * @type {G.ServerInterface}
+	 */
+	p.serverInterface = null;
+
+	/**
+	 *
+	 * @type {null}
+	 */
+	p.gameData = null;
 
 	/**
 	 * init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.
@@ -153,11 +168,15 @@ this.G = this.G || {};
 	p.init = function() {
 		this.stats = new Stats();
 
-		var serverInterface = new G.ServerInterface();
-		serverInterface.init();
-
 		this.signalDispatcher = new G.SignalDispatcher();
 		this.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);
+
+		this.gameData = new G.GameData();
+		this.gameData.slotInitCompleted.add(this.slotInitReceived, this);
+
+		this.serverInterface = new G.ServerInterface();
+		this.serverInterface.init(this.signalDispatcher, this.gameData);
+		this.serverInterface.requestSlotInit();
 
 		this.stage = new createjs.Stage("app");
 		createjs.Ticker.on("tick", this.handleTick, this);
@@ -165,14 +184,6 @@ this.G = this.G || {};
 		createjs.Ticker.setFPS(60);
 
 		this.proton = new Proton();
-
-		var preloader = new G.Preloader();
-		preloader.init(this, this.SETUP_URL);
-		preloader.setupComplete.add(this.onSetupLoaded, this);
-		preloader.assetsLoaded.add(this.onAssetsLoadComplete, this);
-		preloader.startLoad();
-
-		this.preloaderEl = document.querySelector("#preloader");
 
 
 
@@ -205,8 +216,16 @@ this.G = this.G || {};
 		}
 	};
 
-	p.detectDesktop = function() {
-		// for enabling desktop view.
+	p.slotInitReceived = function() {
+		console.log('slotInitReceived', this.gameData);
+
+		var preloader = new G.Preloader();
+		preloader.init(this, this.SETUP_URL);
+		preloader.setupComplete.add(this.onSetupLoaded, this);
+		preloader.assetsLoaded.add(this.onAssetsLoadComplete, this);
+		preloader.startLoad();
+
+		this.preloaderEl = document.querySelector("#preloader");
 	};
 
 	/**
@@ -225,9 +244,11 @@ this.G = this.G || {};
 		this.createProton();
 	};
 
+
 	/**
 	 * Scales Application according to setup scale data
-	 * this.STAGE_SCALE_MODE: "FULL ASPECT" || "FULL_BROWSER" || "NO_SCALE" any other value forces the app to not scale.
+	 * STAGE_SCALE_MODE = "FULL ASPECT" || "FULL_BROWSER" || "NO_SCALE"
+	 * any other value forces the app to not scale.
 	 * @method rescale
 	 */
 	p.rescale = function() {
@@ -480,14 +501,15 @@ this.G = this.G || {};
 		var myElement = document.querySelector('#app');
 		var mc = new Hammer(myElement);
 		mc.get('swipe').set({
-			direction: Hammer.DIRECTION_DOWN
+			direction: Hammer.DOWN,
+			threshold: 1
 		});
 
 		mc.get('pinch').set({
 			enable: true
 		});
 
-		mc.on('swipe', function() {
+		mc.on('swipe', function(e) {
 			self.reelsComponent.spinReels();
 		});
 

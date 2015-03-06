@@ -18,6 +18,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//configure mock node server api
+app.use('/api', require('./routes/server/api').api);
+
 
 app.engine('html', require('ejs').renderFile);
 // view engine setup

@@ -9,7 +9,6 @@ var G = G || {};
 	/**
 	 * @class BigWinComponent
 	 * @extends G.GameComponent
-	 * @uses createjs.Container
 	 * @constructor
 	 */
 	var BigWinComponent = function() {

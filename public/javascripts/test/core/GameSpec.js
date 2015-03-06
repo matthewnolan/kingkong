@@ -3,6 +3,8 @@
 
 describe("Game Test", function () {
 
+	var serverInterface;
+
 	beforeEach(function () {
 
 		this.class = new G.Game();
@@ -27,6 +29,19 @@ describe("Game Test", function () {
 			}
 		});
 
+		var Constructor = G.ServerInterface;
+		spyOn(G, "ServerInterface").and.callFake(function() {
+			serverInterface = new Constructor();
+			spyOn(serverInterface, "init");
+			spyOn(serverInterface, "requestSlotInit");
+			return serverInterface;
+		});
+
+		/*
+		sinon.stub(G, "ServerInterface").returns({
+			init: jasmine.createSpy("serverInterface.init")
+		});
+		*/
 
 		spyOn(this.class, "setupDisplay");
 
@@ -59,6 +74,7 @@ describe("Game Test", function () {
 	afterEach(function () {
 		this.class = null;
 		G.Preloader.restore();
+		//G.ServerInterface.restore();
 		window.Stats.restore();
 		document.body.appendChild.restore();
 		document.querySelector.restore();
@@ -81,61 +97,74 @@ describe("Game Test", function () {
 	});
 
 	it("Main init should create a ServerInterface", function() {
+		/*
 		spyOn(G, "ServerInterface").and.returnValue({
 			init: function() {
 				//do nothing
 			}
-
+		});
+		*/
+		spyOn(G, "GameData").and.returnValue({
+			slotInitCompleted: new signals.Signal()
 		});
 		this.class.init();
 		expect(G.ServerInterface).toHaveBeenCalled();
 	});
 
 	it("ServerInterface should be initialised", function() {
-		var spiedObj, Constructor = G.ServerInterface;
-		spyOn(G, "ServerInterface").and.callFake(function() {
-			spiedObj = new Constructor();
-			spyOn(spiedObj, "init");
-			return spiedObj;
-		});
+		//G.ServerInterface.calls.reset();
 		this.class.init();
-		expect(spiedObj.init).toHaveBeenCalled();
+		expect(serverInterface.init).toHaveBeenCalled();
 	});
 
 
-	it("init function should create a new Preloader and initialise it", function () {
+
+
+	it("slotInitReceived function should create a new Preloader and initialise it", function () {
+		spyOn(G, "GameData").and.returnValue({
+			slotInitCompleted: new signals.Signal()
+		});
 
 		var fakeLoader = new G.Preloader();
 
-		this.class.init();
+		this.class.slotInitReceived();
 
 		expect(fakeLoader.init).toHaveBeenCalled();
 	});
 
-	it("init function should add Signal handler which is called when setup is loaded", function () {
+	it("slotInitReceived function should add Signal handler which is called when setup is loaded", function () {
 		var mockSetup = {
 			fake: "data"
 		};
 
+		spyOn(G, "GameData").and.returnValue({
+			slotInitCompleted: new signals.Signal()
+		});
+
 		var fakeLoader = new G.Preloader();
 		spyOn(this.class, "onSetupLoaded");
 
-		this.class.init();
+		this.class.slotInitReceived();
 
 		fakeLoader.setupComplete.dispatch(mockSetup);
 
 		expect(this.class.onSetupLoaded).toHaveBeenCalled();
 	});
 
-	it("init function should add a Signal handler which is called when assets have finished loading", function() {
+	it("slotInitReceived function should add a Signal handler which is called when assets have finished loading", function() {
+		spyOn(G, "GameData").and.returnValue({
+			slotInitCompleted: new signals.Signal()
+		});
 
 		var mockAssets = {
 			fake: "assets"
 		};
+
+
 		var fakeLoader = new G.Preloader();
 		spyOn(this.class, "onAssetsLoadComplete");
 
-		this.class.init();
+		this.class.slotInitReceived();
 
 		fakeLoader.assetsLoaded.dispatch(mockAssets);
 
@@ -144,6 +173,10 @@ describe("Game Test", function () {
 
 	it("Main init should create a Stage and initialise it with the correct values", function() {
 		// spies let us test a function is called
+		spyOn(G, "GameData").and.returnValue({
+			slotInitCompleted: new signals.Signal()
+		});
+
 		spyOn(createjs, "Stage").and.returnValue({
 			addChild: function() {
 
@@ -182,6 +215,10 @@ describe("Game Test", function () {
 	});
 
 	it("when assets are loaded to Game, then setup the display", function() {
+		spyOn(G, "GameData").and.returnValue({
+			slotInitCompleted: new signals.Signal()
+		});
+
 
 		spyOn(this.class, "createProton");
 		spyOn(this.class, "rescale");
@@ -204,6 +241,9 @@ describe("Game Test", function () {
 	it("When assets are loaded to the Game, then setup the Ticker correctly", function() {
 		//spyOn(this.class, "createProton");
 		//spyOn(this.class, "rescale");
+		spyOn(G, "GameData").and.returnValue({
+			slotInitCompleted: new signals.Signal()
+		});
 
 		this.class.init();
 
@@ -213,6 +253,10 @@ describe("Game Test", function () {
 
 
 	it("Ticker Handler should render the stage", function() {
+		spyOn(G, "GameData").and.returnValue({
+			slotInitCompleted: new signals.Signal()
+		});
+
 		this.class.init();
 
 		spyOn(this.class.stage, "update");
