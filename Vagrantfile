@@ -77,7 +77,7 @@ Vagrant.configure(2) do |config|
   # config.vm.synced_folder ".", "/vagrant", type: "nfs"
   # config.vm.synced_folder ".", "/vagrant", :nfs => { :mount_options => ["dmode=777","fmode=777"] }
 
-  config.vm.synced_folder ".", "/vagrant", :type => :nfs, :mount_options => ['nolock,vers=3,udp,noatime,actimeo=1']
+  # config.vm.synced_folder ".", "/vagrant", :type => :nfs, :mount_options => ['nolock,vers=3,udp,noatime,actimeo=1']
 
 end
 

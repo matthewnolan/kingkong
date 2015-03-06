@@ -160,8 +160,7 @@ var G = G || {};
 		var spinIndex = this.spinIndexEl ? parseInt(this.spinIndexEl.value, 10) : 0;
 
 		if (this.reelsSpinning === 0) {
-			//todo move all Sound.play to DJ and dispatch a Signal here
-			createjs.Sound.play("spin1");
+			self.signalDispatcher.playSound.dispatch("spin1");
 			//notify game components of a spin start
 			this.signalDispatcher.reelSpinStart.dispatch();
 			for (i = 0; i < len; i++)
@@ -174,9 +173,8 @@ var G = G || {};
 			}
 		} else {
 
-			//todo move all Sound.stop to DJ and dispatch a Signal here
 			setTimeout(function() {
-					createjs.Sound.stop("spin1");
+					self.signalDispatcher.stopSound.dispatch("spin1");
 				}, 200
 			);
 

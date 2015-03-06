@@ -34,6 +34,14 @@ var G = G || {};
 	 */
 	p.playAnimId = "";
 
+
+	/**
+	 * @property signalDispatcher
+	 * @type {G.SignalDispatcher}
+	 */
+	p.signalDispatcher = null;
+	
+
 	/**
 	 * Initialises this command's required data
 	 * @method init
@@ -55,7 +63,9 @@ var G = G || {};
 	 * @method execute
 	 */
 	p.execute = function() {
-		//createjs.Sound.play("bonusStop1");
+
+		var dj = G.Utils.getGameComponentByClass(G.Dj);
+		dj.playSound("bonusStop1")
 
 		console.log('show win line command', this.winLineIndexes);
 

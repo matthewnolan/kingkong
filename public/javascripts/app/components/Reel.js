@@ -411,8 +411,7 @@ var G = G || {};
 
 		//todo move all Sound.play to DJ and dispatch a Signal here
 		setTimeout(function() {
-			createjs.Sound.play("reelstop1");
-			self.signalDispatcher.playSound.dispatch("reelStop1");
+			self.signalDispatcher.playSound.dispatch("reelstop1");
 		}, stopTime - 300);
 
 		this.y = 0;

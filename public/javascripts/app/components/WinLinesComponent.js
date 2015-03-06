@@ -184,6 +184,8 @@ var G = G || {};
 		_.each(this.winLines, hideWinLine);
 	};
 
+
+
 	/**
 	 * Shows all winlines at the passed indexes of setup.json winLines array
 	 * @method showWinLinByIndexes
