@@ -81,6 +81,8 @@ var G = G || {};
 	 */
 	p.stopSound = new signals.Signal();
 
+	p.serverSpinRequested = new signals.Signal();
+
 	/**
 	 *
 	 * @method init
@@ -95,6 +97,12 @@ var G = G || {};
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
 		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
 		this.gaffSelect.add(this.handleGaffSelected, this);
+		this.serverSpinRequested.add(this.handleServerReelSpinStart, this);
+	};
+
+	p.handleServerReelSpinStart = function(slotInit, spinResponse) {
+		var reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
+		reels.serverSpinStart(slotInit, spinResponse);
 	};
 
 	/**
@@ -111,7 +119,6 @@ var G = G || {};
 		symbolWinsComponent.hideAll();
 		particles.smokeOff();
 		this.commandQueue.setupQueue();
-
 	};
 
 
@@ -146,6 +153,7 @@ var G = G || {};
 
 		reelsComponent.spinReels();
 	};
+
 
 
 	G.SignalDispatcher = SignalDispatcher;

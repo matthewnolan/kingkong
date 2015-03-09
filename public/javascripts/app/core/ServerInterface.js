@@ -39,7 +39,34 @@ this.G = this.G || {};
 	 */
 	p.init = function(signalDispatcher, gameData) {
 		this.signalDispatcher = signalDispatcher;
+		this.signalDispatcher.serverSpinRequested.add(this.requestSpin, this);
 		this.gameData = gameData;
+		this.gameData.spinRequestCompleted.add(this.signalDispatcher.handleServerReelSpinStart, this);
+	};
+
+
+	/**
+	 * @method requestSpin
+	 */
+	p.requestSpin = function() {
+		var self = this;
+
+		var success = function(json) {
+			self.gameData.spinResponse(json);
+		};
+
+		var error = function(ex) {
+			console.log('parsing failed', ex);
+		};
+
+		var response = function(res) {
+			return res.json();
+		};
+
+		fetch('/api/spin-no-win1')
+			.then(response)
+			.then(success)
+			.catch(error);
 	};
 
 	/**
@@ -65,6 +92,10 @@ this.G = this.G || {};
 			.then(response)
 			.then(success)
 			.catch(error);
+	};
+
+	p.handleSpinRequestCompleted = function (data) {
+
 	};
 
 

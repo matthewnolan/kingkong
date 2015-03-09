@@ -72,7 +72,7 @@ this.G = this.G || {};
 	 * loadGameAssets - loads spritesheets defined in Setup
 	 */
 	p.loadGameAssets = function() {
-		//this.assetsLoader.loadManifest(this.game.setup.imageDataManifest);
+		this.assetsLoader.loadManifest(this.game.setup.imageDataManifest);
 		this.assetsLoader.loadManifest(this.game.setup.spritesManifest);
 		this.assetsLoader.loadManifest(this.game.setup.soundsManifest);
 	};
@@ -94,9 +94,7 @@ this.G = this.G || {};
 	 * handleAssetsLoaded - dispatch a Signal to Game containing loaded Assets
 	 */
 	p.handleAssetsLoaded = function() {
-
 		var self = this;
-
 		var assets = {
 			spriteSheetBigWin: this.assetsLoader.getResult('bigWinAnim'),
 			spriteSheetStatics: this.assetsLoader.getResult('staticImages'),

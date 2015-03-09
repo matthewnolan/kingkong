@@ -27,7 +27,7 @@ var G = G || {};
 
 	/**
 	 * @property reelData
-	 * @type {Number[]}
+	 * @type {Number[][]}
 	 */
 	p.reelsData = [
 		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
@@ -35,6 +35,14 @@ var G = G || {};
 		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
 		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
 		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+	];
+
+	/**
+	 * @property reelStripsData
+	 * @type {Number[][]}
+	 */
+	p.reelStripsData = [
+
 	];
 
 	/**
@@ -59,15 +67,30 @@ var G = G || {};
 	p.spinIndexEl = null;
 
 	/**
+	 *
+	 * @type {boolean}
+	 */
+	p.spinRequested = false;
+
+	/**
+	 *
+	 * @type {null}
+	 */
+	p.serverInterface = null;
+
+	/**
 	 * @method init
 	 * @param setup {Object}
 	 * @param signalDispatcher {G.SignalDispatcher}
 	 * @param symbolSprites {Object}
+	 * @param {Array[]} serverReelStrips
 	 */
-	p.init = function(setup, signalDispatcher, symbolSprites) {
+	p.init = function(setup, signalDispatcher, serverInterface, symbolSprites) {
 		this.GameComponent_init(setup, signalDispatcher);
 		this.reelsMap = setup.reelMap;
+		this.serverInterface = serverInterface;
 		this.symbolSprites = symbolSprites;
+
 		this.initDomEvents();
 
 		if (setup.reelAnimation.shuffleReels) {
@@ -104,6 +127,7 @@ var G = G || {};
 	 * Takes an array of symbol ID's and passes them to each reel to modify symbol sprites at runtime on each reel
 	 * @method modifySymbolData
 	 * @param {number[]} reelData
+	 * @param {boolean} reset
 	 */
 	p.modifySymbolData = function(reelData, reset) {
 		var modifiedReelData = reelData || [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -128,12 +152,78 @@ var G = G || {};
 
 		for (i = 0; i < len; i++) {
 			reel = new G.Reel();
+
+			console.log('reelData:', i, this.reelsData[i]);
+
 			reel.init(this.setup, this.signalDispatcher, this.symbolSprites, this.reelsData[i]);
 			this.addChild(reel);
 			reel.drawReel();
 			this.reels.push(reel);
 			reel.x = symbolW * i + reelMarginR * i;
 		}
+	};
+
+	p.requestSpin = function() {
+		console.log('requestSpin', this.spinRequested);
+		if (this.spinRequested) {
+
+			this.hammerSpin();
+
+		} else {
+
+			this.spinRequested = true;
+			this.serverInterface.requestSpin();
+		}
+	};
+
+	p.serverSpinStart = function(slotInitVo, slotRequestVO) {
+		var reelStrips = slotInitVo.reelStrips;
+		var stops = slotRequestVO.spinRecords[0].stops;
+		var stripData;
+		var startIndex = 0;
+		var endIndex = 0;
+		var shouldWrap = false;
+		var stopIndexes = [];
+
+		var i, j, len = reelStrips.length, strip;
+		for (i = 0; i < len; i++) {
+			stripData = [];
+			strip = reelStrips[i];
+			var tempStop = stops[i] - 8;
+			if (tempStop - 8 < 0) {
+				startIndex = reelStrips[i].length;
+				shouldWrap = true;
+			} else {
+				startIndex = tempStop;
+			}
+
+			var tempEnd = stops[i] + 9;
+			if (tempEnd > reelStrips[i].length) {
+				shouldWrap = true;
+				endIndex = tempEnd - reelStrips[i].length ;
+				//console.log('endWrap, stopIndex=', stops[i], 'start/endIndex=', startIndex, endIndex);
+			} else {
+				endIndex = tempEnd;
+				//console.log('noWrap, stopIndex=', stops[i], 'start/endIndex=', startIndex, endIndex);
+			}
+
+			if (!shouldWrap) {
+				for (j = startIndex; j < endIndex; j++) {
+					stripData.push(strip[j]);
+				}
+
+				console.log('modifyReel', i, stripData);
+				this.reels[i].modifyReelData(stripData);
+				stopIndexes.push(stops[i] - startIndex)
+
+
+			} else {
+				console.warn('wrapping not implemented yet');
+
+			}
+		}
+
+		this.spinReels(stopIndexes);
 	};
 
 	/**
@@ -143,7 +233,8 @@ var G = G || {};
 	 * Play Spin Sound
 	 * @method spinReels
 	 */
-	p.spinReels = function() {
+	p.spinReels = function(indexes) {
+
 		var self = this;
 		var i, len = this.reels.length, reel, delay;
 		var maxDelay = this.setup.reelAnimation.delay.max;
@@ -157,7 +248,12 @@ var G = G || {};
 			}
 		};
 
-		var spinIndex = this.spinIndexEl ? parseInt(this.spinIndexEl.value, 10) : 0;
+		var spinIndex;
+		if (!indexes) {
+			indexes = [0,0,0,0,0];
+		}
+
+		console.log('spinToIndex=', indexes);
 
 		if (this.reelsSpinning === 0) {
 			self.signalDispatcher.playSound.dispatch("spin1");
@@ -167,23 +263,31 @@ var G = G || {};
 			{
 				delay = getDelay(i);
 				reel = this.reels[i];
-				reel.spinToIndex(spinIndex, delay);
+				reel.spinToIndex(indexes[i], delay);
 				reel.reelSpinEnd.add(this.reelSpinEnd, this);
 				this.reelsSpinning++;
 			}
-		} else {
-
-			setTimeout(function() {
-					self.signalDispatcher.stopSound.dispatch("spin1");
-				}, 200
-			);
-
-			for (i = 0; i < len; i++)
-			{
-				reel = this.reels[i];
-				reel.fastStop();
-			}
 		}
+	};
+
+	/**
+	 * @method hammerSpin
+	 */
+	p.hammerSpin = function() {
+		var self = this;
+		var reel, len = this.reels.length, i;
+
+		for (i = 0; i < len; i++)
+		{
+			reel = this.reels[i];
+			reel.scheduleFastStop();
+		}
+
+		setTimeout(function() {
+				self.signalDispatcher.stopSound.dispatch("spin1");
+			}, 200
+		);
+
 	};
 
 	/**
@@ -204,8 +308,11 @@ var G = G || {};
 	 * @Event reelSpinEnd
 	 */
 	p.reelSpinEnd = function() {
+		console.log('reelSpinEnd', this.reelsSpinning);
+
 		if (--this.reelsSpinning === 0)
 		{
+			this.spinRequested = false;
 			this.signalDispatcher.reelSpinComplete.dispatch();
 		}
 	};

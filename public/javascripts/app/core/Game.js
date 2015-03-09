@@ -11,6 +11,7 @@ this.G = this.G || {};
 	 * GameComponents are added to Stage
 	 * Wires ServerInterface to GameComponents using a SignalDispatcher
 	 * User Interface Events can defined set here.
+	 *
 	 * @class Game
 	 * @constructor
 	 */
@@ -349,10 +350,12 @@ this.G = this.G || {};
 		var bezelMarginT = this.setup.bezelMarginT;
 		var bezelW = this.setup.bezelW;
 		var bezelH = this.setup.bezelH;
-
+		var stageW = this.setup.stageW;
+		var stageH = this.setup.stageH;
 		//init background
 		var spriteSheet = new createjs.SpriteSheet(this.assets.spriteSheetStatics);
 		var sprite = new createjs.Sprite(spriteSheet, 'ui-bezel');
+		console.log(this.setup.bezelW, this.setup.bezelH);
 		this.stage.addChild(sprite);
 
 		//stats
@@ -364,7 +367,8 @@ this.G = this.G || {};
 
 		//init reels
 		var reelsComponent = new G.ReelsComponent();
-		reelsComponent.init(this.setup, this.signalDispatcher, spriteSheet);
+
+		reelsComponent.init(this.setup, this.signalDispatcher, this.serverInterface, spriteSheet);
 		reelsComponent.drawReels();
 		reelsComponent.x = bezelMarginL;
 		reelsComponent.y = bezelMarginT;
@@ -486,7 +490,7 @@ this.G = this.G || {};
 				case 32:
                 case 0:
                     e.preventDefault();
-					self.reelsComponent.spinReels();
+					self.reelsComponent.requestSpin();
 					break;
 				////shift+g
 				case 71 :
@@ -501,7 +505,7 @@ this.G = this.G || {};
 		var myElement = document.querySelector('#app');
 		var mc = new Hammer(myElement);
 		mc.get('swipe').set({
-			direction: Hammer.DOWN,
+			direction: Hammer.DIRECTION_DOWN,
 			threshold: 1
 		});
 
@@ -509,7 +513,7 @@ this.G = this.G || {};
 			enable: true
 		});
 
-		mc.on('swipe', function(e) {
+		mc.on('swipe', function() {
 			self.reelsComponent.spinReels();
 		});
 

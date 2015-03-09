@@ -32,9 +32,34 @@ var G = G || {};
 	 *
 	 * @type {null}
 	 */
+	p.spinRequestVO = null;
+
+	/**
+	 *
+	 * @type {Signal}
+	 */
+	p.spinRequestCompleted = new signals.Signal();
+
+
+	/**
+	 *
+	 * @type {null}
+	 */
 	p.slotInit = function(json) {
 		this.slotInitVO = json;
 		this.slotInitCompleted.dispatch();
+	};
+
+	/**
+	 *
+	 * @param json
+	 */
+	p.spinResponse = function(json) {
+		this.spinRequestVO = json;
+
+		console.log('this.slotInitiVo', this.slotInitVO, this.spinRequestVO);
+
+		this.spinRequestCompleted.dispatch(this.slotInitVO, this.spinRequestVO);
 	};
 
 

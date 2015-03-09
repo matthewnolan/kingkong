@@ -4,7 +4,7 @@
   "devMode": 0,
   "htmlDebug": 0,
   "scale" : "none",
-  "failSafeInitisalisation": 1,
+  "failSafeInitisalisation": 0,
   "enableDesktopView": 0,
   "domHelpers": 0,
   "spinOnLoad": "deprecated",
