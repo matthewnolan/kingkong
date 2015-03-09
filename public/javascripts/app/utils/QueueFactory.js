@@ -103,7 +103,6 @@ var G = G || {};
 				queue.push(command);
 
 				for (i = 0; i < winningLines.length; i++) {
-
 					if (i > 0 && i % 10 === 0) {
 						command = new G.FireworksCommand();
 						command.init(this.setup, particles, false, 10000);

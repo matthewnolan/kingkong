@@ -68,6 +68,12 @@ var G = G || {};
 	};
 
 	/**
+	 *
+	 * @type {null}
+	 */
+	p.fireWorkBitmap = null;
+
+	/**
 	 * initialise GameComponent
 	 * @method init
 	 * @param setup
@@ -89,6 +95,8 @@ var G = G || {};
 
 		this.fireWorkSpawnPosition.x = this.setup.stageW/2;
 		this.fireWorkSpawnPosition.y = this.setup.stageH;
+
+		this.fireWorkBitmap = new createjs.Bitmap('assets/images/sparkle.png');
 	};
 
 	/**
@@ -161,12 +169,11 @@ var G = G || {};
 	 */
 	p.launchFirework = function(spawnPos) {
 
-		var bitmap = new createjs.Bitmap('assets/images/firework_particle20x20.png');
+		var bitmap = this.fireWorkBitmap;
 		var emitter = new Proton.Emitter();
 		var proton = this.proton;
 		this.fireWorkSpawnPosition.x = spawnPos ? spawnPos * this.setup.stageW : this.fireWorkSpawnPosition.x;
 
-		//removing bitmap until figured out the positioning bug
 		//emitter.addInitialize(new Proton.ImageTarget(bitmap));
 		//emitter.addInitialize(new Proton.Mass(1));
 		//var scaleA = 1.5 * G.Utils.currentScale;
@@ -183,7 +190,6 @@ var G = G || {};
 
 		emitter.addEventListener(Proton.PARTICLE_CREATED, function(e) {
 			var particle = e.particle;
-			bitmap = new createjs.Bitmap('assets/images/sparkle.png');
 			subEmitter = new Proton.Emitter();
 			subEmitter.rate = new Proton.Rate(new Proton.Span(5, 10), new Proton.Span(0.005, 0.025));
 			subEmitter.addInitialize(new Proton.ImageTarget(bitmap));

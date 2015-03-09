@@ -143,6 +143,8 @@ var G = G || {};
 	 */
 	p.scheduleSymbolUpdate = false;
 
+	p.hammerRequested = false;
+
 	/**
 	 * Initialise Class vars and passes in instance of setup, symbolSprites, and initial reelData
 	 * @method init
@@ -202,6 +204,12 @@ var G = G || {};
 				}
 			}
 		}
+
+		if (this.hammerRequested) {
+			clearInterval(this.stopTimeout);
+			this.scheduleSpinStop = -2;
+			this.speedPercentage = 1;
+		}
 	};
 
 	/**
@@ -258,20 +266,21 @@ var G = G || {};
 			wrapPosY = wrap.y = -l * reelHeight;
 
 			var buffer = l === 0 ? this.upperBuffer : this.lowerBuffer;
+			var numBuffer = 2;
 
-			for (j = 0; j < 2; j++) {
-				//2 rows of symbols to buffer above and below the symbol wrappers
+			for (j = 0; j < numBuffer; j++) {
+				//j rows of symbols to buffer above and below the symbol wrappers
 
 				var symbolBufferWrap = new createjs.Container();
 				this.addChild(symbolBufferWrap);
 				container = new createjs.Container();
-				var tempSymbolIndex = len - 2 + j - (l * (len - 2));
+				var tempSymbolIndex = len - numBuffer + j - (l * (len - 2));
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[tempSymbolIndex]]);
 				container.addChild(sp);
 
 				container.y = (symbolH * j + symbolMarginB * j);
 				symbolBufferWrap.addChild(container);
-				symbolBufferWrap.y = -reelHeight - 2 * (symbolH - symbolMarginB) + (l * (2 * (symbolH - symbolMarginB) + reelHeight * 2));
+				symbolBufferWrap.y = -reelHeight - numBuffer * (symbolH - symbolMarginB) + (l * (2 * (symbolH - symbolMarginB) + reelHeight * 2));
 				//this.containers.wraps.push(symbolBufferWrap);
 				buffer.push(sp);
 
@@ -302,6 +311,8 @@ var G = G || {};
 	 */
 	p.spinToIndex = function(index, delay) {
 		var self = this;
+		this.hammerRequested = false;
+		this.speedPercentage = 0.5;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
@@ -330,7 +341,7 @@ var G = G || {};
 
 
 		this.stopTimeout = setTimeout(function() {
-			self.fastStop();
+			self.scheduleFastStop();
 		}, this.setup.reelAnimation.duration + spinDelay);
 	};
 
@@ -362,6 +373,11 @@ var G = G || {};
 			this.y = 0;
 			yPos = reelH;
 			this.updateSymbolSprites();
+
+		} else if (this.scheduleSpinStop === -2) {
+			this.stopSpinTween();
+			return;
+
 		} else {
 			return;
 		}
@@ -392,24 +408,20 @@ var G = G || {};
 		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
 	};
 
-	/**
-	 * Starts the stop tween animation, beginning at this.y: 0 to the y position of the stop symbol index passed to this function.
-	 * @method stopSpin
-	 * @param {number} index
-	 */
-	p.stopSpin = function(index) {
-		this.scheduleSpinStop = -2;
+
+	p.stopSpinTween = function() {
+		console.log('stopSpinTween', this.spinResultIndex);
 		var self = this;
+		var index = this.spinResultIndex;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolsLen = this.reelData.length;
 		var reelH = (symbolH * symbolsLen) + (symbolMarginB * symbolsLen);
 		var yPos = -(symbolH * index + symbolMarginB * index) + reelH;
 		var stopTime = this.getStopTime(index);
-		var easeAmp = 1 + index * 0.01;
-		var easeTime = 1 - index * 0.02;
+		var easeAmp = 1 + index * 0.1;
+		var easeTime = 1 - index * 0.1;
 
-		//todo move all Sound.play to DJ and dispatch a Signal here
 		setTimeout(function() {
 			self.signalDispatcher.playSound.dispatch("reelstop1");
 		}, stopTime - 300);
@@ -438,17 +450,16 @@ var G = G || {};
 		}
 	};
 
-
 	/**
 	 * Manually stops the current spin animation - also called automatically by the stopTimeout.
 	 * @method fastStop
 	 */
-	p.fastStop = function() {
+	p.scheduleFastStop = function() {
 		if (this.scheduleSpinStop > -2) {
-			clearInterval(this.stopTimeout);
-			this.stopSpin(this.spinResultIndex);
+			this.hammerRequested = true;
 		}
 	};
+
 
 	/**
 	 * Dispatches the reelSpinEnd signal when the reel spin animation is completed.

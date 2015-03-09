@@ -18,16 +18,87 @@ this.G = this.G || {};
 	/**
 	 * @property signalDispatcher
 	 * @type {G.SignalDispatcher}
+	 * @default null
 	 */
 	p.signalDispatcher = null;
 
 	/**
-	 * @method init
-	 * @param signalDispatcher
+	 * @property gameData
+	 * @type {G.GameData}
+	 * @default null
 	 */
-	p.init = function(signalDispatcher) {
+	p.gameData = null;
+
+
+	/**
+	 * init method stores passed in signalDispatcher and gameData
+	 *
+	 * @method init
+	 * @param {G.SignalDispatcher} signalDispatcher
+	 * @param {G.GameData} gameData
+	 */
+	p.init = function(signalDispatcher, gameData) {
 		this.signalDispatcher = signalDispatcher;
+		this.signalDispatcher.serverSpinRequested.add(this.requestSpin, this);
+		this.gameData = gameData;
+		this.gameData.spinRequestCompleted.add(this.signalDispatcher.handleServerReelSpinStart, this);
 	};
+
+
+	/**
+	 * @method requestSpin
+	 */
+	p.requestSpin = function() {
+		var self = this;
+
+		var success = function(json) {
+			self.gameData.spinResponse(json);
+		};
+
+		var error = function(ex) {
+			console.log('parsing failed', ex);
+		};
+
+		var response = function(res) {
+			return res.json();
+		};
+
+		fetch('/api/spin-no-win1')
+			.then(response)
+			.then(success)
+			.catch(error);
+	};
+
+	/**
+	 * Sends a requestInit command to the server
+	 * @method requestInit
+	 */
+	p.requestSlotInit = function() {
+		var self = this;
+
+		var success = function(json) {
+			self.gameData.slotInit(json);
+		};
+
+		var error = function(ex) {
+			console.log('parsing failed', ex);
+		};
+
+		var response = function(res) {
+			return res.json();
+		};
+
+		fetch('/api/slot-init')
+			.then(response)
+			.then(success)
+			.catch(error);
+	};
+
+	p.handleSpinRequestCompleted = function (data) {
+
+	};
+
+
 
 	G.ServerInterface = ServerInterface;
 

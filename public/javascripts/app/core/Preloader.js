@@ -50,6 +50,7 @@ this.G = this.G || {};
 		this.assetsLoader.on("fileload", this.handleAssetsFile, this);
 		this.assetsLoader.on("complete", this.handleAssetsLoaded, this);
 		this.assetsLoader.installPlugin(createjs.Sound);
+
 	};
 
 	/**
@@ -101,9 +102,7 @@ this.G = this.G || {};
 	 * handleAssetsLoaded - dispatch a Signal to Game containing loaded Assets
 	 */
 	p.handleAssetsLoaded = function() {
-
 		var self = this;
-
 		var assets = {
 			spriteSheetBigWin: this.assetsLoader.getResult('bigWinAnim'),
 			spriteSheetStatics: this.assetsLoader.getResult('staticImages'),
@@ -119,7 +118,9 @@ this.G = this.G || {};
 
 		setTimeout(function(){
 			self.assetsLoaded.dispatch(assets);
+
 		}, 50);
+
 
 
 	};

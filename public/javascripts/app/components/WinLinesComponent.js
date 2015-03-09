@@ -114,7 +114,11 @@ var G = G || {};
 				var frameIndex = this.spriteSheetBuilder.addFrame(winLineShape, winLineShape.getBounds());
 				winLineFrames.push(frameIndex);
 			}
+<<<<<<< HEAD
+			//console.log('drawWinLine', i, winLineFrames);
+=======
 			// console.log('drawWinLine', i, winLineFrames);
+>>>>>>> master
 			this.spriteSheetBuilder.addAnimation("winLine" + i, winLineFrames);
 			this.onWinLineDrawn();
 		}
@@ -131,7 +135,7 @@ var G = G || {};
 		if (this.numLinesDrawn === this.numLinesTotal) {
 			//todo consider async spritesheet build
 			this.spriteSheet = this.spriteSheetBuilder.build();
-			// document.body.appendChild(this.spriteSheet._images[0]);
+			//document.body.appendChild(this.spriteSheet._images[0]);
 			this.drawWinLines();
 			this.cacheComplete();
 		}
@@ -156,7 +160,6 @@ var G = G || {};
 				var sprite = new createjs.Sprite(this.spriteSheet, 0);
 				this.addChild(sprite);
 				sprite.gotoAndStop(0);
-				// console.log(count, sprite);
 				sprite.visible = false;
 				sprite.x = marginL;
 				sprite.y = marginT;
@@ -196,11 +199,11 @@ var G = G || {};
 		var i, len = indexes.length;
 		var squaresIndex = numSquares || 0;
 		for (i = 0; i < len; i++) {
-			console.log('ShowWinLine:', indexes[i], squaresIndex);
+			//console.log('ShowWinLine:', indexes[i], squaresIndex);
 
 			var winLineObj = this.winLines[indexes[i]][squaresIndex];
 
-			console.log('winLineObj', winLineObj);
+			//console.log('winLineObj', winLineObj);
 
 			winLineObj.sprite.gotoAndStop(winLineObj.frameId);
 			winLineObj.sprite.visible = true;
