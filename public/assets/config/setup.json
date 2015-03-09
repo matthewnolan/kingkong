@@ -217,15 +217,74 @@
   ],
 
   "soundsManifest": [{
-    "id": "spin1",
-    "src": "assets/sounds/JLspin01.mp3"
-  }, {
-    "id": "reelstop1",
-    "src": "assets/sounds/reelstop1.mp3"
-  }, {
-    "id": "bonusStop1",
-    "src": "assets/sounds/bonus_stop1.mp3"
-  }],
+    "src": "assets/sounds/GameMain/Sounds/ReelSpins/JLspin01.mp3", "id": "JLspin01"}, {
+    "src": "assets/sounds/GameMain/Sounds/ReelSpins/JLspin02.mp3", "id": "JLspin02"}, {
+    "src": "assets/sounds/GameMain/Sounds/ReelSpins/JLspin03.mp3", "id": "JLspin03"}, {
+    "src": "assets/sounds/GameMain/Sounds/ReelSpins/JLspin04.mp3", "id": "JLspin04"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup1.mp3", "id": "Rollup1"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup10.mp3", "id": "Rollup10"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup10Term.mp3", "id": "Rollup10Term"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup11.mp3", "id": "Rollup11"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup11Term.mp3", "id": "Rollup11Term"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup12Loop.mp3", "id": "Rollup12Loop"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup12LoopTerminator.mp3", "id": "Rollup12LoopTerminator"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup2.mp3", "id": "Rollup2"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup2Term.mp3", "id": "Rollup2Term"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup3.mp3", "id": "Rollup3"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup3Term.mp3", "id": "Rollup3Term"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup4.mp3", "id": "Rollup4"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup4Term.mp3", "id": "Rollup4Term"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup5.mp3", "id": "Rollup5"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup5Term.mp3", "id": "Rollup5Term"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup6.mp3", "id": "Rollup6"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup6Term.mp3", "id": "Rollup6Term"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup7.mp3", "id": "Rollup7"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup7Term.mp3", "id": "Rollup7Term"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup8.mp3", "id": "Rollup8"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup8Term.mp3", "id": "Rollup8Term"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup9.mp3", "id": "Rollup9"}, {
+    "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup9Term.mp3", "id": "Rollup9Term"}, {
+    "src": "assets/sounds/GameMain/Sounds/Stacks/F5_SUPERSTACK.mp3", "id": "F5_SUPERSTACK"}, {
+    "src": "assets/sounds/GameMain/Sounds/Stacks/F6_SUPERSTACK.mp3", "id": "F6_SUPERSTACK"}, {
+    "src": "assets/sounds/GameMain/Sounds/Stacks/F7_SUPERSTACK.mp3", "id": "F7_SUPERSTACK"}, {
+    "src": "assets/sounds/GameMain/Sounds/Stacks/M1_SUPERSTACK.mp3", "id": "M1_SUPERSTACK"}, {
+    "src": "assets/sounds/GameMain/Sounds/Stacks/M1_SUPERSTACK.mp3", "id": "M1_SUPERSTACK"}, {
+    "src": "assets/sounds/GameMain/Sounds/Stacks/M3_SUPERSTACK.mp3", "id": "M3_SUPERSTACK"}, {
+    "src": "assets/sounds/GameMain/Sounds/Stacks/M4_SUPERSTACK.mp3", "id": "M4_SUPERSTACK"}, {
+    "src": "assets/sounds/GameMain/Sounds/Stacks/WW_SUPERSTACK.mp3", "id": "WW_SUPERSTACK"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/B1.mp3", "id": "B1"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/D1.mp3", "id": "D1"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/D2.mp3", "id": "D2"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/D3.mp3", "id": "D3"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/D4.mp3", "id": "D4"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/F5.mp3", "id": "F5"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/F6.mp3", "id": "F6"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/F7.mp3", "id": "F7"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/M1.mp3", "id": "M1"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/M2.mp3", "id": "M2"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/M3.mp3", "id": "M3"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/M4.mp3", "id": "M4"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/M5.mp3", "id": "M5"}, {
+    "src": "assets/sounds/GameMain/Sounds/Symbols/WW.mp3", "id": "WW"}, {
+    "src": "assets/sounds/GameShared/Sounds/fireworks01.mp3", "id": "fireworks01"}, {
+    "src": "assets/sounds/GameShared/Sounds/SmartSounds/Anticipation.mp3", "id": "Anticipation"}, {
+    "src": "assets/sounds/GameShared/Sounds/SmartSounds/BonusStop01.mp3", "id": "BonusStop01"}, {
+    "src": "assets/sounds/GameShared/Sounds/SmartSounds/BonusStop02.mp3", "id": "BonusStop02"}, {
+    "src": "assets/sounds/GameShared/Sounds/SmartSounds/BonusStop03.mp3", "id": "BonusStop03"}, {
+    "src": "assets/sounds/GameShared/Sounds/SmartSounds/BonusStop04.mp3", "id": "BonusStop04"}, {
+    "src": "assets/sounds/GameShared/Sounds/SmartSounds/BonusStop05.mp3", "id": "BonusStop05"}, {
+    "src": "assets/sounds/GameTransition/Sounds/FreeGamesComplete.mp3", "id": "FreeGamesComplete"}, {
+    "src": "assets/sounds/GameTransition/Sounds/TotalWin.mp3", "id": "TotalWin"}, {
+    "src": "assets/sounds/GameTransition/Sounds/TranInterBonus.mp3", "id": "TranInterBonus"}, {
+    "src": "assets/sounds/JLspin01.mp3", "id": "spin1"}, {
+    "src": "assets/sounds/reelspin1.mp3", "id": "reelspin1"}, {
+    "src": "assets/sounds/bonus_stop1.mp3", "id": "bonusStop1"}],
+
+
+
+
+
+
 
   "playModesNew" : [
     {

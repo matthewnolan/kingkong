@@ -114,7 +114,11 @@ var G = G || {};
 				var frameIndex = this.spriteSheetBuilder.addFrame(winLineShape, winLineShape.getBounds());
 				winLineFrames.push(frameIndex);
 			}
+<<<<<<< HEAD
 			//console.log('drawWinLine', i, winLineFrames);
+=======
+			// console.log('drawWinLine', i, winLineFrames);
+>>>>>>> master
 			this.spriteSheetBuilder.addAnimation("winLine" + i, winLineFrames);
 			this.onWinLineDrawn();
 		}
@@ -156,7 +160,6 @@ var G = G || {};
 				var sprite = new createjs.Sprite(this.spriteSheet, 0);
 				this.addChild(sprite);
 				sprite.gotoAndStop(0);
-				//console.log(count, sprite);
 				sprite.visible = false;
 				sprite.x = marginL;
 				sprite.y = marginT;

@@ -447,7 +447,7 @@ this.G = this.G || {};
 	 * @method checkInitialised
 	 */
 	p.checkCacheInitialised = function() {
-		console.log('checkCacheInitialised', this.initailisedNum);
+		// console.log('checkCacheInitialised', this.initailisedNum);
 		if (--this.initailisedNum === 0) {
 			this.preloaderEl.style.display = "none";
 		}

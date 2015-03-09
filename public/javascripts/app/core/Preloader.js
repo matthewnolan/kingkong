@@ -47,6 +47,7 @@ this.G = this.G || {};
 		this.assetsLoader = new createjs.LoadQueue(true);
 		this.assetsLoader.on("error", this.handleAssetsError, this);
 		this.assetsLoader.on("progress", this.handleAssetsProgress, this);
+		this.assetsLoader.on("fileload", this.handleAssetsFile, this);
 		this.assetsLoader.on("complete", this.handleAssetsLoaded, this);
 		this.assetsLoader.installPlugin(createjs.Sound);
 
@@ -88,6 +89,13 @@ this.G = this.G || {};
 	p.handleAssetsProgress = function(e) {
 		var el = document.querySelector("#loadPercentage");
 		el.innerHTML = Math.round(e.progress * 100).toString() + "%";
+	};
+
+	/**
+	 * handleAssetsFile - handle loading of game assets
+	 */
+	p.handleAssetsFile = function(e) {
+		console.log(e.item.src);
 	};
 
 	/**
