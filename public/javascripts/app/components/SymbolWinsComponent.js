@@ -174,7 +174,7 @@ var G = G || {};
 		var sprite = e.currentTarget;
 		sprite.removeAllEventListeners();
 		this.hideThisSprite(sprite);
-		console.log('handleAnimEnd', this.initialisedSpritesNum);
+		// console.log('handleAnimEnd', this.initialisedSpritesNum);
 		if (--this.initialisedSpritesNum === 0) {
 			this.cacheCompleted.dispatch();
 		}

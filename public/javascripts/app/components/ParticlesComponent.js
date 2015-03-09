@@ -79,7 +79,7 @@ var G = G || {};
 	 */
 	p.init = function(setup, signalDispatcher, canvas, stageScale, proton, renderer) {
 		this.GameComponent_init(setup, signalDispatcher);
-		console.log('init', canvas);
+		// console.log('init', canvas);
 		this.canvas = canvas;
 		this.stageScale = stageScale;
 		this.proton = proton;

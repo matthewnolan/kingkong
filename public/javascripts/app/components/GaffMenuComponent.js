@@ -79,10 +79,10 @@ var G = G || {};
 		closeTxt.y = - 12;
 
 		var i, len = this.setup.playModesNew.length, button, data;
-		console.log(this.setup);
+		// console.log(this.setup);
 		for (i = 0; i < len; i++) {
 			data = this.setup.playModesNew[i];
-			console.log('data', data);
+			// console.log('data', data);
 			button = new G.GaffButton();
 			button.init(data.type, 100, 100, 10);
 			button.drawButton();
