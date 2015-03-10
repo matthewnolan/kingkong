@@ -91,36 +91,14 @@ var G = G || {};
 		this.serverInterface = serverInterface;
 		this.symbolSprites = symbolSprites;
 
-		this.initDomEvents();
-
-		if (setup.reelAnimation.shuffleReels) {
-			this.shuffleReels();
-		}
-	};
-
-	/**
-	 * @method shuffleReels
-	 */
-	p.shuffleReels = function() {
 		var i, len = this.reelsData.length;
-		for (i = 0; i < len; i++) {
-			this.shuffle(this.reelsData[i]);
+		if (setup.reelAnimation.shuffleReels) {
+			for (i = 0; i < len; i++) {
+				G.Utils.shuffle(this.reelsData[i]);
+			}
 		}
-	};
 
-	p.shuffle = function(array) {
-		var currentIndex = array.length, temporaryValue, randomIndex ;
-		// While there remain elements to shuffle...
-		while (0 !== currentIndex) {
-			// Pick a remaining element...
-			randomIndex = Math.floor(Math.random() * currentIndex);
-			currentIndex -= 1;
-			// And swap it with the current element.
-			temporaryValue = array[currentIndex];
-			array[currentIndex] = array[randomIndex];
-			array[randomIndex] = temporaryValue;
-		}
-		return array;
+		this.initDomEvents();
 	};
 
 	/**
@@ -176,52 +154,58 @@ var G = G || {};
 		}
 	};
 
-	p.serverSpinStart = function(slotInitVo, slotRequestVO) {
+	p.serverSpinStart = function(slotInitVo, spinResponseVO) {
 		var reelStrips = slotInitVo.reelStrips;
-		var stops = slotRequestVO.spinRecords[0].stops;
+		var stops = spinResponseVO.spinRecords[0].stops;
+
+		console.log('serverSpinStart', stops);
+
 		var stripData;
 		var startIndex = 0;
 		var endIndex = 0;
-		var shouldWrap = false;
 		var stopIndexes = [];
-
+		var numSymbolsBefore = 8;
+		var numSymbolsAfter = 9;
 		var i, j, len = reelStrips.length, strip;
 		for (i = 0; i < len; i++) {
 			stripData = [];
 			strip = reelStrips[i];
-			var tempStop = stops[i] - 8;
-			if (tempStop - 8 < 0) {
-				startIndex = reelStrips[i].length;
-				shouldWrap = true;
+			var tempStop = stops[i] - numSymbolsBefore;
+			var tempEnd = stops[i] + numSymbolsAfter;
+			if (tempStop < 0) {
+				startIndex = strip.length + tempStop;
+				for (j = startIndex; j < strip.length; j++) {
+					stripData.push(strip[j]);
+				}
+
+				for (j = 0; j < tempEnd; j++ ) {
+					stripData.push(strip[j]);
+				}
 			} else {
 				startIndex = tempStop;
 			}
 
-			var tempEnd = stops[i] + 9;
-			if (tempEnd > reelStrips[i].length) {
-				shouldWrap = true;
-				endIndex = tempEnd - reelStrips[i].length ;
-				//console.log('endWrap, stopIndex=', stops[i], 'start/endIndex=', startIndex, endIndex);
+			if (tempEnd > strip.length) {
+				startIndex = tempStop;
+				endIndex = tempEnd - strip.length;
+				for (j = startIndex; j < strip.length; j++) {
+					stripData.push(strip[j]);
+				}
+				for (j = 0; j < endIndex; j++) {
+					stripData.push(strip[j]);
+				}
 			} else {
 				endIndex = tempEnd;
-				//console.log('noWrap, stopIndex=', stops[i], 'start/endIndex=', startIndex, endIndex);
-			}
-
-			if (!shouldWrap) {
 				for (j = startIndex; j < endIndex; j++) {
 					stripData.push(strip[j]);
 				}
-
-				console.log('modifyReel', i, stripData);
-				this.reels[i].modifyReelData(stripData);
-				stopIndexes.push(stops[i] - startIndex)
-
-
-			} else {
-				console.warn('wrapping not implemented yet');
-
 			}
+
+			this.reels[i].modifyReelData(stripData);
+			stopIndexes.push(stops[i] - startIndex);
 		}
+
+		console.log('this.spinReels:', stopIndexes);
 
 		this.spinReels(stopIndexes);
 	};
@@ -248,7 +232,6 @@ var G = G || {};
 			}
 		};
 
-		var spinIndex;
 		if (!indexes) {
 			indexes = [0,0,0,0,0];
 		}

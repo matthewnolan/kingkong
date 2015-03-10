@@ -176,7 +176,6 @@ var G = G || {};
 			_.each(winLine, function(line) {
 				line.sprite.visible = false;
 				line.sprite.gotoAndStop(0);
-
 			});
 		};
 		_.each(this.winLines, hideWinLine);

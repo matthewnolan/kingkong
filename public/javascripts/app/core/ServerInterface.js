@@ -63,7 +63,7 @@ this.G = this.G || {};
 			return res.json();
 		};
 
-		fetch('/api/spin-no-win1')
+		fetch('/api/random-spin')
 			.then(response)
 			.then(success)
 			.catch(error);
@@ -93,12 +93,6 @@ this.G = this.G || {};
 			.then(success)
 			.catch(error);
 	};
-
-	p.handleSpinRequestCompleted = function (data) {
-
-	};
-
-
 
 	G.ServerInterface = ServerInterface;
 

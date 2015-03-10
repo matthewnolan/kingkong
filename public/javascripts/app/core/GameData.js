@@ -56,9 +56,6 @@ var G = G || {};
 	 */
 	p.spinResponse = function(json) {
 		this.spinRequestVO = json;
-
-		console.log('this.slotInitiVo', this.slotInitVO, this.spinRequestVO);
-
 		this.spinRequestCompleted.dispatch(this.slotInitVO, this.spinRequestVO);
 	};
 

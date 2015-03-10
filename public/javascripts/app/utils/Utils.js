@@ -41,6 +41,28 @@ var G = G || {};
 	};
 
 	/**
+	 * Shuffles elements of an array randomly and returns the new array
+	 *
+	 * @method shuffle
+	 * @param {[]} arr
+	 * @returns {[]}
+	 */
+	Utils.shuffle = function(arr) {
+		var currentIndex = arr.length, temporaryValue, randomIndex ;
+		// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
+			// Pick a remaining element...
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
+			// And swap it with the current element.
+			temporaryValue = arr[currentIndex];
+			arr[currentIndex] = arr[randomIndex];
+			arr[randomIndex] = temporaryValue;
+		}
+		return arr;
+	};
+
+	/**
 	 * @ method getGameComponentByClass - pass the type of component {eg. G.ReelsComponent} to return the component instance
 	 * @param {class} componentClass - must be the class type of a G.GameComponent
 	 * @returns {G.GameComponent} - the instance

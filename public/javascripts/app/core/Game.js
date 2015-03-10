@@ -300,7 +300,6 @@ this.G = this.G || {};
 		var styleWidth = appWidth.toString() + "px";
 		var styleHeight = appHeight.toString() + "px";
 		var styleLeft = appLeft.toString() + "px";
-		//var preloaderCover = document.querySelector("#preloader");
 		this.preloaderEl.style.width = styleWidth;
 		this.preloaderEl.style.height = styleHeight;
 		this.preloaderEl.style.left = styleLeft;
@@ -350,8 +349,6 @@ this.G = this.G || {};
 		var bezelMarginT = this.setup.bezelMarginT;
 		var bezelW = this.setup.bezelW;
 		var bezelH = this.setup.bezelH;
-		var stageW = this.setup.stageW;
-		var stageH = this.setup.stageH;
 		//init background
 		var spriteSheet = new createjs.SpriteSheet(this.assets.spriteSheetStatics);
 		var sprite = new createjs.Sprite(spriteSheet, 'ui-bezel');
