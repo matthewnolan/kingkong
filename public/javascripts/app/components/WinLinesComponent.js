@@ -114,11 +114,6 @@ var G = G || {};
 				var frameIndex = this.spriteSheetBuilder.addFrame(winLineShape, winLineShape.getBounds());
 				winLineFrames.push(frameIndex);
 			}
-<<<<<<< HEAD
-			//console.log('drawWinLine', i, winLineFrames);
-=======
-			// console.log('drawWinLine', i, winLineFrames);
->>>>>>> master
 			this.spriteSheetBuilder.addAnimation("winLine" + i, winLineFrames);
 			this.onWinLineDrawn();
 		}
