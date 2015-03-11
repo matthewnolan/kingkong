@@ -36,7 +36,7 @@ var G = G || {};
 	 * @const SCALE_FACTOR
 	 * @type {number}
 	 */
-	p.SCALE_FACTOR = (1 / 0.9375);
+	p.SCALE_FACTOR = (1 / 0.83333);
 
 	/**
 	 * @property symbolsMatrix
@@ -130,7 +130,7 @@ var G = G || {};
 				sprite.visible = false;
 				if (this.setup.failSafeInitisalisation) {
 					sprite.on("animationend", this.handleAnimationEnd, this);
-					G.Utils.callLater(this.playThisSprite, [sprite, "m1-sprite__000"], this, 0);
+					G.Utils.callLater(this.playThisSprite, [sprite, "M1intro__001"], this, 0);
 				}
 				this.initialisedSpritesNum++;
 			}

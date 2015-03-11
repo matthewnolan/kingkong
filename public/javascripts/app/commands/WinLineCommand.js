@@ -65,7 +65,7 @@ var G = G || {};
 	p.execute = function() {
 
 		var dj = G.Utils.getGameComponentByClass(G.Dj);
-		dj.playSound("bonusStop1");
+		// dj.playSound("bonusStop1");
 
 		console.log('show win line command', this.winLineIndexes);
 

@@ -66,12 +66,12 @@ var G = G || {};
 				meter.prepareMockWin(this.setup.defaultBigWin);
 
 				command = new G.SymbolAnimCommand();
-				command.init(this.setup, symbolWins, [0,1,2], 5, 'm1-sprite__short');
-				command.callNextDelay = 1500;
+				command.init(this.setup, symbolWins, [0,1,2], 5, 'M1intro__001_short');
+				command.callNextDelay = 500;
 				queue.push(command);
 
 				command = new G.BigWinCommand();
-				command.callNextDelay = 1500;
+				command.callNextDelay = 1200;
 				command.init(this.setup, bigWin);
 
 				queue.push(command);
@@ -83,7 +83,7 @@ var G = G || {};
 				queue.push(command);
 
 				command = new G.SymbolAnimCommand();
-				command.init(this.setup, symbolWins, [0,1,2], 5, 'm1-sprite__resume');
+				command.init(this.setup, symbolWins, [0,1,2], 5, 'M1intro__001_resume');
 				queue.push(command);
 
 				var winLineIndexes = [];
@@ -110,7 +110,7 @@ var G = G || {};
 					}
 
 					command = new G.WinLineCommand();
-					command.init(this.setup, winLines, [i], 5, "m1-sprite__000");
+					command.init(this.setup, winLines, [i], 5, "M1intro__001");
 					queue.push(command);
 				}
 				break;

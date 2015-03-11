@@ -59,7 +59,7 @@
   "spritesManifest" : [
     {"src": "assets/sprites/bigwin_1.json", "id": "bigWinAnim"},
     {"src": "assets/sprites/static-images.json", "id": "staticImages"},
-    {"src": "assets/sprites/symbol_anims.json", "id": "symbolAnims"}
+    {"src": "assets/sprites/testingNew.json", "id": "symbolAnims"}
   ],
 
   "winLines": [
