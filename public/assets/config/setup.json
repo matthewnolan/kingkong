@@ -5,7 +5,7 @@
   "htmlDebug": 0,
   "scale" : "none",
   "failSafeInitisalisation": 0,
-  "enableDesktopView": 0,
+  "enableDesktopView": 1,
   "domHelpers": 0,
   "spinOnLoad": "deprecated",
   "playWinAfterSpin": "deprecated",
@@ -278,7 +278,8 @@
     "src": "assets/sounds/GameTransition/Sounds/TranInterBonus.mp3", "id": "TranInterBonus"}, {
     "src": "assets/sounds/JLspin01.mp3", "id": "spin1"}, {
     "src": "assets/sounds/reelspin1.mp3", "id": "reelspin1"}, {
-    "src": "assets/sounds/bonus_stop1.mp3", "id": "bonusStop1"}],
+    "src": "assets/sounds/bonus_stop1.mp3", "id": "bonusStop1"}, {
+    "src": "assets/sounds/reelstop1.mp3", "id": "reelstop1"}],
 
 
 

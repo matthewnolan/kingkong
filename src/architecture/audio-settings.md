@@ -9,3 +9,12 @@ Bash command:
 
 for f in *.wav; do lame -b 80 "$f" "${f%.wav}.mp3"; done
 for f in *.wav; do lame -b 64 "$f" "${f%.wav}.mp3"; done
+
+
+
+for converting video
+
+ffmpeg -i B1Intro.avi B1Intro_%04d.png
+
+skip evey other frame
+ffmpeg -i B1Intro.avi -filter:v select="not(mod(n-1\,2))",setpts="N/(25*TB)" B1Intro_%04d.png
