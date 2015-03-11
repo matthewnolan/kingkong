@@ -33,6 +33,7 @@ var G = G || {};
 
 	/**
 	 * Scale the symbols by this amount, determined by the scale reduction (n) used in Texturepacker to the ratio 1/n
+	 *
 	 * @const SCALE_FACTOR
 	 * @type {number}
 	 */

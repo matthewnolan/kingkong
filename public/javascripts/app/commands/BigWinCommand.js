@@ -7,9 +7,10 @@ var G = G || {};
 	"use strict";
 
 	/**
+	 * Command will prepare a big win animation and begin the animation on execute or hide a big win animation which is already playing.
+	 *
 	 * @class G.BigWinCommand
 	 * @extends G.Command
-	 * @uses G.BigWinComponent
 	 * @constructor
 	 */
 	var BigWinCommand = function() {
@@ -20,17 +21,20 @@ var G = G || {};
 
 	/**
 	 * Set this flag to true if this command should remove a previously played big win
+	 *
 	 * @property shouldClearExisting
 	 * @type {boolean}
+	 * @default false
 	 */
 	p.shouldClearExisting = false;
 
 	/**
-	 * initialise game data and component, and vars
+	 * initialise command data and component
+	 *
 	 * @method init
 	 * @param {Object} setup
-	 * @param {G.BigWinComponent} gameComponent
-	 * @param {boolean} shouldClearExisting
+	 * @param {G.GameComponent} gameComponent - the bigWinComponent is passed in so it can be called in execute
+	 * @param {boolean} shouldClearExisting -
 	 */
 	p.init = function(setup, gameComponent, shouldClearExisting) {
 		this.Command_init(setup, gameComponent);

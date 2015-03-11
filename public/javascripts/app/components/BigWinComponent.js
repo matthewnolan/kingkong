@@ -38,9 +38,11 @@ var G = G || {};
 
 	/**
 	 * Initialise component data
+	 *
 	 * @method init
 	 * @param {Object} setup
 	 * @param {G.SignalDispatcher} signalDispatcher
+	 * @param {Object} bigWinSprites
 	 */
 	p.init = function(setup, signalDispatcher, bigWinSprites) {
 		this.GameComponent_init(setup, signalDispatcher);

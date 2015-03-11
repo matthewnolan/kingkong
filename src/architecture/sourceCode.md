@@ -17,3 +17,6 @@ Core UGP AS3 API source:
 
 H5C casino extension to core:
 //UGP/ugpdev-clientapi-updates/Casinos/High5/client/
+
+##SlotEngine
+//math/SlotEngines/<game>/src/main/resources/expansions/

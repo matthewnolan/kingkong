@@ -7,11 +7,13 @@ this.G = this.G || {};
 	"use strict";
 
 	/**
-	 * Preloader is responsible loading Setup and assets into the Game.
-	 * These include sounds, spritesheets, and data in the form of json files
-	 * It will then dispatch Signals (Events) back to the Game for notification and safe caching of assets.
+	 * Responsible for loading setup.json config file, then sound and graphic assets.
+	 * These include, spritesheets, and data in the form of json files
+	 * It will then dispatch signals back to the Game for notification and safe caching of assets.
+	 *
 	 * @class Preloader
 	 * @constructor
+	 * @uses createjs.LoadQueue - PreloadJS framework for loading externally stored assets. see
 	 */
 	var Preloader = function() {};
 
@@ -19,28 +21,45 @@ this.G = this.G || {};
 	p.constructor = Preloader;
 
 	/**
+	 * URL location where the Preloader can find the config file (setup.json)
+	 *
 	 * @constant SETUP_URL - path of setup.json file relative to public root.
 	 * @type {string}
+	 * @default "assets/config/setup.json"
 	 */
 	p.SETUP_URL = "assets/config/setup.json";
-	p.game = null;
+
+	/**
+	 *
+	 *
+	 * setupLoader
+	 *
+	 * @property setupLoader
+	 * @type {null}
+	 */
 	p.setupLoader = null;
 	p.assetsLoader = null;
-	p.spriteSheetBigWin = null;
-	p.spriteSheetStatics = null;
-	p.spriteSheetSymbolAnims = null;
+
 	p.setupComplete = new signals.Signal();
 	p.assetsLoaded = new signals.Signal();
 
 	/**
-	 * init - store a reference to game, creates a LoadQueue for Setup, creates a LoadQueue for Assets
-	 * Defines Event Handlers for LoadQueues
-	 * @param game
-	 * @todo only pass in Setup
+	 * The loaded config file (setup.json).
+	 *
+	 * @property setup
+	 * @type {Object}
 	 */
-	p.init = function(game) {
-		this.game = game;
+	p.setup = null;
 
+	/**
+	 * - Set up LoadQueue for loading config file (setup.json).
+	 * - Set up LoadQueue for loading game assets (sounds, spritesheets more jsons)
+	 * - Set up EventHandlers to listen for LoadQueue events.
+	 * - Install the SoundJS Plugin
+	 *
+	 * @param {G.Game} game - game is passed in, Preloader will reference
+	 */
+	p.init = function() {
 		this.setupLoader = new createjs.LoadQueue(true);
 		this.setupLoader.on("fileload", this.handleSetupLoaded, this);
 
@@ -54,6 +73,7 @@ this.G = this.G || {};
 	};
 
 	/**
+	 * @
 	 * startLoad - starts loading setup.json file
 	 */
 	p.startLoad = function() {
@@ -65,7 +85,8 @@ this.G = this.G || {};
 	 * @param e
 	 */
 	p.handleSetupLoaded = function(e) {
-		this.setupComplete.dispatch(e.result);
+		this.setup = e.result;
+		this.setupComplete.dispatch(this.setup);
 		this.loadGameAssets();
 	};
 
@@ -73,9 +94,9 @@ this.G = this.G || {};
 	 * loadGameAssets - loads spritesheets defined in Setup
 	 */
 	p.loadGameAssets = function() {
-		this.assetsLoader.loadManifest(this.game.setup.imageDataManifest);
-		this.assetsLoader.loadManifest(this.game.setup.spritesManifest);
-		this.assetsLoader.loadManifest(this.game.setup.soundsManifest);
+		this.assetsLoader.loadManifest(this.setup.imageDataManifest);
+		this.assetsLoader.loadManifest(this.setup.spritesManifest);
+		this.assetsLoader.loadManifest(this.setup.soundsManifest);
 	};
 
 	/**

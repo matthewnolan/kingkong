@@ -49,7 +49,7 @@ var G = G || {};
 	 * @param {G.WinLinesComponent} gameComponent
 	 * @param {number[]} winLineIndexes - indexes of winLines based on setup.winLines which we'd like to show
 	 * @param {number} numSquares - number of win squares to display on win line
-	 * @param {string} playAnimId - play the symbol animation on this square pass "blink" to make a blinking symbol
+	 * @param {string} playAnimId - play the symbol animation on this square  //todo "blink" to make a blinking symbol
 	 */
 	p.init = function(setup, gameComponent, winLineIndexes, numSquares, playAnimId) {
 		this.Command_init(setup, gameComponent);
