@@ -220,6 +220,18 @@
 			34,
 			0,
 			0.5
+		],
+		"celebration1__000_short": [
+			0,
+			10,
+			0,
+			0.5
+		],
+		"celebration1__000_resume": [
+			10,
+			34,
+			0,
+			0.5
 		]
 	},
 	"texturepacker": [
