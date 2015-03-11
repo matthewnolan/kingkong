@@ -7,10 +7,58 @@ this.G = this.G || {};
 	"use strict";
 
 	/**
-	 * Initialises preloading of assets, stores Setup, GameState, and GameComponents
-	 * GameComponents are added to Stage
-	 * Wires ServerInterface to GameComponents using a SignalDispatcher
-	 * User Interface Events can defined set here.
+	 * Game is the root of the application.  It creates everything a king kong game needs in order to run.  And is responsible for initialising
+	 * Preloading, SignalDispatcher, Server connection, GameData, GameComponents and the Display.  Scaling and UserInterface Events are also handled here.
+	 * It also provides some dependency injection to the Games Components, which becomes the core method GameComponents use to talk to each other.
+	 *
+	 * Responsibilities explained:
+	 *
+	 * Preloading: Creates and initialises a G.Preloader which goes and fetches required sound and graphic assets.
+	 *
+	 * Server: Creates and initialises a G.ServerInterface which can talk to the server. (Currently the Node server for development purposes).
+	 *
+	 * Signals: We use signalsjs to handle communications around the application.  Signals are test friendly, and robust event dispatching system which don't rely on
+	 * "magic" strings to work.  They also support custom parameters, which gets rid of the need to create custom event classes.
+	 * We use a signalDispatcher object passed into GameComponents to handle communication between different components.
+	 *
+	 * GameComponents: The app contains a number of gameComponents.  A GameComponent is a createjs.Container, a DisplayObject which may be added to the canvas.
+	 * They may also contains some game logic, for example: the reels must be displayed according the margin values passed in via the setup.json.
+	 * Also, a reel may animate and dispatch an event(signal) when completed.
+	 * For this reason all GameComponents are passed references to the setup.j	son and a SignalDispatcher.
+	 * All GameComponents are also added to the static G.Utils.gameComponents array, which gives the application the freedom to call up gameComponents at any time when
+	 * required without necessarily having to use the signalDispatcher.
+	 *
+	 * GameData: Creates and initialises a G.GameData.  When data is returned from the server, it uses GameData to store the returned responses and notify the signalDispatcher
+	 * that data has returned.
+
+	 * Stage and Ticker: Stage and Ticker are createjs concepts.  Stage is the root display object of the Canvas, and is the container where all createjs display objects
+	 * must be added to.  Ticker is responsible for updating the stage at regular intervals.  We currently sync stage updates with requestAnimationFrame
+	 * in order to ensure that animations are as smooth as possible on newer browsers which support requestAnimationFrame.
+	 * It is recommened to read this to understand more: http://createjs.com/tutorials/Animation%20and%20Ticker/
+	 *
+	 * See more info at: http://createjs.com/Home
+	 *
+	 * Proton: Is particle animation system used by this application - It was chosen because it supports createjs and other rendering engines.
+	 * It also performed very well in tests. It is created here in Game because it is required to be updated during the createjs.Ticker cycle.
+	 *
+	 * See more info at:  https://github.com/a-jie/Proton
+	 *
+	 * Scaling: In order to support multiple screen resolutions, the application is created at a native scale size of 667px x 375px.
+	 * This value should be set as the setup.json's "scale" value.
+	 * The application supports multiple scale modes to help support as many device sizes as possible:
+	 * 	"FULL_ASPECT":
+	 * 		This scales the application up or down to fit into the the devices viewport while maintaining aspect ratio.  Viewport is the window size, and iframe or WebView container size should be respected.
+	 * 	"FULL_BROWSER":
+	 * 		This scales the application up or down to fit into the viewport dimensions precisely.  This will cause stretching on devices that don't match the native aspect
+	 * 		ratio.
+	 * 	"NONE" or any other value:
+	* 		No scaling is performed, and the application is created at the native dimensions.
+	 *
+	 *
+	 * Devices:
+	 * This application is designed to play on multiple devices, browsers and screen resolutions.  Having said this, it is not possible to design
+	 * an application which can run on any browser on any device and on any screen size. There are limitations and these should be considered.
+	 * @todo create a device compatiibility matrix
 	 *
 	 * @class Game
 	 * @constructor
@@ -21,150 +69,207 @@ this.G = this.G || {};
 
 	/**
 	 * Decides what scale mode is used to determine the scale and position of the canvas
+	 * this value is overridden by whatever value is inside setup.json 'scale'
+	 *
+ 	 * @Property STAGE_SCALE_MODE
+	 * @type {string}
 	 * @example "NO_SCALE" - uses the default setup.json stageScale value;
 	 * @example "FULL_BROWSER" - stretches the app to the viewport size;
 	 * @default 'FULL_ASPECT - scales the app to the viewport, maintining aspect ratio'
-	 * @Property STAGE_SCALE_MODE
-	 * @type {string}
 	 */
 	p.STAGE_SCALE_MODE = "FULL_ASPECT";
 
 	/**
-	 * AUTO_GENERATED in all grunt builds
+	 * Displayed in gaffMenu - version is injected by the build process.
+	 *
 	 * @property version
 	 * @type {string}
+	 * @default "{{ VERSION }}"
+	 * @example "1.2.2" if minified
 	 */
 	p.version = "{{ VERSION }}";
 
 	/**
+	 * This is the main setup file for the application.  Many properties and features in the app can be enabled / disabled via this configuration.
+	 * The first thing Game does is look for the setup.json in the default directory and try to load it.  Once loaded it sets this property from the loaded
+	 * json object.
+	 *
+
 	 * @property setup
 	 * @type {Object}
+	 * @see /assets/config/setup.json
+	 * @default null
 	 */
 	p.setup = null;
 
 	/**
+	 * This is created during init and talks to the server.  It is used by GameComponents to make requests to the server.
+	 * Responses are delivered to the GameComponents via signalDispatcher.
+	 *
 	 * @property serverInterface
 	 * @type {G.ServerInterface}
+	 * @default null
 	 */
 	p.serverInterface = null;
 
 	/**
-	 * @property stage
-	 * @type {createjs.Stage}
-	 */
-	p.stage = null;
-
-	/**
-	 * Override this value in setup.json
-	 * @property stageScale
-	 * @type {number}
-	 */
-	p.stageScale = 1;
-
-	/**
-	 * @property assets
-	 * @type {Object}
-	 */
-	p.assets = null;
-
-	/**
-	 * Game Events be listened to and dispatched from here. Should be passed to GameComponents which require it.
+	 * This is created during init and passed around the application to GameComponents, or any part of the application that requires to talk or listen to another part.
+	 * Signals created on this object can be dispatched and handled by any class which has this reference.
+	 *
 	 * @property signalDispatcher
 	 * @type {G.SignalDispatcher}
+	 * @default null
 	 */
 	p.signalDispatcher = null;
 
 	/**
+	 * A signal dispatched by the GaffMenu when fpsSwitch button is pressed. The handler then checks the currentMaxFps and switches it.
+	 *
 	 * @property fpsSwitcher
 	 * @type {Signal}
 	 */
 	p.fpsSwitcher = new signals.Signal();
 
 	/**
-	 * @property displayInitialised
-	 * @type {Signal}
+	 * The maxFps the app will try to achieve.  This is not the guaranteed FPS in your device.  This value can be switched via Gaff.
+	 * @property currentMaxFps
+	 * @type {number}
+	 * @default 60
 	 */
-	p.displayInitialised = new signals.Signal();
+	p.currentMaxFps = 60;
 
 	/**
-	 * @property daisyShowerStarted
+	 * signal handler launches a firework for demo purposes
+	 *
 	 * @type {Signal}
 	 */
 	p.fireworkLaunched = new signals.Signal();
 
 	/**
+	 * Object contains references to assets loaded via preloader.
+	 * This can then be used to pass to GameComponents which require loaded assets.
+	 *
+	 * @property assets
+	 * @type {Object}
+	 * @default null
+	 */
+	p.assets = null;
+
+	/**
+	 * An array container for all GameComponents.  Passed to the static G.Utils for easy access.
+	 *
 	 * @property gameComponents
 	 * @type {G.GameComponent[]}
+	 * @default []
 	 */
 	p.gameComponents = [];
 
 	/**
-	 * proton
-	 * @type {Proton}
-	 */
-	p.proton = null;
-
-	/**
+	 * GameComponent responsible for running particle animations.
 	 *
-	 * @type {null}
-	 */
-	p.emitter = null;
-
-	/**
-	 *
-	 * @type {HTMLElement}
-	 */
-	p.canvas = null;
-
-	/**
 	 * @property particlesComponent
 	 * @type {G.ParticlesComponent}
+	 * @default null
 	 */
 	p.particlesComponent = null;
 
 	/**
+	 * GameComponent responsible for drawing and animating the Reels.
+	 *
 	 * @property reelsComponent
 	 * @type {G.ReelsComponent}
+	 * @default null
 	 */
 	p.reelsComponent = null;
 
 	/**
+	 * GameComponent responsible for drawing and the logic inside the gaffMenu
+	 *
 	 * @property reelsComponent
 	 * @type {G.GaffMenuComponent}
+	 * @default null
 	 */
 	p.gaffMenu = null;
 
 	/**
-	 * Number of initialised game components to check have initialised before loader is removed
-	 * @property initialisedNum
-	 * @default 3
-	 * @type {number}
-	 */
-	p.initailisedNum = 3;
-
-	/**
-	 * @property preloaderEl
+	 * GameData stores data returned from the server via ServerInterface requests
+	 * It can dispatch signalDispatcher signals to notify GameComponents some serverResponse has happened.
+	 * @property gameData
+	 * @type {G.GameData}
 	 * @default null
-	 * @type {HTMLElement}
-	 */
-	p.preloaderEl = null;
-
-	/**
-	 * @property serverInterface
-	 * @default null
-	 * @type {G.ServerInterface}
-	 */
-	p.serverInterface = null;
-
-	/**
-	 *
-	 * @type {null}
 	 */
 	p.gameData = null;
 
 	/**
-	 * init: Game entry point, create Preloader and accept a Display root (currently createjs.stage), and ServerInterface.
-	 * Starts Preloading of assets
+	 * The Proton object used by tha animation system and updated by Ticker stage updates.
+	 *
+	 * @property proton
+	 * @type {Proton}
+	 * @default null
+	 */
+	p.proton = null;
+
+	/**
+	 * Cache the createjs.Stage object for stage updates
+	 *
+	 * @property stage
+	 * @type {createjs.Stage}
+	 * @default null
+	 */
+	p.stage = null;
+
+	/**
+	 * Default stageScale value. If defined in setup.json this value is overridden
+	 *
+	 * @property stageScale
+	 * @type {number}
+	 * @default 1
+	 */
+	p.stageScale = 1;
+
+	/**
+	 * Number of initialised game components to check have initialised before loader is removed.  If the setup.json defines
+	 * failSafeDelay then it waits for Reels, WinLines and BigWin Animation to play before it removes the preloader
+	 *
+	 * @property initialisedNum
+	 * @type {number}
+	 * @default 3
+	 *
+	 */
+	p.initailisedNum = 3;
+
+	/**
+	 * Caches the preloader HTML element which covers the app during loading and initialisation
+	 *
+	 * @property preloaderEl
+	 * @type {HTMLElement}
+	 * @default null
+	 */
+	p.preloaderEl = null;
+
+	/**
+	 * Cache HTML Canvas Element for scaling
+	 *
+	 * @property canvas
+	 * @type {HTMLElement}
+	 * @default null
+	 */
+	p.canvas = null;
+
+	/**
+	 * Game entry point
+	 *
+	 * Creates and initialises Game framework classes in this order:
+	 * 1. Stats (for profiling)
+	 * 2. SignalDispatcher
+	 * 3. GameData
+	 * 4. ServerInterface
+	 * 5. Stage
+	 * 6. Proton
+	 *
+	 * Game initialisation is continued when the ServerInterface returns SlotInitResponse
+	 *
+	 * @method init:
 	 */
 	p.init = function() {
 		this.stats = new Stats();
@@ -185,17 +290,32 @@ this.G = this.G || {};
 		createjs.Ticker.setFPS(60);
 
 		this.proton = new Proton();
+	};
 
+	/**
+	 * When Slot Init is Received, then Preloader is created and setup.json begins loading
+	 * App then waits for assetsLoadComplete signal to be dispatched by preloader.
+	 * Preloader element is cached so it can be removed later.
+	 *
+	 * @method slotInitReceived
+	 */
+	p.slotInitReceived = function() {
+		var preloader = new G.Preloader();
+		preloader.init(this, this.SETUP_URL);
+		preloader.setupComplete.add(this.onSetupLoaded, this);
+		preloader.assetsLoaded.add(this.onAssetsLoadComplete, this);
+		preloader.startLoad();
 
-
-		//this.displayInitialised.add(this.displayInitialised, this);
+		this.preloaderEl = document.querySelector("#preloader");
 	};
 
 
 	/**
-	 * SignalHandler which saves setup data when loaded by Preloader
+	 * SignalHandler which caches setup.json object when it has finished loading.
+	 *
+	 * @method onSetupLoaded
 	 * @param {Object} setup - Setup Object which is loaded from setup.json file
-	 * @event onSetupLoaded
+	 *
 	 */
 	p.onSetupLoaded = function(setup) {
 		this.setup = setup;
@@ -217,24 +337,16 @@ this.G = this.G || {};
 		}
 	};
 
-	p.slotInitReceived = function() {
-		console.log('slotInitReceived', this.gameData);
-
-		var preloader = new G.Preloader();
-		preloader.init(this, this.SETUP_URL);
-		preloader.setupComplete.add(this.onSetupLoaded, this);
-		preloader.assetsLoaded.add(this.onAssetsLoadComplete, this);
-		preloader.startLoad();
-
-		this.preloaderEl = document.querySelector("#preloader");
-	};
-
 	/**
-	 * Signal Handler
-	 * onAssetsLoadComplete: Asets have been loaded.  Now initialise the Display,
-	 * Initialise UI Events, and Create a SignalDispatcher
-	 * @param {Object} assets
-	 * @event onAssetsLoadComplete
+	 * Signal Handler called when assetsLoadComplete is dispatched by preloader.
+	 * Assets are cached and the application continues to initialisation phase.
+	 * 1. Rescale the application according the setup.json config,
+	 * 2. Setup the main display, creates GameComponents and adds them to the stage.
+	 * 3. Proton animation system is created.
+	 *
+	 * @method onAssetsLoadComplete
+	 * @param {Object} assets - the preloaded game assets which are cached and passed to GameComponents which need it.
+	 *
 	 */
 	p.onAssetsLoadComplete = function(assets) {
 		this.assets = assets;
@@ -247,9 +359,17 @@ this.G = this.G || {};
 
 
 	/**
-	 * Scales Application according to setup scale data
-	 * STAGE_SCALE_MODE = "FULL ASPECT" || "FULL_BROWSER" || "NO_SCALE"
-	 * any other value forces the app to not scale.
+	 * Scales Application according to setup.json scaling configuration
+	 *
+	 * AVAILABLE STAGE_SCALE_MODE = "FULL ASPECT" || "FULL_BROWSER" || "NO_SCALE" or ANY OTHER VALUE
+	 * "FULL_ASPECT" - scale the application to the visible window size, whilst maintaining the app's native apsect ratio.  This will display black borders
+	 * When a device apsect ratio doesn't match the app.
+	 * "FULL_BROWSER" - scale the application to fit the entire window size, stretching the graphics is the aspect ratios do not match.
+	 * "NO_SCALE" - do not scale the application at all.
+	 *
+	 * If the setup.json's enableDesktopView is turned on, the app is set automatically to not scale.
+	 * Stores the final scale value inside G.Utils, for access anywhere in the application.
+	 *
 	 * @method rescale
 	 */
 	p.rescale = function() {
@@ -339,7 +459,11 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * setupDisplay: Start layering Containers and GameComponents.  Mask the stage for reels.
+	 * Initialise and create GaemComponents and add them to thd display.
+	 * GameComponents are stored inside the static G.Utils.gameComponents for access anywhere in the application.
+	 * Adds stats to the window for profiling
+	 * Masks the reels inside the bezel area.
+	 *
 	 * nb. These are potentially expensive cpu operations, but everything done here is done after Preload and during app initialisation.
 	 * Any filters applied to display objects will magnify the length of time this function takes to complete.
 	 * @method setupDisplay
@@ -440,11 +564,13 @@ this.G = this.G || {};
 	};
 
 	/**
+	 * This function is called everytime a GameComponent with caching enabled has finished rendering.
 	 * When initialisedNum has reduced to 0, all game components requiring async initialisation and graphics caching has completed
+	 * and the preloader element is removed from the dom.
+	 *
 	 * @method checkInitialised
 	 */
 	p.checkCacheInitialised = function() {
-		// console.log('checkCacheInitialised', this.initailisedNum);
 		if (--this.initailisedNum === 0) {
 			this.preloaderEl.style.display = "none";
 		}
@@ -452,6 +578,7 @@ this.G = this.G || {};
 
 	/**
 	 * Render Tick which updates Stage and any profiling tool.
+	 *
 	 * @see  http://createjs.com/tutorials/Animation%20and%20Ticker
 	 * @method handleTick
 	 */
@@ -529,7 +656,8 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * Initialise Proton particle system and pass the info to the particles
+	 * Initialise Proton particle system and pass the info to the particles GameComponent
+	 *
 	 * @method createProton
 	 */
 	p.createProton = function() {
@@ -539,18 +667,19 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * Switch between 30 and 60fps
+	 * Switch between 30 and 60fps via the gaff menu button labelled "60" or "30"
+	 *
 	 * @method fpsSwitch
 	 */
 	p.fpsSwitch = function() {
 		console.log('fpsSwitched');
 
-		var currentFrameRate = Math.round(createjs.Ticker.framerate);
-		if (currentFrameRate <= 30) {
-			createjs.Ticker.setFPS(60);
+		if (this.currentMaxFps === 60) {
+			this.currentMaxFps = 30;
 		} else {
-			createjs.Ticker.setFPS(30);
+			this.currentMaxFps = 60;
 		}
+		createjs.Ticker.setFPS(this.currentMaxFps);
 	};
 
 	G.Game = Game;

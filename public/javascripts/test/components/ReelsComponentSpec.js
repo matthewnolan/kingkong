@@ -230,6 +230,42 @@ describe("ReelsComponent Test", function () {
 
 		});
 
+		//
+
+		it("Given a slotInitResponse and stop are: [135, 101, 78, 2, 32] serverSpinStart should queue up slot stops correctly", function() {
+			spyOn(this.class, "spinReels");
+
+			var Reel = function() {
+				return {
+					modifyReelData: jasmine.createSpy("modify reel data spy")
+				};
+			};
+
+			var reel1 = new Reel();
+			var reel2 = new Reel();
+			var reel3 = new Reel();
+			var reel4 = new Reel();
+			var reel5 = new Reel();
+
+			this.class.reels = [reel1, reel2, reel3, reel4, reel5];
+
+			var slotInitVo = {
+				reelStrips: reelStrips
+			};
+
+			var spinResponseVO = {
+				spinRecords: [{
+					stops: [135, 101, 78, 2, 32]
+				}]
+			};
+
+			this.class.serverSpinStart(slotInitVo, spinResponseVO);
+
+			expect(this.class.spinReels).toHaveBeenCalledWith([8,8,8,8,8]);
+
+
+		});
+
 	});
 
 

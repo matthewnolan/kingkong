@@ -7,9 +7,8 @@ this.G = this.G || {};
 	"use strict";
 
 	/**
-	 * The Main Class should give the app its entry point.
-	 * The Main Class is instantiated by the Index.html and it's init function called by this in a way that ensures all
-	 * dependencies are loaded.
+	 * This is the main application entry point.
+	 * Main is instantiated by the index.html and it's init function called when the web application dependencies are fully loaded.
 	 * No other entry points should be used by the index.html
 	 *
 	 * @class Main
@@ -20,16 +19,17 @@ this.G = this.G || {};
 	p.constructor = Main;
 
 	/**
-	 * Stores a reference to G.Game, Everything a King Kong game is created by this.
+	 * Stores a reference to G.Game, Everything a King Kong game needs is created by the game.
 	 * @property game
 	 * @type {G.Game}
 	 */
 	p.game = null;
 
 	/**
-	 * Application entry point initialises Game
-	 * @method init
+	 * Application entry point initialises Game.
+	 * Creates a new Game and calls game.init.
 	 *
+	 * @method init
 	 */
 	p.init = function() {
 		this.game = new G.Game();
