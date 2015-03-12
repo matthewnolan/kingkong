@@ -16,28 +16,13 @@ describe("Preloader Test", function () {
 
 	it("Public vars are initialised correctly", function() {
 		expect(this.class.SETUP_URL).toEqual("assets/config/setup.json");
-		expect(this.class.game).toBeNull();
 		expect(this.class.setupLoader).toBeNull();
 		expect(this.class.assetsLoader).toBeNull();
-		expect(this.class.spriteSheetBigWin).toBeNull();
-		expect(this.class.spriteSheetStatics).toBeNull();
-		expect(this.class.spriteSheetSymbolAnims).toBeNull();
 	});
 
 	it("Signals are initialised correctly", function() {
 		expect(this.class.setupComplete).toEqual(jasmine.any(signals.Signal));
 		expect(this.class.assetsLoaded).toEqual(jasmine.any(signals.Signal));
-	});
-
-	it("init function should set game based on args", function() {
-		var mockGame = {
-			"init": function () {
-			}
-		};
-
-		this.class.init(mockGame);
-
-		expect(this.class.game).toEqual(mockGame);
 	});
 
 
@@ -130,13 +115,12 @@ describe("Preloader Test", function () {
 
 	it("loadGameAssets should load the assets spriteManfiest", function() {
 
-		var mockGame = {
-			setup: {
-				spritesManifest: "mock sprites manifest"
-			}
+		this.class.setup = {
+			spritesManifest: "mock sprites manifest",
+			imageDataManifest: "mock image data manifest"
 		};
 
-		this.class.init(mockGame);
+		this.class.init();
 
 		spyOn(this.class.assetsLoader, "loadManifest");
 

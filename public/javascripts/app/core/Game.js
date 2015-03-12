@@ -476,7 +476,7 @@ this.G = this.G || {};
 		//init background
 		var spriteSheet = new createjs.SpriteSheet(this.assets.spriteSheetStatics);
 		var sprite = new createjs.Sprite(spriteSheet, 'ui-bezel');
-		console.log(this.setup.bezelW, this.setup.bezelH);
+		// console.log(this.setup.bezelW, this.setup.bezelH);
 		this.stage.addChild(sprite);
 
 		//stats

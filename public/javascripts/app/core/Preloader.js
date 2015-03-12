@@ -116,7 +116,7 @@ this.G = this.G || {};
 	 * handleAssetsFile - handle loading of game assets
 	 */
 	p.handleAssetsFile = function(e) {
-		console.log(e.item.src);
+		// console.log(e.item.src);
 	};
 
 	/**

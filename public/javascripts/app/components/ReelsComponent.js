@@ -150,7 +150,7 @@ var G = G || {};
 		for (i = 0; i < len; i++) {
 			reel = new G.Reel();
 
-			console.log('reelData:', i, this.reelsData[i]);
+			// console.log('reelData:', i, this.reelsData[i]);
 
 			reel.init(this.setup, this.signalDispatcher, this.symbolSprites, this.reelsData[i]);
 			this.addChild(reel);
