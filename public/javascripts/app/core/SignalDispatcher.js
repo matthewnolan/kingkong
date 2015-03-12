@@ -133,8 +133,6 @@ var G = G || {};
 	 * @todo slotInit response should be passed to Reels once, and then slot init arg will no longer need to be passed each time.
 	 */
 	p.handleServerReelSpinStart = function(slotInit, spinResponse) {
-		console.log('serverReel')
-
 		var reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
 		reels.serverSpinStart(slotInit, spinResponse);
 	};

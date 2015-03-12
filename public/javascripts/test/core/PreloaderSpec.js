@@ -123,10 +123,11 @@ describe("Preloader Test", function () {
 		this.class.init();
 
 		spyOn(this.class.assetsLoader, "loadManifest");
+		spyOn(this.class.assetsLoader, "load");
 
 		this.class.loadGameAssets();
 
-		expect(this.class.assetsLoader.loadManifest).toHaveBeenCalledWith("mock sprites manifest");
+		expect(this.class.assetsLoader.loadManifest).toHaveBeenCalledWith("mock sprites manifest", false);
 
 	});
 

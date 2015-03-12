@@ -104,7 +104,7 @@ this.G = this.G || {};
 		this.assetsLoader.on("complete", this.handleAssetsLoaded, this);
 		this.assetsLoader.installPlugin(createjs.Sound);
 
-		this.progressEl = document.querySelector("#loadPercentage");;
+		this.progressEl = document.querySelector("#loadPercentage");
 	};
 
 	/**
@@ -169,7 +169,7 @@ this.G = this.G || {};
 	 * @method handleAssetsFile
 	 * @param {createjs.Event} e - the file load event
 	 */
-	p.handleAssetsFile = function(e) { };
+	p.handleAssetsFile = function() { };
 
 	/**
 	 * All game assets have completed loading, now update visible load state information
