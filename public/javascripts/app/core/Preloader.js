@@ -10,6 +10,7 @@ this.G = this.G || {};
 	 * Responsible for loading setup.json config file, then sound and graphic assets.
 	 * These include, spritesheets, and data in the form of json files
 	 * It will then dispatch signals back to the Game for notification and safe caching of assets.
+	 * Currently uses PreloadJS - see http://createjs.com/Docs/PreloadJS/modules/PreloadJS.html
 	 *
 	 * @class Preloader
 	 * @constructor
@@ -30,17 +31,42 @@ this.G = this.G || {};
 	p.SETUP_URL = "assets/config/setup.json";
 
 	/**
-	 *
-	 *
-	 * setupLoader
+	 * The load queue which will load configuration files.
+	 * Currently only loading the setup.json file, but any future configuration eg. language file could be added to this load queue.
 	 *
 	 * @property setupLoader
-	 * @type {null}
+	 * @type {createjs.LoadQueue}
+	 * @default null
 	 */
 	p.setupLoader = null;
+
+	/**
+	 * The load queue which will load game assets, like sounds, spritesheets and other images.
+	 * Currently there seems to be some unexpected behaviour where spritesheet image file loading is completed after the assetLoader.complete event is fired,
+	 * leading to premature application initiation.  This has been raised with the PreloadJS team and the issue can be followed here: https://github.com/CreateJS/PreloadJS/issues/129
+	 * In the meantime we are separately loading the spritesheet.pngs via the loader to ensure they are loaded before our preloader element is removed.
+	 * The drawback of this is that the spritesheet.pngs get preloaded AND loaded after the app is initialised.  Although the 2nd load will likely be from cache.
+	 *
+	 * @property assetsLoader
+	 * @type {createjs.LoadQueue}
+	 * @default null
+	 */
 	p.assetsLoader = null;
 
+	/**
+	 * When the setupLoader complete event is fired, this signal is dispatched notifying the Game.
+	 *
+	 * @property setupComplete
+	 * @type {Signal}
+	 */
 	p.setupComplete = new signals.Signal();
+
+	/**
+	 * When the assetsLoader complete event is fired, this signal is dispatched notifying the Game, and loaded assets passed with it.
+	 *
+	 * @property assetsLoaded
+	 * @type {Signal}
+	 */
 	p.assetsLoaded = new signals.Signal();
 
 	/**
@@ -52,12 +78,12 @@ this.G = this.G || {};
 	p.setup = null;
 
 	/**
+	 * Preloader initialisation sets up the following:
+	 *
 	 * - Set up LoadQueue for loading config file (setup.json).
 	 * - Set up LoadQueue for loading game assets (sounds, spritesheets more jsons)
 	 * - Set up EventHandlers to listen for LoadQueue events.
 	 * - Install the SoundJS Plugin
-	 *
-	 * @param {G.Game} game - game is passed in, Preloader will reference
 	 */
 	p.init = function() {
 		this.setupLoader = new createjs.LoadQueue(true);
@@ -73,16 +99,19 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * @
-	 * startLoad - starts loading setup.json file
+	 * Starts the setupLoader load queue.
+	 *
+	 * @method startLoad
 	 */
 	p.startLoad = function() {
 		this.setupLoader.loadFile(this.SETUP_URL);
 	};
 
 	/**
-	 * handleSetupLoaded - dispatches a Signal to Game then loads Game assets
-	 * @param e
+	 * dispatches a Signal to Game passes the setup file then loads Game assets
+	 *
+	 * @method handleSetupLoaded
+	 * @param {createjs.Event} e - the load complete event
 	 */
 	p.handleSetupLoaded = function(e) {
 		this.setup = e.result;
@@ -91,7 +120,9 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * loadGameAssets - loads spritesheets defined in Setup
+	 * loads spritesheets, images and sounds manifests defined in Setup
+	 *
+	 * @method loadGameAssets
 	 */
 	p.loadGameAssets = function() {
 		this.assetsLoader.loadManifest(this.setup.imageDataManifest);
@@ -100,12 +131,20 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * handleAssetsError - handle errors in asset loading phase gracefully
+	 * handle errors in asset loading phase gracefully
+	 * @method handleAssetsError
+	 * @param {createjs.Event} e - The error event.
+	 * @todo display a reasonable error message to the user
 	 */
-	p.handleAssetsError = function() { };
+	p.handleAssetsError = function(e) {
+		alert("Error loading game assets\n" + e.message);
+	};
 
 	/**
-	 * handleAssetsProgress - handle loading of game assets
+	 * handle progress of game assets
+	 *
+	 * @method handleAssetsProgress -
+	 * @param {createjs.Event} e - The progress event
 	 */
 	p.handleAssetsProgress = function(e) {
 		var el = document.querySelector("#loadPercentage");
@@ -113,17 +152,21 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * handleAssetsFile - handle loading of game assets
+	 * debug loading of game assets
+	 *
+	 * @method handleAssetsFile
+	 * @param {createjs.Event} e - the file load event
 	 */
-	p.handleAssetsFile = function(e) {
-		// console.log(e.item.src);
-	};
+	p.handleAssetsFile = function(e) { };
 
 	/**
-	 * handleAssetsLoaded - dispatch a Signal to Game containing loaded Assets
+	 * All game assets have completed loading, now update visible load state information
+	 * and dispatch a Signal to game and pass assets.
+	 * This is done on a setTimeout to prevent a bug probably related to too much strain on the cpu
+	 *
+	 * @method handleAssetsLoaded
 	 */
 	p.handleAssetsLoaded = function() {
-		var self = this;
 		var assets = {
 			spriteSheetBigWin: this.assetsLoader.getResult('bigWinAnim'),
 			spriteSheetStatics: this.assetsLoader.getResult('staticImages'),
@@ -132,18 +175,10 @@ this.G = this.G || {};
 
 		var el = document.querySelector("#loadState");
 		el.innerHTML = "Loaded";
-
 		el = document.querySelector("#initializeState");
 		el.innerHTML = "Initializing...";
 
-
-		setTimeout(function(){
-			self.assetsLoaded.dispatch(assets);
-
-		}, 50);
-
-
-
+		G.Utils.callLater(this.assetsLoaded.dispatch, [assets], this, 50);
 	};
 
 	G.Preloader = Preloader;
