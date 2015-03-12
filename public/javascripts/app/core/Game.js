@@ -123,27 +123,12 @@ this.G = this.G || {};
 	p.signalDispatcher = null;
 
 	/**
-	 * A signal dispatched by the GaffMenu when fpsSwitch button is pressed. The handler then checks the currentMaxFps and switches it.
-	 *
-	 * @property fpsSwitcher
-	 * @type {Signal}
-	 */
-	p.fpsSwitcher = new signals.Signal();
-
-	/**
 	 * The maxFps the app will try to achieve.  This is not the guaranteed FPS in your device.  This value can be switched via Gaff.
 	 * @property currentMaxFps
 	 * @type {number}
 	 * @default 60
 	 */
 	p.currentMaxFps = 60;
-
-	/**
-	 * signal handler launches a firework for demo purposes
-	 *
-	 * @type {Signal}
-	 */
-	p.fireworkLaunched = new signals.Signal();
 
 	/**
 	 * Object contains references to assets loaded via preloader.

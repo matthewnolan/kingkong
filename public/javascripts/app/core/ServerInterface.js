@@ -59,7 +59,7 @@ this.G = this.G || {};
 	/**
 	 * Makes a REST call to the server api requesting a random spin result.
 	 * GET: "/api/random-spin"
-	 * Returns the spinResponse in JSON when completed and passes the result to GameData.
+	 * Returns the spinResponse in JSON when completed and passes the result to GameData
 	 *
 	 * @method requestSpin
 	 */

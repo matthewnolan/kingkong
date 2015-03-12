@@ -20,8 +20,8 @@ api.get('/spin-no-win1', function(req, res) {
 });
 
 api.get('/random-spin', function(req, res) {
-	//var spins = [spinNoWin1, spinNoWin2, spinWin1];
-	var spins = [spinWin2Gaff];
+	var spins = [spinNoWin1, spinNoWin2, spinWin1, spinWin2Gaff];
+	//var spins = [];
 	var resp = spins[Math.floor(Math.random() * spins.length)];
 	res.json(resp);
 });
