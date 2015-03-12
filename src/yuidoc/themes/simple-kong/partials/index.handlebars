@@ -1,2 +1,29 @@
 <h3>King Kong API Docs - Guide to Source Code</h3>
-<p></p>
+<pre>## Source Code
+
+    Overview
+    --------
+    - index.html: Contains main application CANVAS, Preloader container, script tags load stylesheet and dependencies then calls Main.init();
+    - Main.js: Entry Point
+    - Game.js: Creates GameComponents, Preloader, ServerInterface, SignalDispatcher for wiring events etc.
+    - Preloader: Loads Game Assets and updates preloader element with progress.
+    - setup.json: The Main configuration file, defining assets location, game rules, scaling and position information.
+    - ServerInterface: A bridge between the application and the server. Calls are made to the server via this class.
+    - SignalDispather: The internal wiring for Components to talk to one another in a loosly coupled way.
+    - GameComponents: These are modularised View Containers which extend the createjs.Container class.  They are added to the stage, and they are stored in G.Utils.gameCompeonts for easy access
+    - eg. ReelsComponent: creates a Reel for the number of Reels defined in setup.
+    - eg. DJ: GameComponent responsible for playing sounds.  Can be called directly or when a playSound signal is dispatched.
+
+    3rd Party Dependencies:
+    -----------------------
+    ##Application:
+    Signals - the core event framework
+    Proton - the particle animation framework.
+    Createjs - The Rendering framework, the class inheritence pattern, the Preloader, the Sound Manager, the Tweening Framework.
+    Fetch - The REST API: A cross browser Polyfill.
+    Hammerjs - For responding to user touch gestures on touch enabled devices.
+    - See bower.json for more.
+
+    ##Development:
+    Jasmine - The client side unit testing framework
+    - See bower.json for more.</pre>

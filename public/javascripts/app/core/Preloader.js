@@ -78,6 +78,14 @@ this.G = this.G || {};
 	p.setup = null;
 
 	/**
+	 * The HTML element displaying preloader information
+	 *
+	 * @property progressEl
+	 * @type {HTMLElement}
+	 */
+	p.progressEl = null;
+
+	/**
 	 * Preloader initialisation sets up the following:
 	 *
 	 * - Set up LoadQueue for loading config file (setup.json).
@@ -96,6 +104,7 @@ this.G = this.G || {};
 		this.assetsLoader.on("complete", this.handleAssetsLoaded, this);
 		this.assetsLoader.installPlugin(createjs.Sound);
 
+		this.progressEl = document.querySelector("#loadPercentage");;
 	};
 
 	/**
@@ -125,9 +134,10 @@ this.G = this.G || {};
 	 * @method loadGameAssets
 	 */
 	p.loadGameAssets = function() {
-		this.assetsLoader.loadManifest(this.setup.imageDataManifest);
-		this.assetsLoader.loadManifest(this.setup.spritesManifest);
-		this.assetsLoader.loadManifest(this.setup.soundsManifest);
+		this.assetsLoader.loadManifest(this.setup.imageDataManifest, false);
+		this.assetsLoader.loadManifest(this.setup.spritesManifest, false);
+		this.assetsLoader.loadManifest(this.setup.soundsManifest, false);
+		this.assetsLoader.load();
 	};
 
 	/**
@@ -147,8 +157,10 @@ this.G = this.G || {};
 	 * @param {createjs.Event} e - The progress event
 	 */
 	p.handleAssetsProgress = function(e) {
-		var el = document.querySelector("#loadPercentage");
-		el.innerHTML = Math.round(e.progress * 100).toString() + "%";
+		console.log("loading", e.progress, e.loaded, e.total);
+		if (e.loaded <= 1) {
+			this.progressEl.innerHTML = Math.floor(e.progress * 100).toString() + "%";
+		}
 	};
 
 	/**
@@ -166,7 +178,8 @@ this.G = this.G || {};
 	 *
 	 * @method handleAssetsLoaded
 	 */
-	p.handleAssetsLoaded = function() {
+	p.handleAssetsLoaded = function(e) {
+		console.log('handleAssetsLoaded', e);
 		var assets = {
 			spriteSheetBigWin: this.assetsLoader.getResult('bigWinAnim'),
 			spriteSheetStatics: this.assetsLoader.getResult('staticImages'),
