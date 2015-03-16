@@ -1,6 +1,6 @@
 var express = require('express');
 var api = express.Router();
-var slotInit = require('./requests/SlotInit');
+var slotInit = require('./requests/slotInit2');
 var spinNoWin1 = require('./requests/spin1');
 var spinNoWin2 = require('./requests/spin2');
 var spinWin1 = require('./requests/spin3');
