@@ -1,7 +1,7 @@
 {
   "gameTitle": "Shadow of the Panther",
   "env": "prod",
-  "devMode": 0,
+  "devMode": 1,
   "htmlDebug": 0,
   "scale" : "none",
   "failSafeInitisalisation": 0,
@@ -293,6 +293,9 @@
     },
     {
       "type": "gaff_Line_M1"
+    },
+    {
+      "type": "lotsOfWin"
     }
   ],
 

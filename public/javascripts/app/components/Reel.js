@@ -107,7 +107,7 @@ var G = G || {};
 	 * @property spriteMap
 	 * @type {string[]}
 	 */
-	p.spriteMap = ['ww','m1', 'm2', 'm3', 'm4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f0', 'd1', 'd2', 'd3', 'd4', 'b1', 'b2'];
+	p.spriteMap = ['ww','m1', 'm2', 'm3', 'm4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f0', 'd1', 'd2', 'd3', 'd4', 'b1', 'b2', 'ww'];
 
 	/**
 	 * Stores the current spin tween animation
@@ -239,8 +239,9 @@ var G = G || {};
 			for (j = 0; j < len; j++) {
 				//creates a symbol for every index in reelData array
 				container = new createjs.Container();
+
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[j]]);
-				// console.log('spriteContainer', spriteContainer.length);
+
 				spriteContainer.push(sp);
 				container.addChild(sp);
 				if (this.setup.devMode) {
@@ -253,7 +254,7 @@ var G = G || {};
 					gp.drawRect(0, 0, symbolW, symbolH);
 					gp.endFill().endStroke();
 					container.addChild(debugSh);
-					text = new createjs.Text("SymbolIndex:" + j, "12px Arial", "#ffffff");
+					text = new createjs.Text("Symbol:" + j + ":" + this.spriteMap[this.reelData[j]], "12px Arial", "#ffffff");
 					text2 = new createjs.Text("Wrap:" + l, "12px Arial", "#ffffff");
 					text.x = 0;
 					container.addChild(text);
@@ -269,6 +270,7 @@ var G = G || {};
 			var numBuffer = 2;
 
 			for (j = 0; j < numBuffer; j++) {
+
 				//j rows of symbols to buffer above and below the symbol wrappers
 
 				var symbolBufferWrap = new createjs.Container();
@@ -277,7 +279,6 @@ var G = G || {};
 				var tempSymbolIndex = len - numBuffer + j - (l * (len - 2));
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[tempSymbolIndex]]);
 				container.addChild(sp);
-
 				container.y = (symbolH * j + symbolMarginB * j);
 				symbolBufferWrap.addChild(container);
 				symbolBufferWrap.y = -reelHeight - numBuffer * (symbolH - symbolMarginB) + (l * (2 * (symbolH - symbolMarginB) + reelHeight * 2));

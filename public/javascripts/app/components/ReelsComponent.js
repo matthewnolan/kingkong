@@ -99,21 +99,36 @@ var G = G || {};
 	 * @param {G.SignalDispatcher} signalDispatcher - game's signal dispatcher used to dispatch signals to the rest of the application
 	 * @param {G.ServerInterface} serverInterface - reference to the game's server interface required to make the spin request
 	 * @param {Object} symbolSprites - the createjs spritesheet data object required to pass to the createjs.SpriteSheet constructor
+	 * @param {Array[]} reelsData
 	 */
-	p.init = function(setup, signalDispatcher, serverInterface, symbolSprites) {
+	p.init = function(setup, signalDispatcher, serverInterface, symbolSprites, reelsData) {
 		this.GameComponent_init(setup, signalDispatcher);
 		this.reelsMap = setup.reelMap;
 		this.serverInterface = serverInterface;
 		this.symbolSprites = symbolSprites;
 
+		if (reelsData) {
+			this.reelsData = this.getInitialStrips(reelsData);
+		} else {
+
+		}
+
 		var i, len = this.reelsData.length;
 		if (setup.reelAnimation.shuffleReels) {
 			for (i = 0; i < len; i++) {
-				G.Utils.shuffle(this.reelsData[i]);
+				//G.Utils.shuffle(this.reelsData[i]);
 			}
 		}
-
 		this.initDomEvents();
+	};
+
+	p.getInitialStrips = function(reelStrips) {
+		var i, len = reelStrips.length;
+		var temp = [];
+		for (i = 0; i < len; i++) {
+			temp.push(reelStrips[i].slice(0, 17));
+		}
+		return temp;
 	};
 
 	/**
