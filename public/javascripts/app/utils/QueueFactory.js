@@ -59,6 +59,25 @@ var G = G || {};
 				 queue.push(winLineCommand);
 				break;
 			case "lotsOfWin" :
+				command = new G.CustomCommand();
+				// command.init(this.setup, symbolWins, [1], 1, 'B1Intro__001');
+				// command.callNextDelay = 0;
+				// // command.loopIndex = 1;				
+				queue.push(command);
+
+				// command = new G.SymbolAnimCommand();	
+				// command.init(this.setup, symbolWins, [7], 1, 'F6intro__001');
+				// command.callNextDelay = 0;
+				// queue.push(command);
+
+				// symbolWins.playBySpriteByRowCol(0, 0, "B1Intro__001")
+				// symbolWins.playBySpriteByRowCol(1, 0, "F6intro__001")
+
+
+
+
+
+
 
 				break;
 			case "gaff_Line_M1" :

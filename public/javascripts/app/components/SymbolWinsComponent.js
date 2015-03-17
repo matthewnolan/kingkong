@@ -171,6 +171,11 @@ var G = G || {};
 		this.currentlyPlayingSprites.push(sprite);
 	};
 
+	p.playBySpriteByRowCol = function(row, col, id) {
+		var sprite = this.symbolsMatrix[row][col];
+		this.playThisSprite(sprite, id);
+	};
+
 	p.handleAnimationEnd = function(e) {
 		var sprite = e.currentTarget;
 		sprite.removeAllEventListeners();
