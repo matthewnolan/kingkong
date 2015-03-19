@@ -474,7 +474,7 @@ this.G = this.G || {};
 		//init reels
 		var reelsComponent = new G.ReelsComponent();
 
-		reelsComponent.init(this.setup, this.signalDispatcher, this.serverInterface, spriteSheet);
+		reelsComponent.init(this.setup, this.signalDispatcher, this.serverInterface, spriteSheet, this.gameData.slotInitVO.reelStrips);
 		reelsComponent.drawReels();
 		reelsComponent.x = bezelMarginL;
 		reelsComponent.y = bezelMarginT;

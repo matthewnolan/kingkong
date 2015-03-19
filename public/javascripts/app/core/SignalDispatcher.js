@@ -108,6 +108,12 @@ var G = G || {};
 	p.serverSpinRequested = new signals.Signal();
 
 	/**
+	 *
+	 * @type {Signal}
+	 */
+	p.gaffSpinRequested = new signals.Signal();
+
+	/**
 	 * Initialise the SignalDispatcher with setup object and gameComponents.
 	 * Initialise signal handlers
 	 *
@@ -181,8 +187,18 @@ var G = G || {};
 	 *
 	 * @method handleGaffSelected
 	 * @param {String} gaffType - the menu option string
+	 * @todo change playModesNew name in setup (this is a temporary name)
 	 */
 	p.handleGaffSelected = function(gaffType) {
+
+		if (gaffType.indexOf("gaff") >= 0) {
+			console.log("gaff:", gaffType);
+			var playMode = _.find(this.setup.playModesNew, function(playMode) {
+				return playMode.type === gaffType;
+			} );
+			this.gaffSpinRequested.dispatch( playMode.link);
+			return;
+		}
 
 		console.log('handleGaffSelected', gaffType);
 

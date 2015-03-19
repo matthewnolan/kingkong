@@ -1,5 +1,7 @@
 # kingkong
 
+Source code documentation: http://localhost:3000/docs
+
 
 installation
 ------------
@@ -70,12 +72,11 @@ http://localhost:3000/docs - runs app documentation
 
 ## Changelog
 
-###v.0.3.0
+####v.0.3.0
 - Basic Node server implemented to respond slotInit and spinResponse jsons via REST api
 - Symbol Win Spritesheet missing win anims inserted.
 
-###v.0.2.3
-
+####v.0.2.3
 - Moved Game Setup into Game.js
 - Implemented celebration Fireworks
 - Implemented Failsafe Loading (longer initialisation for more reliable anim loading)

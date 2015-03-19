@@ -93,6 +93,16 @@ var G = G || {};
 
 
 
+				command = new G.SymbolAnimCommand();
+				command.init(this.setup, symbolWins, [1], 1, 'B1Intro__001');
+				command.callNextDelay = 0;
+				queue.push(command);
+
+				command = new G.SymbolAnimCommand();
+				command.init(this.setup, symbolWins, [7], 2, 'F6intro__001');
+				command.callNextDelay = 0;
+				queue.push(command);
+
 				break;
 			case "gaff_Line_M1" :
 				reels.modifySymbolData([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);

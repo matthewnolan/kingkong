@@ -1,0 +1,425 @@
+{
+  "origin": {
+    "spinRecords": {
+      "fixed": false,
+      "length": 1
+    },
+    "sourceRequest": {
+      "requestId": 2,
+      "gameId": 1014,
+      "baseChoice": -1,
+      "bet": {
+        "casinoContext": null,
+        "multiplier": 20,
+        "linesPlayed": 30,
+        "totalBet": 600
+      },
+      "bonusChoice": -1,
+      "casinoContext": {
+        "isAutoPlay": false,
+        "spacebarUsed": false,
+        "maxBetUsed": false
+      },
+      "isBonus": false,
+      "messageTypeId": -2,
+      "isBonusSet": false,
+      "gaffe": {
+        "bonusReplacement": null,
+        "bonusStops": null,
+        "option": null,
+        "casinoContext": null,
+        "stops": [0, 0, 0, 0, 0],
+        "bonusOption": null,
+        "symbols": null,
+        "bonusSymbols": null,
+        "replacement": {
+          "length": 5,
+          "position": 5,
+          "bytesAvailable": 0,
+          "objectEncoding": 3,
+          "endian": "bigEndian"
+        }
+      }
+    },
+    "credits": 4943430,
+    "errodCode": -2147483648,
+    "payload": null,
+    "errorString": null,
+    "responseId": 2,
+    "messageTypeId": -2,
+    "startingCredits": 4941030,
+    "totalSpinsWon": 0,
+    "casinoContext": null,
+    "totalCreditsWon": 3000,
+    "isSuccess": true,
+    "errorUUID": null
+  },
+  "spinRecords": [
+    {
+      "wins": [
+        {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 0,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 1,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 2,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 3,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 4,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 5,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 6,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 7,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 8,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 9,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 10,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 11,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 12,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 13,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 14,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 15,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 16,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 17,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 18,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 19,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 20,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 21,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 22,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 23,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 24,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 25,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 26,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 27,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 28,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }, {
+          "creditsValue": 100,
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "winningType": 3,
+          "ofAKindCount": 3,
+          "paylineIndex": 29,
+          "spinsValue": 0,
+          "isRightToLeft": false
+        }
+      ],
+      "replacement": ["3", "3", "3", "2", "1"]
+    }
+  ]
+}
