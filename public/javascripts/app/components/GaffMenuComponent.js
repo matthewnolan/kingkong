@@ -36,6 +36,14 @@ var G = G || {};
 	p.version = "";
 
 	/**
+	 * The gaffing buttons get added to this container, which scrolls.
+	 * @property hScrollContainer;
+	 * @type {createjs.Container}
+	 * @default null
+	 */
+	p.hScrollContainer = null;
+
+	/**
 	 * @method init
 	 * @param setup
 	 * @param signalDispatcher
@@ -78,6 +86,9 @@ var G = G || {};
 		closeTxt.x = w - 5;
 		closeTxt.y = - 12;
 
+		this.hScrollContainer = new createjs.Container();
+		this.addChild(this.hScrollContainer);
+
 		var i, len = this.setup.playModesNew.length, button, data;
 		// console.log(this.setup);
 		for (i = 0; i < len; i++) {
@@ -90,7 +101,7 @@ var G = G || {};
 			button.y = 40;
 			button.on("click", this.buttonClicked, this);
 			//button.clicked.addOnce(this.buttonClicked, this);
-			this.addChild(button);
+			this.hScrollContainer.addChild(button);
 			this.gaffButtons.push(button);
 		}
 
