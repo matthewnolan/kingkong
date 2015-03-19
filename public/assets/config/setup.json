@@ -298,11 +298,11 @@
     },
     {
       "type": "gaff_Line_M3",
-      "link": "/api/gaff_line_m1"
+      "link": "/api/gaff_line_m3"
     },
     {
       "type": "gaff_Line_M4",
-      "link": "/api/gaff_line_m1"
+      "link": "/api/gaff_line_m4"
     },
     {
       "type": "gaff_F0",

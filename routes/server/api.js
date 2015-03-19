@@ -66,6 +66,7 @@ api.get('/gaff_line_m2', function(req, res) {
 api.get('/gaff_line_m3', function(req, res) {
 	gaff_line_m3.origin.spinRecords = gaff_line_m3.spinRecords;
 	gaff_line_m3.origin.spinRecords[0].stops = [52, 64, 87, 47, 48];
+	console.log('gaffLine_m3', gaff_line_m3);
 	res.json(gaff_line_m3.origin);
 });
 
