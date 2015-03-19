@@ -116,7 +116,7 @@ var G = G || {};
 		var i, len = this.reelsData.length;
 		if (setup.reelAnimation.shuffleReels) {
 			for (i = 0; i < len; i++) {
-				//G.Utils.shuffle(this.reelsData[i]);
+				G.Utils.shuffle(this.reelsData[i]);
 			}
 		}
 		this.initDomEvents();

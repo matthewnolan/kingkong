@@ -194,7 +194,7 @@ var G = G || {};
 		if (gaffType.indexOf("gaff") >= 0) {
 			console.log("gaff:", gaffType);
 			var playMode = _.find(this.setup.playModesNew, function(playMode) {
-				return playMode.type == gaffType;
+				return playMode.type === gaffType;
 			} );
 			this.gaffSpinRequested.dispatch( playMode.link);
 			return;

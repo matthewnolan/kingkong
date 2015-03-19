@@ -40,7 +40,7 @@
 
   "reelAnimation" : {
     "duration" : 2000,
-    "shuffleReels" : true,
+    "shuffleReels" : false,
     "delay" : {
       "max": 2000,
       "sequenced": true,
