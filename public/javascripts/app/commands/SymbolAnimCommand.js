@@ -55,7 +55,8 @@ var G = G || {};
 	 * @method execute
 	 */
 	p.execute = function() {
-		this.gameComponent.hideAll();
+		console.log(this.animId);
+		// this.gameComponent.hideAll();
 		this.gameComponent.showAnimsOnWinline(this.winLineData, this.numSquares, this.animId);
 	};
 
