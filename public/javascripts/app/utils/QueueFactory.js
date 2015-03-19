@@ -70,8 +70,22 @@ var G = G || {};
 				// command.callNextDelay = 0;
 				// queue.push(command);
 
-				// symbolWins.playBySpriteByRowCol(0, 0, "B1Intro__001")
-				// symbolWins.playBySpriteByRowCol(1, 0, "F6intro__001")
+				symbolWins.playBySpriteByRowCol(0, 0, "B1Loop__001")
+				symbolWins.playBySpriteByRowCol(1, 0, "B2Loop__001")
+				symbolWins.playBySpriteByRowCol(2, 0, "D2intro__001")
+				symbolWins.playBySpriteByRowCol(3, 0, "D3intro__001")
+				symbolWins.playBySpriteByRowCol(4, 0, "D4intro__001")
+				symbolWins.playBySpriteByRowCol(0, 1, "F6intro__001")
+				symbolWins.playBySpriteByRowCol(0, 1, "F7intro__001")
+				symbolWins.playBySpriteByRowCol(1, 1, "M1intro__001")
+				symbolWins.playBySpriteByRowCol(2, 1, "M2intro__001")
+				symbolWins.playBySpriteByRowCol(3, 1, "M3intro__001")
+				symbolWins.playBySpriteByRowCol(4, 1, "M4intro__001")
+				symbolWins.playBySpriteByRowCol(0, 2, "WWintro__001")
+				symbolWins.playBySpriteByRowCol(1, 2, "B1Intro__001_short")
+				symbolWins.playBySpriteByRowCol(2, 2, "WWintro__001_resume")
+				symbolWins.playBySpriteByRowCol(3, 2, "B2Intro__001_short")
+				symbolWins.playBySpriteByRowCol(4, 2, "D1intro__001_resume")
 
 
 
