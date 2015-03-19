@@ -287,7 +287,11 @@
 
 
 
+
   "playModesNew" : [
+    {
+      "type": "lotsOfWin"
+    },
     {
       "type": "gaff_Line_M1",
       "link": "/api/gaff_line_m1"
@@ -305,15 +309,129 @@
       "link": "/api/gaff_line_m4"
     },
     {
+      "type": "gaff_F5",
+      "link": "/api/gaff_f5"
+    },
+    {
+      "type": "gaff_F6",
+      "link": "/api/gaff_f6"
+    },
+    {
+      "type": "gaff_F7",
+      "link": "/api/gaff_f7"
+    },
+    {
+      "type": "gaff_F8",
+      "link": "/api/gaff_f8"
+    },
+    {
+      "type": "gaff_F9",
+      "link": "/api/gaff_f9"
+    },
+    {
       "type": "gaff_F0",
       "link": "/api/gaff_f0"
     },
     {
-      "type": "lotsOfWin"
+      "type": "gaff_m1_3x3",
+      "link": "/api/gaff_m1_3x3"
+    },
+    {
+      "type": "gaff_m1_3x4",
+      "link": "/api/gaff_m1_3x4"
+    },
+    {
+      "type": "gaff_m1_3x5",
+      "link": "/api/gaff_m1_3x5"
+    },
+    {
+      "type": "gaff_m2_3x3",
+      "link": "/api/gaff_m2_3x3"
+    },
+    {
+      "type": "gaff_m2_3x4",
+      "link": "/api/gaff_m2_3x4"
+    },
+    {
+      "type": "gaff_m2_3x5",
+      "link": "/api/gaff_m2_3x5"
+    },
+    {
+      "type": "gaff_m3_3x3",
+      "link": "/api/gaff_m3_3x3"
+    },
+    {
+      "type": "gaff_m3_3x4",
+      "link": "/api/gaff_m3_3x4"
+    },
+    {
+      "type": "gaff_m3_3x5",
+      "link": "/api/gaff_m3_3x5"
+    },
+    {
+      "type": "gaff_m4_3x3",
+      "link": "/api/gaff_m4_3x3"
+    },
+    {
+      "type": "gaff_m4_3x4",
+      "link": "/api/gaff_m4_3x4"
+    },
+    {
+      "type": "gaff_m4_3x5",
+      "link": "/api/gaff_m4_3x5"
+    },
+    {
+      "type": "gaff_f5_3x3",
+      "link": "/api/gaff_f5_3x3"
+    },
+    {
+      "type": "gaff_f5_3x4",
+      "link": "/api/gaff_f5_3x4"
+    },
+    {
+      "type": "gaff_f5_3x5",
+      "link": "/api/gaff_f5_3x5"
+    },
+    {
+      "type": "gaff_f6_3x3",
+      "link": "/api/gaff_f6_3x3"
+    },
+    {
+      "type": "gaff_f6_3x4",
+      "link": "/api/gaff_f6_3x4"
+    },
+    {
+      "type": "gaff_f6_3x5",
+      "link": "/api/gaff_f5_3x5"
+    },
+    {
+      "type": "gaff_f7_3x3",
+      "link": "/api/gaff_f7_3x3"
+    },
+    {
+      "type": "gaff_f7_3x4",
+      "link": "/api/gaff_f7_3x4"
+    },
+    {
+      "type": "gaff_f7_3x5",
+      "link": "/api/gaff_f7_3x5"
+    },
+    {
+      "type": "gaff_ww_3x3",
+      "link": "/api/gaff_ww_3x3"
+    },
+    {
+      "type": "gaff_ww_3x4",
+      "link": "/api/gaff_ww_3x4"
+    },
+    {
+      "type": "gaff_ww_3x5",
+      "link": "/api/gaff_ww_3x5"
     }
   ],
 
   "playModes": {
+    "deprecated" : "deprecated",
     "normal": {
       "winOnLine": true,
       "autoWinChance": 0,
