@@ -289,10 +289,24 @@
 
   "playModesNew" : [
     {
-      "type": "normal"
+      "type": "gaff_Line_M1",
+      "link": "/api/gaff_line_m1"
     },
     {
-      "type": "gaff_Line_M1"
+      "type": "gaff_Line_M2",
+      "link": "/api/gaff_line_m2"
+    },
+    {
+      "type": "gaff_Line_M3",
+      "link": "/api/gaff_line_m1"
+    },
+    {
+      "type": "gaff_Line_M4",
+      "link": "/api/gaff_line_m1"
+    },
+    {
+      "type": "gaff_F0",
+      "link": "/api/gaff_f0"
     },
     {
       "type": "lotsOfWin"

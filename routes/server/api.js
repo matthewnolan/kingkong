@@ -51,173 +51,173 @@ api.get('/slot-init', function(req, res) {
 });
 
 // Hardcoded Mock Gaff Requests todo: Replace with real server gaffing
-api.get('/gaff-line-m1', function(req, res) {
-	gaff_line_m1.origin.spinRecords = gaff.spinRecords;
+api.get('/gaff_line_m1', function(req, res) {
+	gaff_line_m1.origin.spinRecords = gaff_line_m1.spinRecords;
 	res.json(gaff_line_m1.origin);
 });
 
-api.get('/gaff-line-m2', function(req, res) {
-	gaff_line_m2.origin.spinRecords = gaff.spinRecords;
+api.get('/gaff_line_m2', function(req, res) {
+	gaff_line_m2.origin.spinRecords = gaff_line_m2.spinRecords;
 	res.json(gaff_line_m2.origin);
 });
 
-api.get('/gaff-line-m3', function(req, res) {
-	gaff_line_m3.origin.spinRecords = gaff.spinRecords;
+api.get('/gaff_line_m3', function(req, res) {
+	gaff_line_m3.origin.spinRecords = gaff_line_m3.spinRecords;
 	res.json(gaff_line_m3.origin);
 });
 
-api.get('/gaff-line-m4', function(req, res) {
-	gaff_line_m4.origin.spinRecords = gaff.spinRecords;
+api.get('/gaff_line_m4', function(req, res) {
+	gaff_line_m4.origin.spinRecords = gaff_line_m4.spinRecords;
 	res.json(gaff_line_m4.origin);
 });
 
 api.get('/gaff_m1_3x3', function(req, res) {
-	gaff_m1_3x3.origin.spinRecords = gaff.spinRecords;
+	gaff_m1_3x3.origin.spinRecords = gaff_m1_3x3.spinRecords;
 	res.json(gaff_m1_3x3.origin);
 });
 
 api.get('/gaff_m1_3x4', function(req, res) {
-	gaff_m1_3x4.origin.spinRecords = gaff.spinRecords;
+	gaff_m1_3x4.origin.spinRecords = gaff_m1_3x4.spinRecords;
 	res.json(gaff_m1_3x4.origin);
 });
 
 api.get('/gaff_m1_3x5', function(req, res) {
-	gaff_m1_3x5.origin.spinRecords = gaff.spinRecords;
+	gaff_m1_3x5.origin.spinRecords = gaff_m1_3x5.spinRecords;
 	res.json(gaff_m1_3x5.origin);
 });
 
 api.get('/gaff_m2_3x3', function(req, res) {
-	gaff_m2_3x3.origin.spinRecords = gaff.spinRecords;
+	gaff_m2_3x3.origin.spinRecords = gaff_m2_3x3.spinRecords;
 	res.json(gaff_m2_3x3.origin);
 });
 
 api.get('/gaff_m2_3x4', function(req, res) {
-	gaff_m2_3x4.origin.spinRecords = gaff.spinRecords;
+	gaff_m2_3x4.origin.spinRecords = gaff_m2_3x4.spinRecords;
 	res.json(gaff_m2_3x4.origin);
 });
 
 api.get('/gaff_m2_3x5', function(req, res) {
-	gaff_m2_3x5.origin.spinRecords = gaff.spinRecords;
+	gaff_m2_3x5.origin.spinRecords = gaff_m2_3x5.spinRecords;
 	res.json(gaff_m2_3x5.origin);
 });
 
 api.get('/gaff_m3_3x3', function(req, res) {
-	gaff_m3_3x3.origin.spinRecords = gaff.spinRecords;
+	gaff_m3_3x3.origin.spinRecords = gaff_m3_3x3.spinRecords;
 	res.json(gaff_m3_3x3.origin);
 });
 
 api.get('/gaff_m3_3x4', function(req, res) {
-	gaff_m3_3x4.origin.spinRecords = gaff.spinRecords;
+	gaff_m3_3x4.origin.spinRecords = gaff_m3_3x4.spinRecords;
 	res.json(gaff_m3_3x4.origin);
 });
 
 api.get('/gaff_m3_3x5', function(req, res) {
-	gaff_m3_3x5.origin.spinRecords = gaff.spinRecords;
+	gaff_m3_3x5.origin.spinRecords = gaff_m3_3x5.spinRecords;
 	res.json(gaff_m3_3x5.origin);
 });
 
 api.get('/gaff_m4_3x3', function(req, res) {
-	gaff_m4_3x3.origin.spinRecords = gaff.spinRecords;
+	gaff_m4_3x3.origin.spinRecords = gaff_m4_3x3.spinRecords;
 	res.json(gaff_m4_3x3.origin);
 });
 
 api.get('/gaff_m4_3x4', function(req, res) {
-	gaff_m4_3x4.origin.spinRecords = gaff.spinRecords;
+	gaff_m4_3x4.origin.spinRecords = gaff_m4_3x4.spinRecords;
 	res.json(gaff_m4_3x4.origin);
 });
 
 api.get('/gaff_m4_3x5', function(req, res) {
-	gaff_m4_3x5.origin.spinRecords = gaff.spinRecords;
+	gaff_m4_3x5.origin.spinRecords = gaff_m4_3x5.spinRecords;
 	res.json(gaff_m4_3x5.origin);
 });
 
 api.get('/gaff_ww_3x3', function(req, res) {
-	gaff_ww_3x3.origin.spinRecords = gaff.spinRecords;
+	gaff_ww_3x3.origin.spinRecords = gaff_ww_3x3.spinRecords;
 	res.json(gaff_ww_3x3.origin);
 });
 
 api.get('/gaff_ww_3x4', function(req, res) {
-	gaff_ww_3x4.origin.spinRecords = gaff.spinRecords;
+	gaff_ww_3x4.origin.spinRecords = gaff_ww_3x4.spinRecords;
 	res.json(gaff_ww_3x4.origin);
 });
 
 api.get('/gaff_ww_3x5', function(req, res) {
-	gaff_ww_3x5.origin.spinRecords = gaff.spinRecords;
+	gaff_ww_3x5.origin.spinRecords = gaff_ww_3x5.spinRecords;
 	res.json(gaff_ww_3x5.origin);
 });
 
 api.get('/gaff_f5_3x3', function(req, res) {
-	gaff_f5_3x3.origin.spinRecords = gaff.spinRecords;
+	gaff_f5_3x3.origin.spinRecords = gaff_f5_3x3.spinRecords;
 	res.json(gaff_f5_3x3.origin);
 });
 
 api.get('/gaff_f5_3x4', function(req, res) {
-	gaff_f5_3x4.origin.spinRecords = gaff.spinRecords;
+	gaff_f5_3x4.origin.spinRecords = gaff_f5_3x4.spinRecords;
 	res.json(gaff_f5_3x4.origin);
 });
 
 api.get('/gaff_f5_3x5', function(req, res) {
-	gaff_f5_3x5.origin.spinRecords = gaff.spinRecords;
+	gaff_f5_3x5.origin.spinRecords = gaff_f5_3x5.spinRecords;
 	res.json(gaff_f5_3x5.origin);
 });
 
 api.get('/gaff_f6_3x3', function(req, res) {
-	gaff_f6_3x3.origin.spinRecords = gaff.spinRecords;
+	gaff_f6_3x3.origin.spinRecords = gaff_f6_3x3.spinRecords;
 	res.json(gaff_f6_3x3.origin);
 });
 
 api.get('/gaff_f6_3x4', function(req, res) {
-	gaff_f6_3x4.origin.spinRecords = gaff.spinRecords;
+	gaff_f6_3x4.origin.spinRecords = gaff_f6_3x4.spinRecords;
 	res.json(gaff_f6_3x4.origin);
 });
 
 api.get('/gaff_f6_3x5', function(req, res) {
-	gaff_f6_3x5.origin.spinRecords = gaff.spinRecords;
+	gaff_f6_3x5.origin.spinRecords = gaff_f6_3x5.spinRecords;
 	res.json(gaff_f6_3x5.origin);
 });
 
 api.get('/gaff_f7_3x3', function(req, res) {
-	gaff_f7_3x3.origin.spinRecords = gaff.spinRecords;
+	gaff_f7_3x3.origin.spinRecords = gaff_f7_3x3.spinRecords;
 	res.json(gaff_f7_3x3.origin);
 });
 
 api.get('/gaff_f7_3x4', function(req, res) {
-	gaff_f7_3x4.origin.spinRecords = gaff.spinRecords;
+	gaff_f7_3x4.origin.spinRecords = gaff_f7_3x4.spinRecords;
 	res.json(gaff_f7_3x4.origin);
 });
 
 api.get('/gaff_f7_3x5', function(req, res) {
-	gaff_f7_3x5.origin.spinRecords = gaff.spinRecords;
+	gaff_f7_3x5.origin.spinRecords = gaff_f7_3x5.spinRecords;
 	res.json(gaff_f7_3x5.origin);
 });
 
 api.get('/gaff_f0', function(req, res) {
-	gaff_f0.origin.spinRecords = gaff.spinRecords;
+	gaff_f0.origin.spinRecords = gaff_f0.spinRecords;
 	res.json(gaff_f0.origin);
 });
 
 api.get('/gaff_f5', function(req, res) {
-	gaff_f5.origin.spinRecords = gaff.spinRecords;
+	gaff_f5.origin.spinRecords = gaff_f5.spinRecords;
 	res.json(gaff_f5.origin);
 });
 
 api.get('/gaff_f6', function(req, res) {
-	gaff_f6.origin.spinRecords = gaff.spinRecords;
+	gaff_f6.origin.spinRecords = gaff_f6.spinRecords;
 	res.json(gaff_f6.origin);
 });
 
 api.get('/gaff_f7', function(req, res) {
-	gaff_f7.origin.spinRecords = gaff.spinRecords;
+	gaff_f7.origin.spinRecords = gaff_f7.spinRecords;
 	res.json(gaff_f7.origin);
 });
 
 api.get('/gaff_f8', function(req, res) {
-	gaff_f8.origin.spinRecords = gaff.spinRecords;
+	gaff_f8.origin.spinRecords = gaff_f8.spinRecords;
 	res.json(gaff_f8.origin);
 });
 
 api.get('/gaff_f9', function(req, res) {
-	gaff_f9.origin.spinRecords = gaff.spinRecords;
+	gaff_f9.origin.spinRecords = gaff_f9.spinRecords;
 	res.json(gaff_f9.origin);
 });
 
