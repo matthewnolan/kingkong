@@ -44,6 +44,12 @@ var G = G || {};
 	p.hScrollContainer = null;
 
 	/**
+	 *
+	 * @type {null}
+	 */
+	p.hScrollOffset = null;
+
+	/**
 	 * @method init
 	 * @param setup
 	 * @param signalDispatcher
@@ -104,6 +110,33 @@ var G = G || {};
 			this.hScrollContainer.addChild(button);
 			this.gaffButtons.push(button);
 		}
+
+		var sceneMask = new createjs.Shape();
+		sceneMask.graphics.setStrokeStyle(0)
+			.drawRect(0, 0, w, h)
+			.closePath();
+		this.addChild(sceneMask);
+
+		this.hScrollContainer.mask = sceneMask;
+
+		// using "on" binds the listener to the scope of the currentTarget by default
+		// in this case that means it executes in the scope of the button.
+		this.on("mousedown", function (evt) {
+			//this.parent.addChild(this);
+			self.hScrollOffset = {x: self.hScrollContainer.x - evt.stageX};
+			///console.log('mousedown ::', self.hScrollOffset);
+		});
+
+		// the pressmove event is dispatched when the mouse moves after a mousedown on the target until the mouse is released.
+		this.on("pressmove", function (evt) {
+			//this.x = evt.stageX + this.offset.x;
+			//this.y = evt.stageY + this.offset.y;
+			// indicate that the stage should be updated on the next tick:
+			//update = true;
+			var scrollVal = evt.stageX + self.hScrollOffset.x;
+			self.hScrollContainer.x = scrollVal < 0? scrollVal : 0;
+			//console.log('pressmove ::', self.hScrollOffset);
+		});
 
 		var fpsSwitch = new G.GaffButton();
 		fpsSwitch.init("60 FPS", 70, 60, 10);
