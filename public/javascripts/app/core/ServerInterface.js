@@ -51,8 +51,35 @@ this.G = this.G || {};
 	p.init = function(signalDispatcher, gameData) {
 		this.signalDispatcher = signalDispatcher;
 		this.signalDispatcher.serverSpinRequested.add(this.requestSpin, this);
+		this.signalDispatcher.gaffSpinRequested.add(this.requestGaffSpin, this);
 		this.gameData = gameData;
 		this.gameData.spinRequestCompleted.add(this.signalDispatcher.handleServerReelSpinStart, this);
+
+	};
+
+	/**
+	 * @method requestGaffSpin
+	 * @param {String} gaffLink
+	 */
+	p.requestGaffSpin = function(gaffLink) {
+		var self = this;
+
+		var success = function(json) {
+			self.gameData.spinResponse(json);
+		};
+
+		var error = function(ex) {
+			console.log('parsing failed', ex);
+		};
+
+		var response = function(res) {
+			return res.json();
+		};
+
+		fetch(gaffLink)
+			.then(response)
+			.then(success)
+			.catch(error);
 	};
 
 

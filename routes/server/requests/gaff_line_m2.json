@@ -1,1 +1,95 @@
-{"origin":{"errorUUID":null,"sourceRequest":{"isBonusSet":false,"requestId":2,"bonusChoice":-1,"messageTypeId":-2,"bet":{"casinoContext":null,"multiplier":20,"linesPlayed":30,"totalBet":600},"gameId":1014,"gaffe":{"bonusSymbols":null,"bonusReplacement":null,"bonusStops":null,"symbols":{"length":5,"position":5,"bytesAvailable":0,"objectEncoding":3,"endian":"bigEndian"},"option":null,"casinoContext":null,"stops":[54,68,48,46,58],"bonusOption":null,"replacement":{"length":5,"position":5,"bytesAvailable":0,"objectEncoding":3,"endian":"bigEndian"}},"casinoContext":{"maxBetUsed":false,"isAutoPlay":false,"spacebarUsed":false},"isBonus":false,"baseChoice":-1},"spinRecords":{"fixed":false,"length":1},"credits":4879130,"payload":null,"responseId":2,"errorString":null,"messageTypeId":-2,"startingCredits":4879210,"errodCode":-2147483648,"totalSpinsWon":0,"totalCreditsWon":520,"casinoContext":null,"isSuccess":true},"spinRecords":[{"wins":[{"type":{"id":2,"codec":{},"name":"Payline"},"ofAKindCount":7,"winningType":2,"paylineIndex":1,"spinsValue":0,"isRightToLeft":false,"creditsValue":400},{"type":{"id":2,"codec":{},"name":"Payline"},"ofAKindCount":3,"winningType":2,"paylineIndex":19,"spinsValue":0,"isRightToLeft":false,"creditsValue":120}],"replacement":["1","1","1","1","1"]}]}
+{
+  "origin": {
+    "errorUUID": null,
+    "sourceRequest": {
+      "isBonusSet": false,
+      "requestId": 2,
+      "bonusChoice": -1,
+      "messageTypeId": -2,
+      "bet": {
+        "casinoContext": null,
+        "multiplier": 20,
+        "linesPlayed": 30,
+        "totalBet": 600
+      },
+      "gameId": 1014,
+      "gaffe": {
+        "bonusSymbols": null,
+        "bonusReplacement": null,
+        "bonusStops": null,
+        "symbols": {
+          "length": 5,
+          "position": 5,
+          "bytesAvailable": 0,
+          "objectEncoding": 3,
+          "endian": "bigEndian"
+        },
+        "option": null,
+        "casinoContext": null,
+        "stops": [54, 68, 48, 46, 58],
+        "bonusOption": null,
+        "replacement": {
+          "length": 5,
+          "position": 5,
+          "bytesAvailable": 0,
+          "objectEncoding": 3,
+          "endian": "bigEndian"
+        }
+      },
+      "casinoContext": {
+        "maxBetUsed": false,
+        "isAutoPlay": false,
+        "spacebarUsed": false
+      },
+      "isBonus": false,
+      "baseChoice": -1
+    },
+    "spinRecords": {
+      "fixed": false,
+      "length": 1
+    },
+    "credits": 4879130,
+    "payload": null,
+    "responseId": 2,
+    "errorString": null,
+    "messageTypeId": -2,
+    "startingCredits": 4879210,
+    "errodCode": -2147483648,
+    "totalSpinsWon": 0,
+    "totalCreditsWon": 520,
+    "casinoContext": null,
+    "isSuccess": true
+  },
+  "spinRecords": [
+    {
+      "wins": [
+        {
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "ofAKindCount": 7,
+          "winningType": 2,
+          "paylineIndex": 1,
+          "spinsValue": 0,
+          "isRightToLeft": false,
+          "creditsValue": 400
+        }, {
+          "type": {
+            "id": 2,
+            "codec": {},
+            "name": "Payline"
+          },
+          "ofAKindCount": 3,
+          "winningType": 2,
+          "paylineIndex": 19,
+          "spinsValue": 0,
+          "isRightToLeft": false,
+          "creditsValue": 120
+        }
+      ],
+      "replacement": ["1", "1", "1", "1", "1"]
+    }
+  ]
+}
