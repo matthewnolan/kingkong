@@ -104,10 +104,14 @@ var G = G || {};
 	p.speedConstant = 5000;
 
 	/**
+	 *
+	 *
 	 * @property spriteMap
 	 * @type {string[]}
+	 * @example ['ww','m1', 'm2', 'm3', 'm4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f0', 'd1', 'd2', 'd3', 'd4', 'b1', 'b2', 'ww'];
+	 * @default null
 	 */
-	p.spriteMap = ['ww','m1', 'm2', 'm3', 'm4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f0', 'd1', 'd2', 'd3', 'd4', 'b1', 'b2', 'ww'];
+	p.spriteMap = null;
 
 	/**
 	 * Stores the current spin tween animation
@@ -154,6 +158,7 @@ var G = G || {};
 	 * @param reelData
 	 */
 	p.init = function(setup, signalDispatcher, symbolSprites, reelData) {
+
 		this.setup = setup;
 		this.signalDispatcher = signalDispatcher;
 		this.symbolSprites = symbolSprites;
@@ -162,6 +167,7 @@ var G = G || {};
 		this.wrap2 = [];
 		this.upperBuffer = [];
 		this.lowerBuffer = [];
+		this.spriteMap = this.setup.reelAnimation.symbols.spriteMap;
 
 	};
 
@@ -420,8 +426,8 @@ var G = G || {};
 		var reelH = (symbolH * symbolsLen) + (symbolMarginB * symbolsLen);
 		var yPos = -(symbolH * index + symbolMarginB * index) + reelH;
 		var stopTime = this.getStopTime(index);
-		var easeAmp = 1 + index * 0.1;
-		var easeTime = 1 - index * 0.1;
+		var easeAmp = 1 + index * (this.reelData.length * 0.2);
+		var easeTime = 1 - index * (this.reelData.length * 0.02);
 
 		setTimeout(function() {
 			self.signalDispatcher.playSound.dispatch("reelstop1");

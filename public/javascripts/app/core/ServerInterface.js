@@ -105,7 +105,7 @@ this.G = this.G || {};
 			return res.json();
 		};
 
-		fetch('/api/spin-no-win1')
+		fetch('/api/random-spin')
 			.then(response)
 			.then(success)
 			.catch(error);

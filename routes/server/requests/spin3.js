@@ -26,11 +26,11 @@ var spin3 = {
 				"playerLevel": -1
 			},
 			"stops": [
-				135,
-				101,
+				66,
+				77,
 				78,
-				2,
-				32
+				77,
+				90
 			],
 			"tumblingOccurs": false,
 			"wins": [

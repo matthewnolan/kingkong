@@ -26,10 +26,10 @@ var spinNoWin2 = {
 				"playerLevel": -1
 			},
 			"stops": [
-				9,
-				17,
-				100,
-				116,
+				66,
+				56,
+				55,
+				43,
 				65
 			],
 			"tumblingOccurs": false,

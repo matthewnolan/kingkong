@@ -10,7 +10,7 @@
   "spinOnLoad": "deprecated",
   "playWinAfterSpin": "deprecated",
   "useLoader": "deprecated",
-  "soundVolume": 1,
+  "loadSounds": 0,
   "enableWinLineShadows": 0,
   "cheaperWinLineShadows": 0,
   "winAnimDelay": 3000,
@@ -45,10 +45,15 @@
       "max": 2000,
       "sequenced": true,
       "random" : false
+    },
+    "symbols" : {
+      "spriteMap" : ["ww","m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2", "ww"],
+      "cutLength" : 10,
+      "stopVal" : 0
     }
   },
 
-  "reelMap" : ["ww","m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2"],
+
 
   "imageDataManifest" : [
     "assets/sprites/bigwin_1.png",
