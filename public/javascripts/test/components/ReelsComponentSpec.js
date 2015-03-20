@@ -80,6 +80,27 @@ describe("ReelsComponent Test", function () {
 	});
 
 	describe("serverSpinStart test different spin stops and ensure reel datas are created correctly", function() {
+
+		beforeEach(function() {
+			var setup = {
+				"reelAnimation" : {
+					"duration" : 2000,
+					"shuffleReels" : false,
+					"symbols" : {
+						"cutLength" : 17,
+						"stopVal" : 8
+					},
+					"delay" : {
+						"max": 2000,
+						"sequenced": true,
+						"random" : false
+					}
+				},
+				reelMap: "reelMap"
+			};
+			this.class.init(setup);
+		});
+
 		var reelStrips = [
 			[10, 3, 6, 4, 9, 8, 3, 10, 8, 5, 9, 10, 0, 9, 6, 4, 8, 6, 8, 4, 8, 3, 9, 6, 4, 10, 5, 7, 9, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 10, 8, 9, 2, 6, 10, 5, 10, 3, 6, 4, 9, 8, 3, 10, 0, 10, 9, 5, 8, 1, 9, 6, 4, 8, 6, 8, 4, 8, 3, 9, 6, 5, 10, 9, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 10, 8, 9, 2, 6, 10, 5],
 			[6, 9, 2, 7, 4, 6, 10, 9, 7, 4, 6, 9, 5, 10, 9, 10, 7, 1, 6, 10, 7, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 9, 0, 8, 1, 10, 2, 7, 6, 2, 7, 4, 10, 1, 7, 6, 9, 2, 7, 4, 10, 6, 4, 9, 7, 6, 9, 4, 7, 9, 10, 1, 4, 9, 6, 7, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 6, 0, 10, 3, 1, 10, 2, 9, 6, 2, 7, 4, 10, 1, 7],
@@ -212,6 +233,7 @@ describe("ReelsComponent Test", function () {
 			var reel5 = new Reel();
 
 			this.class.reels = [reel1, reel2, reel3, reel4, reel5];
+
 
 			var slotInitVo = {
 				reelStrips: reelStrips

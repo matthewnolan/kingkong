@@ -1,9 +1,18 @@
 var express = require('express');
 var api = express.Router();
-var slotInit = require('./requests/SlotInit');
+var slotInit = require('./requests/slotInit');
 var spinNoWin1 = require('./requests/spin1');
 var spinNoWin2 = require('./requests/spin2');
 var spinWin1 = require('./requests/spin3');
+
+/*
+ How to determine gaffe details
+ Go here:
+ https://qa1h5c.h5c.co/Social/index.php?qs=&originId=2&accountTypeId=1&soslog=localhost:4444
+
+ You’ll have to login. Please use these creds:
+ rmg1@rmg.com / rmg123456
+ */
 
 //gaffs
 var gaff_line_m1 = require('./requests/gaff_line_m1');

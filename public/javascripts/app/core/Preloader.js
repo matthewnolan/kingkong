@@ -136,7 +136,7 @@ this.G = this.G || {};
 	p.loadGameAssets = function() {
 		this.assetsLoader.loadManifest(this.setup.imageDataManifest, false);
 		this.assetsLoader.loadManifest(this.setup.spritesManifest, false);
-		this.assetsLoader.loadManifest(this.setup.soundsManifest, false);
+		if (this.setup.loadSounds) this.assetsLoader.loadManifest(this.setup.soundsManifest, false);
 		this.assetsLoader.load();
 	};
 

@@ -19,6 +19,12 @@ var G = G || {};
     var p = createjs.extend(Dj, G.GameComponent);
     p.constructor = Dj;
 
+	/**
+	 *
+	 * @type {boolean}
+	 */
+	p.isMuted = false;
+
     /**
      * @method init
      * @param setup
@@ -28,6 +34,7 @@ var G = G || {};
         this.GameComponent_init(setup, signalDispatcher);
         this.signalDispatcher.playSound.add(this.playSound, this);
         this.signalDispatcher.stopSound.add(this.stopSound, this);
+		this.isMuted = !setup.loadSounds;
     };
 
     p.nameDrop = function(name) {
@@ -35,13 +42,17 @@ var G = G || {};
     };
 
     p.playSound = function(whatSound) {
-        console.log("playing this sound: " + whatSound);
-        createjs.Sound.play(whatSound);
+		if (!this.isMuted) {
+			console.log("playing this sound: " + whatSound);
+			createjs.Sound.play(whatSound);
+		}
     };
     
     p.stopSound = function(whatSound) {
-        console.log("stopping this sound: " + whatSound);
-        createjs.Sound.stop(whatSound);
+		if (!this.isMuted) {
+			console.log("stopping this sound: " + whatSound);
+			createjs.Sound.stop(whatSound);
+		}
     };
 
     G.Dj = createjs.promote(Dj, "GameComponent");

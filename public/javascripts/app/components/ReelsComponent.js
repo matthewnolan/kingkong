@@ -126,7 +126,7 @@ var G = G || {};
 		var i, len = reelStrips.length;
 		var temp = [];
 		for (i = 0; i < len; i++) {
-			temp.push(reelStrips[i].slice(0, 17));
+			temp.push(reelStrips[i].slice(0, this.setup.reelAnimation.symbols.cutLength));
 		}
 		return temp;
 	};
@@ -159,6 +159,7 @@ var G = G || {};
 	 */
 	p.drawReels = function() {
 		var i, len = this.reelsData.length, reel;
+
 		var symbolW = this.setup.symbolW;
 		var reelMarginR = this.setup.reelMarginRight;
 
@@ -213,13 +214,19 @@ var G = G || {};
 		var stops = spinResponseVO.spinRecords[0].stops;
 
 		console.log('serverSpinStart', stops);
+		/*
+		 "symbols" : {
+		 "cutLength" : 5,
+		 "stopVal" : 0
+		 },
+		 */
 
 		var stripData;
 		var startIndex = 0;
 		var endIndex = 0;
 		var stopIndexes = [];
-		var numSymbolsBefore = 8;
-		var numSymbolsAfter = 9;
+		var numSymbolsBefore = this.setup.reelAnimation.symbols.stopVal;
+		var numSymbolsAfter = this.setup.reelAnimation.symbols.cutLength - numSymbolsBefore;
 		var i, j, len = reelStrips.length, strip;
 		for (i = 0; i < len; i++) {
 			stripData = [];
