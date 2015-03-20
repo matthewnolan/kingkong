@@ -54,6 +54,19 @@ module.exports = function (grunt) {
 			}
 		},
 
+		// Configure a mochaTest task
+		mochaTest: {
+			test: {
+				options: {
+					reporter: 'spec',
+					captureFile: 'results.txt', // Optionally capture the reporter output to a file
+					quiet: false, // Optionally suppress output to standard out (defaults to false)
+					clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
+				},
+				src: ['test/**/*.js']
+			}
+		},
+
 		connect: {
 			serve: {
 				options: {
@@ -329,32 +342,41 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-notify');
 	grunt.loadNpmTasks('grunt-text-replace');
-
-	// documentation tool
+	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
 	//Defualt build tasks
-	grunt.registerTask('default', 		  ['jshint']);
-	grunt.registerTask('build', 		  ['jshint', 'phantom', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
-	grunt.registerTask('build:prod', 	  ['jshint', 'phantom', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
-	grunt.registerTask('build:skipTests', ['temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
-	//Do a build with bumped version numb
-	grunt.registerTask('patch', 		  ['jshint', 'phantom', 'bump:patch', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
-	grunt.registerTask('patch:prod', 	  ['jshint', 'phantom', 'bump:patch', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
-	grunt.registerTask('feature', 		  ['jshint', 'phantom', 'bump:minor', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
-	grunt.registerTask('feature:prod', 	  ['jshint', 'phantom', 'bump:minor', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
-	grunt.registerTask('release', 		  ['jshint', 'phantom', 'bump:major', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-dev-index']);
-	grunt.registerTask('release:prod', 	  ['jshint', 'phantom', 'bump:major', 'temp-copy', 'replace:version', 'concat', 'uglify', 'yuidoc', 'temp-copy-return', 'copy-prod-index']);
+	// Run Linter and Unit Tests (client and server),
+	// injects current Version number to minified source code,
+	// uglifies
+	// copies a new index.html from the dev/prod template);
+	grunt.registerTask('default', ['build']);
+	grunt.registerTask('build', 		  ['lint', 'test', 'version', 'uglify', 'docs', 'dev-index']);
+	grunt.registerTask('build:prod', 	  ['lint', 'phantom', 'version', 'uglify', 'docs', 'prod-index']);
+	grunt.registerTask('build:skipLint',  ['test', 'version', 'uglify', 'docs', 'dev-index']);
+	grunt.registerTask('build:skipTests', ['version', 'uglify', 'docs', 'prod-index']);
+	//Do a build with bumped version number
+	//usage: patch increments 0.0.1 to 0.0.2, feature increments 0.0.1 to 0.1.0, release increments 0.0.1 to 1.0.0)
+	grunt.registerTask('patch', 		  ['lint', 'test', 'bump:patch', 'version', 'uglify', 'docs', 'dev-index']);
+	grunt.registerTask('patch:prod', 	  ['lint', 'test', 'bump:patch', 'version', 'uglify', 'docs', 'prod-index']);
+	grunt.registerTask('feature', 		  ['lint', 'test', 'bump:minor', 'version', 'uglify', 'docs', 'dev-index']);
+	grunt.registerTask('feature:prod', 	  ['lint', 'test', 'bump:minor', 'version', 'uglify', 'docs', 'prod-index']);
+	grunt.registerTask('release', 		  ['lint', 'test', 'bump:major', 'version', 'uglify', 'docs', 'dev-index']);
+	grunt.registerTask('release:prod', 	  ['lint', 'test', 'bump:major', 'version', 'uglify', 'docs', 'prod-index']);
 	//development support
 	grunt.registerTask('texture', ['easel-packer']);
-	grunt.registerTask('doc', ['yuidoc']);
-	grunt.registerTask('docs', ['yuidoc']);
-	grunt.registerTask('add', ['prompt:file-creator', 'file-creator']);
+	grunt.registerTask('doc',     ['yuidoc']);
+	grunt.registerTask('docs',    ['yuidoc']);
+	grunt.registerTask('add',     ['prompt:file-creator', 'file-creator']);
+	grunt.registerTask('version', ['temp-copy', 'replace:version', 'concat']);
+	grunt.registerTask('dev-index',  ['temp-copy-return', 'copy-dev-index']);
+	grunt.registerTask('prod-index',  ['temp-copy-return', 'copy-prod-index']);
 
-	//Tests Only
+	//Testing
 	grunt.registerTask("phantom", "Launches phantom-based tests", ["connect:phantom", "jasmine"]);
-	grunt.registerTask('test', 			['phantom']);
-	grunt.registerTask('lint', 			['jshint']);
+	grunt.registerTask('test', 	['mochaTest', 'phantom']);
+	grunt.registerTask('lint', 	['jshint']);
+	grunt.registerTask('mocha', ['mochaTest'])
 
 
 };

@@ -111,7 +111,7 @@ var G = G || {};
 	 * @example ['ww','m1', 'm2', 'm3', 'm4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f0', 'd1', 'd2', 'd3', 'd4', 'b1', 'b2', 'ww'];
 	 * @default null
 	 */
-	p.spriteMap = null
+	p.spriteMap = null;
 
 	/**
 	 * Stores the current spin tween animation
