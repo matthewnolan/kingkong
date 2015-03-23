@@ -48,7 +48,7 @@ var spin4 = {
 			"respinTriggered": false,
 			"bonusTriggered": true,
 			"spinsWon": 7,
-			"replacement": "ByteArray",
+			"replacement": ["1", "1", "1", "1", "1"],
 			"isRespin": false,
 			"creditsWon": 0
 		},

@@ -28,16 +28,26 @@ describe('SlotInit tests', function(){
 		});
 
 		it('Log reelStrips at 0 position', function(){
-			table = helpers.drawReelStripsAtStopIndex(slotInit.reelStrips, 0, true);
+			table = helpers.drawReelStripsAtStops(slotInit.reelStrips, [0,0,0,0,0], true);
 			console.log(table.toString());
 		});
 
-
 		it('test middle reel strip symbol at stop 55 is correct', function(){
-			table = helpers.drawReelStripsAtStopIndex(slotInit.reelStrips, 55, true);
+			table = helpers.drawReelStripsAtStops(slotInit.reelStrips, [55,55,55,55,55], true);
 			console.log(table.toString());
 			expect(strip2[55]).to.equal(14)
+		});
 
+		it('test spin 3 is correct', function(){
+			table = helpers.drawReelStripsAtStops(slotInit.reelStrips, [
+				66,
+				77,
+				78,
+				77,
+				90
+			], true);
+			console.log(table.toString());
+			//expect(strip2[55]).to.equal(14)
 		});
 
 		it('test reel strips are correct size', function() {
