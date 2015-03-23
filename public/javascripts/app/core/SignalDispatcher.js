@@ -119,15 +119,15 @@ var G = G || {};
 	 *
 	 * @method init
 	 * @param {Object} setup
+	 * @param {G.CommandQueue} commandQueue
 	 * @param {G.GameComponent[]} gameComponents
 	 */
-	p.init = function(setup, gameComponents) {
+	p.init = function(setup, commandQueue, gameComponents) {
 		this.setup = setup;
 		this.gameComponents = gameComponents;
-		this.commandQueue = new G.CommandQueue();
-		this.commandQueue.init(setup, gameComponents);
+		this.commandQueue = commandQueue;
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
-		this.reelSpinComplete.add(this.handleReelSpinComplete, this);
+		//this.reelSpinComplete.add(this.handleReelSpinComplete, this);
 		this.gaffSelect.add(this.handleGaffSelected, this);
 	};
 
@@ -138,9 +138,9 @@ var G = G || {};
 	 * @param spinResponse
 	 * @todo slotInit response should be passed to Reels once, and then slot init arg will no longer need to be passed each time.
 	 */
-	p.handleServerReelSpinStart = function(slotInit, spinResponse) {
+	p.handleServerReelSpinStart = function(spinResponse) {
 		var reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
-		reels.serverSpinStart(slotInit, spinResponse);
+		reels.serverSpinStart(spinResponse);
 	};
 
 	/**
@@ -162,25 +162,6 @@ var G = G || {};
 		this.commandQueue.setupQueue();
 	};
 
-
-
-
-	/**
-	 * Dispached by ReelsComponent when the reel spin stops.
-	 * Heree we can setup any necessary win animations, and update the meter.
-	 *
-	 * @method handleReeSpinComplete
-	 */
-	p.handleReelSpinComplete = function() {
-		this.commandQueue.play();
-		this.commandQueue.gaffType = "default";
-		var gaffMenu = G.Utils.getGameComponentByClass(G.GaffMenuComponent);
-		gaffMenu.deselectGaffButtons();
-
-		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
-		meter.checkMockWin();
-	};
-
 	/**
 	 * Dispatched by the GaffMenu when a gaff button is selected.
 	 * Sets the commandQueue gaff type for animating the final win, and starts spinning the reels.
@@ -188,22 +169,21 @@ var G = G || {};
 	 * @method handleGaffSelected
 	 * @param {String} gaffType - the menu option string
 	 * @todo change playModesNew name in setup (this is a temporary name)
+	 * @todo clean up gaffing
 	 */
 	p.handleGaffSelected = function(gaffType) {
+		console.log('handleGaffSelected', gaffType);
 
 		if (gaffType.indexOf("gaff") >= 0) {
 			console.log("gaff:", gaffType);
 			var playMode = _.find(this.setup.playModesNew, function(playMode) {
 				return playMode.type === gaffType;
-			} );
-			this.gaffSpinRequested.dispatch( playMode.link);
+			});
+			this.gaffSpinRequested.dispatch( playMode.link );
 			return;
 		}
 
-		console.log('handleGaffSelected', gaffType);
-
 		this.commandQueue.gaffType = gaffType;
-
 		var reelsComponent = _.find(this.gameComponents, function(component) {
 			return component instanceof G.ReelsComponent;
 		});

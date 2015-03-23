@@ -20,11 +20,9 @@ var G = G || {};
 	 * Saves reference to Setup and GameComponents
 	 * @method init
 	 * @param {Object} setup
-	 * @param {G.GameComponent[]} gameComponents
 	 */
-	p.init = function(setup, gameComponents) {
+	p.init = function(setup) {
 		this.setup = setup;
-		this.gameComponents = gameComponents;
 	};
 
 	/**

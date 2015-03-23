@@ -59,12 +59,6 @@ var G = G || {};
 	p.currentIndex = 0;
 
 	/**
-	 * @property gameComponents
-	 * @type {G.GameComponent[]}
-	 */
-	p.gameComponents = null;
-
-	/**
 	 * A special win animation is displayed according to setup.gaffs and QueueFactory
 	 * @property gaffType
 	 * @type {string}
@@ -78,17 +72,16 @@ var G = G || {};
 	 * @param {Object} setup
 	 * @param {G.GameComponent[]} gameComponents
 	 */
-	p.init = function(setup, gameComponents) {
+	p.init = function(setup) {
 		this.setup = setup;
-		this.gameComponents = gameComponents;
 		this.queueFactory = new G.QueueFactory();
-		this.queueFactory.init(setup, gameComponents);
+		this.queueFactory.init(setup);
 	};
 
 	/**
 	 * Initialise a queue ready for playing
 	 * @method setupQueue
-	 * @todo introduce playNow option
+	 * @todo allow mocked client or server gaffs
 	 */
 	p.setupQueue = function() {
 

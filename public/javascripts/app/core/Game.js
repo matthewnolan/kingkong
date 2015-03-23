@@ -123,6 +123,17 @@ this.G = this.G || {};
 	p.signalDispatcher = null;
 
 	/**
+	 * SpinEvaluator listens to the reelComplete signal, and prepares win animations based on any wins in the spinResponse.
+	 *
+	 * @property spinEvaluator
+	 * @type {G.SpinEvaluator}
+	 * @default null
+	 *
+	 */
+	p.spinEvaluator = null;
+
+
+	/**
 	 * The maxFps the app will try to achieve.  This is not the guaranteed FPS in your device.  This value can be switched via Gaff.
 	 * @property currentMaxFps
 	 * @type {number}
@@ -242,6 +253,15 @@ this.G = this.G || {};
 	p.canvas = null;
 
 	/**
+	 * Command Queue for winAnimations - based on the Command design pattern.
+	 *
+	 * @property commandQueue;
+	 * @type {G.CommandQueue}
+	 * @default null
+	 */
+	p.commandQueue;
+
+	/**
 	 * Game entry point
 	 *
 	 * Creates and initialises Game framework classes in this order:
@@ -268,6 +288,9 @@ this.G = this.G || {};
 		this.serverInterface = new G.ServerInterface();
 		this.serverInterface.init(this.signalDispatcher, this.gameData);
 		this.serverInterface.requestSlotInit();
+
+		this.spinEvaluator = new G.SpinEvaluator();
+
 
 		this.stage = new createjs.Stage("app");
 		createjs.Ticker.on("tick", this.handleTick, this);
@@ -340,6 +363,7 @@ this.G = this.G || {};
 		this.setupDisplay();
 		this.initUIEvents();
 		this.createProton();
+		this.wireApp();
 	};
 
 
@@ -444,8 +468,7 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * Initialise and create GaemComponents and add them to thd display.
-	 * GameComponents are stored inside the static G.Utils.gameComponents for access anywhere in the application.
+	 * Initialise and create GaemComponents and add them to the display.
 	 * Adds stats to the window for profiling
 	 * Masks the reels inside the bezel area.
 	 *
@@ -473,15 +496,12 @@ this.G = this.G || {};
 
 		//init reels
 		var reelsComponent = new G.ReelsComponent();
-		reelsComponent.init(this.setup, this.signalDispatcher, this.serverInterface, spriteSheet, this.gameData.slotInitVO.reelStrips);
+		reelsComponent.init(this.setup, this.signalDispatcher, this.serverInterface, spriteSheet, this.gameData.slotInitVO);
 		reelsComponent.drawReels();
 		reelsComponent.x = bezelMarginL;
 		reelsComponent.y = bezelMarginT;
 		this.stage.addChild(reelsComponent);
-
-		//store components
 		this.reelsComponent = reelsComponent;
-		this.signalDispatcher.init(this.setup, this.gameComponents);
 
 		//init mask
 		var sceneMask = new createjs.Shape();
@@ -540,11 +560,28 @@ this.G = this.G || {};
 		this.gameComponents.push(this.particlesComponent);
 		this.gameComponents.push(gaffMenu);
 
-		G.Utils.gameComponents = this.gameComponents;
-
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
 		}
+	};
+
+	/**
+	 * Application wiring is done here
+	 * Application communitcation:
+	 * GameComponents talk to each other by dispatching and handling Signals
+	 * Core components also use the signal dispatcher.
+	 * EG. Spin Evaluator listens to the reelComplete signal and prepares a CommandQueue (for win animations).
+	 * GameComponents are stored inside the static G.Utils.gameComponents for access anywhere inside the application.
+	 *
+	 * @method wireApp
+	 *
+	 */
+	p.wireApp = function() {
+		var commandQueue = new G.CommandQueue();
+		commandQueue.init(this.setup);
+		this.signalDispatcher.init(this.setup, commandQueue, this.gameComponents);
+		this.spinEvaluator.init(this.setup, this.signalDispatcher, commandQueue, this.gameData.slotInitVO);
+		G.Utils.gameComponents = this.gameComponents;
 	};
 
 	/**

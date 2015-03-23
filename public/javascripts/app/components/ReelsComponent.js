@@ -36,16 +36,10 @@ var G = G || {};
 	 * These are the default symbols drawn to the reels.
 	 * This may need to be created from the slotInit response at some point.
 	 *
-	 * @property reelData
-	 * @type {Number[][]}
+	 * @property reelsData
+	 * @type {null}
 	 */
-	p.reelsData = [
-		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
-		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
-		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
-		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
-		[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
-	];
+	p.reelsData = null;
 
 
 	/**
@@ -92,6 +86,22 @@ var G = G || {};
 	p.serverInterface = null;
 
 	/**
+	 * This stores the last spin, and is dispatched with the reel complete
+	 * to allow SignalDispatcher to evaluate any wins.
+	 *
+	 * @type {Object}
+	 * @default null
+	 */
+	p.spinResponse = null;
+
+	/**
+	 *
+	 * @property slotInit
+	 * @type {null}
+	 */
+	p.slotInitResponse = null;
+
+	/**
 	 * initialises the reelsComponent with required game data and assets
 	 *
 	 * @method init
@@ -99,19 +109,15 @@ var G = G || {};
 	 * @param {G.SignalDispatcher} signalDispatcher - game's signal dispatcher used to dispatch signals to the rest of the application
 	 * @param {G.ServerInterface} serverInterface - reference to the game's server interface required to make the spin request
 	 * @param {Object} symbolSprites - the createjs spritesheet data object required to pass to the createjs.SpriteSheet constructor
-	 * @param {Array[]} reelsData
+	 * @param {Object} slotInitResponse - the slot init response from the server.
 	 */
-	p.init = function(setup, signalDispatcher, serverInterface, symbolSprites, reelsData) {
+	p.init = function(setup, signalDispatcher, serverInterface, symbolSprites, slotInitResponse) {
 		this.GameComponent_init(setup, signalDispatcher);
 		this.reelsMap = setup.reelMap;
 		this.serverInterface = serverInterface;
 		this.symbolSprites = symbolSprites;
-
-		if (reelsData) {
-			this.reelsData = this.getInitialStrips(reelsData);
-		} else {
-
-		}
+		this.slotInitResponse = slotInitResponse;
+		this.reelsData = this.getInitialStrips(this.slotInitResponse.reelStrips);
 
 		var i, len = this.reelsData.length;
 		if (setup.reelAnimation.shuffleReels) {
@@ -122,6 +128,11 @@ var G = G || {};
 		this.initDomEvents();
 	};
 
+	/**
+	 * @method getInitialStrips
+	 * @param reelStrips
+	 * @returns {Array}
+	 */
 	p.getInitialStrips = function(reelStrips) {
 		var i, len = reelStrips.length;
 		var temp = [];
@@ -159,15 +170,10 @@ var G = G || {};
 	 */
 	p.drawReels = function() {
 		var i, len = this.reelsData.length, reel;
-
 		var symbolW = this.setup.symbolW;
 		var reelMarginR = this.setup.reelMarginRight;
-
 		for (i = 0; i < len; i++) {
 			reel = new G.Reel();
-
-			// console.log('reelData:', i, this.reelsData[i]);
-
 			reel.init(this.setup, this.signalDispatcher, this.symbolSprites, this.reelsData[i]);
 			this.addChild(reel);
 			reel.drawReel();
@@ -205,22 +211,29 @@ var G = G || {};
 	 * See (G.Reel) for info about how reel strips are created and animated.
 	 *
 	 * @method serverSpinStart
-	 * @param {Object} slotInitVo - the slot init response from the server, containing the reelStrips array.
-	 * @param {Object} spinResponseVO - the spin response containing the spinRecords and stops array
-	 * @todo initialise slotInitVo during init method, because it only needs to be passed in once.
+	 * @param {Object} spinResponse - the spin response containing the spinRecords and stops array
+	 * @todo support a spinResponse which contains multiple spin records
 	 */
-	p.serverSpinStart = function(slotInitVo, spinResponseVO) {
-		var reelStrips = slotInitVo.reelStrips;
-		var stops = spinResponseVO.spinRecords[0].stops;
+	p.serverSpinStart = function(spinResponse) {
 
-		console.log('serverSpinStart', stops);
-		/*
-		 "symbols" : {
-		 "cutLength" : 5,
-		 "stopVal" : 0
-		 },
-		 */
+		console.log('serverSpin Start', spinResponse);
+		this.spinResponse = spinResponse;
+		var reelStrips = this.slotInitResponse.reelStrips;
+		//todo support multiple spin records
+		var record = spinResponse.spinRecords[0];
 
+		if (record.stops.length > 1) {
+			console.warn("multiple spin records not yet supported");
+		}
+
+		var replacements = _.map(record.replacement, function(replacementStr) {
+			return parseInt(replacementStr, 10);
+		});
+
+		console.log('replacement=', replacements);
+		//todo support multiple spin records
+		var stops = record.stops;
+		var replacementId = parseInt(this.setup.reelAnimation.symbols.replacementId, 10);
 		var stripData;
 		var startIndex = 0;
 		var endIndex = 0;
@@ -236,11 +249,20 @@ var G = G || {};
 			if (tempStop < 0) {
 				startIndex = strip.length + tempStop;
 				for (j = startIndex; j < strip.length; j++) {
-					stripData.push(strip[j]);
+					if (strip[j] === replacementId) {
+						stripData.push(replacements[i]);
+					} else {
+						stripData.push(strip[j]);
+					}
 				}
 
 				for (j = 0; j < tempEnd; j++ ) {
-					stripData.push(strip[j]);
+					//console.warn("symbol modification not handled at this location:", i, j);
+					if (strip[j] === replacementId) {
+						stripData.push(replacements[i]);
+					} else {
+						stripData.push(strip[j]);
+					}
 				}
 			} else {
 				startIndex = tempStop;
@@ -250,7 +272,11 @@ var G = G || {};
 				startIndex = tempStop;
 				endIndex = tempEnd - strip.length;
 				for (j = startIndex; j < strip.length; j++) {
-					stripData.push(strip[j]);
+					if (strip[j] === replacementId) {
+						stripData.push(replacements[i]);
+					} else {
+						stripData.push(strip[j]);
+					}
 				}
 				for (j = 0; j < endIndex; j++) {
 					stripData.push(strip[j]);
@@ -258,16 +284,17 @@ var G = G || {};
 			} else {
 				endIndex = tempEnd;
 				for (j = startIndex; j < endIndex; j++) {
-					stripData.push(strip[j]);
+					if (strip[j] === replacementId) {
+						stripData.push(replacements[i]);
+					} else {
+						stripData.push(strip[j]);
+					}
 				}
 			}
 
 			this.reels[i].modifyReelData(stripData);
 			stopIndexes.push(numSymbolsBefore);
 		}
-
-		console.log('this.spinReels:', stopIndexes);
-
 		this.spinReels(stopIndexes);
 	};
 
@@ -359,7 +386,8 @@ var G = G || {};
 		if (--this.reelsSpinning === 0)
 		{
 			this.spinRequested = false;
-			this.signalDispatcher.reelSpinComplete.dispatch();
+			this.signalDispatcher.reelSpinComplete.dispatch(this.spinResponse);
+			this.spinResponse = null;
 		}
 	};
 

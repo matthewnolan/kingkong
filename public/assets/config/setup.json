@@ -42,14 +42,15 @@
     "duration" : 2000,
     "shuffleReels" : false,
     "delay" : {
-      "max": 2000,
+      "max": 1000,
       "sequenced": true,
       "random" : false
     },
     "symbols" : {
-      "spriteMap" : ["ww","m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2", "ww"],
+      "spriteMap" : ["ww","m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2", "m1"],
       "cutLength" : 10,
-      "stopVal" : 0
+      "stopVal" : 0,
+      "replacementId" : 17
     }
   },
 
