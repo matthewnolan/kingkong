@@ -192,8 +192,8 @@ module.exports = function (grunt) {
 		},
 		watch: {
 			scripts: {
-				files: ['public/javascripts/app/**/*.js', 'public/javascripts/test/**/*.js'],
-				tasks: ['test']
+				files: ['Gruntfile.js', 'public/javascripts/app/**/*.js', 'public/javascripts/test/**/*.js'],
+				tasks: ['lint', 'test']
 			},
 			options: {
 				spawn: true

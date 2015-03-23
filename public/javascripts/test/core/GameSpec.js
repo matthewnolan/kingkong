@@ -96,7 +96,7 @@ describe("Game Test", function () {
 		expect(this.class.version).toEqual("{{ VERSION }}");
 	});
 
-	it("Main init should create a ServerInterface", function() {
+	it("Game init should create a ServerInterface", function() {
 		/*
 		spyOn(G, "ServerInterface").and.returnValue({
 			init: function() {
@@ -115,6 +115,19 @@ describe("Game Test", function () {
 		//G.ServerInterface.calls.reset();
 		this.class.init();
 		expect(serverInterface.init).toHaveBeenCalled();
+	});
+
+	it("Ticker should be created correctly", function() {
+		//spyOn(this.class, "createProton");
+		//spyOn(this.class, "rescale");
+		spyOn(G, "GameData").and.returnValue({
+			slotInitCompleted: new signals.Signal()
+		});
+
+		this.class.init();
+
+		expect(createjs.Ticker.on).toHaveBeenCalledWith("tick", this.class.handleTick, this.class);
+
 	});
 
 
@@ -208,6 +221,7 @@ describe("Game Test", function () {
 
 		spyOn(this.class, "createProton");
 		spyOn(this.class, "rescale");
+		spyOn(this.class, "wireApp");
 
 		this.class.onAssetsLoadComplete(data);
 
@@ -222,6 +236,7 @@ describe("Game Test", function () {
 
 		spyOn(this.class, "createProton");
 		spyOn(this.class, "rescale");
+		spyOn(this.class, "wireApp");
 
 		this.class.onAssetsLoadComplete();
 
@@ -231,23 +246,11 @@ describe("Game Test", function () {
 	it("when assets are loaded to Game, then initialse User Interface Events", function() {
 		spyOn(this.class, "createProton");
 		spyOn(this.class, "rescale");
+		spyOn(this.class, "wireApp");
 
 		this.class.onAssetsLoadComplete();
 
 		expect(this.class.initUIEvents).toHaveBeenCalled();
-
-	});
-
-	it("When assets are loaded to the Game, then setup the Ticker correctly", function() {
-		//spyOn(this.class, "createProton");
-		//spyOn(this.class, "rescale");
-		spyOn(G, "GameData").and.returnValue({
-			slotInitCompleted: new signals.Signal()
-		});
-
-		this.class.init();
-
-		expect(createjs.Ticker.on).toHaveBeenCalledWith("tick", this.class.handleTick, this.class);
 
 	});
 

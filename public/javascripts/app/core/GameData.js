@@ -65,7 +65,7 @@ var G = G || {};
 	 */
 	p.slotInit = function(json) {
 		this.slotInitVO = json;
-		this.slotInitCompleted.dispatch();
+		this.slotInitCompleted.dispatch(this.slotInitVO);
 	};
 
 	/**
@@ -77,7 +77,7 @@ var G = G || {};
 	 */
 	p.spinResponse = function(json) {
 		this.spinRequestVO = json;
-		this.spinRequestCompleted.dispatch(this.slotInitVO, this.spinRequestVO);
+		this.spinRequestCompleted.dispatch(this.spinRequestVO);
 	};
 
 
