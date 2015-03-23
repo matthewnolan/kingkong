@@ -264,15 +264,6 @@ api.get('/gaff_f9', function(req, res) {
 	res.json(gaff_f9.origin);
 });
 
-
-
-
-
-
-
-
-
-
 api.get('/spin-no-win1', function(req, res) {
 	res.json(spinNoWin1);
 });

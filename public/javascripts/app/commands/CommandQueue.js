@@ -84,9 +84,10 @@ var G = G || {};
 	 * @todo allow mocked client or server gaffs
 	 */
 	p.setupQueue = function() {
-
-		if (this.gaffType !== "default") {
+		console.log('this.setupQueue=', this.gaffType);
+		if (this.gaffType.indexOf('client') >= 0) {
 			this.queue = this.queueFactory.generateGaff(this.gaffType);
+			console.log("this.queue=", this.queue)
 		}
 	};
 

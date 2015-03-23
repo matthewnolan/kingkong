@@ -75,6 +75,7 @@ var G = G || {};
 		if (this.commandQueue.gaffType === 'default') {
 			this.evaluateWin(spinResponse);
 		}
+		console.log('handleReelSpinComplete', this.commandQueue.gaffType);
 		this.commandQueue.play();
 		this.commandQueue.gaffType = "default";
 		var gaffMenu = G.Utils.getGameComponentByClass(G.GaffMenuComponent);
@@ -88,7 +89,6 @@ var G = G || {};
 	 */
 	p.evaluateWin = function(spinResponse) {
 		console.warn(">> evaluateWin :: ", spinResponse);
-
 
 		var numRecords = spinResponse.spinRecords.length;
 

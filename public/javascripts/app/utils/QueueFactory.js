@@ -98,8 +98,15 @@ var G = G || {};
 				// queue.push(command);
 
 				break;
-			case "gaff_Line_M1" :
-				reels.modifySymbolData([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
+			case "client_Line_M1" :
+				var numSymbolsPerReel = this.setup.reelAnimation.symbols.cutLength;
+				var modifySymbols = [];
+				for (i = 0; i < numSymbolsPerReel; i++)
+				{
+					modifySymbols.push(1);
+				}
+
+				reels.modifySymbolData(modifySymbols);
 				meter.prepareMockWin(this.setup.defaultBigWin);
 
 				command = new G.SymbolAnimCommand();
