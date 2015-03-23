@@ -129,7 +129,7 @@ var spin3 = {
 			"respinTriggered": false,
 			"bonusTriggered": false,
 			"spinsWon": 0,
-			"replacement": "ByteArray",
+			"replacement": ["1", "1", "1", "1", "1"],
 			"isRespin": false,
 			"creditsWon": 16170000
 		}
