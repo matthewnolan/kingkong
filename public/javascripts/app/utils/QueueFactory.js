@@ -45,7 +45,7 @@ var G = G || {};
 		particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
 		meter = G.Utils.getGameComponentByClass(G.MeterComponent);
 
-		console.log('generateGaff=', particles);
+		console.log('generateGaff=', gaffType);
 
 
 		switch(gaffType) {
@@ -82,11 +82,11 @@ var G = G || {};
 				symbolWins.playBySpriteByRowCol(3, 1, "M3intro__001");
 				symbolWins.playBySpriteByRowCol(4, 1, "F7intro__001");
 
-				symbolWins.playBySpriteByRowCol(0, 2, "D3intro__001")
-				symbolWins.playBySpriteByRowCol(1, 2, "F7intro__001")
-				symbolWins.playBySpriteByRowCol(2, 2, "WWintro__001_resume")
-				symbolWins.playBySpriteByRowCol(3, 2, "B2Intro__001_short")
-				symbolWins.playBySpriteByRowCol(4, 2, "D1intro__001_resume")
+				symbolWins.playBySpriteByRowCol(0, 2, "D3intro__001");
+				symbolWins.playBySpriteByRowCol(1, 2, "F7intro__001");
+				symbolWins.playBySpriteByRowCol(2, 2, "WWintro__001_resume");
+				symbolWins.playBySpriteByRowCol(3, 2, "B2Intro__001_short");
+				symbolWins.playBySpriteByRowCol(4, 2, "D1intro__001_resume");
 
 
 				// command = new G.SymbolAnimCommand();
