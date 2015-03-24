@@ -387,7 +387,7 @@ var G = G || {};
 		if (--this.reelsSpinning === 0)
 		{
 			this.spinRequested = false;
-			this.signalDispatcher.reelSpinComplete.dispatch(this.spinResponse);
+			this.signalDispatcher.reelSpinCompleted.dispatch(this.spinResponse);
 			this.spinResponse = null;
 		}
 	};

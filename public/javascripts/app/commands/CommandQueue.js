@@ -81,13 +81,22 @@ var G = G || {};
 	/**
 	 * Initialise a queue ready for playing
 	 * @method setupQueue
+	 * @param queue
 	 * @todo allow mocked client or server gaffs
 	 */
-	p.setupQueue = function() {
-		console.log('this.setupQueue=', this.gaffType);
+	p.setupQueue = function(queue) {
+
+		console.log('this.setupQueue=', this.gaffType, queue);
 		if (this.gaffType.indexOf('client') >= 0) {
 			this.queue = this.queueFactory.generateGaff(this.gaffType);
+			return;
 		}
+
+		if (queue) {
+			this.queue = queue;
+		}
+
+
 	};
 
 	/**
@@ -98,6 +107,7 @@ var G = G || {};
 		var len = this.queue.length;
 
 		if (len) {
+			this.gaffType = "default";
 			this.executeNext();
 		}
 	};

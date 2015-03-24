@@ -25,10 +25,10 @@ var G = G || {};
 	p.setup = null;
 
 	/**
-	 * @property slotInitVO
+	 * @property slotInit
 	 * @type {Object}
 	 */
-	p.slotInitVO = null;
+	p.slotInit = null;
 
 	/**
 	 * @property signalDispatcher
@@ -40,11 +40,11 @@ var G = G || {};
 	/**
 	 * Used here to prepare and run win animations.
 	 *
-	 * @property commandQueue
+	 * @property winAnimationQueue
 	 * @type {G.CommandQueue}
 	 * @default null
 	 */
-	p.commandQueue = null;
+	p.winAnimationQueue = null;
 
 	/**
 	 * Initialise Class dependencies
@@ -54,14 +54,47 @@ var G = G || {};
 	 * @param {Object} setup
 	 * @param {G.SignalDispatcher} signalDispatcher
 	 * @param {G.CommandQueue} commandQueue
-	 * @param {Object} slotInitVO
+	 * @param {Object} slotInit
 	 */
-	p.init = function(setup, signalDispatcher, commandQueue, slotInitVO) {
+	p.init = function(setup, signalDispatcher, commandQueue, slotInit) {
 		this.setup = setup;
 		this.signalDispatcher = signalDispatcher;
-		this.commandQueue = commandQueue;
-		this.slotInitVO = slotInitVO;
-		this.signalDispatcher.reelSpinComplete.add(this.handleReelSpinComplete, this);
+		this.winAnimationQueue = commandQueue;
+		this.slotInit = slotInit;
+
+		this.signalDispatcher.reelSpinCompleted.add(this.handleReelSpinComplete, this);
+		this.signalDispatcher.spinResponseReceived.add(this.queueWinAnimation, this);
+	};
+
+	/**
+	 * @method queueWinAnimation
+	 */
+	p.queueWinAnimation = function(spinResponse) {
+		var numRecords = spinResponse.spinRecords.length;
+		if (numRecords > 1) {
+			console.warn("multiple spin records is not supported yet");
+		} else if (!numRecords) {
+			throw "no spin record found";
+		}
+
+		var record = spinResponse.spinRecords[0];
+		if (!record.wins) {
+			return;
+		}
+
+		console.log('queueWinAnimation=', record);
+		var payLineIndex;
+
+
+		var i, len = record.wins.length, win;
+		for (i = 0; i < len; i++) {
+			win = record.wins[i];
+			console.log('win ' + i + " type:", win.winningType, ": ", win);
+			payLineIndex = win.paylineIndex;
+
+			
+
+		}
 	};
 
 	/**
@@ -70,28 +103,12 @@ var G = G || {};
 	 *
 	 * @method handleReeSpinComplete
 	 */
-	p.handleReelSpinComplete = function(spinResponse) {
-		console.log('handleReelSpinComplete', this.commandQueue.gaffType);
-
+	p.handleReelSpinComplete = function() {
+		console.log('handleReelSpinComplete', this.winAnimationQueue.gaffType);
+		this.winAnimationQueue.play();
 		//allow client side gaffs:
-		if (this.commandQueue.gaffType.indexOf('client') >= 0) {
+		if (this.winAnimationQueue.gaffType.indexOf('client') >= 0) {
 			this.doClientSideGaff();
-			return;
-		}
-
-		//if spin response is from the server continue..
-		var numRecords = spinResponse.spinRecords.length;
-		if (numRecords === 1) {
-			//1 spin record, proceed
-		} else {
-			console.warn("multiple spin records is not supported yet");
-		}
-
-		var record = spinResponse.spinRecords[0];
-		console.log('spin record=', record);
-
-		if (record.wins) {
-			this.evaluateWins(record);
 		}
 	};
 
@@ -99,34 +116,11 @@ var G = G || {};
 	 * @method doClientSideGaff
 	 */
 	p.doClientSideGaff = function() {
-		this.commandQueue.play();
-		this.commandQueue.gaffType = "default";
 		var gaffMenu = G.Utils.getGameComponentByClass(G.GaffMenuComponent);
 		gaffMenu.deselectGaffButtons();
 		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
 		meter.checkMockWin();
 	};
-
-	/**
-	 * @method evaluateWin
-	 */
-	p.evaluateWins = function(record) {
-		console.warn(">> evaluateWins :: ", record);
-
-		var i, len = record.wins.length, win;
-		for (i = 0; i < len; i++) {
-			win = record.wins[i];
-			console.log('win ' + i + " type:", win.winningType, ": ", win);
-		}
-
-
-
-		/*
-
-		 */
-
-	};
-
 
 
 

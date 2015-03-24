@@ -291,6 +291,7 @@ this.G = this.G || {};
 		this.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);
 
 		this.gameData = new G.GameData();
+		this.gameData.init(this.signalDispatcher);
 		this.gameData.slotInitCompleted.add(this.slotInitReceived, this);
 
 		this.serverInterface = new G.ServerInterface();

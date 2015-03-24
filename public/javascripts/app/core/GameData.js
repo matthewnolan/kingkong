@@ -53,10 +53,24 @@ var G = G || {};
 	 * @property spinRequestCompleted
 	 * @type {Signal}
 	 */
-	p.spinRequestCompleted = new signals.Signal();
+	//p.spinRequestCompleted = new signals.Signal();
+
+	/**
+	 * init method stores passed in signalDispatcher and gameData.
+	 * Signals which need to be handled by GameComponents should also be declared here.
+	 *
+	 * @method init
+	 * @param {G.SignalDispatcher} signalDispatcher
+	 * @param {G.GameData} gameData
+	 */
+	p.init = function(signalDispatcher) {
+		this.signalDispatcher = signalDispatcher;
+
+	};
 
 	/**
 	 * data from the slotInit response is passed here from the ServerInterface using this method.
+	 * @todo use the signalDispatcher
 	 * A slotInitCompleted signal is then dispatched
 	 *
 	 * @method slotInit
@@ -69,14 +83,13 @@ var G = G || {};
 
 	/**
 	 * data from the spinResponse is passed here from the ServerInterface using this method.
-	 * A spinRequestCompleted signal is then dispatched and handled by the ReelsComponent
 	 *
 	 * @method spinResponse
 	 * @param {JSON} json - the spinResponse from the server
 	 */
 	p.spinResponse = function(json) {
 		this.spinResponseData = json;
-		this.spinRequestCompleted.dispatch(this.spinResponseData);
+		this.signalDispatcher.spinResponseReceived.dispatch(this.spinResponseData);
 	};
 
 
