@@ -92,7 +92,8 @@ var G = G || {};
 			console.log('win ' + i + " type:", win.winningType, ": ", win);
 			payLineIndex = win.paylineIndex;
 
-			
+
+
 
 		}
 	};

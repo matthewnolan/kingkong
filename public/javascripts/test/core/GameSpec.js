@@ -105,7 +105,10 @@ describe("Game Test", function () {
 		});
 		*/
 		spyOn(G, "GameData").and.returnValue({
-			slotInitCompleted: new signals.Signal()
+			slotInitCompleted: new signals.Signal(),
+			init: function() {
+
+			}
 		});
 		this.class.init();
 		expect(G.ServerInterface).toHaveBeenCalled();
@@ -121,7 +124,10 @@ describe("Game Test", function () {
 		//spyOn(this.class, "createProton");
 		//spyOn(this.class, "rescale");
 		spyOn(G, "GameData").and.returnValue({
-			slotInitCompleted: new signals.Signal()
+			slotInitCompleted: new signals.Signal(),
+			init: function() {
+
+			}
 		});
 
 		this.class.init();
@@ -187,7 +193,10 @@ describe("Game Test", function () {
 	it("Main init should create a Stage and initialise it with the correct values", function() {
 		// spies let us test a function is called
 		spyOn(G, "GameData").and.returnValue({
-			slotInitCompleted: new signals.Signal()
+			slotInitCompleted: new signals.Signal(),
+			init: function() {
+
+			}
 		});
 
 		spyOn(createjs, "Stage").and.returnValue({
@@ -257,7 +266,10 @@ describe("Game Test", function () {
 
 	it("Ticker Handler should render the stage", function() {
 		spyOn(G, "GameData").and.returnValue({
-			slotInitCompleted: new signals.Signal()
+			slotInitCompleted: new signals.Signal(),
+			init: function() {
+				
+			}
 		});
 
 		this.class.init();
