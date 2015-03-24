@@ -22,13 +22,13 @@ var G = G || {};
 	/**
 	 * Slot init response data is cached here
 	 *
-	 * @property slotInitVO
-	 * @todo create a VO to store data when core part finalised
+	 * @property slotInitData
+	 * @todo create a data object to store data when core part finalised
 	 * @see http://localhost:3000/api/slotInit for mock example
-	 * @type {slotInitVO}
+	 * @type {slotInitResponse}
 	 * @default null
 	 */
-	p.slotInitVO = null;
+	p.slotInitResponseData = null;
 
 	/**
 	 * siganl dispatched when the slotInit response has been received.
@@ -39,18 +39,17 @@ var G = G || {};
 	p.slotInitCompleted = new signals.Signal();
 
 	/**
-	 * spinResponse virtual object where the last spin response is stored until the next one.
+	 * Where the last spin response is stored until the next one.
 	 *
-	 * @property spinRequestVO
+	 * @property spinRequestData
 	 * @type {Object}
 	 * @default null until first spin response received.
 	 */
-	p.spinRequestVO = null;
+	p.spinResponseData = null;
 
 	/**
 	 * signal dispatched when a spinResponse arrives from server
 	 *
-	 * @todo rename to spinResponseCompleted
 	 * @property spinRequestCompleted
 	 * @type {Signal}
 	 */
@@ -64,8 +63,8 @@ var G = G || {};
 	 * @param {JSON} json - the slotInit response from the server
 	 */
 	p.slotInit = function(json) {
-		this.slotInitVO = json;
-		this.slotInitCompleted.dispatch(this.slotInitVO);
+		this.slotInitResponseData = json;
+		this.slotInitCompleted.dispatch(this.slotInitResponseData);
 	};
 
 	/**
@@ -76,8 +75,8 @@ var G = G || {};
 	 * @param {JSON} json - the spinResponse from the server
 	 */
 	p.spinResponse = function(json) {
-		this.spinRequestVO = json;
-		this.spinRequestCompleted.dispatch(this.spinRequestVO);
+		this.spinResponseData = json;
+		this.spinRequestCompleted.dispatch(this.spinResponseData);
 	};
 
 

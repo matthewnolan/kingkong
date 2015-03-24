@@ -3,6 +3,7 @@
   "env": "prod",
   "devMode": 0,
   "htmlDebug": 0,
+  "enableTabPausing": 1,
   "scale" : "none",
   "failSafeInitisalisation": 0,
   "enableDesktopView": 1,
@@ -297,7 +298,7 @@
 
   "playModesNew" : [
     {
-      "type": "lotsOfWin"
+      "type": "client_lotsOfWin"
     },
     {
       "type": "client_Line_M1"

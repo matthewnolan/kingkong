@@ -133,11 +133,24 @@ var G = G || {};
 	};
 
 	/**
-	 * @todo implement this
-	 * @method stop
+	 * @method pause
 	 */
-	p.stop = function() {
-		throw "not implemented";
+	p.pause = function() {
+		console.log('pause timeout=', this.timeout);
+		if (this.timeout) {
+			clearTimeout(this.timeout);
+		}
+	};
+
+	/**
+	 * @method resume
+	 */
+	p.resume = function() {
+		console.log('resume timeout=', this.timeout);
+		if (this.timeout) {
+			this.currentIndex--;
+			this.executeNext();
+		}
 	};
 
 	/**
@@ -149,6 +162,7 @@ var G = G || {};
 		this.currentIndex = 0;
 		this.queue = [];
 		this.shouldLoop = false;
+		this.timeout = null;
 	};
 
 	G.CommandQueue = CommandQueue;

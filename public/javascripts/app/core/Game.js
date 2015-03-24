@@ -262,6 +262,14 @@ this.G = this.G || {};
 	p.commandQueue;
 
 	/**
+	 * Set to true when all game and core components have been initialised are available
+	 *
+	 * @property gameInitComplete
+	 * @type {boolean}
+	 */
+	p.initComplete = false;
+
+	/**
 	 * Game entry point
 	 *
 	 * Creates and initialises Game framework classes in this order:
@@ -293,11 +301,20 @@ this.G = this.G || {};
 
 
 		this.stage = new createjs.Stage("app");
+
 		createjs.Ticker.on("tick", this.handleTick, this);
 		createjs.Ticker.timingMode = createjs.Ticker.RAF;
-		createjs.Ticker.setFPS(60);
+		createjs.Ticker.setFPS(this.currentMaxFps);
 
 		this.proton = new Proton();
+	};
+
+	p.enableTicker = function() {
+		this.isPaused = false;
+	};
+
+	p.disableTicker = function() {
+		this.isPause = true;
 	};
 
 	/**
@@ -496,7 +513,7 @@ this.G = this.G || {};
 
 		//init reels
 		var reelsComponent = new G.ReelsComponent();
-		reelsComponent.init(this.setup, this.signalDispatcher, this.serverInterface, spriteSheet, this.gameData.slotInitVO);
+		reelsComponent.init(this.setup, this.signalDispatcher, this.serverInterface, spriteSheet, this.gameData.slotInitResponseData);
 		reelsComponent.drawReels();
 		reelsComponent.x = bezelMarginL;
 		reelsComponent.y = bezelMarginT;
@@ -577,11 +594,12 @@ this.G = this.G || {};
 	 *
 	 */
 	p.wireApp = function() {
-		var commandQueue = new G.CommandQueue();
-		commandQueue.init(this.setup);
-		this.signalDispatcher.init(this.setup, commandQueue, this.gameComponents);
-		this.spinEvaluator.init(this.setup, this.signalDispatcher, commandQueue, this.gameData.slotInitVO);
+		this.commandQueue = new G.CommandQueue();
+		this.commandQueue.init(this.setup);
+		this.signalDispatcher.init(this.setup, this.commandQueue, this.gameComponents);
+		this.spinEvaluator.init(this.setup, this.signalDispatcher, this.commandQueue, this.gameData.slotInitResponseData);
 		G.Utils.gameComponents = this.gameComponents;
+		this.initComplete = true;
 	};
 
 	/**
@@ -604,16 +622,18 @@ this.G = this.G || {};
 	 * @method handleTick
 	 */
 	p.handleTick = function() {
-		this.stats.begin();
-		this.proton.update();
-		this.stage.update();
-		this.stats.end();
+		if(!this.isPaused) {
+			this.stats.begin();
+			this.proton.update();
+			this.stage.update();
+			this.stats.end();
+		}
 	};
 
 	/**
 	 * User Control is initialised: Keyboard control / touch controls
 	 * if User Control shouldn't be enabled during app initialisation phase, then execute this function later.
-	 * @todo - configure a way to turn on/off user interaction events.
+	 * @todo - implement turn on/off user interaction events.
 	 * @method initUIEvents
 	 */
 	p.initUIEvents = function() {
@@ -625,6 +645,29 @@ this.G = this.G || {};
 			window.scrollTo(0, 0);
 			self.rescale();
 		}, true);
+
+		/**
+		 * resume the app on focus (tab restored)
+		 */
+		window.addEventListener('focus', function() {
+			//document.title = 'focused';
+			if (self.initComplete && self.setup.enableTabPausing) {
+				//self.enableTicker();
+				//self.commandQueue.resume();
+			}
+
+		});
+
+		/**
+		 * pause the app on blue (switched to another tab)
+		 */
+		window.addEventListener('blur', function() {
+			//document.title = 'not focused';
+			if (self.initComplete && self.setup.enableTabPausing) {
+				//self.disableTicker();
+				//self.commandQueue.pause();
+			}
+		});
 
 		createjs.Touch.enable(this.stage);
 

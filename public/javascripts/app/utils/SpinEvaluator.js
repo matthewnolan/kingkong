@@ -65,17 +65,40 @@ var G = G || {};
 	};
 
 	/**
-	 * Dispached by ReelsComponent when the reel spin stops.
-	 * Heree we can setup any necessary win animations, and update the meter.
+	 * Dispatched by ReelsComponent when the reel spin stops.
+	 * Here we can setup any necessary win animations, and update the meter.
 	 *
 	 * @method handleReeSpinComplete
-	 * @todo put this logic in spinEvaluator
 	 */
 	p.handleReelSpinComplete = function(spinResponse) {
-		if (this.commandQueue.gaffType === 'default') {
-			this.evaluateWin(spinResponse);
-		}
 		console.log('handleReelSpinComplete', this.commandQueue.gaffType);
+
+		//allow client side gaffs:
+		if (this.commandQueue.gaffType.indexOf('client') >= 0) {
+			this.doClientSideGaff();
+			return;
+		}
+
+		//if spin response is from the server continue..
+		var numRecords = spinResponse.spinRecords.length;
+		if (numRecords === 1) {
+			//1 spin record, proceed
+		} else {
+			console.warn("multiple spin records is not supported yet");
+		}
+
+		var record = spinResponse.spinRecords[0];
+		console.log('spin record=', record);
+
+		if (record.wins) {
+			this.evaluateWins(record);
+		}
+	};
+
+	/**
+	 * @method doClientSideGaff
+	 */
+	p.doClientSideGaff = function() {
 		this.commandQueue.play();
 		this.commandQueue.gaffType = "default";
 		var gaffMenu = G.Utils.getGameComponentByClass(G.GaffMenuComponent);
@@ -87,19 +110,8 @@ var G = G || {};
 	/**
 	 * @method evaluateWin
 	 */
-	p.evaluateWin = function(spinResponse) {
-		console.warn(">> evaluateWin :: ", spinResponse);
-
-		var numRecords = spinResponse.spinRecords.length;
-
-		if (numRecords === 1) {
-			//1 spin record, proceed
-		} else {
-			console.warn("multiple spin records is not supported yet");
-		}
-
-		var record = spinResponse.spinRecords[0];
-		console.log('spin record=', record);
+	p.evaluateWins = function(record) {
+		console.warn(">> evaluateWins :: ", record);
 
 		var i, len = record.wins.length, win;
 		for (i = 0; i < len; i++) {
@@ -109,9 +121,9 @@ var G = G || {};
 
 
 
+		/*
 
-
-
+		 */
 
 	};
 

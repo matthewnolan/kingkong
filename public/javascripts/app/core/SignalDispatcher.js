@@ -134,7 +134,6 @@ var G = G || {};
 	/**
 	 * Dispatched when GameData has received slotResponse. Get the ReelsComponent and spin call a reelSpin.
 	 *
-	 * @param slotInit
 	 * @param spinResponse
 	 * @todo slotInit response should be passed to Reels once, and then slot init arg will no longer need to be passed each time.
 	 */
@@ -187,6 +186,7 @@ var G = G || {};
 		var reelsComponent = _.find(this.gameComponents, function(component) {
 			return component instanceof G.ReelsComponent;
 		});
+
 
 		reelsComponent.spinReels();
 	};
