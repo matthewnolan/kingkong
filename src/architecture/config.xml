@@ -1,0 +1,57 @@
+<config>
+    <build id="1209"/>
+    <connection host="nyx.h5c.co" port="9899"/>
+    <!--
+
+            Site IDs:
+            347 - bet365
+            1 - test
+            2 - test
+            258,100258 - Football Pool
+            241 - Full Moon
+
+    -->
+    <games>
+        <!--  First Set  -->
+        <game id="1010" name="Dangerous Beauty" showIGTLogo="true" showBallyLogo="false">
+            <site id="347,368,1,2,241" betOptions="1, 2, 3, 5, 10, 20, 30, 50, 100, 200, 300" currencyMultipliers="ARS:5,AUD:2,BGN:2,BRL:3,CAD:2,CHF:2,CNY:10,CZK:30,DKK:10,EUR:1,GBP:1,HKD:15,HUF:300,INR:70,ISK:100,JPY:200,MXN:20,MYR:5,NOK:10,NZD:2,PLN:5,RMB:10,RON:4,SEK:10,SGD:3,THB:50,TWD:50,USD:2,ZAR:10"></site>
+            <site id="258,100258" betOptions="1, 2, 5, 10, 20, 30, 40, 50, 100" currencyMultipliers="GBP:1"/>
+        </game>
+        <game id="1011" name="Vivaldi's Seasons" showIGTLogo="true" showBallyLogo="false">
+            <site id="347,368,1,2,241" betOptions="1, 2, 3, 5, 10, 20, 30, 50, 100, 200, 300" currencyMultipliers="ARS:5,AUD:2,BGN:2,BRL:3,CAD:2,CHF:2,CNY:10,CZK:30,DKK:10,EUR:1,GBP:1,HKD:15,HUF:300,INR:70,ISK:100,JPY:200,MXN:20,MYR:5,NOK:10,NZD:2,PLN:5,RMB:10,RON:4,SEK:10,SGD:3,THB:50,TWD:50,USD:2,ZAR:10"></site>
+            <site id="258,100258" betOptions="1, 2, 5, 10, 20, 30, 40, 50, 100" currencyMultipliers="GBP:1"/>
+        </game>
+        <game id="1013" name="Sirens" showIGTLogo="true" showBallyLogo="false">
+            <site id="347,368,1,2,241" betOptions="1, 2, 3, 5, 10, 20, 30, 50, 100, 200, 300" currencyMultipliers="ARS:5,AUD:2,BGN:2,BRL:3,CAD:2,CHF:2,CNY:10,CZK:30,DKK:10,EUR:1,GBP:1,HKD:15,HUF:300,INR:70,ISK:100,JPY:200,MXN:20,MYR:5,NOK:10,NZD:2,PLN:5,RMB:10,RON:4,SEK:10,SGD:3,THB:50,TWD:50,USD:2,ZAR:10"></site>
+            <site id="258,100258" betOptions="1, 2, 5, 10, 20, 30, 40, 50, 100" currencyMultipliers="GBP:1"/>
+        </game>
+        <game id="1014" name="Shadow of the Panther" showIGTLogo="true" showBallyLogo="false">
+            <site id="347,368,1,2,241" betOptions="1, 2, 3, 5, 10, 20, 30, 50, 100, 200, 300" currencyMultipliers="ARS:5,AUD:2,BGN:2,BRL:3,CAD:2,CHF:2,CNY:10,CZK:30,DKK:10,EUR:1,GBP:1,HKD:15,HUF:300,INR:70,ISK:100,JPY:200,MXN:20,MYR:5,NOK:10,NZD:2,PLN:5,RMB:10,RON:4,SEK:10,SGD:3,THB:50,TWD:50,USD:2,ZAR:10"></site>
+            <site id="258,100258" betOptions="1, 2, 5, 10, 20, 30, 40, 50, 100" currencyMultipliers="GBP:1"/>
+        </game>
+        <game id="1017" name="The Mighty Atlas" showIGTLogo="true" showBallyLogo="false">
+            <site id="347,368,1,2,241" betOptions="1, 2, 3, 5, 10, 20, 30, 50, 100, 200, 300" currencyMultipliers="ARS:5,AUD:2,BGN:2,BRL:3,CAD:2,CHF:2,CNY:10,CZK:30,DKK:10,EUR:1,GBP:1,HKD:15,HUF:300,INR:70,ISK:100,JPY:200,MXN:20,MYR:5,NOK:10,NZD:2,PLN:5,RMB:10,RON:4,SEK:10,SGD:3,THB:50,TWD:50,USD:2,ZAR:10"></site>
+            <site id="258,100258" betOptions="1, 2, 5, 10, 20, 30, 40, 50, 100" currencyMultipliers="GBP:1"/>
+        </game>
+        <game id="1022" name="Michelangelo" showIGTLogo="true" showBallyLogo="false">
+            <site id="347,368,1,2,241" betOptions="1, 2, 3, 5, 10, 20, 30, 50, 100" currencyMultipliers="ARS:5,AUD:2,BGN:2,BRL:3,CAD:2,CHF:2,CNY:10,CZK:30,DKK:10,EUR:1,GBP:1,HKD:15,HUF:300,INR:70,ISK:100,JPY:200,MXN:20,MYR:5,NOK:10,NZD:2,PLN:5,RMB:10,RON:4,SEK:10,SGD:3,THB:50,TWD:50,USD:2,ZAR:10"></site>
+            <site id="258,100258" betOptions="1, 2, 5, 10, 20, 30, 40, 50, 100" currencyMultipliers="GBP:1"/>
+        </game>
+        <game id="1030" name="A Night of Mystery" showIGTLogo="true" showBallyLogo="false">
+            <site id="347,368,1,2,241" betOptions="1, 2, 3, 5, 10, 20, 30, 50, 100, 200, 300" currencyMultipliers="ARS:5,AUD:2,BGN:2,BRL:3,CAD:2,CHF:2,CNY:10,CZK:30,DKK:10,EUR:1,GBP:1,HKD:15,HUF:300,INR:70,ISK:100,JPY:200,MXN:20,MYR:5,NOK:10,NZD:2,PLN:5,RMB:10,RON:4,SEK:10,SGD:3,THB:50,TWD:50,USD:2,ZAR:10"></site>
+            <site id="258,100258" betOptions="1, 2, 5, 10, 20, 30, 40, 50, 100" currencyMultipliers="GBP:1"/>
+        </game>
+        <game id="1040" name="Golden Knight" showIGTLogo="true" showBallyLogo="false">
+            <site id="347,368,1,2,241" betOptions="1, 2, 3, 5, 10, 20, 30, 50, 100, 200, 300" currencyMultipliers="ARS:5,AUD:2,BGN:2,BRL:3,CAD:2,CHF:2,CNY:10,CZK:30,DKK:10,EUR:1,GBP:1,HKD:15,HUF:300,INR:70,ISK:100,JPY:200,MXN:20,MYR:5,NOK:10,NZD:2,PLN:5,RMB:10,RON:4,SEK:10,SGD:3,THB:50,TWD:50,USD:2,ZAR:10"></site>
+            <site id="258,100258" betOptions="1, 2, 5, 10, 20, 30, 40, 50, 100" currencyMultipliers="GBP:1"/>
+        </game>
+        <game id="1056" name="Gypsy" showIGTLogo="false" showBallyLogo="true">
+            <site id="347,368,1,2,241" betOptions="1, 2, 3, 5, 10, 20, 30, 50, 100, 200" currencyMultipliers="ARS:5,AUD:2,BGN:2,BRL:3,CAD:2,CHF:2,CNY:10,CZK:30,DKK:10,EUR:1,GBP:1,HKD:15,HUF:300,INR:70,ISK:100,JPY:200,MXN:20,MYR:5,NOK:10,NZD:2,PLN:5,RMB:10,RON:4,SEK:10,SGD:3,THB:50,TWD:50,USD:2,ZAR:10"></site>
+            <site id="258,100258" betOptions="1, 2, 5, 10, 20, 30, 40, 50, 100" currencyMultipliers="GBP:1"/>
+        </game>
+        <game id="1090" name="Valkyrie Queen" showIGTLogo="false" showBallyLogo="true">
+            <site id="347,368,1,2,241" betOptions="1, 2, 3, 5, 10, 20, 30, 50, 100, 200, 300" currencyMultipliers="ARS:5,AUD:2,BGN:2,BRL:3,CAD:2,CHF:2,CNY:10,CZK:30,DKK:10,EUR:1,GBP:1,HKD:15,HUF:300,INR:70,ISK:100,JPY:200,MXN:20,MYR:5,NOK:10,NZD:2,PLN:5,RMB:10,RON:4,SEK:10,SGD:3,THB:50,TWD:50,USD:2,ZAR:10"></site>
+            <site id="258,100258" betOptions="1, 2, 5, 10, 20, 30, 40, 50, 100" currencyMultipliers="GBP:1"/>
+        </game>
+    </games>
+</config>

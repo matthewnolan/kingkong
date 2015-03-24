@@ -70,6 +70,7 @@ var G = G || {};
 	 * @method queueWinAnimation
 	 */
 	p.queueWinAnimation = function(spinResponse) {
+		var i, len, self = this;
 		var numRecords = spinResponse.spinRecords.length;
 		if (numRecords > 1) {
 			console.warn("multiple spin records is not supported yet");
@@ -84,18 +85,37 @@ var G = G || {};
 
 		console.log('queueWinAnimation=', record);
 		var payLineIndex;
+		var reelStrips = this.slotInit.reelStrips;
+		var symbolsPerReel = this.setup.symbolsPerReel;
+		console.log(reelStrips);
 
+		len = reelStrips.length;
+		var visibleSymbolIndexes = [];
+		for (i = 0; i < reelStrips.length; i++) {
+			var stopIndex = record.stops[i];
+			var vStrip = reelStrips[i].slice(stopIndex, stopIndex + symbolsPerReel);
+			_.each(vStrip, function(symbolIndex) {
+				visibleSymbolIndexes.push(symbolIndex);
+			});
+		}
+		console.log('visibleSymbolIndexes', visibleSymbolIndexes);
+		var maxSymbolsNum = visibleSymbolIndexes.length;
+		var winningSymbols = _.filter(visibleSymbolIndexes, function(symbolIndex) {
+			return symbolIndex === self.setup.reelAnimation.symbols.replacementId;
+		});
 
-		var i, len = record.wins.length, win;
+		if (winningSymbols.length === maxSymbolsNum) {
+			console.warn("big win");
+		}
+
+		len = record.wins.length;
+		var win;
 		for (i = 0; i < len; i++) {
 			win = record.wins[i];
 			console.log('win ' + i + " type:", win.winningType, ": ", win);
 			payLineIndex = win.paylineIndex;
-
-
-
-
 		}
+
 	};
 
 	/**

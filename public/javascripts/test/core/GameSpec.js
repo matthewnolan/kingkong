@@ -268,7 +268,7 @@ describe("Game Test", function () {
 		spyOn(G, "GameData").and.returnValue({
 			slotInitCompleted: new signals.Signal(),
 			init: function() {
-				
+
 			}
 		});
 
