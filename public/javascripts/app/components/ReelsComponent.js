@@ -205,11 +205,13 @@ var G = G || {};
 	};
 
 	/**
-	 * 1. modifies the reelstrips off canvas, so that the next spin contains the correct symbols to stop to, it modifies (by default) 8 symbols before the stop symbol
-	 * and 8 symbols after the symbol to make up the total number of symbols on each reel strip. (by default 17).
-	 * 2. Starts the reels spinning and passes the correct symbol index to stop to (which should always be a fixed number based on the number of symbols before the stop.
-	 * eg. If 8 symbols are stuffed before the stop symbol, then reels must tween to symbol index 8 in order to stop at the correct symbol.
-	 * See (G.Reel) for info about how reel strips are created and animated.
+	 * Reel Animations start here: configuration options are in setup.reelAnimation
+	 * 1. By default 10 symbols after and including the symbol at the stopIndex of the reelStrip are cut from the reelStrips array
+	 * 2. Existing symbols on the reels are switched to those symbols.  Switching takes place off the visible canvas after the first spin cycle,
+	 * to give the existing symbols time to animate from the reels.
+	 * 3. If a symbolIndex in the reelStrip array equals the replacementId defined in the setup.json then a replacement is made based on the spinResponse.
+	 * 4. Starts the reels spinning and passes the correct symbol index to stop to
+	 * See (G.Reel) for more info about how reel strips are drawn and animated.
 	 *
 	 * @method serverSpinStart
 	 * @param {Object} spinResponse - the spin response containing the spinRecords and stops array
@@ -222,7 +224,6 @@ var G = G || {};
 		var reelStrips = this.slotInitResponse.reelStrips;
 		//todo support multiple spin records
 		var record = spinResponse.spinRecords[0];
-
 		if (record.stops.length > 1) {
 			console.warn("multiple spin records not yet supported");
 		}
@@ -256,9 +257,7 @@ var G = G || {};
 						stripData.push(strip[j]);
 					}
 				}
-
 				for (j = 0; j < tempEnd; j++ ) {
-					//console.warn("symbol modification not handled at this location:", i, j);
 					if (strip[j] === replacementId) {
 						stripData.push(replacements[i]);
 					} else {
