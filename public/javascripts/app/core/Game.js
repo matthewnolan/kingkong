@@ -300,7 +300,6 @@ this.G = this.G || {};
 
 		this.spinEvaluator = new G.SpinEvaluator();
 
-
 		this.stage = new createjs.Stage("app");
 
 		createjs.Ticker.on("tick", this.handleTick, this);
@@ -639,6 +638,11 @@ this.G = this.G || {};
 	 */
 	p.initUIEvents = function() {
 		var self = this;
+
+		G.Utils.parseQueryString();
+
+		console.log('G.Utils.params', G.Utils.params);
+
 		/**
 		 * Fix position of app on rotate
 		 */
