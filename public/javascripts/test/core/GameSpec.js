@@ -43,6 +43,12 @@ describe("Game Test", function () {
 		});
 		*/
 
+		//spyOn(G.Utils, 'parseQueryString');
+
+		G.Utils = {
+			parseQueryString: function() {}
+		};
+
 		spyOn(this.class, "setupDisplay");
 
 		spyOn(this.class, "initUIEvents");
@@ -74,6 +80,7 @@ describe("Game Test", function () {
 	afterEach(function () {
 		this.class = null;
 		G.Preloader.restore();
+		//G.Utils.restore();
 		//G.ServerInterface.restore();
 		window.Stats.restore();
 		document.body.appendChild.restore();

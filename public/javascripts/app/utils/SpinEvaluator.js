@@ -89,14 +89,17 @@ var G = G || {};
 		var symbolsPerReel = this.setup.symbolsPerReel;
 		console.log(reelStrips);
 
+
+
 		len = reelStrips.length;
 		var visibleSymbolIndexes = [];
+		var pushSymbol = function(symbolIndex) {
+			visibleSymbolIndexes.push(symbolIndex);
+		};
 		for (i = 0; i < reelStrips.length; i++) {
 			var stopIndex = record.stops[i];
 			var vStrip = reelStrips[i].slice(stopIndex, stopIndex + symbolsPerReel);
-			_.each(vStrip, function(symbolIndex) {
-				visibleSymbolIndexes.push(symbolIndex);
-			});
+			_.each(vStrip, pushSymbol);
 		}
 		console.log('visibleSymbolIndexes', visibleSymbolIndexes);
 		var maxSymbolsNum = visibleSymbolIndexes.length;

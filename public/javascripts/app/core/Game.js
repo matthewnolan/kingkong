@@ -287,6 +287,9 @@ this.G = this.G || {};
 	p.init = function() {
 		this.stats = new Stats();
 
+		G.Utils.parseQueryString();
+		console.log('G.Utils.params', G.Utils.params);
+
 		this.signalDispatcher = new G.SignalDispatcher();
 		this.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);
 
@@ -638,10 +641,6 @@ this.G = this.G || {};
 	 */
 	p.initUIEvents = function() {
 		var self = this;
-
-		G.Utils.parseQueryString();
-
-		console.log('G.Utils.params', G.Utils.params);
 
 		/**
 		 * Fix position of app on rotate
