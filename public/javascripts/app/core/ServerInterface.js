@@ -50,11 +50,9 @@ this.G = this.G || {};
 	 */
 	p.init = function(signalDispatcher, gameData) {
 		this.signalDispatcher = signalDispatcher;
-		this.signalDispatcher.serverSpinRequested.add(this.requestSpin, this);
+		this.signalDispatcher.spinRequested.add(this.requestSpin, this);
 		this.signalDispatcher.gaffSpinRequested.add(this.requestGaffSpin, this);
 		this.gameData = gameData;
-		this.gameData.spinRequestCompleted.add(this.signalDispatcher.handleServerReelSpinStart, this);
-
 	};
 
 	/**

@@ -3,6 +3,7 @@
   "env": "prod",
   "devMode": 0,
   "htmlDebug": 0,
+  "enableTabPausing": 1,
   "scale" : "none",
   "failSafeInitisalisation": 0,
   "enableDesktopView": 1,

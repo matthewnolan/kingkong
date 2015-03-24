@@ -81,14 +81,22 @@ var G = G || {};
 	/**
 	 * Initialise a queue ready for playing
 	 * @method setupQueue
+	 * @param queue
 	 * @todo allow mocked client or server gaffs
 	 */
-	p.setupQueue = function() {
-		console.log('this.setupQueue=', this.gaffType);
+	p.setupQueue = function(queue) {
+
+		console.log('this.setupQueue=', this.gaffType, queue);
 		if (this.gaffType.indexOf('client') >= 0) {
 			this.queue = this.queueFactory.generateGaff(this.gaffType);
-			console.log("this.queue=", this.queue)
+			return;
 		}
+
+		if (queue) {
+			this.queue = queue;
+		}
+
+
 	};
 
 	/**
@@ -99,6 +107,7 @@ var G = G || {};
 		var len = this.queue.length;
 
 		if (len) {
+			this.gaffType = "default";
 			this.executeNext();
 		}
 	};
@@ -133,11 +142,23 @@ var G = G || {};
 	};
 
 	/**
-	 * @todo implement this
-	 * @method stop
+	 * @method pause
 	 */
-	p.stop = function() {
-		throw "not implemented";
+	p.pause = function() {
+		console.log('pause timeout=', this.timeout);
+		if (this.timeout >= 0) {
+			clearTimeout(this.timeout);
+		}
+	};
+
+	/**
+	 * @method resume
+	 */
+	p.resume = function() {
+		console.log('resume timeout=', this.timeout);
+		if (this.timeout >= 0) {
+			this.executeNext();
+		}
 	};
 
 	/**
@@ -149,6 +170,7 @@ var G = G || {};
 		this.currentIndex = 0;
 		this.queue = [];
 		this.shouldLoop = false;
+		this.timeout = null;
 	};
 
 	G.CommandQueue = CommandQueue;

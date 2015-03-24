@@ -22,13 +22,13 @@ var G = G || {};
 	/**
 	 * Slot init response data is cached here
 	 *
-	 * @property slotInitVO
-	 * @todo create a VO to store data when core part finalised
+	 * @property slotInitData
+	 * @todo create a data object to store data when core part finalised
 	 * @see http://localhost:3000/api/slotInit for mock example
-	 * @type {slotInitVO}
+	 * @type {slotInitResponse}
 	 * @default null
 	 */
-	p.slotInitVO = null;
+	p.slotInitResponseData = null;
 
 	/**
 	 * siganl dispatched when the slotInit response has been received.
@@ -39,45 +39,57 @@ var G = G || {};
 	p.slotInitCompleted = new signals.Signal();
 
 	/**
-	 * spinResponse virtual object where the last spin response is stored until the next one.
+	 * Where the last spin response is stored until the next one.
 	 *
-	 * @property spinRequestVO
+	 * @property spinRequestData
 	 * @type {Object}
 	 * @default null until first spin response received.
 	 */
-	p.spinRequestVO = null;
+	p.spinResponseData = null;
 
 	/**
 	 * signal dispatched when a spinResponse arrives from server
 	 *
-	 * @todo rename to spinResponseCompleted
 	 * @property spinRequestCompleted
 	 * @type {Signal}
 	 */
-	p.spinRequestCompleted = new signals.Signal();
+	//p.spinRequestCompleted = new signals.Signal();
+
+	/**
+	 * init method stores passed in signalDispatcher and gameData.
+	 * Signals which need to be handled by GameComponents should also be declared here.
+	 *
+	 * @method init
+	 * @param {G.SignalDispatcher} signalDispatcher
+	 * @param {G.GameData} gameData
+	 */
+	p.init = function(signalDispatcher) {
+		this.signalDispatcher = signalDispatcher;
+
+	};
 
 	/**
 	 * data from the slotInit response is passed here from the ServerInterface using this method.
+	 * @todo use the signalDispatcher
 	 * A slotInitCompleted signal is then dispatched
 	 *
 	 * @method slotInit
 	 * @param {JSON} json - the slotInit response from the server
 	 */
 	p.slotInit = function(json) {
-		this.slotInitVO = json;
-		this.slotInitCompleted.dispatch(this.slotInitVO);
+		this.slotInitResponseData = json;
+		this.slotInitCompleted.dispatch(this.slotInitResponseData);
 	};
 
 	/**
 	 * data from the spinResponse is passed here from the ServerInterface using this method.
-	 * A spinRequestCompleted signal is then dispatched and handled by the ReelsComponent
 	 *
 	 * @method spinResponse
 	 * @param {JSON} json - the spinResponse from the server
 	 */
 	p.spinResponse = function(json) {
-		this.spinRequestVO = json;
-		this.spinRequestCompleted.dispatch(this.spinRequestVO);
+		this.spinResponseData = json;
+		this.signalDispatcher.spinResponseReceived.dispatch(this.spinResponseData);
 	};
 
 

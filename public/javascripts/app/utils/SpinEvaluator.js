@@ -25,10 +25,10 @@ var G = G || {};
 	p.setup = null;
 
 	/**
-	 * @property slotInitVO
+	 * @property slotInit
 	 * @type {Object}
 	 */
-	p.slotInitVO = null;
+	p.slotInit = null;
 
 	/**
 	 * @property signalDispatcher
@@ -40,11 +40,11 @@ var G = G || {};
 	/**
 	 * Used here to prepare and run win animations.
 	 *
-	 * @property commandQueue
+	 * @property winAnimationQueue
 	 * @type {G.CommandQueue}
 	 * @default null
 	 */
-	p.commandQueue = null;
+	p.winAnimationQueue = null;
 
 	/**
 	 * Initialise Class dependencies
@@ -54,67 +54,97 @@ var G = G || {};
 	 * @param {Object} setup
 	 * @param {G.SignalDispatcher} signalDispatcher
 	 * @param {G.CommandQueue} commandQueue
-	 * @param {Object} slotInitVO
+	 * @param {Object} slotInit
 	 */
-	p.init = function(setup, signalDispatcher, commandQueue, slotInitVO) {
+	p.init = function(setup, signalDispatcher, commandQueue, slotInit) {
 		this.setup = setup;
 		this.signalDispatcher = signalDispatcher;
-		this.commandQueue = commandQueue;
-		this.slotInitVO = slotInitVO;
-		this.signalDispatcher.reelSpinComplete.add(this.handleReelSpinComplete, this);
+		this.winAnimationQueue = commandQueue;
+		this.slotInit = slotInit;
+
+		this.signalDispatcher.reelSpinCompleted.add(this.handleReelSpinComplete, this);
+		this.signalDispatcher.spinResponseReceived.add(this.queueWinAnimation, this);
 	};
 
 	/**
-	 * Dispached by ReelsComponent when the reel spin stops.
-	 * Heree we can setup any necessary win animations, and update the meter.
+	 * @method queueWinAnimation
+	 */
+	p.queueWinAnimation = function(spinResponse) {
+		var i, len, self = this;
+		var numRecords = spinResponse.spinRecords.length;
+		if (numRecords > 1) {
+			console.warn("multiple spin records is not supported yet");
+		} else if (!numRecords) {
+			throw "no spin record found";
+		}
+
+		var record = spinResponse.spinRecords[0];
+		if (!record.wins) {
+			return;
+		}
+
+		console.log('queueWinAnimation=', record);
+		var payLineIndex;
+		var reelStrips = this.slotInit.reelStrips;
+		var symbolsPerReel = this.setup.symbolsPerReel;
+		console.log(reelStrips);
+
+
+
+		len = reelStrips.length;
+		var visibleSymbolIndexes = [];
+		var pushSymbol = function(symbolIndex) {
+			visibleSymbolIndexes.push(symbolIndex);
+		};
+		for (i = 0; i < reelStrips.length; i++) {
+			var stopIndex = record.stops[i];
+			var vStrip = reelStrips[i].slice(stopIndex, stopIndex + symbolsPerReel);
+			_.each(vStrip, pushSymbol);
+		}
+		console.log('visibleSymbolIndexes', visibleSymbolIndexes);
+		var maxSymbolsNum = visibleSymbolIndexes.length;
+		var winningSymbols = _.filter(visibleSymbolIndexes, function(symbolIndex) {
+			return symbolIndex === self.setup.reelAnimation.symbols.replacementId;
+		});
+
+		if (winningSymbols.length === maxSymbolsNum) {
+			console.warn("big win");
+		}
+
+		len = record.wins.length;
+		var win;
+		for (i = 0; i < len; i++) {
+			win = record.wins[i];
+			console.log('win ' + i + " type:", win.winningType, ": ", win);
+			payLineIndex = win.paylineIndex;
+		}
+
+	};
+
+	/**
+	 * Dispatched by ReelsComponent when the reel spin stops.
+	 * Here we can setup any necessary win animations, and update the meter.
 	 *
 	 * @method handleReeSpinComplete
-	 * @todo put this logic in spinEvaluator
 	 */
-	p.handleReelSpinComplete = function(spinResponse) {
-		if (this.commandQueue.gaffType === 'default') {
-			this.evaluateWin(spinResponse);
+	p.handleReelSpinComplete = function() {
+		console.log('handleReelSpinComplete', this.winAnimationQueue.gaffType);
+		this.winAnimationQueue.play();
+		//allow client side gaffs:
+		if (this.winAnimationQueue.gaffType.indexOf('client') >= 0) {
+			this.doClientSideGaff();
 		}
-		console.log('handleReelSpinComplete', this.commandQueue.gaffType);
-		this.commandQueue.play();
-		this.commandQueue.gaffType = "default";
+	};
+
+	/**
+	 * @method doClientSideGaff
+	 */
+	p.doClientSideGaff = function() {
 		var gaffMenu = G.Utils.getGameComponentByClass(G.GaffMenuComponent);
 		gaffMenu.deselectGaffButtons();
 		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
 		meter.checkMockWin();
 	};
-
-	/**
-	 * @method evaluateWin
-	 */
-	p.evaluateWin = function(spinResponse) {
-		console.warn(">> evaluateWin :: ", spinResponse);
-
-		var numRecords = spinResponse.spinRecords.length;
-
-		if (numRecords === 1) {
-			//1 spin record, proceed
-		} else {
-			console.warn("multiple spin records is not supported yet");
-		}
-
-		var record = spinResponse.spinRecords[0];
-		console.log('spin record=', record);
-
-		var i, len = record.wins.length, win;
-		for (i = 0; i < len; i++) {
-			win = record.wins[i];
-			console.log('win ' + i + " type:", win.winningType, ": ", win);
-		}
-
-
-
-
-
-
-
-	};
-
 
 
 

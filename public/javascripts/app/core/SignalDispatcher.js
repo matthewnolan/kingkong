@@ -49,7 +49,7 @@ var G = G || {};
 	 * @property reelSpinComplete
 	 * @type {Signal}
 	 */
-	p.reelSpinComplete = new signals.Signal();
+	p.reelSpinCompleted = new signals.Signal();
 
 	/**
 	 * Signal dispatched by the ReelsComponent when the reel animations have just started.
@@ -100,15 +100,24 @@ var G = G || {};
 	p.stopSound = new signals.Signal();
 
 	/**
-	 * Dispatch this signal to request a spinResponse from the server.
+	 * Dispatch this signal to start a request for a spinResponse from the server.
 	 *
 	 * @property serverSpinRequested
 	 * @type {Signal}
 	 */
-	p.serverSpinRequested = new signals.Signal();
+	p.spinRequested = new signals.Signal();
+
+	/**
+	 * Signal dispatched by GameData Object when server response received
+	 *
+	 * @property spinReponseReceived
+	 * @type {Signal}
+	 */
+	p.spinResponseReceived = new signals.Signal();
 
 	/**
 	 *
+	 * @property gaffSpinRequested
 	 * @type {Signal}
 	 */
 	p.gaffSpinRequested = new signals.Signal();
@@ -127,16 +136,14 @@ var G = G || {};
 		this.gameComponents = gameComponents;
 		this.commandQueue = commandQueue;
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
-		//this.reelSpinComplete.add(this.handleReelSpinComplete, this);
+		this.spinResponseReceived.add(this.handleServerReelSpinStart, this);
 		this.gaffSelect.add(this.handleGaffSelected, this);
 	};
 
 	/**
 	 * Dispatched when GameData has received slotResponse. Get the ReelsComponent and spin call a reelSpin.
 	 *
-	 * @param slotInit
 	 * @param spinResponse
-	 * @todo slotInit response should be passed to Reels once, and then slot init arg will no longer need to be passed each time.
 	 */
 	p.handleServerReelSpinStart = function(spinResponse) {
 		var reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
@@ -187,6 +194,7 @@ var G = G || {};
 		var reelsComponent = _.find(this.gameComponents, function(component) {
 			return component instanceof G.ReelsComponent;
 		});
+
 
 		reelsComponent.spinReels();
 	};
