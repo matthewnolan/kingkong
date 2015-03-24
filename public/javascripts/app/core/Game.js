@@ -259,7 +259,7 @@ this.G = this.G || {};
 	 * @type {G.CommandQueue}
 	 * @default null
 	 */
-	p.commandQueue;
+	p.commandQueue = null;
 
 	/**
 	 * Set to true when all game and core components have been initialised are available

@@ -21,6 +21,7 @@ var G = G || {};
 	};
 
 	var p = createjs.extend(ReelsComponent, G.GameComponent);
+
 	p.constructor = ReelsComponent;
 
 	/**

@@ -87,7 +87,6 @@ var G = G || {};
 		console.log('this.setupQueue=', this.gaffType);
 		if (this.gaffType.indexOf('client') >= 0) {
 			this.queue = this.queueFactory.generateGaff(this.gaffType);
-			console.log("this.queue=", this.queue)
 		}
 	};
 
@@ -137,7 +136,7 @@ var G = G || {};
 	 */
 	p.pause = function() {
 		console.log('pause timeout=', this.timeout);
-		if (this.timeout) {
+		if (this.timeout >= 0) {
 			clearTimeout(this.timeout);
 		}
 	};
@@ -147,8 +146,7 @@ var G = G || {};
 	 */
 	p.resume = function() {
 		console.log('resume timeout=', this.timeout);
-		if (this.timeout) {
-			this.currentIndex--;
+		if (this.timeout >= 0) {
 			this.executeNext();
 		}
 	};

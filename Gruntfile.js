@@ -376,7 +376,7 @@ module.exports = function (grunt) {
 	grunt.registerTask("phantom", "Launches phantom-based tests", ["connect:phantom", "jasmine"]);
 	grunt.registerTask('test', 	['mochaTest', 'phantom']);
 	grunt.registerTask('lint', 	['jshint']);
-	grunt.registerTask('mocha', ['mochaTest'])
+	grunt.registerTask('mocha', ['mochaTest']);
 
 
 };
