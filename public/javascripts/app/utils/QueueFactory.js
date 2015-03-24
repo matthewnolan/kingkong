@@ -56,7 +56,7 @@ var G = G || {};
 				 winLineCommand.init(this.setup, winLines, [1,2,3,4,5]);
 				 queue.push(winLineCommand);
 				break;
-			case "lotsOfWin" :
+			case "client_lotsOfWin" :
 				command = new G.CustomCommand();
 				// command.init(this.setup, symbolWins, [1], 1, 'B1Intro__001');
 				// command.callNextDelay = 0;
@@ -96,6 +96,8 @@ var G = G || {};
 				// command.init(this.setup, symbolWins, [7], 2, 'F6intro__001');
 				// command.callNextDelay = 0;
 				// queue.push(command);
+				reels.visible = false;
+				
 
 				break;
 			case "client_Line_M1" :

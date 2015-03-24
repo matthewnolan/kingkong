@@ -108,7 +108,8 @@ var G = G || {};
 	 * @method drawSprites
 	 */
 	p.drawSprites = function() {
-		var spritesheet = new createjs.SpriteSheet(this.symbolAnims);
+		// var spritesheet = new createjs.SpriteSheet(this.symbolAnims);
+		var spritesheet = this.symbolAnims;
 		var i, j, sprite;
 		var reelLen = this.setup.numberOfReels;
 		var symbolLen = this.setup.symbolsPerReel;

@@ -53,7 +53,8 @@ var G = G || {};
 	 * @method drawSprites
 	 */
 	p.drawSprites = function() {
-		var spritesheet = new createjs.SpriteSheet(this.bigWinSprites);
+		// var spritesheet = new createjs.SpriteSheet(this.bigWinSprites);
+		var spritesheet = this.bigWinSprites;
 		var sprite = new createjs.Sprite(spritesheet, 0);
 		sprite.x = 0;
 		sprite.y = 0;

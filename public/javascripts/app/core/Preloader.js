@@ -184,6 +184,7 @@ this.G = this.G || {};
 		console.log('handleAssetsLoaded', e);
 		var assets = {
 			spriteSheetBigWin: this.assetsLoader.getResult('bigWinAnim'),
+			spriteSheetBigWinAnimSymbol: this.assetsLoader.getResult('bigWinAnimSymbol'),
 			spriteSheetStatics: this.assetsLoader.getResult('staticImages'),
 			spriteSheetSymbolAnims: this.assetsLoader.getResult('symbolAnims')
 		};
