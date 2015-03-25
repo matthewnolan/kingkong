@@ -154,7 +154,6 @@ var G = G || {};
 
 		var generateCommandData = function(win, i) {
 			var animId = spriteSymbolMap[win.winningType].toUpperCase() + "intro__001";
-			//var animId = "M2intro__001";
 			paylineIndexes.push(win.paylineIndex);
 			command = new G.WinLineCommand();
 			command.init(self.setup, [win.paylineIndex], 3, animId);
