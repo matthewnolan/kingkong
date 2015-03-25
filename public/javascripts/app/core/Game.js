@@ -306,7 +306,7 @@ this.G = this.G || {};
 		this.stage = new createjs.Stage("app");
 
 		createjs.Ticker.on("tick", this.handleTick, this);
-		createjs.Ticker.timingMode = createjs.Ticker.RAF;
+		//createjs.Ticker.timingMode = createjs.Ticker.RAF;
 		createjs.Ticker.setFPS(this.currentMaxFps);
 
 		this.proton = new Proton();
