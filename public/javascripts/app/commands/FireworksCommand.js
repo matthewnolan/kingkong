@@ -21,12 +21,14 @@ var G = G || {};
 	p.animationDuration = 6000;
 
 
-	p.init = function(setup, gameComponent, shouldStopExisting, animationDuration) {
-		this.Command_init(setup, gameComponent);
+	p.init = function(setup, shouldStopExisting, animationDuration) {
+		this.Command_init(setup);
 
 		this.callNextDelay = 0;
 		this.shouldStopExisting = shouldStopExisting || this.shouldStopExisting;
 		this.animationDuration = animationDuration || this.animationDuration;
+
+		this.gameComponent = G.Utils.getGameComponentByClass(G.ParticlesComponent);
 	};
 
 	p.execute = function() {

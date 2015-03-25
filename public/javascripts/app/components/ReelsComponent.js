@@ -89,7 +89,7 @@ var G = G || {};
 	/**
 	 * This stores the last spin, and is dispatched with the reel complete
 	 * to allow SignalDispatcher to evaluate any wins.
-	 *
+	 * @deprecated
 	 * @type {Object}
 	 * @default null
 	 */
@@ -220,7 +220,7 @@ var G = G || {};
 	p.serverSpinStart = function(spinResponse) {
 
 		console.log('serverSpin Start', spinResponse);
-		this.spinResponse = spinResponse;
+		//this.spinResponse = spinResponse;
 		var reelStrips = this.slotInitResponse.reelStrips;
 		//todo support multiple spin records
 		var record = spinResponse.spinRecords[0];
@@ -291,7 +291,7 @@ var G = G || {};
 					}
 				}
 			}
-
+			//this.cutSymbolIds = stripData;
 			this.reels[i].modifyReelData(stripData);
 			stopIndexes.push(numSymbolsBefore);
 		}
@@ -386,8 +386,9 @@ var G = G || {};
 		if (--this.reelsSpinning === 0)
 		{
 			this.spinRequested = false;
-			this.signalDispatcher.reelSpinCompleted.dispatch(this.spinResponse);
-			this.spinResponse = null;
+			this.signalDispatcher.reelSpinCompleted.dispatch();
+			//this.spinResponse = null;
+			//this.cutSymbolIds = null;
 		}
 	};
 

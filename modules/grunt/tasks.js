@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 
 		var arr = grunt.file.expand({}, 'src/texturepacker/*.json');
 		var filePath, filename;
-		var i, len = arr.length, file, animations, key, tempName, animName, count = 0, prevKey, endFrame, shortFrameEnd;
+		var i, len = arr.length, file, animations, key, tempName, animName, count = 0, prevKey, endFrame, shortFrameEnd, startFrame;
 		for (i = 0; i < len; i++) {
 			filePath = arr[i];
 			grunt.log.write('reading ' + filePath + ' ').ok();
@@ -44,17 +44,27 @@ module.exports = function(grunt) {
 
 					if (prevKey !== "") {
 						if (count > 0) {
-							endFrame = animations[prevKey][0] + count;
-							animations[prevKey].push(endFrame, 0, 0.5);
-							shortFrameEnd = animations[prevKey][0] + 10;
-							animations[prevKey + '_short'] = [
-								animations[prevKey][0],
+							startFrame = animations[prevKey][0];
+							endFrame = startFrame + count;
+							shortFrameEnd = startFrame + 10;
+
+							delete animations[prevKey];
+
+							animations[prevKey.toLowerCase()] = [
+								startFrame,
+								endFrame,
+								0,
+								0.5
+							];
+
+							animations[prevKey.toLowerCase() + '_short'] = [
+								startFrame,
 								shortFrameEnd,
 								0,
 								0.5
 							];
 
-							animations[prevKey + '_resume'] = [
+							animations[prevKey.toLowerCase() + '_resume'] = [
 								shortFrameEnd,
 								endFrame,
 								0,
@@ -74,22 +84,35 @@ module.exports = function(grunt) {
 				if (animations[key]) {
 					prevKey = key;
 				}
+
+
+
+
 			}
 
 			//do last item
 			if (count > 0) {
-				shortFrameEnd = animations[prevKey][0] + 10;
-				endFrame = animations[prevKey][0] + count;
-				animations[prevKey].push(endFrame, 0, 0.5);
+				startFrame = animations[prevKey][0];
+				endFrame = startFrame + count;
+				shortFrameEnd = startFrame + 10;
 
-				animations[prevKey + '_short'] = [
-					animations[prevKey][0],
+				delete animations[prevKey];
+
+				animations[prevKey.toLowerCase()] = [
+					startFrame,
+					endFrame,
+					0,
+					0.5
+				];
+
+				animations[prevKey.toLowerCase() + '_short'] = [
+					startFrame,
 					shortFrameEnd,
 					0,
 					0.5
 				];
 
-				animations[prevKey + '_resume'] = [
+				animations[prevKey.toLowerCase() + '_resume'] = [
 					shortFrameEnd,
 					endFrame,
 					0,

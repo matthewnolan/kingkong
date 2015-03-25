@@ -166,7 +166,7 @@ var G = G || {};
 		bigWinComponent.hideAnimation();
 		symbolWinsComponent.hideAll();
 		particles.smokeOff();
-		this.commandQueue.setupQueue();
+		//this.commandQueue.setupQueue();
 	};
 
 	/**
