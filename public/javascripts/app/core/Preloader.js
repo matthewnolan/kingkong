@@ -134,7 +134,7 @@ this.G = this.G || {};
 	 * @method loadGameAssets
 	 */
 	p.loadGameAssets = function() {
-		//this.assetsLoader.loadManifest(this.setup.imageDataManifest, false);
+		// this.assetsLoader.loadManifest(this.setup.imageDataManifest, false);
 		this.assetsLoader.loadManifest(this.setup.spritesManifest, false);
 		if (this.setup.loadSounds) {
 			this.assetsLoader.loadManifest(this.setup.soundsManifest, false);

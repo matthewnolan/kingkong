@@ -542,7 +542,7 @@ this.G = this.G || {};
 		this.gameComponents.push(symbolWinsComponent);
 
 		var bigWinComponent = new G.BigWinComponent();
-		bigWinComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetBigWin);
+		bigWinComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetBigWinAnimSymbol);
 		bigWinComponent.cacheCompleted.add(this.checkCacheInitialised, this);
 		bigWinComponent.x = bezelMarginL;
 		bigWinComponent.y = bezelMarginT;
