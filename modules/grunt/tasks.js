@@ -44,9 +44,9 @@ module.exports = function(grunt) {
 
 					if (prevKey !== "") {
 						if (count > 0) {
-							startFrame = animations[prevkey][0];
-							endFrame = animations[prevKey][0] + count;
-							shortFrameEnd = animations[startFrame + 10];
+							startFrame = animations[prevKey][0];
+							endFrame = startFrame + count;
+							shortFrameEnd = startFrame + 10;
 
 							delete animations[prevKey];
 
@@ -93,8 +93,8 @@ module.exports = function(grunt) {
 			//do last item
 			if (count > 0) {
 				startFrame = animations[prevKey][0];
+				endFrame = startFrame + count;
 				shortFrameEnd = startFrame + 10;
-				endFrame = animations[startFrame + count];
 
 				delete animations[prevKey];
 
