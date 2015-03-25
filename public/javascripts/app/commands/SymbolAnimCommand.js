@@ -34,18 +34,18 @@ var G = G || {};
 	 * initialise setup, gameComponent and command data
 	 * @method init
 	 * @param {Object} setup
-	 * @param {G.SymbolWinsComponent} gameComponent
 	 * @param {Array} winLineIndexes
 	 * @param {Number} numSquares
 	 * @param {String} animId
 	 */
-	p.init = function(setup, gameComponent, winLineIndexes, numSquares, animId) {
-		this.Command_init(setup, gameComponent);
+	p.init = function(setup, winLineIndexes, numSquares, animId) {
+		this.Command_init(setup);
 		this.winLineData = [];
 		var i, len = winLineIndexes.length;
 		for (i = 0; i < len; i++) {
 			this.winLineData.push(this.setup.winLines[winLineIndexes[i]].data);
 		}
+		this.gameComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		this.numSquares = numSquares;
 		this.animId = animId;
 	};

@@ -52,11 +52,9 @@ var G = G || {};
 	 *
 	 * @method init
 	 * @param {Object} setup
-	 * @param {G.GameComponent} gameComponent
 	 */
-	p.init = function(setup, gameComponent) {
+	p.init = function(setup) {
 		this.setup = setup;
-		this.gameComponent = gameComponent;
 	};
 
 	/**

@@ -94,6 +94,7 @@ var G = G || {};
 
 		if (queue) {
 			this.queue = queue;
+			console.log('setupQueue=', this.queue);
 		}
 
 
@@ -105,6 +106,8 @@ var G = G || {};
 	 */
 	p.play = function() {
 		var len = this.queue.length;
+
+		console.log('winAnimation.play', this.queue);
 
 		if (len) {
 			this.gaffType = "default";

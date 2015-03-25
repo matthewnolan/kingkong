@@ -33,12 +33,12 @@ var G = G || {};
 	 *
 	 * @method init
 	 * @param {Object} setup
-	 * @param {G.GameComponent} gameComponent - the bigWinComponent is passed in so it can be called in execute
 	 * @param {boolean} shouldClearExisting -
 	 */
-	p.init = function(setup, gameComponent, shouldClearExisting) {
-		this.Command_init(setup, gameComponent);
+	p.init = function(setup, shouldClearExisting) {
+		this.Command_init(setup);
 		this.shouldClearExisting = shouldClearExisting;
+		this.gameComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
 	};
 
 	/**

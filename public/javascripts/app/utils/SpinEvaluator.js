@@ -67,10 +67,25 @@ var G = G || {};
 	};
 
 	/**
+	 * As soon as the spinRepsonse is returned, we are ready to queue up a win animation
+	 * The win animation itself will play on "reelSpinCompleted" signal.
+	 * The steps to queue the win animation as follows:
+	 * 1. Use the spin response to test the number spinRecords received.
+	 * @todo multiple spin records are not yet supported.
+	 * 2. Use the reelStrips from the slotInit and the stops from the spinResponse to take a cut of symbolIds.
+	 * This cut will contain the visible symbol indexes which the user will see when the spin has completed.
+	 * 3. Get the number of visible symbolIndexes which equal the the replacement symbolIndex (defined in setup.json)
+	 * 4. If this number === numReels * visible symbols per reel, then a big win anim should be queued.
+	 * 5. Use the replacements array from spinResponse to decide which type of big win anim should play.
+	 * eg. on a 5 strip x 3 symbol reel then 15 replacement symbolIndexes visible on the reel means a 3x5 win animation should play
+	 *
 	 * @method queueWinAnimation
+	 * @param {Object} spinResponse
 	 */
 	p.queueWinAnimation = function(spinResponse) {
 		var i, len, self = this;
+		var commands = [];
+		var isBigWin = false;
 		var numRecords = spinResponse.spinRecords.length;
 		if (numRecords > 1) {
 			console.warn("multiple spin records is not supported yet");
@@ -84,19 +99,19 @@ var G = G || {};
 		}
 
 		console.log('queueWinAnimation=', record);
-		var payLineIndex;
 		var reelStrips = this.slotInit.reelStrips;
 		var symbolsPerReel = this.setup.symbolsPerReel;
+		var replacementSymbolId = this.setup.reelAnimation.symbols.replacementId;
+		var replacements = _.map(record.replacement, function(replacementStr) {
+			return parseInt(replacementStr, 10);
+		});
 		console.log(reelStrips);
-
-
-
 		len = reelStrips.length;
 		var visibleSymbolIndexes = [];
 		var pushSymbol = function(symbolIndex) {
 			visibleSymbolIndexes.push(symbolIndex);
 		};
-		for (i = 0; i < reelStrips.length; i++) {
+		for (i = 0; i < len; i++) {
 			var stopIndex = record.stops[i];
 			var vStrip = reelStrips[i].slice(stopIndex, stopIndex + symbolsPerReel);
 			_.each(vStrip, pushSymbol);
@@ -104,20 +119,61 @@ var G = G || {};
 		console.log('visibleSymbolIndexes', visibleSymbolIndexes);
 		var maxSymbolsNum = visibleSymbolIndexes.length;
 		var winningSymbols = _.filter(visibleSymbolIndexes, function(symbolIndex) {
-			return symbolIndex === self.setup.reelAnimation.symbols.replacementId;
+			return symbolIndex === replacementSymbolId;
 		});
 
 		if (winningSymbols.length === maxSymbolsNum) {
-			console.warn("big win");
+			console.warn("Big Win Anim: ", replacements);
+			isBigWin = true;
+			var winningItems = _.filter(replacements, function(symbolIndex) {
+				return symbolIndex === replacements[0];
+			});
+
+			console.log("winningItemsLen=", winningItems.length);
+			switch(winningItems.length) {
+				case 5 :
+					console.log('play 3x5 win anim typeId=', winningItems[0]);
+					break;
+				case 4 :
+					console.log('play 3x4 win anim typeId=', winningItems[0]);
+					break;
+				case 3 :
+					console.log('play 3x4 win anim typeId=', winningItems[0]);
+					break;
+				default :
+					throw "big win anim error, not enough replacements for big win: " + winningItems.length + " should be greater than 2";
+			}
 		}
 
-		len = record.wins.length;
-		var win;
-		for (i = 0; i < len; i++) {
-			win = record.wins[i];
-			console.log('win ' + i + " type:", win.winningType, ": ", win);
-			payLineIndex = win.paylineIndex;
-		}
+		var command;
+		var paylineIndexes = [];
+
+		var spriteSymbolMap = this.setup.reelAnimation.symbols.spriteMap;
+
+		//setup, winLineIndexes, numSquares, playAnimId
+
+		var generateCommandData = function(win, i) {
+			var animId = spriteSymbolMap[win.winningType].toUpperCase() + "intro__001";
+			//var animId = "M2intro__001";
+			paylineIndexes.push(win.paylineIndex);
+			command = new G.WinLineCommand();
+			command.init(self.setup, [win.paylineIndex], 3, animId);
+			if (i===0) {
+				command.loopIndex = 1;
+			}
+			command.callNextDelay = 3000;
+			commands.push(command);
+		};
+
+		_.each(record.wins, generateCommandData);
+
+		command = new G.WinLineCommand();
+		command.init(this.setup, paylineIndexes, 0);
+
+		commands.unshift(command);
+
+
+		this.winAnimationQueue.setupQueue(commands);
 
 	};
 
