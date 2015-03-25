@@ -83,6 +83,9 @@ var G = G || {};
 	 * @param {Object} spinResponse
 	 */
 	p.queueWinAnimation = function(spinResponse) {
+
+		console.warn('queueWinAnimation', spinResponse);
+
 		var i, len, self = this;
 		var commands = [];
 		var isBigWin = false;
@@ -170,7 +173,6 @@ var G = G || {};
 		command.init(this.setup, paylineIndexes, 0);
 
 		commands.unshift(command);
-
 
 		this.winAnimationQueue.setupQueue(commands);
 

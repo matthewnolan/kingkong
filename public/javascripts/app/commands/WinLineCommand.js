@@ -86,7 +86,7 @@ var G = G || {};
 		if (this.numSquares && this.playAnimId) {
 			for (i = 0; i < len; i++) {
 				winLineData = this.setup.winLines[this.payLineIndexes[i]].data;
-				symbolWins.showAnimsOnWinLine2(winLineData, this.numSquares, this.playAnimId);
+				symbolWins.showAnimsOnWinLine2(winLineData, this.numSquares, this.playAnimId.toLowerCase());
 			}
 		}
 

@@ -168,13 +168,13 @@ var G = G || {};
 	 */
 	p.playThisSprite = function(sprite, id) {
 		sprite.visible = true;
-		sprite.gotoAndPlay(id);
+		sprite.gotoAndPlay(id.toLowerCase());
 		this.currentlyPlayingSprites.push(sprite);
 	};
 
 	p.playBySpriteByRowCol = function(row, col, id) {
 		var sprite = this.symbolsMatrix[row][col];
-		this.playThisSprite(sprite, id);
+		this.playThisSprite(sprite, id.toLowerCase());
 	};
 
 	p.handleAnimationEnd = function(e) {

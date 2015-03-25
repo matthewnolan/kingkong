@@ -50,10 +50,10 @@ var G = G || {};
 			case "normal" :
 				reels.modifySymbolData(null, true);
 				var bigWinCommand = new G.BigWinCommand();
-				 bigWinCommand.init(this.setup, bigWin);
+				 bigWinCommand.init(this.setup);
 
 				 var winLineCommand = new G.WinLineCommand();
-				 winLineCommand.init(this.setup, winLines, [1,2,3,4,5]);
+				 winLineCommand.init(this.setup, [1,2,3,4,5]);
 				 queue.push(winLineCommand);
 				break;
 			case "client_lotsOfWin" :
@@ -112,24 +112,24 @@ var G = G || {};
 				meter.prepareMockWin(this.setup.defaultBigWin);
 
 				command = new G.SymbolAnimCommand();
-				command.init(this.setup, symbolWins, [0,1,2], 5, 'M1intro__001_short');
+				command.init(this.setup, [0,1,2], 5, 'M1intro__001_short');
 				command.callNextDelay = 500;
 				queue.push(command);
 
 				command = new G.BigWinCommand();
 				command.callNextDelay = 1200;
-				command.init(this.setup, bigWin);
+				command.init(this.setup);
 
 				queue.push(command);
 
 				command = new G.BigWinCommand();
 				command.callNextDelay = 0;
-				command.init(this.setup, bigWin,true);
+				command.init(this.setup, true);
 
 				queue.push(command);
 
 				command = new G.SymbolAnimCommand();
-				command.init(this.setup, symbolWins, [0,1,2], 5, 'M1intro__001_resume');
+				command.init(this.setup, [0,1,2], 5, 'M1intro__001_resume');
 				queue.push(command);
 
 				var winLineIndexes = [];
@@ -140,23 +140,23 @@ var G = G || {};
 				}
 
 				command = new G.WinLineCommand();
-				command.init(this.setup, winLines, winLineIndexes, 0);
+				command.init(this.setup, winLineIndexes, 0);
 				queue.push(command);
 
 				command = new G.FireworksCommand();
-				command.init(this.setup, particles, false, 10000);
+				command.init(this.setup, false, 10000);
 				command.loopIndex = 1;
 				queue.push(command);
 
 				for (i = 0; i < winningLines.length; i++) {
 					if (i > 0 && i % 10 === 0) {
 						command = new G.FireworksCommand();
-						command.init(this.setup, particles, false, 10000);
+						command.init(this.setup, false, 10000);
 						queue.push(command);
 					}
 
 					command = new G.WinLineCommand();
-					command.init(this.setup, winLines, [i], 5, "M1intro__001");
+					command.init(this.setup, [i], 5, "M1intro__001");
 					queue.push(command);
 				}
 				break;

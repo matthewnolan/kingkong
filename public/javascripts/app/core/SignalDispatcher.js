@@ -166,7 +166,7 @@ var G = G || {};
 		bigWinComponent.hideAnimation();
 		symbolWinsComponent.hideAll();
 		particles.smokeOff();
-		//this.commandQueue.setupQueue();
+		this.commandQueue.setupQueue();
 	};
 
 	/**
@@ -181,22 +181,29 @@ var G = G || {};
 	p.handleGaffSelected = function(gaffType) {
 		console.log('handleGaffSelected', gaffType);
 
+		var reelsComponent = _.find(this.gameComponents, function(component) {
+			return component instanceof G.ReelsComponent;
+		});
+
 		if (gaffType.indexOf("gaff") >= 0) {
 			console.log("gaff:", gaffType);
 			var playMode = _.find(this.setup.playModesNew, function(playMode) {
 				return playMode.type === gaffType;
 			});
 			this.gaffSpinRequested.dispatch( playMode.link );
-			return;
+		} else if (gaffType.indexOf("client") >= 0) {
+			this.commandQueue.gaffType = gaffType;
+			//this.commandQueue.setupQueue();
+			reelsComponent.spinReels();
 		}
 
-		this.commandQueue.gaffType = gaffType;
-		var reelsComponent = _.find(this.gameComponents, function(component) {
-			return component instanceof G.ReelsComponent;
-		});
 
 
-		reelsComponent.spinReels();
+
+
+
+
+
 	};
 
 
