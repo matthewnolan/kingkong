@@ -49,6 +49,8 @@ var G = G || {};
 	 */
 	p.hScrollOffset = null;
 
+	p.currentCurrency = 0;
+
 	/**
 	 * @method init
 	 * @param setup
@@ -178,6 +180,14 @@ var G = G || {};
 			window.open("/doc", "_blank");
 		});
 
+		var currencyButton = new G.GaffButton();
+		currencyButton.init("Currency", 70, 60, 10);
+		currencyButton.drawButton();
+		currencyButton.x = docsButton.x - currencyButton.width - 20;
+		currencyButton.y = testButton.y;
+		this.addChild(currencyButton);
+		currencyButton.on("click", this.changeWinText, this);
+
 
 		var labelTxt = new createjs.Text("Gaff Menu", "17px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
 		labelTxt.x = 5;
@@ -292,6 +302,7 @@ var G = G || {};
 			button.changeLabel("60 FPS");
 			button.select();
 		}
+
 	};
 
 	p.showerSwitched = function(e) {
@@ -355,6 +366,16 @@ var G = G || {};
 			.to({alpha: 0, scaleX: 0.01, scaleY: 0.01}, 400, createjs.Ease.getElasticIn(4,2))
 			.call(this.handleComplete);
 	};
+
+	p.changeWinText = function(){
+		this.currentCurrency++;
+		if (this.currentCurrency === this.setup.currencySymbol.length) {
+			this.currentCurrency = 0;
+		}
+		console.log(this.currentCurrency);
+		var meterComponent = G.Utils.getGameComponentByClass(G.MeterComponent);
+		meterComponent.currencySymbolChange(this.setup.currencySymbol[this.currentCurrency]);
+	}
 
 
 	G.GaffMenuComponent = createjs.promote(GaffMenuComponent, "GameComponent");

@@ -96,7 +96,7 @@ var G = G || {};
 	 * @method drawComponent
 	 */
 	p.drawComponent = function() {
-		this.winText = new createjs.Text(this.setup.currencySymbol + "0", "19px Arial", "#FFCC00");
+		this.winText = new createjs.Text(this.setup.currencySymbol[0] + "0", "19px Arial", "#FFCC00");
 		this.winText.textAlign = "right";
 		this.winText.x = this.setup.stageW - this.setup.bezelMarginL + 9;
 		this.winText.y = 6;
@@ -199,7 +199,16 @@ var G = G || {};
 	 */
 	p.handleWinAmountChange = function() {
 		var updateWinAmount = Math.floor(this.tempWinAmount);
-		this.winText.text = this.setup.currencySymbol + updateWinAmount.toString();
+		this.winText.text = this.currencySymbol + updateWinAmount.toString();
+	};
+	/**
+	 * change event handler for rollUpWinAmount win amount text field
+	 *
+	 * @method handlWinAmountChange
+	 */
+	p.currencySymbolChange = function(symbol) {
+		this.currencySymbol = symbol;
+		this.winText.text = this.currencySymbol + "0";
 	};
 
 
