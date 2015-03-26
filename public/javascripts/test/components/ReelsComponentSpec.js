@@ -120,7 +120,12 @@ describe("ReelsComponent Test", function () {
 					"shuffleReels" : false,
 					"symbols" : {
 						"cutLength" : 17,
-						"stopVal" : 8
+						 "stopVal" : 8,
+						"replacement" : {
+							"index": 17,
+							"frameLabel" : "r1",
+							"defaultLabel" : "m1"
+						}
 					},
 					"delay" : {
 						"max": 2000,
