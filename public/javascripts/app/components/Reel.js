@@ -220,18 +220,27 @@ var G = G || {};
 	};
 
 	/**
-	 * Draws the current reelData symbols to this reel, Should be called once during app initialisation.
+	 * Draws a ReelStrip of symbols based on slotInit.reelStrips indexes and setup.json symbol.frameLabels.
+	 * Replacement symbols are derived from setup.json, and if either the index or the label are matching, then replace the symbol sprite image
+	 * with the defaultReplacementLabel
+	 * debugging sprites are drawn if setup.json activates "devMode":1
+	 * Each reelStrip draws a set (wrap) of symbols twice to allow for speedy reelAnimation looping without missing symbols
+	 * A buffer (n number of symbols - configurable) is also drawn above and below the 2 wraps to allow for elastic bounce easing on spin animations and to facilitate
+	 * the spin animation.
+	 *
+	 * The fullset of slotInit.reelstips is not drawn here, as animating 90+ symbols in a reelstrip at once is too costly for the cpu / gpu.
+	 * So during init, a 10 cut version of the reelStrips iss created.
+	 *
 	 * @method drawReel
 	 */
 	p.drawReel = function() {
-
 		var symbolW = this.setup.symbolW;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var container, len = this.reelData.length;
-
-		// console.log('drawReel', len);
-
+		var replacementSymbolIndex = this.setup.reelAnimation.symbols.replacement.index;
+		var replacementSymbolLabel = this.setup.reelAnimation.symbols.replacement.frameLabel;
+		var defaultReplacementLabel = this.setup.reelAnimation.symbols.replacement.defaultLabel;
 		var l, j, sp, debugSh, gp, text, text2;
 		var reelHeight = this.reelData.length * symbolH + this.reelData.length * symbolMarginB;
 		var wrapPosY;
@@ -247,6 +256,11 @@ var G = G || {};
 				//creates a symbol for every index in reelData array
 				container = new createjs.Container();
 				var frameLabel = this.spriteMap[this.reelData[j]];
+				//default replacement switcheroo
+				if (frameLabel === replacementSymbolLabel || this.reelData[j] === replacementSymbolIndex) {
+					frameLabel = defaultReplacementLabel;
+				}
+
 				sp = new createjs.Sprite(this.symbolSprites, frameLabel);
 
 				spriteContainer.push(sp);
@@ -277,9 +291,7 @@ var G = G || {};
 			var numBuffer = 2;
 
 			for (j = 0; j < numBuffer; j++) {
-
 				//j rows of symbols to buffer above and below the symbol wrappers
-
 				var symbolBufferWrap = new createjs.Container();
 				this.addChild(symbolBufferWrap);
 				container = new createjs.Container();
@@ -289,7 +301,6 @@ var G = G || {};
 				container.y = (symbolH * j + symbolMarginB * j);
 				symbolBufferWrap.addChild(container);
 				symbolBufferWrap.y = -reelHeight - numBuffer * (symbolH - symbolMarginB) + (l * (2 * (symbolH - symbolMarginB) + reelHeight * 2));
-				//this.containers.wraps.push(symbolBufferWrap);
 				buffer.push(sp);
 
 				if (this.setup.devMode) {

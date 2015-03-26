@@ -57,11 +57,6 @@ var G = G || {};
 		this.numSquares = numSquares || this.numSquares;
 		this.playAnimId = playAnimId || this.playAnimId;
 		this.gameComponent = G.Utils.getGameComponentByClass(G.WinLinesComponent);
-
-		console.log('new Command_init:: \n');
-		console.log('this.payLineIndexes', this.payLineIndexes);
-		console.log('this.numSquares', this.numSquares);
-		console.log('this.playAnimId', this.playAnimId);
 	};
 
 	/**
@@ -73,7 +68,6 @@ var G = G || {};
 		//var dj = G.Utils.getGameComponentByClass(G.Dj);
 		// dj.playSound("bonusStop1");
 
-		console.log('show win line command', this.payLineIndexes);
 
 		var symbolWins = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		symbolWins.hideAll();

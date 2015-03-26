@@ -135,6 +135,7 @@ api.get('/gaff_m3_3x4', function(req, res) {
 
 api.get('/gaff_m3_3x5', function(req, res) {
 	gaff_m3_3x5.origin.spinRecords = gaff_m3_3x5.spinRecords;
+	gaff_m3_3x5.origin.spinRecords[0].stops = [0, 0, 0, 0, 0];
 	res.json(gaff_m3_3x5.origin);
 });
 

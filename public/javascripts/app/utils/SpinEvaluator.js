@@ -61,7 +61,6 @@ var G = G || {};
 		this.signalDispatcher = signalDispatcher;
 		this.winAnimationQueue = commandQueue;
 		this.slotInit = slotInit;
-
 		this.signalDispatcher.reelSpinCompleted.add(this.handleReelSpinComplete, this);
 		this.signalDispatcher.spinResponseReceived.add(this.queueWinAnimation, this);
 	};
@@ -97,7 +96,7 @@ var G = G || {};
 		}
 
 		var record = spinResponse.spinRecords[0];
-		if (!record.wins) {
+		if (!record.wins.length) {
 			return;
 		}
 
@@ -152,12 +151,13 @@ var G = G || {};
 			}
 		}
 
-
 		var generateCommandData = function(win, i) {
+			// todo get label from winning type
 			var animId = spriteSymbolMap[win.winningType].toLowerCase() + "intro__001";
 			paylineIndexes.push(win.paylineIndex);
+			var numWins = self.getNumWinsOnPayline(win.paylineIndex, record.stops, win.winningType);
 			command = new G.WinLineCommand();
-			command.init(self.setup, [win.paylineIndex], 3, animId);
+			command.init(self.setup, [win.paylineIndex], numWins, animId);
 			if (i===0) {
 				command.loopIndex = 1;
 			}
@@ -172,11 +172,47 @@ var G = G || {};
 			command.init(this.setup, paylineIndexes, 0);
 			commands.unshift(command);
 		}
-
-
 		this.winAnimationQueue.setupQueue(commands);
-
 	};
+
+	/**
+	 * @method getNumWinsOnPayline
+	 * @param paylineIndex
+	 * @param stops
+	 * @param winningType
+	 * @returns {*}
+	 */
+	p.getNumWinsOnPayline = function(paylineIndex, stops, winningType) {
+		var symbolData = this.getSymbolDataOnPayline(paylineIndex, stops);
+		return _.filter(symbolData, function(data) {
+			return data.winType === winningType;
+		}).length;
+	};
+
+	/**
+	 * @method getSymbolLabelsOnPayline
+	 * @param paylineIndex
+	 * @param stops
+	 * @returns {Array}
+	 *
+	 */
+	p.getSymbolIndexesOnPayline = function(paylineIndex, stops) {
+		var payline = this.setup.winLines[paylineIndex].data;
+		var reelStrips = this.slotInit.reelStrips;
+		return _.map(reelStrips, function(strip, i) {
+			return strip[stops[i] + payline[i]];
+		});
+	};
+
+	p.getSymbolDataOnPayline = function(paylineIndex, stops) {
+		var indexesOnPayline = this.getSymbolIndexesOnPayline(paylineIndex, stops);
+		var symbolsData = this.setup.reelAnimation.symbols.data;
+		return _.map(indexesOnPayline, function(index) {
+			return symbolsData[index];
+		});
+	};
+
+
 
 	/**
 	 * Dispatched by ReelsComponent when the reel spin stops.

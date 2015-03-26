@@ -235,7 +235,7 @@ var G = G || {};
 		console.log('replacement=', replacements);
 		//todo support multiple spin records
 		var stops = record.stops;
-		var replacementId = parseInt(this.setup.reelAnimation.symbols.replacementId, 10);
+		var replacementId = this.setup.reelAnimation.symbols.replacement.index;
 		var stripData;
 		var startIndex = 0;
 		var endIndex = 0;
