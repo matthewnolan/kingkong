@@ -37,7 +37,7 @@
   "defaultBet": 50,
   "defaultBigWin" : 140000,
   "defaultCredits": 10340,
-  "currencySymbol": "$",
+  "currencySymbol": ["$","€","£"],
 
   "reelAnimation" : {
     "duration" : 2000,
