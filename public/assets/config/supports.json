@@ -1,12 +1,12 @@
 {
   "devices": {
-    "categories": ["old", "budget", "mid-range", "new", "flagship", "catch-all"],
+    "groups": ["old", "budget", "mid-range", "new", "flagship", "catch-all"],
     "mobile": {
-      "old" : ["iphone3", "iphone4"],
-      "budget" : ["iphone5c"],
-      "mid-range" : ["iphone5", "iphone5s"],
-      "new" : ["nexus5", "iphone6"],
-      "flagship" : ["iphone6s", "nexus6"],
+      "old" : ["iphone1", "iphone2", "iphone3", "iphone4", "ipad1", "ipad2", "galaxyS3", "galaxyAce2", "nexus1", "nexus2", "nexus3"],
+      "budget" : ["iphone5c", "ipodTouch4", "ipodTouch5", "nexus4", "galaxyAce4", "galaxyCore2"],
+      "mid-range" : ["iphone5", "iphone5s", "ipad3", "ipad4", "ipadMini1", "galaxyNote3"],
+      "new" : ["nexus5", "iphone6", "ipadAir1", "ipadMin2", "galaxyS4", "nexus7tab"],
+      "flagship" : ["iphone6+", "nexus6", "galaxyS5", "ipadAir2", "ipadMini3", "htcOneM8"],
       "catch-all" : []
     },
     "browsers" : ["chrome-desktop", "chrome-mobile", "safari-mobile", "safari-desktop", "firefox", "ie-latest", "catch-all"],
@@ -14,15 +14,15 @@
   },
 
   "features" : {
-    "details" : ["/* For more details on timingModes in createjs please read: http://createjs.com/tutorials/Animation%20and%20Ticker/ */"],
-    "game" :  ["noSupport", "assetsHi", "assetsLow", "slowInit", "payLineShadows", "touchGestures", "sounds", "bigWinAnimations", "particles"],
+    "game" :  ["notSupported", "assetsHi", "assetsLow", "slowInit", "payLineShadows", "touchGestures", "sounds", "bigWinAnimations", "particles"],
     "fps" : [10, 12, 15, 20, 30, 60],
-    "timingModes": ["RAF", "RAF_SYNCHED", "ELASTIC"]
+    "timingModes": ["RAF", "RAF_SYNCHED", "TIMEOUT"],
+    "details" : ["/* For more details on timingModes in createjs please read: http://createjs.com/tutorials/Animation%20and%20Ticker/ */"]
   },
 
   "supports" : {
     "devices" : {
-      "old" : ["noSupport"],
+      "old" : ["notSupported"],
       "budget" : ["assetsLow", "slowInit", "bigWinAnimations", "touchGestures"],
       "mid-range" : ["assetsLow", "payLineShadows", "sounds", "bigWinAnimations"],
       "new" : ["assetsLow", "payLineShadows", "touchGestures", "sounds", "bigWinAnimations"],
@@ -39,23 +39,23 @@
         "fps" : 30
       },
       "safari-desktop" : {
-        "timing" : "ELASTIC",
+        "timing" : "TIMEOUT",
         "fps" : "max"
       },
       "safari-mobile" : {
-        "timing" : "ELASTIC",
+        "timing" : "TIMEOUT",
         "fps" : 30
       },
       "firefox" : {
-        "timing" : "ELASTIC",
+        "timing" : "TIMEOUT",
         "fps" : "max"
       },
       "ie-latest" : {
-        "timing" : "ELASTIC",
+        "timing" : "TIMEOUT",
         "fps" : "max"
       },
       "catch-all" : {
-        "timing" : "ELASTIC",
+        "timing" : "TIMEOUT",
         "fps" : "max"
       }
     }

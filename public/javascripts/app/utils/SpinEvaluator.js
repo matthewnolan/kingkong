@@ -125,6 +125,10 @@ var G = G || {};
 			return symbolIndex === replacementSymbolId;
 		});
 
+		var command;
+		var paylineIndexes = [];
+		var spriteSymbolMap = this.setup.reelAnimation.symbols.spriteMap;
+
 		if (winningSymbols.length === maxSymbolsNum) {
 			console.warn("Big Win Anim: ", replacements);
 			isBigWin = true;
@@ -148,12 +152,6 @@ var G = G || {};
 			}
 		}
 
-		var command;
-		var paylineIndexes = [];
-
-		var spriteSymbolMap = this.setup.reelAnimation.symbols.spriteMap;
-
-		//setup, winLineIndexes, numSquares, playAnimId
 
 		var generateCommandData = function(win, i) {
 			var animId = spriteSymbolMap[win.winningType].toLowerCase() + "intro__001";
@@ -169,10 +167,12 @@ var G = G || {};
 
 		_.each(record.wins, generateCommandData);
 
-		command = new G.WinLineCommand();
-		command.init(this.setup, paylineIndexes, 0);
+		if (record.wins.length) {
+			command = new G.WinLineCommand();
+			command.init(this.setup, paylineIndexes, 0);
+			commands.unshift(command);
+		}
 
-		commands.unshift(command);
 
 		this.winAnimationQueue.setupQueue(commands);
 
