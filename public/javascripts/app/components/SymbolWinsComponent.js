@@ -132,7 +132,7 @@ var G = G || {};
 				sprite.visible = false;
 				if (this.setup.failSafeInitisalisation) {
 					sprite.on("animationend", this.handleAnimationEnd, this);
-					G.Utils.callLater(this.playThisSprite, [sprite, "M1intro__001"], this, 0);
+					G.Utils.callLater(this.playThisSprite, [sprite, "m1intro__001"], this, 0);
 				}
 				this.initialisedSpritesNum++;
 			}
@@ -195,6 +195,7 @@ var G = G || {};
 	 * @param {Array} winLineData
 	 * @param {number} winSquaresNum
 	 * @param {string} id
+	 * @deprecated
 	 */
 	p.showAnimsOnWinline = function(winLineData, winSquaresNum, id) {
 		var i, j, len = winLineData.length, lineData;

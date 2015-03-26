@@ -5,9 +5,23 @@ Source code documentation: http://localhost:3000/docs
 
 installation
 ------------
+
 ```sh
 $ npm install
 ```
+
+Unless previously installed you'll _need_ __Cairo__. For system-specific installation view the [Wiki](https://github.com/LearnBoost/node-canvas/wiki/_pages).
+
+You can quickly install Cairo and its dependencies for OS X using the one liner below:
+
+```bash
+$ wget https://raw.githubusercontent.com/LearnBoost/node-canvas/master/install -O - | sh
+```
+
+or if you use MacPorts
+
+```bash
+sudo port install pkgconfig libpng giflib freetype libpixman cairo
 
 Run local server
 ```sh

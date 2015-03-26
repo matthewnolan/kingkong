@@ -167,8 +167,9 @@ var G = G || {};
 		this.wrap2 = [];
 		this.upperBuffer = [];
 		this.lowerBuffer = [];
-		this.spriteMap = this.setup.reelAnimation.symbols.spriteMap;
-
+		this.spriteMap = _.map(this.setup.reelAnimation.symbols.data, function(data) {
+			return data.frameLabel;
+		});
 	};
 
 	/**
@@ -245,8 +246,8 @@ var G = G || {};
 			for (j = 0; j < len; j++) {
 				//creates a symbol for every index in reelData array
 				container = new createjs.Container();
-
-				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[j]]);
+				var frameLabel = this.spriteMap[this.reelData[j]];
+				sp = new createjs.Sprite(this.symbolSprites, frameLabel);
 
 				spriteContainer.push(sp);
 				container.addChild(sp);

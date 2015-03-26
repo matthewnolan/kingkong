@@ -47,19 +47,37 @@
       "sequenced": true,
       "random" : false
     },
+    "cutLength" : 10,
+    "stopVal" : 0,
     "symbols" : {
-      "spriteMap" : ["ww","m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2", "m1"],
-      "cutLength" : 10,
-      "stopVal" : 0,
-      "replacementId" : 17
+      "data" : [
+        { "frameLabel" : "ww", "doubleType" : 1, "winType" : 0,  "unknown": "0" },
+        { "frameLabel" : "m1", "doubleType" : 1, "winType" : 1,  "unknown": "2" },
+        { "frameLabel" : "m2", "doubleType" : 1, "winType" : 2,  "unknown": "2" },
+        { "frameLabel" : "m3", "doubleType" : 1, "winType" : 3,  "unknown": "2" },
+        { "frameLabel" : "m4", "doubleType" : 1, "winType" : 4,  "unknown": "2" },
+        { "frameLabel" : "f5", "doubleType" : 1, "winType" : 5,  "unknown": "1" },
+        { "frameLabel" : "f6", "doubleType" : 1, "winType" : 6,  "unknown": "1" },
+        { "frameLabel" : "f7", "doubleType" : 1, "winType" : 7,  "unknown": "1" },
+        { "frameLabel" : "f8", "doubleType" : 1, "winType" : 8,  "unknown": "1" },
+        { "frameLabel" : "f9", "doubleType" : 1, "winType" : 9,  "unknown": "1" },
+        { "frameLabel" : "f0", "doubleType" : 1, "winType" : 10, "unknown": "1" },
+        { "frameLabel" : "d1", "doubleType" : 1, "winType" : 1,  "unknown": "0" },
+        { "frameLabel" : "d2", "doubleType" : 2, "winType" : 2,  "unknown": "0" },
+        { "frameLabel" : "d3", "doubleType" : 2, "winType" : 3,  "unknown": "0" },
+        { "frameLabel" : "d4", "doubleType" : 2, "winType" : 4,  "unknown": "0" },
+        { "frameLabel" : "b1", "doubleType" : 2, "winType" : 15, "unknown": "0" },
+        { "frameLabel" : "b2", "doubleType" : 2, "winType" : 15, "unknown": "0" },
+        { "frameLabel" : "r1", "doubleType" : 1, "winType" : 1,  "unknown": "0" }
+      ],
+      "spriteMap" :  ["ww","m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2", "r1"],
+      "replacement" : {
+        "index": 17,
+        "frameLabel" : "r1",
+        "defaultLabel" : "m1"
+      }
     }
   },
-
-  "imageDataManifest" : [
-    "assets/sprites/bigwin_1.png",
-    "assets/sprites/static-images.png",
-    "assets/sprites/symbol_anims.png"
-  ],
 
   "spritesManifest" : [
     {"src": "assets/sprites/bigwin_1_symbol.json", "id": "bigWinAnimSymbol", "type":"spritesheet"},

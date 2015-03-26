@@ -306,18 +306,10 @@ this.G = this.G || {};
 		this.stage = new createjs.Stage("app");
 
 		createjs.Ticker.on("tick", this.handleTick, this);
-		//createjs.Ticker.timingMode = createjs.Ticker.RAF;
+		createjs.Ticker.timingMode = createjs.Ticker.TIMEOUT;
 		createjs.Ticker.setFPS(this.currentMaxFps);
 
 		this.proton = new Proton();
-	};
-
-	p.enableTicker = function() {
-		this.isPaused = false;
-	};
-
-	p.disableTicker = function() {
-		this.isPause = true;
 	};
 
 	/**
@@ -626,12 +618,10 @@ this.G = this.G || {};
 	 * @method handleTick
 	 */
 	p.handleTick = function() {
-		if(!this.isPaused) {
-			this.stats.begin();
-			this.proton.update();
-			this.stage.update();
-			this.stats.end();
-		}
+		this.stats.begin();
+		this.proton.update();
+		this.stage.update();
+		this.stats.end();
 	};
 
 	/**
@@ -652,6 +642,7 @@ this.G = this.G || {};
 		}, true);
 
 		/**
+		 * @experimental feature
 		 * resume the app on focus (tab restored)
 		 */
 		window.addEventListener('focus', function() {
@@ -659,18 +650,22 @@ this.G = this.G || {};
 			if (self.initComplete && self.setup.enableTabPausing) {
 				//self.enableTicker();
 				//self.commandQueue.resume();
+				createjs.Ticker.setPaused(false);
+
 			}
 
 		});
 
 		/**
-		 * pause the app on blue (switched to another tab)
+		 * @experimental feature
+		 * pause the app on window blur event (eg tab switched)
 		 */
 		window.addEventListener('blur', function() {
 			//document.title = 'not focused';
 			if (self.initComplete && self.setup.enableTabPausing) {
 				//self.disableTicker();
 				//self.commandQueue.pause();
+				createjs.Ticker.setPaused(true);
 			}
 		});
 
@@ -707,7 +702,7 @@ this.G = this.G || {};
 		});
 
 		mc.on('swipe', function() {
-			self.reelsComponent.spinReels();
+			self.reelsComponent.requestSpin();
 		});
 
 		mc.on('pinchin', function() {
