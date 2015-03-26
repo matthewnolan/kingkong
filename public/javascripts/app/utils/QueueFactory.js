@@ -111,8 +111,8 @@ var G = G || {};
 				reels.modifySymbolData(modifySymbols);
 				meter.prepareMockWin(this.setup.defaultBigWin);
 
-				command = new G.SymbolAnimCommand();
-				command.init(this.setup, [0,1,2], 5, 'M1intro__001_short');
+				command = new G.BigWinCommand();
+				command.init(this.setup, [0,1,2], 5, 'm1-sprite__000');
 				command.callNextDelay = 500;
 				queue.push(command);
 
