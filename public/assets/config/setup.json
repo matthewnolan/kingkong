@@ -47,6 +47,8 @@
       "sequenced": true,
       "random" : false
     },
+    "cutLength" : 10,
+    "stopVal" : 0,
     "symbols" : {
       "data" : [
         { "frameLabel" : "ww", "doubleType" : 1, "winType" : 0,  "unknown": "0" },
@@ -68,10 +70,12 @@
         { "frameLabel" : "b2", "doubleType" : 2, "winType" : 15, "unknown": "0" },
         { "frameLabel" : "r1", "doubleType" : 1, "winType" : 1,  "unknown": "0" }
       ],
-      "spriteMap" :  ["ww","m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2", "m1"],
-      "cutLength" : 10,
-      "stopVal" : 0,
-      "replacementId" : 17
+      "spriteMap" :  ["ww","m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2", "r1"],
+      "replacement" : {
+        "index": 17,
+        "frameLabel" : "r1",
+        "defaultLabel" : "m1"
+      }
     }
   },
 

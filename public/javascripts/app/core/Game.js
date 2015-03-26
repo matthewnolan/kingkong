@@ -642,6 +642,7 @@ this.G = this.G || {};
 		}, true);
 
 		/**
+		 * @experimental feature
 		 * resume the app on focus (tab restored)
 		 */
 		window.addEventListener('focus', function() {
@@ -649,21 +650,22 @@ this.G = this.G || {};
 			if (self.initComplete && self.setup.enableTabPausing) {
 				//self.enableTicker();
 				//self.commandQueue.resume();
-				createjs.Ticker.setPaused(false)
+				createjs.Ticker.setPaused(false);
 
 			}
 
 		});
 
 		/**
-		 * pause the app on blue (switched to another tab)
+		 * @experimental feature
+		 * pause the app on window blur event (eg tab switched)
 		 */
 		window.addEventListener('blur', function() {
 			//document.title = 'not focused';
 			if (self.initComplete && self.setup.enableTabPausing) {
 				//self.disableTicker();
 				//self.commandQueue.pause();
-				createjs.Ticker.setPaused(true)
+				createjs.Ticker.setPaused(true);
 			}
 		});
 

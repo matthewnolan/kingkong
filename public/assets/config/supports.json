@@ -9,7 +9,7 @@
       "flagship" : ["iphone6+", "nexus6", "galaxyS5", "ipadAir2", "ipadMini3", "htcOneM8"],
       "catch-all" : []
     },
-    "browsers" : ["chrome-desktop", "chrome-mobile", "safari-mobile", "safari-desktop", "firefox", "ie-latest", "catch-all"],
+    "browsers" : ["chrome-desktop", "chrome-mobile", "safari-mobile", "safari-desktop", "firefox", "ie-latest", "catch-all", "webview-android", "webview-ios"],
     "OS" : ["iOS", "Android", "WindowsPhone", "Windows", "MacOS", "Linux"]
   },
 
