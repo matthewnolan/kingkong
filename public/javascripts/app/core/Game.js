@@ -626,12 +626,10 @@ this.G = this.G || {};
 	 * @method handleTick
 	 */
 	p.handleTick = function() {
-		if(!this.isPaused) {
-			this.stats.begin();
-			this.proton.update();
-			this.stage.update();
-			this.stats.end();
-		}
+		this.stats.begin();
+		this.proton.update();
+		this.stage.update();
+		this.stats.end();
 	};
 
 	/**
@@ -659,6 +657,8 @@ this.G = this.G || {};
 			if (self.initComplete && self.setup.enableTabPausing) {
 				//self.enableTicker();
 				//self.commandQueue.resume();
+				createjs.Ticker.setPaused(false)
+
 			}
 
 		});
@@ -671,6 +671,7 @@ this.G = this.G || {};
 			if (self.initComplete && self.setup.enableTabPausing) {
 				//self.disableTicker();
 				//self.commandQueue.pause();
+				createjs.Ticker.setPaused(true)
 			}
 		});
 
@@ -707,7 +708,7 @@ this.G = this.G || {};
 		});
 
 		mc.on('swipe', function() {
-			self.reelsComponent.spinReels();
+			self.reelsComponent.requestSpin();
 		});
 
 		mc.on('pinchin', function() {

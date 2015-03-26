@@ -1,0 +1,63 @@
+{
+  "devices": {
+    "categories": ["old", "budget", "mid-range", "new", "flagship", "catch-all"],
+    "mobile": {
+      "old" : ["iphone3", "iphone4"],
+      "budget" : ["iphone5c"],
+      "mid-range" : ["iphone5", "iphone5s"],
+      "new" : ["nexus5", "iphone6"],
+      "flagship" : ["iphone6s", "nexus6"],
+      "catch-all" : []
+    },
+    "browsers" : ["chrome-desktop", "chrome-mobile", "safari-mobile", "safari-desktop", "firefox", "ie-latest", "catch-all"],
+    "OS" : ["iOS", "Android", "WindowsPhone", "Windows", "MacOS", "Linux"]
+  },
+
+  "features" : {
+    "details" : ["/* For more details on timingModes in createjs please read: http://createjs.com/tutorials/Animation%20and%20Ticker/ */"],
+    "game" :  ["noSupport", "assetsHi", "assetsLow", "slowInit", "payLineShadows", "touchGestures", "sounds", "bigWinAnimations", "particles"],
+    "fps" : [10, 12, 15, 20, 30, 60],
+    "timingModes": ["RAF", "RAF_SYNCHED", "ELASTIC"]
+  },
+
+  "supports" : {
+    "devices" : {
+      "old" : ["noSupport"],
+      "budget" : ["assetsLow", "slowInit", "bigWinAnimations", "touchGestures"],
+      "mid-range" : ["assetsLow", "payLineShadows", "sounds", "bigWinAnimations"],
+      "new" : ["assetsLow", "payLineShadows", "touchGestures", "sounds", "bigWinAnimations"],
+      "flagship" : ["assetsHi", "payLineShadows", "touchGestures", "sounds", "bigWinAnimations", "particles"],
+      "catch-all" : ["assetsLow", "slowInit", "touchGestures", "sounds", "bigWinAnimations"]
+    },
+    "browsers" : {
+      "chrome-desktop" : {
+        "timing" : "RAF_SYNCHED",
+        "fps" : 60
+      },
+      "chrome-mobile" : {
+        "timing" : "RAF_SYNCHED",
+        "fps" : 30
+      },
+      "safari-desktop" : {
+        "timing" : "ELASTIC",
+        "fps" : "max"
+      },
+      "safari-mobile" : {
+        "timing" : "ELASTIC",
+        "fps" : 30
+      },
+      "firefox" : {
+        "timing" : "ELASTIC",
+        "fps" : "max"
+      },
+      "ie-latest" : {
+        "timing" : "ELASTIC",
+        "fps" : "max"
+      },
+      "catch-all" : {
+        "timing" : "ELASTIC",
+        "fps" : "max"
+      }
+    }
+  }
+}
