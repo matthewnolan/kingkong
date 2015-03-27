@@ -47,6 +47,24 @@ var G = G || {};
 	p.winAnimationQueue = null;
 
 	/**
+	 *
+	 * @type {string}
+	 */
+	p.replacementLabel = "";
+
+	/**
+	 *
+	 * @type {Array}
+	 */
+	p.symbolData = [];
+
+	/**
+	 *
+	 * @type {Array}
+	 */
+	p.replacements = [];
+
+	/**
 	 * Initialise Class dependencies
 	 * Create signal handlers related to win animation
 	 *
@@ -61,6 +79,8 @@ var G = G || {};
 		this.signalDispatcher = signalDispatcher;
 		this.winAnimationQueue = commandQueue;
 		this.slotInit = slotInit;
+		this.replacementLabel = this.setup.reelAnimation.symbols.replacement.frameLabel;
+		this.symbolData = this.setup.reelAnimation.symbols.data;
 		this.signalDispatcher.reelSpinCompleted.add(this.handleReelSpinComplete, this);
 		this.signalDispatcher.spinResponseReceived.add(this.queueWinAnimation, this);
 	};
@@ -103,8 +123,8 @@ var G = G || {};
 		console.log('queueWinAnimation=', record);
 		var reelStrips = this.slotInit.reelStrips;
 		var symbolsPerReel = this.setup.symbolsPerReel;
-		var replacementSymbolId = this.setup.reelAnimation.symbols.replacementId;
-		var replacements = _.map(record.replacement, function(replacementStr) {
+		var replacementSymbolIndex = this.setup.reelAnimation.symbols.replacement.index;
+		this.replacements = _.map(record.replacement, function(replacementStr) {
 			return parseInt(replacementStr, 10);
 		});
 		console.log(reelStrips);
@@ -121,18 +141,18 @@ var G = G || {};
 		console.log('visibleSymbolIndexes', visibleSymbolIndexes);
 		var maxSymbolsNum = visibleSymbolIndexes.length;
 		var winningSymbols = _.filter(visibleSymbolIndexes, function(symbolIndex) {
-			return symbolIndex === replacementSymbolId;
+			return symbolIndex === replacementSymbolIndex;
 		});
 
 		var command;
 		var paylineIndexes = [];
-		var spriteSymbolMap = this.setup.reelAnimation.symbols.spriteMap;
+		//var spriteSymbolMap = this.setup.reelAnimation.symbols.spriteMap;
 
 		if (winningSymbols.length === maxSymbolsNum) {
-			console.warn("Big Win Anim: ", replacements);
+			console.warn("Big Win Anim: ", this.replacements);
 			isBigWin = true;
-			var winningItems = _.filter(replacements, function(symbolIndex) {
-				return symbolIndex === replacements[0];
+			var winningItems = _.filter(this.replacements, function(symbolIndex) {
+				return symbolIndex === self.replacements[0];
 			});
 
 			console.log("winningItemsLen=", winningItems.length);
@@ -151,13 +171,25 @@ var G = G || {};
 			}
 		}
 
+		var mapFrameLabels = function(data, index) {
+			if (data.frameLabel === self.replacementLabel) {
+				return self.symbolData[self.replacements[index]].frameLabel;
+			}
+			return data.frameLabel;
+		};
+
+
 		var generateCommandData = function(win, i) {
+			var symbolsOnPayline = self.getSymbolDataOnPayline(win.paylineIndex, record.stops);
+			console.log('symbolsOnPayline', symbolsOnPayline);
+			var frameLabels = _.map(symbolsOnPayline, mapFrameLabels);
 			// todo get label from winning type
-			var animId = spriteSymbolMap[win.winningType].toLowerCase() + "intro__001";
+			var frameLabel = "m2intro__001";
+			console.log('winIndex:', i, "labels:", frameLabels);
 			paylineIndexes.push(win.paylineIndex);
 			var numWins = self.getNumWinsOnPayline(win.paylineIndex, record.stops, win.winningType);
 			command = new G.WinLineCommand();
-			command.init(self.setup, [win.paylineIndex], numWins, animId);
+			command.init(self.setup, [win.paylineIndex], numWins, frameLabel, frameLabels, true);
 			if (i===0) {
 				command.loopIndex = 1;
 			}
@@ -167,11 +199,10 @@ var G = G || {};
 
 		_.each(record.wins, generateCommandData);
 
-		if (record.wins.length) {
-			command = new G.WinLineCommand();
-			command.init(this.setup, paylineIndexes, 0);
-			commands.unshift(command);
-		}
+		command = new G.WinLineCommand();
+		command.init(this.setup, paylineIndexes, 0);
+		commands.unshift(command);
+
 		this.winAnimationQueue.setupQueue(commands);
 	};
 

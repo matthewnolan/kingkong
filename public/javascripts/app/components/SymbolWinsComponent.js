@@ -60,6 +60,15 @@ var G = G || {};
 	p.initialisedSpritesNum = 0;
 
 	/**
+	 * The animation label suffix, take this from the texture packer output.
+	 * The current convention is to have animation keys in this format: symbol.frameLabel + "intro__001";
+	 * May consdier making this a setup.json variable.
+	 *
+	 * @type {string}
+	 */
+	p.animationLabelSuffix = "intro__001";
+
+	/**
 	 * init the game component vars.
 	 * @method init
 	 * @param {Object} setup
@@ -165,14 +174,26 @@ var G = G || {};
 	 * Helper method to show and play a passed sprite.  Animation is defined in the id parameter
 	 * @param {createjs.Sprite} sprite
 	 * @param {string} id - Matching string to a particular symbol_anims.json animations
+	 * @param {boolean} autoAppend - concatenate this.animationLabelSuffix.
 	 */
-	p.playThisSprite = function(sprite, id) {
+	p.playThisSprite = function(sprite, id, autoAppend) {
+		if (autoAppend) {
+			id = id + this.animationLabelSuffix;
+		}
 		sprite.visible = true;
 		sprite.gotoAndPlay(id.toLowerCase());
 		this.currentlyPlayingSprites.push(sprite);
 	};
 
-	p.playBySpriteByRowCol = function(row, col, id) {
+	/**
+	 * Plays the sprite animation for id at the passed row and col.
+	 *
+	 * @method playSpriteByRowCol
+	 * @param row
+	 * @param col
+	 * @param id
+	 */
+	p.playSpriteByRowCol = function(row, col, id) {
 		var sprite = this.symbolsMatrix[row][col];
 		this.playThisSprite(sprite, id.toLowerCase());
 	};
@@ -188,45 +209,17 @@ var G = G || {};
 	};
 
 	/**
-	 * Plays a number of symbol animations according to a winLine and number of squares
-	 * Pass a winLine data array (eg. [1,2,1,0,0]), a winSquaresNum (eg, 2 would play anims on first two reels of the winLine) and
-	 * an id which should match with the animation id from symbol_anims.json
-	 * @method showAnimsOnWinline
-	 * @param {Array} winLineData
-	 * @param {number} winSquaresNum
-	 * @param {string} id
-	 * @deprecated
-	 */
-	p.showAnimsOnWinline = function(winLineData, winSquaresNum, id) {
-		var i, j, len = winLineData.length, lineData;
-
-		console.log('winLineData=', winLineData);
-
-		for (i = 0; i < len; i++) {
-			lineData = winLineData[i];
-
-			if (winSquaresNum > lineData.length) {
-				throw "Maximum number of winSquares exceeded";
-			}
-
-			for (j = 0; j < winSquaresNum; j++) {
-
-				console.log('lineData', j, 'this.symbolsMatrix', this.symbolsMatrix[j], 'lineData', lineData[j]);
-
-				this.playThisSprite(
-					this.symbolsMatrix[j][lineData[j]], id
-				);
-			}
-		}
-	};
-
-	/**
-	 * @method showAnimsOnWinLine2
+	 * This plays the same win anim across the payline for each winSquaresNum.
+	 * Optionally append the animationLabelSuffix automatically.
+	 * @todo lose the 2 from the name
+	 *
+	 * @method showAnimsOnWinLine
 	 * @param winLineData
 	 * @param winSquaresNum
-	 * @param id
+	 * @param frameLabel
+	 * @param autoAppend
 	 */
-	p.showAnimsOnWinLine2 = function(winLineData, winSquaresNum, id) {
+	p.showAnimsOnWinLine = function(winLineData, winSquaresNum, frameLabel, autoAppend) {
 		var i, len = winLineData.length, lineIndex;
 		if (winSquaresNum > len) {
 			throw "Maximum number of winSquares exceeded";
@@ -235,7 +228,32 @@ var G = G || {};
 		for (i = 0; i < winSquaresNum; i++) {
 			lineIndex = winLineData[i];
 			var sprite = this.symbolsMatrix[i][lineIndex];
-			this.playThisSprite(sprite, id);
+			this.playThisSprite(sprite, frameLabel, autoAppend);
+		}
+	};
+
+	/**
+	 * To call different symbol anims on a single payline, use this function.
+	 * Optionally append the animationLabelSuffix automatically.
+	 *
+	 * @method playMixedAnims
+	 * @param payline
+	 * @param winSquaresNum
+	 * @param frameLabels
+	 * @param autoAppend
+	 */
+	p.playMixedAnims = function(payline, winSquaresNum, frameLabels, autoAppend) {
+
+		console.log('playMixedAnims:', payline, winSquaresNum, frameLabels, autoAppend);
+
+		var reelIndex;
+		var symbolIndex;
+		for (reelIndex = 0; reelIndex < winSquaresNum; reelIndex++) {
+			symbolIndex = payline[reelIndex];
+			var sprite = this.symbolsMatrix[reelIndex][symbolIndex];
+			var frameLabel = frameLabels[reelIndex];
+			console.log('reel' + reelIndex + " play:" + frameLabel);
+			this.playThisSprite(sprite, frameLabel, autoAppend);
 		}
 	};
 

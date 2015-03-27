@@ -375,7 +375,7 @@ var G = G || {};
 		console.log(this.currentCurrency);
 		var meterComponent = G.Utils.getGameComponentByClass(G.MeterComponent);
 		meterComponent.currencySymbolChange(this.setup.currencySymbol[this.currentCurrency]);
-	}
+	};
 
 
 	G.GaffMenuComponent = createjs.promote(GaffMenuComponent, "GameComponent");

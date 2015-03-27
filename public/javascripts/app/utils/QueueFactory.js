@@ -68,23 +68,23 @@ var G = G || {};
 				// command.callNextDelay = 0;
 				// queue.push(command);
 
-				symbolWins.playBySpriteByRowCol(0, 0, "B1Loop__001");
-				symbolWins.playBySpriteByRowCol(1, 0, "D1intro__001");
-				symbolWins.playBySpriteByRowCol(2, 0, "D2intro__001");
-				symbolWins.playBySpriteByRowCol(3, 0, "F6intro__001");
-				symbolWins.playBySpriteByRowCol(4, 0, "D4intro__001");
+				symbolWins.playSpriteByRowCol(0, 0, "B1Loop__001");
+				symbolWins.playSpriteByRowCol(1, 0, "D1intro__001");
+				symbolWins.playSpriteByRowCol(2, 0, "D2intro__001");
+				symbolWins.playSpriteByRowCol(3, 0, "F6intro__001");
+				symbolWins.playSpriteByRowCol(4, 0, "D4intro__001");
 
-				symbolWins.playBySpriteByRowCol(0, 1, "F5intro__001");
-				symbolWins.playBySpriteByRowCol(1, 1, "M1intro__001");
-				symbolWins.playBySpriteByRowCol(2, 1, "F6intro__001");
-				symbolWins.playBySpriteByRowCol(3, 1, "M3intro__001");
-				symbolWins.playBySpriteByRowCol(4, 1, "F7intro__001");
+				symbolWins.playSpriteByRowCol(0, 1, "F5intro__001");
+				symbolWins.playSpriteByRowCol(1, 1, "M1intro__001");
+				symbolWins.playSpriteByRowCol(2, 1, "F6intro__001");
+				symbolWins.playSpriteByRowCol(3, 1, "M3intro__001");
+				symbolWins.playSpriteByRowCol(4, 1, "F7intro__001");
 
-				symbolWins.playBySpriteByRowCol(0, 2, "D3intro__001");
-				symbolWins.playBySpriteByRowCol(1, 2, "F7intro__001");
-				symbolWins.playBySpriteByRowCol(2, 2, "WWintro__001_resume");
-				symbolWins.playBySpriteByRowCol(3, 2, "B2Intro__001_short");
-				symbolWins.playBySpriteByRowCol(4, 2, "D1intro__001_resume");
+				symbolWins.playSpriteByRowCol(0, 2, "D3intro__001");
+				symbolWins.playSpriteByRowCol(1, 2, "F7intro__001");
+				symbolWins.playSpriteByRowCol(2, 2, "WWintro__001_resume");
+				symbolWins.playSpriteByRowCol(3, 2, "B2Intro__001_short");
+				symbolWins.playSpriteByRowCol(4, 2, "D1intro__001_resume");
 
 
 				// command = new G.SymbolAnimCommand();

@@ -67,7 +67,7 @@ this.G = this.G || {};
 		};
 
 		var error = function(ex) {
-			console.log('parsing failed', ex);
+			console.error('parsing failed', ex.stack);
 		};
 
 		var response = function(res) {
@@ -96,7 +96,7 @@ this.G = this.G || {};
 		};
 
 		var error = function(ex) {
-			console.log('parsing failed', ex);
+			console.error('parsing failed', ex.stack);
 		};
 
 		var response = function(res) {
@@ -124,7 +124,7 @@ this.G = this.G || {};
 		};
 
 		var error = function(ex) {
-			console.log('parsing failed', ex);
+			console.error('parsing failed', ex, ex.stack);
 		};
 
 		var response = function(res) {
