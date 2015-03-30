@@ -90,7 +90,7 @@ var G = G || {};
 	 * The win animation itself will play on "reelSpinCompleted" signal.
 	 * The steps to queue the win animation as follows:
 	 * 1. Use the spin response to test the number spinRecords received.
-	 * @todo multiple spin records are not yet supported.
+	 * @todo support multiple spin records.
 	 * 2. Use the reelStrips from the slotInit and the stops from the spinResponse to take a cut of symbolIds.
 	 * This cut will contain the visible symbol indexes which the user will see when the spin has completed.
 	 * 3. Get the number of visible symbolIndexes which equal the the replacement symbolIndex (defined in setup.json)
@@ -181,15 +181,14 @@ var G = G || {};
 
 		var generateCommandData = function(win, i) {
 			var symbolsOnPayline = self.getSymbolDataOnPayline(win.paylineIndex, record.stops);
-			console.log('symbolsOnPayline', symbolsOnPayline);
 			var frameLabels = _.map(symbolsOnPayline, mapFrameLabels);
-			// todo get label from winning type
-			var frameLabel = "m2intro__001";
-			console.log('winIndex:', i, "labels:", frameLabels);
 			paylineIndexes.push(win.paylineIndex);
-			var numWins = self.getNumWinsOnPayline(win.paylineIndex, record.stops, win.winningType);
+
+			console.log("frameLabels:" + frameLabels);
+
+			var numWins = self.getNumWinsOnPayline2(frameLabels, win.winningType);
 			command = new G.WinLineCommand();
-			command.init(self.setup, [win.paylineIndex], numWins, frameLabel, frameLabels, true);
+			command.init(self.setup, [win.paylineIndex], numWins, null, frameLabels, true);
 			if (i===0) {
 				command.loopIndex = 1;
 			}
@@ -207,11 +206,35 @@ var G = G || {};
 	};
 
 	/**
+	 *
+	 * @param frameLabels
+	 * @param winningType
+	 */
+	p.getNumWinsOnPayline2 = function(frameLabels, winningType) {
+		var self = this;
+		var i, len = frameLabels.length;
+
+		var getSymbol = function(label) {
+			console.log('getSymbol', self.symbolData, label);
+			return _.find(self.symbolData, function(symbol) {
+				return symbol.frameLabel === label;
+			});
+		};
+
+		for (i = 0; i < len; i++) {
+			var symbol = getSymbol(frameLabels[i]);
+			console.log('symbolAt', i, frameLabels[i], symbol);
+		}
+
+		console.log('getNumWinsOnPayline2 :: symbolsOnLine:');
+	};
+
+	/**
 	 * @method getNumWinsOnPayline
 	 * @param paylineIndex
 	 * @param stops
 	 * @param winningType
-	 * @returns {*}
+	 * @returns {number}
 	 */
 	p.getNumWinsOnPayline = function(paylineIndex, stops, winningType) {
 		var symbolData = this.getSymbolDataOnPayline(paylineIndex, stops);
@@ -235,15 +258,19 @@ var G = G || {};
 		});
 	};
 
+	/**
+	 * @method getSymbolDataOnPayline
+	 * @param paylineIndex
+	 * @param stops
+	 * @returns {Array}
+	 */
 	p.getSymbolDataOnPayline = function(paylineIndex, stops) {
 		var indexesOnPayline = this.getSymbolIndexesOnPayline(paylineIndex, stops);
-		var symbolsData = this.setup.reelAnimation.symbols.data;
+		var symbolsData = this.symbolData;
 		return _.map(indexesOnPayline, function(index) {
 			return symbolsData[index];
 		});
 	};
-
-
 
 	/**
 	 * Dispatched by ReelsComponent when the reel spin stops.

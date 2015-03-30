@@ -7,12 +7,20 @@ var G = G || {};
 	"use strict";
 
 	/**
+	 * Utility methods and properties commonly used around the application.
+	 * GameComponents are stored here.
+	 * Canvas scale is stored here.
+	 * Please be aware that application code has global access to this class, because it is static. So don't go crazy.
+	 *
 	 * @class Utils
 	 * @static
 	 */
 	var Utils = {};
 
 	/**
+	 * Array container for all GameComponents.
+	 * Can be accessed directly or via the helper method getGameComponentByClass
+	 *
 	 * @property gameComponents
 	 * @type {G.GameComponent[]}
 	 */
@@ -21,12 +29,14 @@ var G = G || {};
 	/**
 	 * Access value the app is currently scaled to.
 	 * It is modified when the app is rescaled.
+	 *
 	 * @property currentScale
 	 * @type {number}
 	 */
 	Utils.currentScale = 1;
 
 	/**
+	 * Global object to store queryString parameters
 	 *
 	 * @type {{}}
 	 */
@@ -69,7 +79,7 @@ var G = G || {};
 	};
 
 	/**
-	 * @ method getGameComponentByClass - pass the type of component {eg. G.ReelsComponent} to return the component instance
+	 * @method getGameComponentByClass - pass the type of component {eg. G.ReelsComponent} to return the component instance
 	 * @param {class} componentClass - must be the class type of a G.GameComponent
 	 * @returns {G.GameComponent} - the instance
 	 */
@@ -79,6 +89,12 @@ var G = G || {};
 		});
 	};
 
+	/**
+	 * Creates a global object params based on queryString parameters.
+	 *
+	 * @method parseQueryString
+	 *
+	 */
 	Utils.parseQueryString = function() {
 		var queryString = window.location.search;
 		queryString = queryString.substring(1);

@@ -4,7 +4,7 @@
   "devMode": 0,
   "htmlDebug": 0,
   "enableTabPausing": 1,
-  "scale" : "none",
+  "scale" : "FULL_ASPECT",
   "failSafeInitisalisation": 0,
   "enableDesktopView": 1,
   "domHelpers": 0,
