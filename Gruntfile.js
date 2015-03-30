@@ -305,11 +305,7 @@ module.exports = function (grunt) {
 								}
 							},
 							when: function (answers) {
-								if (answers['config.shouldExtend'] === true) {
-									return true;
-								} else {
-									return false;
-								}
+								return answers['config.shouldExtend'];
 							}
 						},
 						{

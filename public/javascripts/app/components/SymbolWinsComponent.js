@@ -126,6 +126,7 @@ var G = G || {};
 		var symbolH = this.setup.symbolH;
 		var reelMarginR = this.setup.reelMarginRight;
 		var symbolMarginB = this.setup.symbolMarginBottom;
+		var slowInit = this.setup.failSafeInitisalisation;
 
 		for (i = 0; i < reelLen; i++) {
 
@@ -139,7 +140,7 @@ var G = G || {};
 				this.addChild(sprite);
 				this.symbolsMatrix[i].push(sprite);
 				sprite.visible = false;
-				if (this.setup.failSafeInitisalisation) {
+				if (slowInit) {
 					sprite.on("animationend", this.handleAnimationEnd, this);
 					G.Utils.callLater(this.playThisSprite, [sprite, "m1intro__001"], this, 0);
 				}

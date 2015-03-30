@@ -13,10 +13,10 @@ var G = G || {};
 	p.constructor = SymbolAnimCommand;
 
 	/**
-	 * @property winLineData
+	 * @property paylines
 	 * @type {Array}
 	 */
-	p.winLineData = [];
+	p.paylines = [];
 
 	/**
 	 * @property numSquares
@@ -25,29 +25,29 @@ var G = G || {};
 	p.numSquares = 0;
 
 	/**
-	 * @property animId - Should match a key from symbol_anims.json['animations']
+	 * @property frameLabel - Should match a key from symbol_anims.json['animations']
 	 * @type {string}
 	 */
-	p.animId = "";
+	p.frameLabel = "";
 
 	/**
 	 * initialise setup, gameComponent and command data
 	 * @method init
 	 * @param {Object} setup
-	 * @param {Array} winLineIndexes
+	 * @param {Array} paylineIndexes - array of paylineIndexes eg [0,1,2]
 	 * @param {Number} numSquares
-	 * @param {String} animId
+	 * @param {String} frameLabel
 	 */
-	p.init = function(setup, winLineIndexes, numSquares, animId) {
+	p.init = function(setup, paylineIndexes, numSquares, frameLabel) {
 		this.Command_init(setup);
 		this.winLineData = [];
-		var i, len = winLineIndexes.length;
+		var i, len = paylineIndexes.length;
 		for (i = 0; i < len; i++) {
-			this.winLineData.push(this.setup.winLines[winLineIndexes[i]].data);
+			this.paylines.push(this.setup.winLines[paylineIndexes[i]].data);
 		}
 		this.gameComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		this.numSquares = numSquares;
-		this.animId = animId;
+		this.frameLabel = frameLabel;
 	};
 
 	/**
@@ -57,7 +57,11 @@ var G = G || {};
 	p.execute = function() {
 		console.log(this.animId);
 		// this.gameComponent.hideAll();
-		this.gameComponent.showAnimsOnWinline(this.winLineData, this.numSquares, this.animId);
+		//@todo send the short frameLabel
+		var i, len = this.paylines.length;
+		for (i = 0; i < len; i++) {
+			this.gameComponent.showAnimsOnWinLine(this.paylines[i], this.numSquares, this.frameLabel.toLowerCase());
+		}
 	};
 
 	G.SymbolAnimCommand = createjs.promote(SymbolAnimCommand, "Command");

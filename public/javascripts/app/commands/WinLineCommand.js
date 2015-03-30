@@ -120,20 +120,15 @@ var G = G || {};
 
 		var winLineData, i, len = this.payLineIndexes.length;
 
-		if (this.numSquares && this.playAnimId && !this.frameLabels.length) {
+		if (this.numSquares && this.frameLabel && !this.frameLabels.length) {
 			for (i = 0; i < len; i++) {
 				winLineData = this.setup.winLines[this.payLineIndexes[i]].data;
-				symbolWins.showAnimsOnWinLine(winLineData, this.numSquares, this.playAnimId.toLowerCase(), this.autoAppendSuffix);
+				symbolWins.showAnimsOnWinLine(winLineData, this.numSquares, this.frameLabel.toLowerCase(), this.autoAppendSuffix);
 			}
 		} else if (this.frameLabels && this.payLineIndexes.length === 1) {
 			winLineData = this.setup.winLines[this.payLineIndexes[0]].data;
 			symbolWins.playMixedAnims(winLineData, this.numSquares, this.frameLabels, this.autoAppendSuffix);
 		}
-
-
-
-
-
 	};
 
 	G.WinLineCommand = createjs.promote(WinLineCommand, "Command");

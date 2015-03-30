@@ -156,7 +156,7 @@ var G = G || {};
 					}
 
 					command = new G.WinLineCommand();
-					command.init(this.setup, [i], 5, "M1intro__001");
+					command.init(this.setup, [i], 5, "M1", ["m1", "m1", "m1", "m1", "m1"], true);
 					queue.push(command);
 				}
 				break;
