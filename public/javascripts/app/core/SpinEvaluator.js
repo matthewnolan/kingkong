@@ -184,9 +184,7 @@ var G = G || {};
 			var frameLabels = _.map(symbolsOnPayline, mapFrameLabels);
 			paylineIndexes.push(win.paylineIndex);
 
-			console.log("frameLabels:" + frameLabels);
-
-			var numWins = self.getNumWinsOnPayline2(frameLabels, win.winningType);
+			var numWins = self.getNumWinsOnPayline(frameLabels, win.winningType);
 			command = new G.WinLineCommand();
 			command.init(self.setup, [win.paylineIndex], numWins, null, frameLabels, true);
 			if (i===0) {
@@ -206,13 +204,19 @@ var G = G || {};
 	};
 
 	/**
+	 * Takes an array of frameLabels along a payline and the winningType in spinResponse
+	 * Compare the symbols along the payline match the winningType symbol id, or the wild symbol ID (hardcoded here to 0)
+	 * and return the number of winning symbols on the payline
 	 *
-	 * @param frameLabels
-	 * @param winningType
+	 * @method getNumWinsOnPayline
+	 * @param {array} frameLabels - eg ["m2", "m1", "m1", "f4", "f5"]
+	 * @param {number} winningType - the winning type id from the spin response - eg 1 (which is an m1 symbol)
+	 * @return {number} the number of winning symbols on this payline which should show animated win
 	 */
-	p.getNumWinsOnPayline2 = function(frameLabels, winningType) {
+	p.getNumWinsOnPayline = function(frameLabels, winningType) {
 		var self = this;
 		var i, len = frameLabels.length;
+		var wildSymbolId = 0;
 
 		var getSymbol = function(label) {
 			console.log('getSymbol', self.symbolData, label);
@@ -221,25 +225,13 @@ var G = G || {};
 			});
 		};
 
+		var symbols = [];
 		for (i = 0; i < len; i++) {
-			var symbol = getSymbol(frameLabels[i]);
-			console.log('symbolAt', i, frameLabels[i], symbol);
+			symbols.push(getSymbol(frameLabels[i]));
 		}
 
-		console.log('getNumWinsOnPayline2 :: symbolsOnLine:');
-	};
-
-	/**
-	 * @method getNumWinsOnPayline
-	 * @param paylineIndex
-	 * @param stops
-	 * @param winningType
-	 * @returns {number}
-	 */
-	p.getNumWinsOnPayline = function(paylineIndex, stops, winningType) {
-		var symbolData = this.getSymbolDataOnPayline(paylineIndex, stops);
-		return _.filter(symbolData, function(data) {
-			return data.winType === winningType;
+		return _.filter(symbols, function(data) {
+			return data.winType === winningType || data.winType === wildSymbolId;
 		}).length;
 	};
 
