@@ -7,11 +7,8 @@ describe("SymbolWinsComponent Test", function () {
 	var signalDispatcher;
 	var symbolAnims;
 
-
-
 	beforeEach(function () {
 		this.class = new G.SymbolWinsComponent();
-
 		setup = {
 			mock: "data",
 			numberOfReels: 5,
@@ -22,13 +19,9 @@ describe("SymbolWinsComponent Test", function () {
 			symbolMarginBottom: 10,
 			failSafeInitialisation: 0
 		};
-
 		signalDispatcher = sinon.createStubInstance(G.SignalDispatcher);
-
 		symbolAnims = sinon.createStubInstance(createjs.SpriteSheet);
-
 	});
-
 
 	it("Class can be instantiated", function () {
 		expect(this.class).toBeDefined();
@@ -47,7 +40,6 @@ describe("SymbolWinsComponent Test", function () {
 	describe("Class can be initialised correctly", function() {
 
 		beforeEach(function() {
-
 
 		});
 
