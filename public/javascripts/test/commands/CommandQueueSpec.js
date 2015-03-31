@@ -33,9 +33,8 @@ describe("CommandQueue Test", function () {
 		expect(this.class.queue).toEqual(jasmine.any(Array));
 		expect(this.class.queue.length).toBe(0);
  		expect(this.class.timeout).toBe(null);
-		expect(this.class.shouldLoop).toBe(false);
 		expect(this.class.queueFactory).toBeNull();
-		expect(this.class.loopReturnIndex).toBe(0);
+		expect(this.class.loopReturnIndex).toBe(-1);
 		expect(this.class.currentIndex).toBe(0);
 	});
 
@@ -73,7 +72,7 @@ describe("CommandQueue Test", function () {
 					execute: jasmine.createSpy("command.execute").and.callThrough(function() {
 						console.log('}MOCK{ Command.execute');
 					}),
-					loopIndex: 0,
+					loopIndex: -1,
 					callNextDelay: 2000
 				};
 			};
@@ -97,7 +96,7 @@ describe("CommandQueue Test", function () {
 		it("executeNext: {Loops} should set loopReturnIndex if command is the start of a loop", function() {
 
 			this.class.queue = [myCommand];
-			myCommand.loopIndex = 1;
+			myCommand.shouldLoop = true;
 			this.class.executeNext();
 			expect(this.class.loopReturnIndex).toBe(0);
 

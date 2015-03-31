@@ -15,7 +15,7 @@ describe("Command Test", function () {
 	});
 
 	it("Class vars are initialised correctly", function () {
-		expect(this.class.loopIndex).toBe(0);
+		expect(this.class.shouldLoop).toBe(false);
 		expect(this.class.callNextDelay).toBe(2000);
 	});
 

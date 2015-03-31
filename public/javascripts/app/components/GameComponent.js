@@ -45,7 +45,11 @@ var G = G || {};
 	p.cacheCompleted = new signals.Signal();
 
 	/**
-	 * initialises the setup and signalDispatcher for the component.
+	 * initialises the gameComponent by wiring setup and signalDispatcher
+	 * Also pushes this instance to the Utils.gameComponents array.
+	 * Once initialised, this gameComponent may be called by calling the static
+	 * getGameComponentByClass method eg: G.Utils.getGameComponentByClass(G.ReelsComponent);
+	 *
 	 * @method init
 	 * @param {Object} setup
 	 * @param {G.SignalDispatcher} signalDispatcher

@@ -708,7 +708,6 @@ this.G = this.G || {};
 	 * @method createProton
 	 */
 	p.createProton = function() {
-
 		this.renderer = new Proton.Renderer('easel', this.proton, this.stage);
 		this.particlesComponent.init(this.setup, this.signalDispatcher, this.canvas, this.stageScale, this.proton, this.renderer);
 	};

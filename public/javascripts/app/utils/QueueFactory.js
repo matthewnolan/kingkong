@@ -145,7 +145,7 @@ var G = G || {};
 
 				command = new G.FireworksCommand();
 				command.init(this.setup, false, 10000);
-				command.loopIndex = 1;
+				command.shouldLoop = true;
 				queue.push(command);
 
 				for (i = 0; i < winningLines.length; i++) {

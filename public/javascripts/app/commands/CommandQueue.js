@@ -7,7 +7,12 @@ var G = G || {};
 	"use strict";
 
 	/**
-	 * Schdule and execute Commands in a CommandQueue
+	 * Based on the Command Pattern, a CommandQueue consists of an array of commands (the queue)
+	 * And methods to play, pause, loop and flush the current queue.
+	 * When set to play, the commandQueue will execute each command in the queue, then wait a period of time defined
+	 * in the command, before executing the next command.
+	 * Command Queues support infinite looping: when a loopIndex is found inside a command, it will loop back to this command when the queue has finished.
+	 *
 	 * @class CommandQueue
 	 * @constructor
 	 */
@@ -22,55 +27,60 @@ var G = G || {};
 	p.setup = null;
 
 	/**
+	 * The primary queue which commands must be added to.
+	 *
 	 * @property queue
 	 * @type {G.Command[]}
 	 */
 	p.queue = [];
 
 	/**
-	 * @deprecated
+	 * The setTimeout for the queue.
+	 *
 	 * @property timeout
 	 * @type {Number}
 	 */
 	p.timeout = null;
 
 	/**
-	 * @property shouldLoop
-	 * @type {boolean}
-	 */
-	p.shouldLoop = false;
-
-	/**
+	 * This is set to the currentIndex when a loopIndex is found on a command.
+	 *
+	 * @private
 	 * @property loopReturnIndex
 	 * @type {number}
 	 */
-	p.loopReturnIndex = 0;
+	p.loopReturnIndex = -1;
 
 	/**
+	 * Helper class to create prebuilt win animations.
+	 *
 	 * @property queueFactory
 	 * @type {G.QueueFactory}
 	 */
 	p.queueFactory = null;
 
 	/**
+	 * index position of the command to play next in the queue.
+	 *
 	 * @property currentIndex
 	 * @type {number}
 	 */
 	p.currentIndex = 0;
 
 	/**
-	 * A special win animation is displayed according to setup.gaffs and QueueFactory
+	 * If gaffType is changed to 'client*', then queue may be built from QueueFactory instead of the usual way.
+	 * For debugging purposes only
+	 *
 	 * @property gaffType
 	 * @type {string}
-	 * @see G.QueueFactory
 	 */
 	p.gaffType = "default";
 
 	/**
-	 * Saves reference to Setup and creates a QueueFactory
+	 * Initialise command queue with setup and a new QueueFactory.
+	 *
 	 * @method init
 	 * @param {Object} setup
-	 * @param {G.GameComponent[]} gameComponents
 	 */
 	p.init = function(setup) {
 		this.setup = setup;
@@ -80,12 +90,11 @@ var G = G || {};
 
 	/**
 	 * Initialise a queue ready for playing
+	 *
 	 * @method setupQueue
 	 * @param queue
-	 * @todo allow mocked client or server gaffs
 	 */
 	p.setupQueue = function(queue) {
-
 		console.log('this.setupQueue=', this.gaffType, queue);
 		if (this.gaffType.indexOf('client') >= 0) {
 			this.queue = this.queueFactory.generateGaff(this.gaffType);
@@ -96,20 +105,15 @@ var G = G || {};
 			this.queue = queue;
 			console.log('setupQueue=', this.queue);
 		}
-
-
 	};
 
 	/**
-	 *  Plays the current queue, defined during setupQueue function.
+	 *  If there's a queue of commands, then play and reset the gaffType.
+	 *
 	 * @method play
 	 */
 	p.play = function() {
-		var len = this.queue.length;
-
-		console.log('winAnimation.play', this.queue);
-
-		if (len) {
+		if (this.queue.length) {
 			this.gaffType = "default";
 			this.executeNext();
 		}
@@ -118,20 +122,20 @@ var G = G || {};
 	/**
 	 * executes the currently queued command and schedules a timeout to call the next in queue
 	 * or finishes if at the end of the queue, or loops back (loops back to first command in queue with a loopIndex).
+	 *
 	 * @method executeNext
 	 */
 	p.executeNext = function() {
 		var self = this;
 		var command = this.queue[this.currentIndex];
 		command.execute();
-		if (command.loopIndex) {
+		if (command.shouldLoop) {
 			this.loopReturnIndex = this.currentIndex;
-			this.shouldLoop = true;
 		}
 
 		if (this.currentIndex ++ === this.queue.length - 1)
 		{
-			if (this.shouldLoop) {
+			if (this.loopReturnIndex >= 0) {
 				this.currentIndex = this.loopReturnIndex;
 			} else {
 				this.flushQueue();
@@ -172,7 +176,7 @@ var G = G || {};
 		clearTimeout(this.timeout);
 		this.currentIndex = 0;
 		this.queue = [];
-		this.shouldLoop = false;
+		this.loopReturnIndex = -1;
 		this.timeout = null;
 	};
 

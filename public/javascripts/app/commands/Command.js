@@ -7,8 +7,12 @@ var G = G || {};
 	"use strict";
 
 	/**
+	 * Commands contain the methods init, and execute.
+	 * Commands can be added to a CommandQueue once initialised with any necessary data, when added to a CommandQueue, commands' execute
+	 * function is called when the command is reached in the queue. The command's callNextDelay defines how many millis until the next
+	 * command may be called.
+	 *
 	 * @class Command
-	 * @abstract
 	 * @constructor
 	 */
 	var Command = function() {};
@@ -16,15 +20,18 @@ var G = G || {};
 	p.constructor = Command;
 
 	/**
-	 * Set to any value other than 0 to make the Queue loop back to this command when finished
-	 * @property loopIndex
-	 * @default 0 - No looping
+	 * Set to true to make the Queue loop back to this command when finished
+	 *
+	 * @property shouldLoop
+	 * @default false - No looping
+	 * @example: true - Loop back to this command on queue finish.
 	 * @type {number}
 	 */
-	p.loopIndex = 0;
+	p.shouldLoop = false;
 
 	/**
 	 * duration of time in millis to allow this command to execute
+	 *
 	 * @property callNextDelay
 	 * @default 2000
 	 * @type {number}
@@ -32,13 +39,17 @@ var G = G || {};
 	p.callNextDelay = 2000;
 
 	/**
+	 * Store the setup object
+	 *
 	 * @property setup
 	 * @type {Object}
 	 */
 	p.setup = null;
 
 	/**
-	 * The primary G.GameComponent which this Command should act on.
+	 * The primary G.GameComponent which this Command should use on.
+	 * Other gameComponents may be also called using Utils.getGameComponentByClass if more than one gameComponent needs to be used.
+	 *
 	 * @property gameComponent
 	 * @type {G.GameComponent}
 	 */
@@ -60,15 +71,11 @@ var G = G || {};
 	/**
 	 * Executes the Command.
 	 * Override this method in the particular Command.
+	 *
 	 * @method execute
 	 */
 	p.execute = function() {
-		if (!this.setup) {
-			throw "No setup object found, ensure Command is initialised correctly";
-		}
-		if (!this.gameComponent) {
-			throw "No primary gameComponent found, ensure Command is initialised correctly";
-		}
+
 	};
 
 	G.Command = Command;

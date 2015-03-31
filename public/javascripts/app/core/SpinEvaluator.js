@@ -188,7 +188,7 @@ var G = G || {};
 			command = new G.WinLineCommand();
 			command.init(self.setup, [win.paylineIndex], numWins, null, frameLabels, true);
 			if (i===0) {
-				command.loopIndex = 1;
+				command.shouldLoop = true;
 			}
 			command.callNextDelay = 3000;
 			commands.push(command);
