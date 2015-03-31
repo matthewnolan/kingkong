@@ -11,11 +11,12 @@ var G = G || {};
 	 * SpriteSheet driven animations are stored as 2D Array (symbolsMatrix), 1st level of the array represents each reel
 	 * and this reel array stores a sprite for each visible symbol on that reel.
 	 * Sprites are arranged over each visible symbol.
-	 * Playing and Hiding of animations should be called via the G.SymbolAnimCommand.
+	 * Playing and Hiding of animations is normally called via the G.SymbolAnimCommand
+	 * (although anims are played during slow init caching and debugging purposes)
+	 *
 	 * @class SymbolWinsComponent
-	 * @constructor
 	 * @extends G.GameComponent
-	 * @uses createjs.Container
+	 * @constructor
 	 */
 	var SymbolWinsComponent = function() {
 		this.GameComponent_constructor();
@@ -40,6 +41,8 @@ var G = G || {};
 	p.SCALE_FACTOR = (1 / 0.83333);
 
 	/**
+	 * The 2D array where sprites are stored.  Each sprite is initialised with the Symbols Sprite Sheet.
+	 *
 	 * @property symbolsMatrix
 	 * @type {createjs.Sprite[][]}
 	 */
@@ -62,7 +65,7 @@ var G = G || {};
 	/**
 	 * The animation label suffix, take this from the texture packer output.
 	 * The current convention is to have animation keys in this format: symbol.frameLabel + "intro__001";
-	 * May consdier making this a setup.json variable.
+	 * May consider making this a setup.json variable.
 	 *
 	 * @type {string}
 	 */
@@ -70,6 +73,7 @@ var G = G || {};
 
 	/**
 	 * init the game component vars.
+	 *
 	 * @method init
 	 * @param {Object} setup
 	 * @param {G.SignalDispatcher} signalDispatcher
@@ -82,6 +86,8 @@ var G = G || {};
 
 	/**
 	 * Call this function if you'd like to see a visual representation of where invisible sprites are located on the reels
+	 * This method is called if devmode in setup.json is switched on.
+	 *
 	 * @method drawDebug
 	 */
 	p.drawDebug = function() {
@@ -99,7 +105,6 @@ var G = G || {};
 				this.addChild(container);
 				var shape = new createjs.Shape();
 				var gp = shape.graphics;
-				//gp.setStrokeStyle(3);
 				gp.beginStroke("#ff0000");
 				gp.beginFill("rgba(128,3,95,0.3)");
 				gp.drawRect(0, 0, symbolW, symbolH);
@@ -114,10 +119,10 @@ var G = G || {};
 
 	/**
 	 * Draws a symbol sprite on each visible symbol on the reels
+	 *
 	 * @method drawSprites
 	 */
 	p.drawSprites = function() {
-		// var spritesheet = new createjs.SpriteSheet(this.symbolAnims);
 		var spritesheet = this.symbolAnims;
 		var i, j, sprite;
 		var reelLen = this.setup.numberOfReels;
@@ -151,6 +156,7 @@ var G = G || {};
 
 	/**
 	 * Clears and hides all currently playing sprites
+	 *
 	 * @method hideAll
 	 */
 	p.hideAll = function() {
@@ -174,15 +180,15 @@ var G = G || {};
 	/**
 	 * Helper method to show and play a passed sprite.  Animation is defined in the id parameter
 	 * @param {createjs.Sprite} sprite
-	 * @param {string} id - Matching string to a particular symbol_anims.json animations
+	 * @param {string} frameLabel - Matching string to a particular symbol_anims.json animations
 	 * @param {boolean} autoAppend - concatenate this.animationLabelSuffix.
 	 */
-	p.playThisSprite = function(sprite, id, autoAppend) {
+	p.playThisSprite = function(sprite, frameLabel, autoAppend) {
 		if (autoAppend) {
-			id = id + this.animationLabelSuffix;
+			frameLabel = frameLabel + this.animationLabelSuffix;
 		}
 		sprite.visible = true;
-		sprite.gotoAndPlay(id.toLowerCase());
+		sprite.gotoAndPlay(frameLabel.toLowerCase());
 		this.currentlyPlayingSprites.push(sprite);
 	};
 
@@ -190,15 +196,22 @@ var G = G || {};
 	 * Plays the sprite animation for id at the passed row and col.
 	 *
 	 * @method playSpriteByRowCol
-	 * @param row
-	 * @param col
-	 * @param id
+	 * @param {number} row
+	 * @param {number} col
+	 * @param {string} frameLabel
 	 */
-	p.playSpriteByRowCol = function(row, col, id) {
+	p.playSpriteByRowCol = function(row, col, frameLabel) {
 		var sprite = this.symbolsMatrix[row][col];
-		this.playThisSprite(sprite, id.toLowerCase());
+		this.playThisSprite(sprite, frameLabel.toLowerCase());
 	};
 
+	/**
+	 * event handler called when a sprite's animation is completed.
+	 * Currently it's set to call once only, and is used to call the cacheCompleted signals if all sprites have initialised.
+	 *
+	 * @method handleAnimationEnd
+	 * @param {createjs.Event} e
+	 */
 	p.handleAnimationEnd = function(e) {
 		var sprite = e.currentTarget;
 		sprite.removeAllEventListeners();
@@ -212,13 +225,12 @@ var G = G || {};
 	/**
 	 * This plays the same win anim across the payline for each winSquaresNum.
 	 * Optionally append the animationLabelSuffix automatically.
-	 * @todo lose the 2 from the name
 	 *
 	 * @method showAnimsOnWinLine
-	 * @param winLineData
-	 * @param winSquaresNum
-	 * @param frameLabel
-	 * @param autoAppend
+	 * @param {Object} winLineData as defined in setup.json
+	 * @param {number} winSquaresNum number of squares to animate over
+	 * @param {string} frameLabel animation label defined in spritesheet
+	 * @param {boolean} autoAppend if flag is true, append the animation suffix to the frameLabel
 	 */
 	p.showAnimsOnWinLine = function(winLineData, winSquaresNum, frameLabel, autoAppend) {
 		var i, len = winLineData.length, lineIndex;
@@ -238,15 +250,13 @@ var G = G || {};
 	 * Optionally append the animationLabelSuffix automatically.
 	 *
 	 * @method playMixedAnims
-	 * @param payline
-	 * @param winSquaresNum
-	 * @param frameLabels
-	 * @param autoAppend
+	 * @param {number} payline index according to setup.json
+	 * @param {number} winSquaresNum number of squares to animate over
+	 * @param {array} frameLabels array of frameLabels to animate - eg.["m1", "m2"] plays m1 then m2 on first two reels
+	 * @param {boolean} autoAppend if flag is true, append the animation suffix to the frameLabels
 	 */
 	p.playMixedAnims = function(payline, winSquaresNum, frameLabels, autoAppend) {
-
 		console.log('playMixedAnims:', payline, winSquaresNum, frameLabels, autoAppend);
-
 		var reelIndex;
 		var symbolIndex;
 		for (reelIndex = 0; reelIndex < winSquaresNum; reelIndex++) {

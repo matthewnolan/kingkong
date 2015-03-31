@@ -178,12 +178,10 @@ var G = G || {};
 			return data.frameLabel;
 		};
 
-
 		var generateCommandData = function(win, i) {
 			var symbolsOnPayline = self.getSymbolDataOnPayline(win.paylineIndex, record.stops);
 			var frameLabels = _.map(symbolsOnPayline, mapFrameLabels);
 			paylineIndexes.push(win.paylineIndex);
-
 			var numWins = self.getNumWinsOnPayline(frameLabels, win.winningType);
 			command = new G.WinLineCommand();
 			command.init(self.setup, [win.paylineIndex], numWins, null, frameLabels, true);

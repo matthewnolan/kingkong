@@ -51,10 +51,10 @@ http://localhost:3000 - runs application.
 
     Controls:
     ---------
-    Shift-G,
+    G: Show Gaff Menu
     Pinch Out (touch): Show Gaff Menu
     Pinch In (touch): Hides Gaff Menu
-    Space,
+    Space: Spin Reels
     Swipe Down (touch) : Spin Reels
 
     Gaff Menu Features:
