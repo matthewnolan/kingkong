@@ -6,7 +6,7 @@ describe("ReelsComponent Test", function () {
 	beforeEach(function () {
 		this.class = new G.ReelsComponent();
 		sinon.stub(this.class, "initDomEvents");
-		G.Utils.shuffle = jasmine.createSpy("Utils.shuffle")
+		G.Utils.shuffle = jasmine.createSpy("Utils.shuffle");
 	});
 
 	afterEach(function () {

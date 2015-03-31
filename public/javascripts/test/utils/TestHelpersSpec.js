@@ -30,7 +30,7 @@ describe("TestHelpers Test", function () {
 			});
 			self.assetsLoader.loadManifest(
 				[
-					{"src": assetsPath, "id": "symbolAnims", "type": "spritesheet"}
+					{"src": assetsPath, "id": "symbolAnims"}
 				]
 			);
 		};
@@ -69,7 +69,7 @@ describe("TestHelpers Test", function () {
 
 	it("Can draw a symbol", function(done) {
 		var self = this;
-		var spriteSheet = this.assetsLoader.getResult('symbolAnims');
+		var spriteSheet = new createjs.SpriteSheet(this.assetsLoader.getResult('symbolAnims'));
 		var sprite = new createjs.Sprite(spriteSheet, 0);
 		sprite.scaleX = sprite.scaleY = SCALE_FACTOR;
 

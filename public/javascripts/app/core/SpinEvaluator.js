@@ -214,7 +214,7 @@ var G = G || {};
 	p.getNumWinsOnPayline = function(frameLabels, winningType) {
 		var self = this;
 		var i, len = frameLabels.length;
-		var wildSymbolId = 0;
+		//var wildSymbolId = 0;
 
 		var getSymbol = function(label) {
 			console.log('getSymbol', self.symbolData, label);
@@ -229,7 +229,7 @@ var G = G || {};
 		}
 
 		return _.filter(symbols, function(data) {
-			return data.winType === winningType || data.winType === wildSymbolId;
+			return data.winType === winningType;
 		}).length;
 	};
 

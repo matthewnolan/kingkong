@@ -2,7 +2,6 @@
 * Copyright (c) 2015 Licensed @HighFiveGames */
 
 describe("SymbolWinsComponent Test", function () {
-	var self = this;
 	var setup;
 	var signalDispatcher;
 	var symbolAnims;
