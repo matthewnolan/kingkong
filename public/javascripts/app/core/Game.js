@@ -152,15 +152,6 @@ this.G = this.G || {};
 	p.assets = null;
 
 	/**
-	 * An array container for all GameComponents.  Passed to the static G.Utils for easy access.
-	 *
-	 * @property gameComponents
-	 * @type {G.GameComponent[]}
-	 * @default []
-	 */
-	p.gameComponents = [];
-
-	/**
 	 * GameComponent responsible for running particle animations.
 	 *
 	 * @property particlesComponent
@@ -287,7 +278,7 @@ this.G = this.G || {};
 	p.init = function() {
 		this.stats = new Stats();
 
-		G.Utils.parseQueryString();
+		G.Utils.init();
 		console.log('G.Utils.params', G.Utils.params);
 
 		this.signalDispatcher = new G.SignalDispatcher();
@@ -531,7 +522,6 @@ this.G = this.G || {};
 		symbolWinsComponent.y = bezelMarginT;
 		this.stage.addChild(symbolWinsComponent);
 		symbolWinsComponent.drawSprites();
-		this.gameComponents.push(symbolWinsComponent);
 
 		var bigWinComponent = new G.BigWinComponent();
 		bigWinComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetBigWinAnimSymbol);
@@ -547,19 +537,16 @@ this.G = this.G || {};
 		winLinesComponent.cacheCompleted.add(this.checkCacheInitialised, this);
 		this.stage.addChild(winLinesComponent);
 		winLinesComponent.drawComponent();
-		this.gameComponents.push(reelsComponent, winLinesComponent, bigWinComponent);
 
 		var meterComponent = new G.MeterComponent();
 		meterComponent.init(this.setup, this.signalDispatcher);
 		meterComponent.drawComponent();
 		this.stage.addChild(meterComponent);
-		this.gameComponents.push(meterComponent);
 
         // init Dj
         var djComponent = new G.Dj();
         djComponent.init(this.setup, this.signalDispatcher);
         // djComponent.nameDrop("doc");
-        this.gameComponents.push(djComponent);
 
 		var gaffMenu = new G.GaffMenuComponent(this.version);
 		gaffMenu.init(this.setup, this.signalDispatcher);
@@ -570,8 +557,6 @@ this.G = this.G || {};
 		this.gaffMenu = gaffMenu;
 
 		this.particlesComponent = new G.ParticlesComponent();
-		this.gameComponents.push(this.particlesComponent);
-		this.gameComponents.push(gaffMenu);
 
 		if (!this.setup.devMode) {
 			reelsComponent.mask = sceneMask;
@@ -584,7 +569,6 @@ this.G = this.G || {};
 	 * GameComponents talk to each other by dispatching and handling Signals
 	 * Core components also use the signal dispatcher.
 	 * EG. Spin Evaluator listens to the reelComplete signal and prepares a CommandQueue (for win animations).
-	 * GameComponents are stored inside the static G.Utils.gameComponents for access anywhere inside the application.
 	 *
 	 * @method wireApp
 	 *
@@ -592,9 +576,8 @@ this.G = this.G || {};
 	p.wireApp = function() {
 		this.commandQueue = new G.CommandQueue();
 		this.commandQueue.init(this.setup);
-		this.signalDispatcher.init(this.setup, this.commandQueue, this.gameComponents);
+		this.signalDispatcher.init(this.setup, this.commandQueue);
 		this.spinEvaluator.init(this.setup, this.signalDispatcher, this.commandQueue, this.gameData.slotInitResponseData);
-		G.Utils.gameComponents = this.gameComponents;
 		this.initComplete = true;
 	};
 

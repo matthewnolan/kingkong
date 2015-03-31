@@ -5,6 +5,11 @@ describe("Game Test", function () {
 
 	var serverInterface;
 
+	G.Utils = {
+		init: jasmine.createSpy("Utils.init"),
+		gameComponents: []
+	};
+
 	beforeEach(function () {
 
 		this.class = new G.Game();
@@ -43,11 +48,7 @@ describe("Game Test", function () {
 		});
 		*/
 
-		//spyOn(G.Utils, 'parseQueryString');
-
-		G.Utils = {
-			parseQueryString: function() {}
-		};
+		//spyOn(G.Utils, 'init').andCallThrough();
 
 		spyOn(this.class, "setupDisplay");
 

@@ -18,6 +18,15 @@ var G = G || {};
 	var Utils = {};
 
 	/**
+	 * Initial Utils setup: for now just parse the queryString into global params object
+	 *
+	 * @method Utils.init
+	 */
+	Utils.init = function() {
+		Utils.parseQueryString();
+	};
+
+	/**
 	 * Array container for all GameComponents.
 	 * Can be accessed directly or via the helper method getGameComponentByClass
 	 *
@@ -43,12 +52,13 @@ var G = G || {};
 	Utils.params = {};
 
 	/**
-	 * Wrapper function useful for allowing setTimeout to be used inside loops
+	 * Wrapper function useful for allowing setTimeout to be used inside loops where creating new functions is inefficient
 	 * method callLater
-	 * @param func
-	 * @param args
-	 * @param scope
-	 * @param ms
+	 *
+	 * @param func - function to be called later
+	 * @param args - arguments to pass to func
+	 * @param scope - scope for function call (eg. pass this if required)
+	 * @param ms - millis til function call (may pass 0 to delay a function call to next execution cycle)
 	 */
 	Utils.callLater = function(func, args, scope, ms) {
 		setTimeout(function() {
@@ -60,8 +70,8 @@ var G = G || {};
 	 * Shuffles elements of an array randomly and returns the new array
 	 *
 	 * @method shuffle
-	 * @param {[]} arr
-	 * @returns {[]}
+	 * @param arr - array to be shuffled
+	 * @returns {[]} shuffled array
 	 */
 	Utils.shuffle = function(arr) {
 		var currentIndex = arr.length, temporaryValue, randomIndex ;
@@ -112,10 +122,6 @@ var G = G || {};
 
 		G.Utils.params = params;
 	};
-
-
-
-
 
 
 	G.Utils = Utils;

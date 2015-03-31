@@ -19,14 +19,6 @@ var G = G || {};
 	p.constructor = SignalDispatcher;
 
 	/**
-	 * @deprecated
-	 * @property gameComponents
-	 * @type {G.GameComponent[]}
-	 * @default null
-	 */
-	p.gameComponents = null;
-
-	/**
 	 * The application config file (setup.json)
 	 *
 	 * @property setup
@@ -129,11 +121,9 @@ var G = G || {};
 	 * @method init
 	 * @param {Object} setup
 	 * @param {G.CommandQueue} commandQueue
-	 * @param {G.GameComponent[]} gameComponents
 	 */
-	p.init = function(setup, commandQueue, gameComponents) {
+	p.init = function(setup, commandQueue) {
 		this.setup = setup;
-		this.gameComponents = gameComponents;
 		this.commandQueue = commandQueue;
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
 		this.spinResponseReceived.add(this.handleServerReelSpinStart, this);
@@ -181,10 +171,7 @@ var G = G || {};
 	p.handleGaffSelected = function(gaffType) {
 		console.log('handleGaffSelected', gaffType);
 
-		var reelsComponent = _.find(this.gameComponents, function(component) {
-			return component instanceof G.ReelsComponent;
-		});
-
+		var reelsComponent = G.Utils.getGameComponentByClass(G.ReelsComponent);
 		if (gaffType.indexOf("gaff") >= 0) {
 			console.log("gaff:", gaffType);
 			var playMode = _.find(this.setup.playModesNew, function(playMode) {

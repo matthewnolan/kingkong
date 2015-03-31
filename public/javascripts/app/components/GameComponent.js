@@ -53,6 +53,7 @@ var G = G || {};
 	p.init = function(setup, signalDispatcher) {
 		this.setup = setup;
 		this.signalDispatcher = signalDispatcher;
+		G.Utils.gameComponents.push(this);
 	};
 
 	/**
