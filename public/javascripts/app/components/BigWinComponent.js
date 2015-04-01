@@ -123,7 +123,7 @@ var G = G || {};
 		var width3x3 = symbolW * 3 + symbolMarginR * 2;
 		var height3x3 = symbolH * 3 + symbolMarginB * 2;
 		var width3x4 = symbolW * 4 + symbolMarginR * 3;
-		var height3x4 = symbolH * 4 + symbolMarginR * 3;
+		var height3x4 = symbolH * 3 + symbolMarginB * 2;
 		var scaleX_3x3 = (width3x3 / symbolW) * symbolsScale;
 		var scaleY_3x3 = (height3x3 / symbolH) * symbolsScale;
 		var scaleX_3x4 = (width3x4 / symbolW) * symbolsScale;
@@ -190,6 +190,10 @@ var G = G || {};
 	};
 
 	/**
+	 * Plays a big win animation, which currently is a 3x5 m1 animation
+	 * If 3x3 or 3x4 type animations should play, we will play a scaled up version of symbolAnim.
+	 * If 3x5 type animation and is not an m1... we'll play m1 anyway.
+	 *
 	 * @method playAnimation
 	 * @param type - big win animation type
 	 * @param frameLabel - the small symbol frameLabel

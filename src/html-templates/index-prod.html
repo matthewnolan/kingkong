@@ -25,21 +25,33 @@
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
+    <!-- Vendor -->
     <script src="javascripts/dist/kingkong.min.js"></script>
 
     <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body>
+<div id="landscapeModal">
+    <p><b>Rotate Device to Landscape</b>
+    </p>
+</div>
 
-<div>
-    <canvas id="app"></canvas>
-    <div id="preloader">
-        <div class="content">
-            <div class="vertical-center">
-                <div id="loadState">Loading...</div>
-                <div id="loadPercentage">0%</div>
-                <div id="initializeState"></div>
+<div id="appContainer">
+    <div id="canvasHolder">
+        <canvas id="app"></canvas>
+        <div id="preloader">
+            <div class="content">
+                <div class="vertical-center">
+                    <div id="loadState">Loading...</div>
+                    <div id="loadPercentage">0%</div>
+                    <div id="initializeState"></div>
+                </div>
             </div>
+        </div>
+    </div>
+    <div id="desktopControls">
+        <div id="qrcode">
+            <p>Try it on your phone</p>
         </div>
     </div>
     <div id="debug">
@@ -48,8 +60,6 @@
         </div>
     </div>
 </div>
-
-
 
 <div class="dom-helpers">
     <h4>Spin Demo (Press space to spin - again to stop)</h4>
@@ -65,10 +75,7 @@
     </div>
 </div>
 
-<div>
-    <a href="tests.html">Tests</a>
-    <a href="/doc/">Documentation</a>
-</div>
+
 
 
 <script>

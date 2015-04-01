@@ -1,12 +1,13 @@
 ## Changelog
 
+####v0.4.0
+- spin evaluation got smarter, win anims should show for all gaffes including 3x3 and 3x4 anims (nb. some animations are missing due to incorrect texture-packer labelling)
+- using combined spritesheets which have 3x5 big win animations with smaller win animation
 
 ####v0.3.3
-- spin evaluation got smarter, win anims should show for all gaffes
 - new spin evaluation and tests for symbol wins
 - refactoring of CommandQueue queue
 - simplified gameComponents wiring in Game.. now game components wire themselves
-
 
 ####v0.3.2
 - spin evaluation now detects big win
