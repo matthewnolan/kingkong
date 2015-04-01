@@ -51,15 +51,15 @@ this.G = this.G || {};
 	p.init = function(signalDispatcher, gameData) {
 		this.signalDispatcher = signalDispatcher;
 		this.signalDispatcher.spinRequested.add(this.requestSpin, this);
-		this.signalDispatcher.gaffSpinRequested.add(this.requestGaffSpin, this);
+		this.signalDispatcher.gaffeSpinRequested.add(this.requestGaffeSpin, this);
 		this.gameData = gameData;
 	};
 
 	/**
-	 * @method requestGaffSpin
-	 * @param {String} gaffLink
+	 * @method requestGaffeSpin
+	 * @param {String} gaffeLink
 	 */
-	p.requestGaffSpin = function(gaffLink) {
+	p.requestGaffeSpin = function(gaffeLink) {
 		var self = this;
 
 		var success = function(json) {
@@ -74,7 +74,7 @@ this.G = this.G || {};
 			return res.json();
 		};
 
-		fetch(gaffLink)
+		fetch(gaffeLink)
 			.then(response)
 			.then(success)
 			.catch(error);

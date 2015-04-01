@@ -28,12 +28,12 @@ var G = G || {};
 	p.setup = null;
 
 	/**
-	 * Signal dispatched by the GaffMenu when a gaff is selected.
+	 * Signal dispatched by the GaffeMenu when a gaffe is selected.
 	 *
-	 * @property gaffSelect
+	 * @property gaffeSelect
 	 * @type {Signal}
 	 */
-	p.gaffSelect = new signals.Signal();
+	p.gaffeSelect = new signals.Signal();
 
 	/**
 	 * Signal dispatched by the ReelsComponent when all reel animations have stopped
@@ -52,7 +52,7 @@ var G = G || {};
 	p.reelSpinStart = new signals.Signal();
 
 	/**
-	 * Signal dispatched by the GaffMenu when FPS switch is used.
+	 * Signal dispatched by the GaffeMenu when FPS switch is used.
 	 *
 	 * @property fpsSwitched
 	 * @type {Signal}
@@ -109,10 +109,10 @@ var G = G || {};
 
 	/**
 	 *
-	 * @property gaffSpinRequested
+	 * @property gaffeSpinRequested
 	 * @type {Signal}
 	 */
-	p.gaffSpinRequested = new signals.Signal();
+	p.gaffeSpinRequested = new signals.Signal();
 
 	/**
 	 * Initialise the SignalDispatcher with setup object and gameComponents.
@@ -127,7 +127,7 @@ var G = G || {};
 		this.commandQueue = commandQueue;
 		this.reelSpinStart.add(this.handleReelSpinStart, this);
 		this.spinResponseReceived.add(this.handleServerReelSpinStart, this);
-		this.gaffSelect.add(this.handleGaffSelected, this);
+		this.gaffeSelect.add(this.handleGaffeSelected, this);
 	};
 
 	/**
@@ -160,26 +160,26 @@ var G = G || {};
 	};
 
 	/**
-	 * Dispatched by the GaffMenu when a gaff button is selected.
-	 * Sets the commandQueue gaff type for animating the final win, and starts spinning the reels.
+	 * Dispatched by the GaffeMenu when a gaffe button is selected.
+	 * Sets the commandQueue gaffe type for animating the final win, and starts spinning the reels.
 	 *
-	 * @method handleGaffSelected
-	 * @param {String} gaffType - the menu option string
+	 * @method handleGaffeSelected
+	 * @param {String} gaffeType - the menu option string
 	 * @todo change playModesNew name in setup (this is a temporary name)
-	 * @todo clean up gaffing
+	 * @todo clean up gaffeing
 	 */
-	p.handleGaffSelected = function(gaffType) {
-		console.log('handleGaffSelected', gaffType);
+	p.handleGaffeSelected = function(gaffeType) {
+		console.log('handleGaffeSelected', gaffeType);
 
 		var reelsComponent = G.Utils.getGameComponentByClass(G.ReelsComponent);
-		if (gaffType.indexOf("gaff") >= 0) {
-			console.log("gaff:", gaffType);
+		if (gaffeType.indexOf("gaffe") >= 0) {
+			console.log("gaffe:", gaffeType);
 			var playMode = _.find(this.setup.playModesNew, function(playMode) {
-				return playMode.type === gaffType;
+				return playMode.type === gaffeType;
 			});
-			this.gaffSpinRequested.dispatch( playMode.link );
-		} else if (gaffType.indexOf("client") >= 0) {
-			this.commandQueue.gaffType = gaffType;
+			this.gaffeSpinRequested.dispatch( playMode.link );
+		} else if (gaffeType.indexOf("client") >= 0) {
+			this.commandQueue.gaffeType = gaffeType;
 			//this.commandQueue.setupQueue();
 			reelsComponent.spinReels();
 		}

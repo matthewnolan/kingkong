@@ -147,7 +147,7 @@ var G = G || {};
 
 	/**
 	 * @todo Replace with Server Integration
-	 * @method mockGaffM1
+	 * @method mockGaffeM1
 	 */
 	p.checkMockWin = function() {
 		if (this.mockWin > 0) {

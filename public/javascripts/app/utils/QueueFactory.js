@@ -26,12 +26,12 @@ var G = G || {};
 	};
 
 	/**
-	 * Generates a win animation accorind to gaffType
-	 * @method generateGaff
-	 * @param {String} gaffType - the gaff to generate a queue for
+	 * Generates a win animation accorind to gaffeType
+	 * @method generateGaffe
+	 * @param {String} gaffeType - the gaffe to generate a queue for
 	 * @returns Array
 	 */
-	p.generateGaff = function(gaffType) {
+	p.generateGaffe = function(gaffeType) {
 
 		var queue = [], command, i, len;
 		var winLines, bigWin, reels, symbolWins, particles, meter;
@@ -43,10 +43,10 @@ var G = G || {};
 		particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
 		meter = G.Utils.getGameComponentByClass(G.MeterComponent);
 
-		console.log('generateGaff=', gaffType);
+		console.log('generateGaffe=', gaffeType);
 
 
-		switch(gaffType) {
+		switch(gaffeType) {
 			case "normal" :
 				reels.modifySymbolData(null, true);
 				var bigWinCommand = new G.BigWinCommand();

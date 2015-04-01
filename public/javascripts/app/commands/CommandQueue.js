@@ -68,13 +68,13 @@ var G = G || {};
 	p.currentIndex = 0;
 
 	/**
-	 * If gaffType is changed to 'client*', then queue may be built from QueueFactory instead of the usual way.
+	 * If gaffeType is changed to 'client*', then queue may be built from QueueFactory instead of the usual way.
 	 * For debugging purposes only
 	 *
-	 * @property gaffType
+	 * @property gaffeType
 	 * @type {string}
 	 */
-	p.gaffType = "default";
+	p.gaffeType = "default";
 
 	/**
 	 * Initialise command queue with setup and a new QueueFactory.
@@ -95,9 +95,9 @@ var G = G || {};
 	 * @param queue
 	 */
 	p.setupQueue = function(queue) {
-		console.log('this.setupQueue=', this.gaffType, queue);
-		if (this.gaffType.indexOf('client') >= 0) {
-			this.queue = this.queueFactory.generateGaff(this.gaffType);
+		console.log('this.setupQueue=', this.gaffeType, queue);
+		if (this.gaffeType.indexOf('client') >= 0) {
+			this.queue = this.queueFactory.generateGaffe(this.gaffeType);
 			return;
 		}
 
@@ -108,13 +108,13 @@ var G = G || {};
 	};
 
 	/**
-	 *  If there's a queue of commands, then play and reset the gaffType.
+	 *  If there's a queue of commands, then play and reset the gaffeType.
 	 *
 	 * @method play
 	 */
 	p.play = function() {
 		if (this.queue.length) {
-			this.gaffType = "default";
+			this.gaffeType = "default";
 			this.executeNext();
 		}
 	};

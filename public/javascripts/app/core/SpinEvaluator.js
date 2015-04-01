@@ -269,20 +269,20 @@ var G = G || {};
 	 * @method handleReeSpinComplete
 	 */
 	p.handleReelSpinComplete = function() {
-		console.log('handleReelSpinComplete', this.winAnimationQueue.gaffType);
+		console.log('handleReelSpinComplete', this.winAnimationQueue.gaffeType);
 		this.winAnimationQueue.play();
-		//allow client side gaffs:
-		if (this.winAnimationQueue.gaffType.indexOf('client') >= 0) {
-			this.doClientSideGaff();
+		//allow client side gaffes:
+		if (this.winAnimationQueue.gaffeType.indexOf('client') >= 0) {
+			this.doClientSideGaffe();
 		}
 	};
 
 	/**
-	 * @method doClientSideGaff
+	 * @method doClientSideGaffe
 	 */
-	p.doClientSideGaff = function() {
-		var gaffMenu = G.Utils.getGameComponentByClass(G.GaffMenuComponent);
-		gaffMenu.deselectGaffButtons();
+	p.doClientSideGaffe = function() {
+		var gaffeMenu = G.Utils.getGameComponentByClass(G.GaffeMenuComponent);
+		gaffeMenu.deselectGaffeButtons();
 		var meter = G.Utils.getGameComponentByClass(G.MeterComponent);
 		meter.checkMockWin();
 	};
