@@ -304,7 +304,7 @@
     "src": "assets/sounds/bonus_stop1.mp3", "id": "bonusStop1"}, {
     "src": "assets/sounds/reelstop1.mp3", "id": "reelstop1"}
   ],
-  "playModesNew" : [
+  "gaffeMenu" : [
     {
       "type": "client_lotsOfWin"
     },
@@ -447,48 +447,5 @@
       "type": "gaffe_ww_3x5",
       "link": "/api/gaffe_ww_3x5"
     }
-  ],
-
-  "playModes": {
-    "deprecated" : "deprecated",
-    "normal": {
-      "winOnLine": true,
-      "autoWinChance": 0,
-      "doSymbolAnimationsLoop": false,
-      "winningLines": [
-        1, 5
-      ],
-      "enableOnMobile": true
-    },
-    "lotsOfWin": {
-      "winOnLine": false,
-      "autoWinChance": 50,
-      "doSymbolAnimationsLoop": false,
-      "winningLines": null,
-      "enableOnMobile": true
-    },
-    "gaffee_Line_M1": {
-      "winOnLine": true,
-      "autoWinChance": 50,
-      "doSymbolAnimationsLoop": false,
-      "gaffee": "Line_M1",
-      "stuffSymbol": 0,
-      "winningLines": null,
-      "enableOnMobile": true
-    },
-    "allPayLines": {
-      "winOnLine": false,
-      "autoWinChance": 0,
-      "doSymbolAnimationsLoop": false,
-      "winningLines": null,
-      "enableOnMobile": true
-    },
-    "singleSpriteSheet": {
-      "numSprites": 1
-    },
-    "compareTest": {
-      "numSprites": 1
-    }
-  },
-  "defaultPlayMode": "deprecated"
+  ]
 }

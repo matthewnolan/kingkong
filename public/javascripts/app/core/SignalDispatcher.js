@@ -165,8 +165,7 @@ var G = G || {};
 	 *
 	 * @method handleGaffeSelected
 	 * @param {String} gaffeType - the menu option string
-	 * @todo change playModesNew name in setup (this is a temporary name)
-	 * @todo clean up gaffeing
+	 * @todo clean up gaffing / commandQueue mess
 	 */
 	p.handleGaffeSelected = function(gaffeType) {
 		console.log('handleGaffeSelected', gaffeType);
@@ -174,7 +173,7 @@ var G = G || {};
 		var reelsComponent = G.Utils.getGameComponentByClass(G.ReelsComponent);
 		if (gaffeType.indexOf("gaffe") >= 0) {
 			console.log("gaffe:", gaffeType);
-			var playMode = _.find(this.setup.playModesNew, function(playMode) {
+			var playMode = _.find(this.setup.gaffeMenu, function(playMode) {
 				return playMode.type === gaffeType;
 			});
 			this.gaffeSpinRequested.dispatch( playMode.link );

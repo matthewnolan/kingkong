@@ -97,10 +97,10 @@ var G = G || {};
 		this.hScrollContainer = new createjs.Container();
 		this.addChild(this.hScrollContainer);
 
-		var i, len = this.setup.playModesNew.length, button, data;
+		var i, len = this.setup.gaffeMenu.length, button, data;
 		// console.log(this.setup);
 		for (i = 0; i < len; i++) {
-			data = this.setup.playModesNew[i];
+			data = this.setup.gaffeMenu[i];
 			// console.log('data', data);
 			button = new G.GaffeButton();
 			button.init(data.type, 100, 100, 10);
