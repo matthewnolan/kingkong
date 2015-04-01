@@ -38,10 +38,11 @@ var G = G || {};
 	/**
 	 * Scale the symbols by this amount, determined by the scale reduction (n) used in Texturepacker to the ratio 1/n
 	 *
-	 * @const SCALE_FACTOR
+	 * @const scaleFactor
 	 * @type {number}
+	 * @default null
 	 */
-	p.SCALE_FACTOR = (1 / 0.83333);
+	p.scaleFactor = null;
 
 	/**
 	 * The 2D array where sprites are stored.  Each sprite is initialised with the Symbols Sprite Sheet.
@@ -90,6 +91,7 @@ var G = G || {};
 		this.GameComponent_init(setup, signalDispatcher);
 		this.symbolAnims = symbolAnims;
 		this.gaffAnims = gaffAnims;
+		this.scaleFactor = 1 / setup.spritesScaleFactor.symbolAnims;
 	};
 
 	/**
@@ -155,7 +157,7 @@ var G = G || {};
 				sprite = new createjs.Sprite(spritesheet, 0);
 				sprite.x = i * symbolW + i * reelMarginR;
 				sprite.y = j * symbolH + j * symbolMarginB;
-				sprite.scaleX = sprite.scaleY = this.SCALE_FACTOR;
+				sprite.scaleX = sprite.scaleY = this.scaleFactor;
 				this.addChild(sprite);
 				this.symbolsMatrix[i].push(sprite);
 				sprite.visible = false;

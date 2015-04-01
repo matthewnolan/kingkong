@@ -147,6 +147,15 @@ var G = G || {};
 	 */
 	p.scheduleSymbolUpdate = false;
 
+	/**
+	 * scaleFactor for static symbols: defined in setup.json
+	 *
+	 * @property scaleFactor
+	 * @type {number}
+	 * @default null
+	 */
+	p.scaleFactor = null;
+
 	p.hammerRequested = false;
 
 	/**
@@ -170,6 +179,7 @@ var G = G || {};
 		this.spriteMap = _.map(this.setup.reelAnimation.symbols.data, function(data) {
 			return data.frameLabel;
 		});
+		this.scaleFactor = this.setup.spritesScaleFactor.staticImages;
 	};
 
 	/**
@@ -262,6 +272,7 @@ var G = G || {};
 				}
 
 				sp = new createjs.Sprite(this.symbolSprites, frameLabel);
+				sp.scaleX = sp.scaleY = this.scaleFactor;
 
 				spriteContainer.push(sp);
 				container.addChild(sp);
@@ -297,6 +308,7 @@ var G = G || {};
 				container = new createjs.Container();
 				var tempSymbolIndex = len - numBuffer + j - (l * (len - 2));
 				sp = new createjs.Sprite(this.symbolSprites, this.spriteMap[this.reelData[tempSymbolIndex]]);
+				sp.scaleX = sp.scaleY = this.scaleFactor;
 				container.addChild(sp);
 				container.y = (symbolH * j + symbolMarginB * j);
 				symbolBufferWrap.addChild(container);
