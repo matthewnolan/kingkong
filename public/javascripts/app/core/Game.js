@@ -80,7 +80,7 @@ this.G = this.G || {};
 	p.STAGE_SCALE_MODE = "FULL_ASPECT";
 
 	/**
-	 * Displayed in gaffMenu - version is injected by the build process.
+	 * Displayed in gaffeMenu - version is injected by the build process.
 	 *
 	 * @property version
 	 * @type {string}
@@ -134,7 +134,7 @@ this.G = this.G || {};
 
 
 	/**
-	 * The maxFps the app will try to achieve.  This is not the guaranteed FPS in your device.  This value can be switched via Gaff.
+	 * The maxFps the app will try to achieve.  This is not the guaranteed FPS in your device.  This value can be switched via Gaffe.
 	 * @property currentMaxFps
 	 * @type {number}
 	 * @default 60
@@ -170,13 +170,13 @@ this.G = this.G || {};
 	p.reelsComponent = null;
 
 	/**
-	 * GameComponent responsible for drawing and the logic inside the gaffMenu
+	 * GameComponent responsible for drawing and the logic inside the gaffeMenu
 	 *
 	 * @property reelsComponent
-	 * @type {G.GaffMenuComponent}
+	 * @type {G.GaffeMenuComponent}
 	 * @default null
 	 */
-	p.gaffMenu = null;
+	p.gaffeMenu = null;
 
 	/**
 	 * GameData stores data returned from the server via ServerInterface requests
@@ -375,8 +375,8 @@ this.G = this.G || {};
 	 *
 	 * AVAILABLE STAGE_SCALE_MODE = "FULL ASPECT" || "FULL_BROWSER" || "NO_SCALE" or ANY OTHER VALUE
 	 * "FULL_ASPECT" - scale the application to the visible window size, whilst maintaining the app's native apsect ratio.  This will display black borders
-	 * When a device apsect ratio doesn't match the app.
-	 * "FULL_BROWSER" - scale the application to fit the entire window size, stretching the graphics is the aspect ratios do not match.
+	 * when a devices apsect ratio doesn't match the app's.
+	 * "FULL_BROWSER" - scale the application to fit the entire window size, stretching the graphics if the aspect ratios do not match.
 	 * "NO_SCALE" - do not scale the application at all.
 	 *
 	 * If the setup.json's enableDesktopView is turned on, the app is set automatically to not scale.
@@ -548,13 +548,13 @@ this.G = this.G || {};
         djComponent.init(this.setup, this.signalDispatcher);
         // djComponent.nameDrop("doc");
 
-		var gaffMenu = new G.GaffMenuComponent(this.version);
-		gaffMenu.init(this.setup, this.signalDispatcher);
-		gaffMenu.drawMenu();
-		this.stage.addChild(gaffMenu);
-		gaffMenu.x = bezelMarginL + (bezelW / 2);
-		gaffMenu.y = bezelMarginT + (bezelH / 2);
-		this.gaffMenu = gaffMenu;
+		var gaffeMenu = new G.GaffeMenuComponent(this.version);
+		gaffeMenu.init(this.setup, this.signalDispatcher);
+		gaffeMenu.drawMenu();
+		this.stage.addChild(gaffeMenu);
+		gaffeMenu.x = bezelMarginL + (bezelW / 2);
+		gaffeMenu.y = bezelMarginT + (bezelH / 2);
+		this.gaffeMenu = gaffeMenu;
 
 		this.particlesComponent = new G.ParticlesComponent();
 
@@ -654,6 +654,14 @@ this.G = this.G || {};
 
 		createjs.Touch.enable(this.stage);
 
+		/**
+		 * 32|0 = ENTER/SPACE - SPIN REELS
+		 * 71   = G           - GAFFEE MENU
+		 * 70   = F
+		 *
+		 * @method window.document.onKeydown
+		 * @param e
+		 */
 		window.document.onkeydown = function(e) {
 
 			switch(e.keyCode) {
@@ -665,7 +673,7 @@ this.G = this.G || {};
 					break;
 				////shift+g
 				case 71 :
-					self.gaffMenu.show();
+					self.gaffeMenu.show();
 					break;
 				case 70 :
 					self.signalDispatcher.fireworkLaunched.dispatch();
@@ -689,11 +697,11 @@ this.G = this.G || {};
 		});
 
 		mc.on('pinchin', function() {
-			self.gaffMenu.hide();
+			self.gaffeMenu.hide();
 		});
 
 		mc.on('pinchout', function() {
-			self.gaffMenu.show();
+			self.gaffeMenu.show();
 		});
 
 		if (!this.setup.domHelpers) {
@@ -713,7 +721,7 @@ this.G = this.G || {};
 	};
 
 	/**
-	 * Switch between 30 and 60fps via the gaff menu button labelled "60" or "30"
+	 * Switch between 30 and 60fps via the gaffe menu button labelled "60" or "30"
 	 *
 	 * @method fpsSwitch
 	 */

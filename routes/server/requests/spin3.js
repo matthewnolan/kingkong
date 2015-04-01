@@ -63,7 +63,7 @@ var spin3 = {
 			"multiplier": 2310000,
 			"linesPlayed": 40
 		},
-		"gaffe": null
+		"gaffee": null
 	},
 	"totalCreditsWon": 16170000,
 	"casinoContext": null,

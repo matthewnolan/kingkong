@@ -7,16 +7,16 @@ var G = G || {};
 	"use strict";
 
 	/**
-	 * @class GaffButton
+	 * @class GaffeButton
 	 * @extends G.Container
 	 * @uses createjs.Container
 	 * @constructor
 	 */
-	var GaffButton = function() {
+	var GaffeButton = function() {
 		this.Container_constructor();
 	};
-	var p = createjs.extend(GaffButton, createjs.Container);
-	p.constructor = GaffButton;
+	var p = createjs.extend(GaffeButton, createjs.Container);
+	p.constructor = GaffeButton;
 
 	/**
 	 * @property labelText
@@ -127,6 +127,6 @@ var G = G || {};
 		this.strokeCommand.style = this.strokeColor;
 	};
 
-	G.GaffButton = createjs.promote(GaffButton, "Container");
+	G.GaffeButton = createjs.promote(GaffeButton, "Container");
 
 })();

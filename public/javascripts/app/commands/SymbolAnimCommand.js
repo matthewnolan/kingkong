@@ -6,6 +6,13 @@ var G = G || {};
 (function () {
 	"use strict";
 
+	/**
+	 * Command responsible for playing Symbol Animations on the SymbolWinsComponent
+	 *
+	 * @class SymbolAnimCommand
+	 * @extends G.Command
+	 * @constructor
+	 */
 	var SymbolAnimCommand = function() {
 		this.Command_constructor();
 	};
@@ -13,22 +20,42 @@ var G = G || {};
 	p.constructor = SymbolAnimCommand;
 
 	/**
+	 *
 	 * @property paylines
 	 * @type {Array}
 	 */
 	p.paylines = [];
 
 	/**
+	 *
 	 * @property numSquares
 	 * @type {number}
 	 */
-	p.numSquares = 0;
+	p.numSymbols = null;
 
 	/**
+	 *
 	 * @property frameLabel - Should match a key from symbol_anims.json['animations']
 	 * @type {string}
+	 * @default null
 	 */
-	p.frameLabel = "";
+	p.frameLabel = null;
+
+	/**
+	 *
+	 * @method autoAppend
+	 * @type {boolean}
+	 * @default false
+	 */
+	p.autoAppend = false;
+
+	/**
+	 *
+	 * @method shouldPlayCombinedSprite
+	 * @type {boolean}
+	 * @default false
+	 */
+	p.shouldPlayCombinedSprite = false;
 
 	/**
 	 * @TODO del this if dont need
@@ -37,42 +64,46 @@ var G = G || {};
 
 	/**
 	 * initialise setup, gameComponent and command data
+	 *
 	 * @method init
 	 * @param {Object} setup
-	 * @param {Array} paylineIndexes - array of paylineIndexes eg [0,1,2]
-	 * @param {Number} numSquares
+	 * @param {Array} paylineIndexes array of paylineIndexes eg [0,1,2]
+	 * @param {Number} numSymbols number of symbols to animate from the left
 	 * @param {String} frameLabel
+	 * @param {boolean} autoAppend
+	 * @param {boolean} shouldPlayCombinedSprite
 	 */
-	p.init = function(setup, paylineIndexes, numSquares, frameLabel, shouldUseGaffSprite) {
+
+	p.init = function(setup, paylineIndexes, numSymbols, frameLabel, autoAppend, shouldPlayCombinedSprite) {
 		this.Command_init(setup);
-		this.winLineData = [];
 		var i, len = paylineIndexes.length;
 		for (i = 0; i < len; i++) {
 			this.paylines.push(this.setup.winLines[paylineIndexes[i]].data);
 		}
 		this.gameComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
-		this.numSquares = numSquares;
+		this.numSymbols = numSymbols;
 		this.frameLabel = frameLabel;
-		this.shouldUseGaffSprite = shouldUseGaffSprite;
+		this.autoAppend = autoAppend || this.autoAppend;
+		this.shouldPlayCombinedSprite = shouldPlayCombinedSprite || this.shouldPlayCombinedSprite;
+
 	};
 
 	/**
 	 * Hide Previously drawn anims / winLines and show symbol anims.
+	 *
 	 * @method execute
 	 */
 	p.execute = function() {
 		console.log(this.animId);
-		// this.gameComponent.hideAll();
-		//@todo send the short frameLabel
+
 		var i, len = this.paylines.length;
 		for (i = 0; i < len; i++) {
-
-			if (this.shouldUseGaffSprite){
-				this.gameComponent.playGaffAnimsOnWinLine(this.paylines[i], this.numSquares, "m1-sprite__000");
+			if (this.shouldPlayCombinedSprite) {
+				//@todo implement combined sprite playing
+				console.warn("combined sprite playing not implemented");
 			} else {
-				this.gameComponent.showAnimsOnWinLine(this.paylines[i], this.numSquares, this.frameLabel.toLowerCase());
+				this.gameComponent.showAnimsOnWinLine(this.paylines[i], this.numSymbols, this.frameLabel.toLowerCase(), this.autoAppend);
 			}
-
 		}
 	};
 

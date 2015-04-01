@@ -304,7 +304,7 @@
     "src": "assets/sounds/bonus_stop1.mp3", "id": "bonusStop1"}, {
     "src": "assets/sounds/reelstop1.mp3", "id": "reelstop1"}
   ],
-  "playModesNew" : [
+  "gaffeMenu" : [
     {
       "type": "client_lotsOfWin"
     },
@@ -312,183 +312,140 @@
       "type": "client_Line_M1"
     },
     {
-      "type": "gaff_Line_M1",
-      "link": "/api/gaff_line_m1"
+      "type": "gaffe_Line_M1",
+      "link": "/api/gaffe_line_m1"
     },
     {
-      "type": "gaff_Line_M2",
-      "link": "/api/gaff_line_m2"
+      "type": "gaffe_Line_M2",
+      "link": "/api/gaffe_line_m2"
     },
     {
-      "type": "gaff_Line_M3",
-      "link": "/api/gaff_line_m3"
+      "type": "gaffe_Line_M3",
+      "link": "/api/gaffe_line_m3"
     },
     {
-      "type": "gaff_Line_M4",
-      "link": "/api/gaff_line_m4"
+      "type": "gaffe_Line_M4",
+      "link": "/api/gaffe_line_m4"
     },
     {
-      "type": "gaff_F5",
-      "link": "/api/gaff_f5"
+      "type": "gaffe_F5",
+      "link": "/api/gaffe_f5"
     },
     {
-      "type": "gaff_F6",
-      "link": "/api/gaff_f6"
+      "type": "gaffe_F6",
+      "link": "/api/gaffe_f6"
     },
     {
-      "type": "gaff_F7",
-      "link": "/api/gaff_f7"
+      "type": "gaffe_F7",
+      "link": "/api/gaffe_f7"
     },
     {
-      "type": "gaff_F8",
-      "link": "/api/gaff_f8"
+      "type": "gaffe_F8",
+      "link": "/api/gaffe_f8"
     },
     {
-      "type": "gaff_F9",
-      "link": "/api/gaff_f9"
+      "type": "gaffe_F9",
+      "link": "/api/gaffe_f9"
     },
     {
-      "type": "gaff_F0",
-      "link": "/api/gaff_f0"
+      "type": "gaffe_F0",
+      "link": "/api/gaffe_f0"
     },
     {
-      "type": "gaff_m1_3x3",
-      "link": "/api/gaff_m1_3x3"
+      "type": "gaffe_m1_3x3",
+      "link": "/api/gaffe_m1_3x3"
     },
     {
-      "type": "gaff_m1_3x4",
-      "link": "/api/gaff_m1_3x4"
+      "type": "gaffe_m1_3x4",
+      "link": "/api/gaffe_m1_3x4"
     },
     {
-      "type": "gaff_m1_3x5",
-      "link": "/api/gaff_m1_3x5"
+      "type": "gaffe_m1_3x5",
+      "link": "/api/gaffe_m1_3x5"
     },
     {
-      "type": "gaff_m2_3x3",
-      "link": "/api/gaff_m2_3x3"
+      "type": "gaffe_m2_3x3",
+      "link": "/api/gaffe_m2_3x3"
     },
     {
-      "type": "gaff_m2_3x4",
-      "link": "/api/gaff_m2_3x4"
+      "type": "gaffe_m2_3x4",
+      "link": "/api/gaffe_m2_3x4"
     },
     {
-      "type": "gaff_m2_3x5",
-      "link": "/api/gaff_m2_3x5"
+      "type": "gaffe_m2_3x5",
+      "link": "/api/gaffe_m2_3x5"
     },
     {
-      "type": "gaff_m3_3x3",
-      "link": "/api/gaff_m3_3x3"
+      "type": "gaffe_m3_3x3",
+      "link": "/api/gaffe_m3_3x3"
     },
     {
-      "type": "gaff_m3_3x4",
-      "link": "/api/gaff_m3_3x4"
+      "type": "gaffe_m3_3x4",
+      "link": "/api/gaffe_m3_3x4"
     },
     {
-      "type": "gaff_m3_3x5",
-      "link": "/api/gaff_m3_3x5"
+      "type": "gaffe_m3_3x5",
+      "link": "/api/gaffe_m3_3x5"
     },
     {
-      "type": "gaff_m4_3x3",
-      "link": "/api/gaff_m4_3x3"
+      "type": "gaffe_m4_3x3",
+      "link": "/api/gaffe_m4_3x3"
     },
     {
-      "type": "gaff_m4_3x4",
-      "link": "/api/gaff_m4_3x4"
+      "type": "gaffe_m4_3x4",
+      "link": "/api/gaffe_m4_3x4"
     },
     {
-      "type": "gaff_m4_3x5",
-      "link": "/api/gaff_m4_3x5"
+      "type": "gaffe_m4_3x5",
+      "link": "/api/gaffe_m4_3x5"
     },
     {
-      "type": "gaff_f5_3x3",
-      "link": "/api/gaff_f5_3x3"
+      "type": "gaffe_f5_3x3",
+      "link": "/api/gaffe_f5_3x3"
     },
     {
-      "type": "gaff_f5_3x4",
-      "link": "/api/gaff_f5_3x4"
+      "type": "gaffe_f5_3x4",
+      "link": "/api/gaffe_f5_3x4"
     },
     {
-      "type": "gaff_f5_3x5",
-      "link": "/api/gaff_f5_3x5"
+      "type": "gaffe_f5_3x5",
+      "link": "/api/gaffe_f5_3x5"
     },
     {
-      "type": "gaff_f6_3x3",
-      "link": "/api/gaff_f6_3x3"
+      "type": "gaffe_f6_3x3",
+      "link": "/api/gaffe_f6_3x3"
     },
     {
-      "type": "gaff_f6_3x4",
-      "link": "/api/gaff_f6_3x4"
+      "type": "gaffe_f6_3x4",
+      "link": "/api/gaffe_f6_3x4"
     },
     {
-      "type": "gaff_f6_3x5",
-      "link": "/api/gaff_f5_3x5"
+      "type": "gaffe_f6_3x5",
+      "link": "/api/gaffe_f5_3x5"
     },
     {
-      "type": "gaff_f7_3x3",
-      "link": "/api/gaff_f7_3x3"
+      "type": "gaffe_f7_3x3",
+      "link": "/api/gaffe_f7_3x3"
     },
     {
-      "type": "gaff_f7_3x4",
-      "link": "/api/gaff_f7_3x4"
+      "type": "gaffe_f7_3x4",
+      "link": "/api/gaffe_f7_3x4"
     },
     {
-      "type": "gaff_f7_3x5",
-      "link": "/api/gaff_f7_3x5"
+      "type": "gaffe_f7_3x5",
+      "link": "/api/gaffe_f7_3x5"
     },
     {
-      "type": "gaff_ww_3x3",
-      "link": "/api/gaff_ww_3x3"
+      "type": "gaffe_ww_3x3",
+      "link": "/api/gaffe_ww_3x3"
     },
     {
-      "type": "gaff_ww_3x4",
-      "link": "/api/gaff_ww_3x4"
+      "type": "gaffe_ww_3x4",
+      "link": "/api/gaffe_ww_3x4"
     },
     {
-      "type": "gaff_ww_3x5",
-      "link": "/api/gaff_ww_3x5"
+      "type": "gaffe_ww_3x5",
+      "link": "/api/gaffe_ww_3x5"
     }
-  ],
-
-  "playModes": {
-    "deprecated" : "deprecated",
-    "normal": {
-      "winOnLine": true,
-      "autoWinChance": 0,
-      "doSymbolAnimationsLoop": false,
-      "winningLines": [
-        1, 5
-      ],
-      "enableOnMobile": true
-    },
-    "lotsOfWin": {
-      "winOnLine": false,
-      "autoWinChance": 50,
-      "doSymbolAnimationsLoop": false,
-      "winningLines": null,
-      "enableOnMobile": true
-    },
-    "gaffe_Line_M1": {
-      "winOnLine": true,
-      "autoWinChance": 50,
-      "doSymbolAnimationsLoop": false,
-      "gaffe": "Line_M1",
-      "stuffSymbol": 0,
-      "winningLines": null,
-      "enableOnMobile": true
-    },
-    "allPayLines": {
-      "winOnLine": false,
-      "autoWinChance": 0,
-      "doSymbolAnimationsLoop": false,
-      "winningLines": null,
-      "enableOnMobile": true
-    },
-    "singleSpriteSheet": {
-      "numSprites": 1
-    },
-    "compareTest": {
-      "numSprites": 1
-    }
-  },
-  "defaultPlayMode": "deprecated"
+  ]
 }

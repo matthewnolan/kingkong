@@ -26,12 +26,12 @@ var G = G || {};
 	};
 
 	/**
-	 * Generates a win animation accorind to gaffType
-	 * @method generateGaff
-	 * @param {String} gaffType - the gaff to generate a queue for
+	 * Generates a win animation accorind to gaffeType
+	 * @method generateGaffe
+	 * @param {String} gaffeType - the gaffe to generate a queue for
 	 * @returns Array
 	 */
-	p.generateGaff = function(gaffType) {
+	p.generateGaffe = function(gaffeType) {
 
 		var queue = [], command, i, len;
 		var winLines, bigWin, reels, symbolWins, particles, meter;
@@ -43,10 +43,10 @@ var G = G || {};
 		particles = G.Utils.getGameComponentByClass(G.ParticlesComponent);
 		meter = G.Utils.getGameComponentByClass(G.MeterComponent);
 
-		console.log('generateGaff=', gaffType);
+		console.log('generateGaffe=', gaffeType);
 
 
-		switch(gaffType) {
+		switch(gaffeType) {
 			case "normal" :
 				reels.modifySymbolData(null, true);
 				var bigWinCommand = new G.BigWinCommand();
@@ -111,19 +111,31 @@ var G = G || {};
 				reels.modifySymbolData(modifySymbols);
 				meter.prepareMockWin(this.setup.defaultBigWin);
 
-				command = new G.SymbolAnimCommand();
-				command.init(this.setup, [0,1,2], 5, 'm1-sprite__000', true);
-				queue.push(command);
 
-				command = new G.BigWinCommand();
-				command.callNextDelay = 1200;
-				command.init(this.setup);
+				// command = new G.SymbolAnimCommand();
+				// command.init(this.setup, [0,1,2], 5, 'm1-sprite__000', true);
+				// queue.push(command);
 
-				queue.push(command);
+				// command = new G.BigWinCommand();
+				// command.init(this.setup, 5);
+				// command.callNextDelay = 1200;
+				// queue.push(command);
 
-				command = new G.BigWinCommand();
-				command.callNextDelay = 100;
-				command.init(this.setup, true);
+
+				// command = new G.BigWinCommand();
+				// command.callNextDelay = 100;
+				// command.init(this.setup, true);
+
+				// command = new G.RemoveBigWinCommand();
+
+command = new G.BigWinCommand();
+command.init(this.setup, 5);
+command.callNextDelay = 1200;
+
+queue.push(command);
+command = new G.RemoveBigWinCommand();
+command.callNextDelay = 0;
+command.init(this.setup);
 
 				queue.push(command);
 

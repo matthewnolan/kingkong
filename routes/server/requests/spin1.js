@@ -63,7 +63,7 @@ var spinNoWin1 = {
 			"multiplier": 2310000,
 			"linesPlayed": 40
 		},
-		"gaffe": null
+		"gaffee": null
 	},
 	"totalCreditsWon": 0,
 	"casinoContext": null,

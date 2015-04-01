@@ -1096,7 +1096,7 @@ var spin4 = {
 			"multiplier": 2310000,
 			"linesPlayed": 40
 		},
-		"gaffe": {
+		"gaffee": {
 			"bonusReplacement": null,
 			"option": null,
 			"bonusStops": null,

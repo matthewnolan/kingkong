@@ -51,16 +51,16 @@ http://localhost:3000 - runs application.
 
     Controls:
     ---------
-    G: Show Gaff Menu
-    Pinch Out (touch): Show Gaff Menu
-    Pinch In (touch): Hides Gaff Menu
+    G: Show Gaffe Menu
+    Pinch Out (touch): Show Gaffe Menu
+    Pinch In (touch): Hides Gaffe Menu
     Space: Spin Reels
     Swipe Down (touch) : Spin Reels
 
-    Gaff Menu Features:
+    Gaffe Menu Features:
     -------------------
     Play Normal win animation with spin
-    Show M1 Gaff Win animation with spin
+    Show M1 Gaffe Win animation with spin
     Switch between 30/60 FPS
     Switch particle shower on for profiling
 

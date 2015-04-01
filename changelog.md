@@ -2,7 +2,7 @@
 
 
 ####v0.3.3
-- spin evaluation got smarter, win anims should show for all gaffs
+- spin evaluation got smarter, win anims should show for all gaffes
 - new spin evaluation and tests for symbol wins
 - refactoring of CommandQueue queue
 - simplified gameComponents wiring in Game.. now game components wire themselves
@@ -15,8 +15,8 @@
 - jpg sprite sheet
 - parse url params for testing
 - refactor of core components
-- all gaffs added to menu
-- client side gaffing
+- all gaffes added to menu
+- client side gaffeing
 - client side m1 reintroduced
 - custom command
 - replacements implemented
@@ -24,7 +24,7 @@
 - reels changed to reflect new cut size, server tests introduced
 - reels can now be displayed in node in an ascii table)
 - supports.json file added (describes device groups and supported features)
-- client-side m1 gaff updated
+- client-side m1 gaffe updated
 - new symbol data based on original symbol.txt used in setup.json
 - currency add
 - reset createjs.Ticker timing mode to default, it's better in ios safari
@@ -32,12 +32,12 @@
 - texture command change, all keys forced to lower case to avoid problem with mixed case filenames in symbols
 
 ####v0.3.1
-- initial gaffs added to gaff menu
+- initial gaffes added to gaffe menu
 - reel strip animations refactored to support node requests, and custom cut length symbols
 - new class: CustomCommand (to make fake Win Animations easier)
 - before lotsofWin (for symbolAnimation comparison)
 - node: stops added to json
-- node: all gaffs added to api
+- node: all gaffes added to api
 - node: proper reel strip data from shadow of the panther used
 - node: mocha introduced (allows server side tests)
 
@@ -58,7 +58,7 @@
 - Implemented celebration Fireworks
 - Implemented Failsafe Loading (longer initialisation for more reliable anim loading)
 - spritesheets for caching paylines implemented
-- Added Tests and Docs Links to Gaff Menu
+- Added Tests and Docs Links to Gaffe Menu
 - Added MeterComponent consisting of balance/win rollups
 - new class: DJ
 - timerMode RAF sync implemented
@@ -77,7 +77,7 @@
 - fixed CommandQueue loop
 
 ####v0.2.1
-- gaff line 1 implemented
+- gaffe line 1 implemented
 - css overlay
 - corrections to pay line drawing and pre-init rendering
 - implemented cheaper winline shadows (better on mobile)
@@ -88,7 +88,7 @@
 - reels can now modify symbols dynamically
 - reel spin dev mode introduced
 - lua code added to src
-- gaff menu and normal win implemented
+- gaffe menu and normal win implemented
 - lots grunt tasks added to support development
 
 ####v0.1.0

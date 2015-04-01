@@ -7,25 +7,25 @@ var G = G || {};
 	"use strict";
 
 	/**
-	 * A GaffMenu component which you can call show/hide from to show and hide the menu
-	 * should also draw some buttons based on setup.json's gaffs
-	 * @class GaffMenuComponent
+	 * A GaffeMenu component which you can call show/hide from to show and hide the menu
+	 * should also draw some buttons based on setup.json's gaffes
+	 * @class GaffeMenuComponent
 	 * @param version {String}
 	 * @constructor
 	 */
-	var GaffMenuComponent = function(version) {
+	var GaffeMenuComponent = function(version) {
 		this.version = version;
 		this.GameComponent_constructor();
 	};
-	var p = createjs.extend(GaffMenuComponent, G.GameComponent);
-	p.constructor = GaffMenuComponent;
+	var p = createjs.extend(GaffeMenuComponent, G.GameComponent);
+	p.constructor = GaffeMenuComponent;
 
 	/**
 	 * Store the buttons on the menu for deselection purposes
 	 * @property buttons
-	 * @type {G.GaffButton[]}
+	 * @type {G.GaffeButton[]}
 	 */
-	p.gaffButtons = [];
+	p.gaffeButtons = [];
 
 	/**
 	 * A version number which can be shown on the menu.
@@ -36,7 +36,7 @@ var G = G || {};
 	p.version = "";
 
 	/**
-	 * The gaffing buttons get added to this container, which scrolls.
+	 * The gaffeing buttons get added to this container, which scrolls.
 	 * @property hScrollContainer;
 	 * @type {createjs.Container}
 	 * @default null
@@ -97,12 +97,12 @@ var G = G || {};
 		this.hScrollContainer = new createjs.Container();
 		this.addChild(this.hScrollContainer);
 
-		var i, len = this.setup.playModesNew.length, button, data;
+		var i, len = this.setup.gaffeMenu.length, button, data;
 		// console.log(this.setup);
 		for (i = 0; i < len; i++) {
-			data = this.setup.playModesNew[i];
+			data = this.setup.gaffeMenu[i];
 			// console.log('data', data);
-			button = new G.GaffButton();
+			button = new G.GaffeButton();
 			button.init(data.type, 100, 100, 10);
 			button.drawButton();
 			button.x = 20 + i * button.width + i * 10;
@@ -110,7 +110,7 @@ var G = G || {};
 			button.on("click", this.buttonClicked, this);
 			//button.clicked.addOnce(this.buttonClicked, this);
 			this.hScrollContainer.addChild(button);
-			this.gaffButtons.push(button);
+			this.gaffeButtons.push(button);
 		}
 
 		var sceneMask = new createjs.Shape();
@@ -140,7 +140,7 @@ var G = G || {};
 			//console.log('pressmove ::', self.hScrollOffset);
 		});
 
-		var fpsSwitch = new G.GaffButton();
+		var fpsSwitch = new G.GaffeButton();
 		fpsSwitch.init("60 FPS", 70, 60, 10);
 		fpsSwitch.drawButton();
 		fpsSwitch.x = w - fpsSwitch.width - 20;
@@ -149,7 +149,7 @@ var G = G || {};
 		fpsSwitch.on("click", this.fpsClicked, this);
 		fpsSwitch.select();
 
-		var uaButton = new G.GaffButton();
+		var uaButton = new G.GaffeButton();
 		uaButton.init("UA", 70, 60, 10);
 		uaButton.drawButton();
 		uaButton.x = fpsSwitch.x - uaButton.width - 20;
@@ -160,7 +160,7 @@ var G = G || {};
 		}, this);
 
 		//fpsSwitch.clicked.addOnce(this.fpsClicked, this);
-		var testButton = new G.GaffButton();
+		var testButton = new G.GaffeButton();
 		testButton.init("Test", 70, 60, 10);
 		testButton.drawButton();
 		testButton.x = uaButton.x - testButton.width - 20;
@@ -170,7 +170,7 @@ var G = G || {};
 			window.open("/test","_blank");
 		});
 
-		var docsButton = new G.GaffButton();
+		var docsButton = new G.GaffeButton();
 		docsButton.init("Docs", 70, 60, 10);
 		docsButton.drawButton();
 		docsButton.x = testButton.x - docsButton.width - 20;
@@ -180,7 +180,7 @@ var G = G || {};
 			window.open("/doc", "_blank");
 		});
 
-		var currencyButton = new G.GaffButton();
+		var currencyButton = new G.GaffeButton();
 		currencyButton.init("Currency", 70, 60, 10);
 		currencyButton.drawButton();
 		currencyButton.x = docsButton.x - currencyButton.width - 20;
@@ -189,7 +189,7 @@ var G = G || {};
 		currencyButton.on("click", this.changeWinText, this);
 
 
-		var labelTxt = new createjs.Text("Gaff Menu", "17px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
+		var labelTxt = new createjs.Text("Gaffe Menu", "17px Helvetica", createjs.Graphics.getRGB(255,255,126,1));
 		labelTxt.x = 5;
 		labelTxt.y = 5;
 		labelTxt.setBounds(0,0, this.setup.bezelW, this.setup.bezelH);
@@ -278,15 +278,15 @@ var G = G || {};
 	};*/
 
 	/**
-	 * dispatch to SignalDispatcher to update gaff type
+	 * dispatch to SignalDispatcher to update gaffe type
 	 * @method buttonClicked
 	 * @param e
 	 */
 	p.buttonClicked = function(e) {
 		console.log('buttonClicked', this, e.currentTarget);
 		var button = e.currentTarget;
-		this.deselectGaffButtons(button);
-		this.signalDispatcher.gaffSelect.dispatch(button.type);
+		this.deselectGaffeButtons(button);
+		this.signalDispatcher.gaffeSelect.dispatch(button.type);
 		this.hide();
 	};
 
@@ -320,13 +320,13 @@ var G = G || {};
 	};
 
 	/**
-	 * @method deselectGaffButtons
-	 * @param {G.GaffButton} [button] do not deselect this button
+	 * @method deselectGaffeButtons
+	 * @param {G.GaffeButton} [button] do not deselect this button
 	 */
-	p.deselectGaffButtons = function(button) {
-		var i, len = this.gaffButtons.length, tempButton;
+	p.deselectGaffeButtons = function(button) {
+		var i, len = this.gaffeButtons.length, tempButton;
 		for (i  = 0; i < len; i++) {
-			tempButton = this.gaffButtons[i];
+			tempButton = this.gaffeButtons[i];
 			if (!button || button !== tempButton) {
 				tempButton.deselect();
 			} else {
@@ -336,7 +336,7 @@ var G = G || {};
 	};
 
 	/**
-	 * Shows the gaff menu
+	 * Shows the gaffe menu
 	 * @method show
 	 */
 	p.show = function() {
@@ -358,7 +358,7 @@ var G = G || {};
 	};
 
 	/**
-	 * Hides the gaff menu
+	 * Hides the gaffe menu
 	 * @method hide
 	 */
 	p.hide = function() {
@@ -378,6 +378,6 @@ var G = G || {};
 	};
 
 
-	G.GaffMenuComponent = createjs.promote(GaffMenuComponent, "GameComponent");
+	G.GaffeMenuComponent = createjs.promote(GaffeMenuComponent, "GameComponent");
 
 })();

@@ -25,8 +25,8 @@ https://pastee.org/ksghn
 ##SpinResponse - win
 https://pastee.org/psx9j
 
-##SpinRequest – Shadow Diamond, Bonus w/gaffing
+##SpinRequest – Shadow Diamond, Bonus w/gaffeing
 https://pastee.org/xxfes
 
-##SpinResponse – Shadow Diamond, bonus w/gaffing
+##SpinResponse – Shadow Diamond, bonus w/gaffeing
 https://pastee.org/hyar5

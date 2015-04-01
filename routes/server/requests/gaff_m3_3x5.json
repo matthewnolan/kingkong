@@ -391,7 +391,7 @@
       "isBonus": false,
       "messageTypeId": -2,
       "isBonusSet": false,
-      "gaffe": {
+      "gaffee": {
         "bonusReplacement": null,
         "bonusStops": null,
         "option": null,
