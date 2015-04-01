@@ -9,6 +9,7 @@ var G = G || {};
 	/**
 	 * A GaffeMenu component which you can call show/hide from to show and hide the menu
 	 * should also draw some buttons based on setup.json's gaffes
+	 *
 	 * @class GaffeMenuComponent
 	 * @param version {String}
 	 * @constructor
@@ -22,6 +23,7 @@ var G = G || {};
 
 	/**
 	 * Store the buttons on the menu for deselection purposes
+	 *
 	 * @property buttons
 	 * @type {G.GaffeButton[]}
 	 */
@@ -30,6 +32,7 @@ var G = G || {};
 	/**
 	 * A version number which can be shown on the menu.
 	 * nb. do a grunt build:prod to generate the index.html and inject the version number from package.json.
+	 *
 	 * @property version
 	 * @type {string}
 	 */
@@ -37,6 +40,7 @@ var G = G || {};
 
 	/**
 	 * The gaffeing buttons get added to this container, which scrolls.
+	 *
 	 * @property hScrollContainer;
 	 * @type {createjs.Container}
 	 * @default null
@@ -45,10 +49,18 @@ var G = G || {};
 
 	/**
 	 *
+	 *
+	 * @property hScrollOffset
 	 * @type {null}
 	 */
 	p.hScrollOffset = null;
 
+	/**
+	 *
+	 *
+	 * @property
+	 * @type {number}
+	 */
 	p.currentCurrency = 0;
 
 	/**

@@ -8,7 +8,7 @@ var G = G || {};
 
 	/**
 	 * Command will remove a playing big win animation
-	 *
+	 * @deprecated
 	 * @class G.BigWinCommand
 	 * @extends G.Command
 	 * @constructor

@@ -52,7 +52,9 @@ var G = G || {};
 	};
 
 	/**
-	 * Executes the command payload which in this case should either show or hide a BigWin animation
+	 * Play a Big Win Animation
+	 *
+	 *
 	 * @method execute
 	 */
 	p.execute = function() {

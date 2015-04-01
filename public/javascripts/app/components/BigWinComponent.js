@@ -190,6 +190,10 @@ var G = G || {};
 	};
 
 	/**
+	 * Plays a big win animation, which currently is a 3x5 m1 animation
+	 * If 3x3 or 3x4 type animations should play, we will play a scaled up version of symbolAnim.
+	 * If 3x5 type animation and is not an m1... we'll play m1 anyway.
+	 *
 	 * @method playAnimation
 	 * @param type - big win animation type
 	 * @param frameLabel - the small symbol frameLabel

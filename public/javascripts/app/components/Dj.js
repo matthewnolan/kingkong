@@ -20,12 +20,16 @@ var G = G || {};
     p.constructor = Dj;
 
 	/**
+	 * If set to true, don't play any app sounds
 	 *
+	 * @property isMuted
 	 * @type {boolean}
 	 */
 	p.isMuted = false;
 
     /**
+	 * initialise component and signal handling
+	 *
      * @method init
      * @param setup
      * @param signalDispatcher
@@ -37,22 +41,37 @@ var G = G || {};
 		this.isMuted = !setup.loadSounds;
     };
 
+	/**
+	 * @deprecated
+	 * @method nameDrop
+	 * @param name
+	 */
     p.nameDrop = function(name) {
         console.log("my homie " + name);
     };
 
+	/**
+	 * Plays a sound if not muted
+	 *
+	 * @method playSound
+	 * @param {string} whatSound sound name as defined in setup.json sounds manifest
+	 */
     p.playSound = function(whatSound) {
 		if (!this.isMuted) {
 			console.log("playing this sound: " + whatSound);
 			createjs.Sound.play(whatSound);
 		}
     };
-    
+
+	/**
+	 * Stops a playing sound
+	 *
+	 * @method stopSound
+	 * @param whatSound
+	 */
     p.stopSound = function(whatSound) {
-		if (!this.isMuted) {
-			console.log("stopping this sound: " + whatSound);
-			createjs.Sound.stop(whatSound);
-		}
+		console.log("stopping this sound: " + whatSound);
+		createjs.Sound.stop(whatSound);
     };
 
     G.Dj = createjs.promote(Dj, "GameComponent");
