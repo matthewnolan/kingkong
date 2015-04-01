@@ -112,19 +112,13 @@ var G = G || {};
 				meter.prepareMockWin(this.setup.defaultBigWin);
 
 				command = new G.BigWinCommand();
-				command.init(this.setup, [0,1,2], 5, 'm1-sprite__000');
-				command.callNextDelay = 500;
-				queue.push(command);
-
-				command = new G.BigWinCommand();
+				command.init(this.setup, 5);
 				command.callNextDelay = 1200;
-				command.init(this.setup);
-
 				queue.push(command);
 
-				command = new G.BigWinCommand();
+				command = new G.RemoveBigWinCommand();
 				command.callNextDelay = 0;
-				command.init(this.setup, true);
+				command.init(this.setup);
 
 				queue.push(command);
 
