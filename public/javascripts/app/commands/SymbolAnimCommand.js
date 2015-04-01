@@ -31,6 +31,11 @@ var G = G || {};
 	p.frameLabel = "";
 
 	/**
+	 * @TODO del this if dont need
+	*/
+	p.shouldUseGaffSprite = false;
+
+	/**
 	 * initialise setup, gameComponent and command data
 	 * @method init
 	 * @param {Object} setup
@@ -38,7 +43,7 @@ var G = G || {};
 	 * @param {Number} numSquares
 	 * @param {String} frameLabel
 	 */
-	p.init = function(setup, paylineIndexes, numSquares, frameLabel) {
+	p.init = function(setup, paylineIndexes, numSquares, frameLabel, shouldUseGaffSprite) {
 		this.Command_init(setup);
 		this.winLineData = [];
 		var i, len = paylineIndexes.length;
@@ -48,6 +53,7 @@ var G = G || {};
 		this.gameComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		this.numSquares = numSquares;
 		this.frameLabel = frameLabel;
+		this.shouldUseGaffSprite = shouldUseGaffSprite;
 	};
 
 	/**
@@ -60,7 +66,13 @@ var G = G || {};
 		//@todo send the short frameLabel
 		var i, len = this.paylines.length;
 		for (i = 0; i < len; i++) {
-			this.gameComponent.showAnimsOnWinLine(this.paylines[i], this.numSquares, this.frameLabel.toLowerCase());
+
+			if (this.shouldUseGaffSprite){
+				this.gameComponent.playGaffAnimsOnWinLine(this.paylines[i], this.numSquares, "m1-sprite__000");
+			} else {
+				this.gameComponent.showAnimsOnWinLine(this.paylines[i], this.numSquares, this.frameLabel.toLowerCase());
+			}
+
 		}
 	};
 

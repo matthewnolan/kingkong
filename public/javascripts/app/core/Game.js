@@ -516,7 +516,7 @@ this.G = this.G || {};
 
 		//init symbolWins
 		var symbolWinsComponent = new G.SymbolWinsComponent();
-		symbolWinsComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetSymbolAnims);
+		symbolWinsComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetSymbolAnims, this.assets.spriteSheetBigWinAnimSymbol);
 		symbolWinsComponent.cacheCompleted.add(this.checkCacheInitialised, this);
 		symbolWinsComponent.x = bezelMarginL;
 		symbolWinsComponent.y = bezelMarginT;

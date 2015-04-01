@@ -111,9 +111,8 @@ var G = G || {};
 				reels.modifySymbolData(modifySymbols);
 				meter.prepareMockWin(this.setup.defaultBigWin);
 
-				command = new G.BigWinCommand();
-				command.init(this.setup, [0,1,2], 5, 'm1-sprite__000');
-				command.callNextDelay = 500;
+				command = new G.SymbolAnimCommand();
+				command.init(this.setup, [0,1,2], 5, 'm1-sprite__000', true);
 				queue.push(command);
 
 				command = new G.BigWinCommand();
@@ -123,14 +122,11 @@ var G = G || {};
 				queue.push(command);
 
 				command = new G.BigWinCommand();
-				command.callNextDelay = 0;
+				command.callNextDelay = 100;
 				command.init(this.setup, true);
 
 				queue.push(command);
 
-				command = new G.SymbolAnimCommand();
-				command.init(this.setup, [0,1,2], 5, 'M1intro__001_resume');
-				queue.push(command);
 
 				var winLineIndexes = [];
 				var winningLines = this.setup.winLines;
