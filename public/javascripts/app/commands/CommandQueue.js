@@ -93,6 +93,7 @@ var G = G || {};
 	 *
 	 * @method setupQueue
 	 * @param queue
+	 * @todo separate client and server gaffing win queues
 	 */
 	p.setupQueue = function(queue) {
 		console.log('this.setupQueue=', this.gaffeType, queue);
@@ -103,7 +104,6 @@ var G = G || {};
 
 		if (queue) {
 			this.queue = queue;
-			console.log('setupQueue=', this.queue);
 		}
 	};
 

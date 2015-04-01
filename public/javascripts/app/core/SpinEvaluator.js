@@ -71,13 +71,13 @@ var G = G || {};
 	 * @method init
 	 * @param {Object} setup
 	 * @param {G.SignalDispatcher} signalDispatcher
-	 * @param {G.CommandQueue} commandQueue
+	 * @param {G.CommandQueue} winAnimationQueue
 	 * @param {Object} slotInit
 	 */
-	p.init = function(setup, signalDispatcher, commandQueue, slotInit) {
+	p.init = function(setup, signalDispatcher, winAnimationQueue, slotInit) {
 		this.setup = setup;
 		this.signalDispatcher = signalDispatcher;
-		this.winAnimationQueue = commandQueue;
+		this.winAnimationQueue = winAnimationQueue;
 		this.slotInit = slotInit;
 		this.replacementLabel = this.setup.reelAnimation.symbols.replacement.frameLabel;
 		this.symbolData = this.setup.reelAnimation.symbols.data;
@@ -103,11 +103,8 @@ var G = G || {};
 	 */
 	p.queueWinAnimation = function(spinResponse) {
 
-		console.warn('queueWinAnimation', spinResponse);
-
 		var i, len, self = this;
 		var commands = [];
-		var isBigWin = false;
 		var numRecords = spinResponse.spinRecords.length;
 		if (numRecords > 1) {
 			console.warn("multiple spin records is not supported yet");
@@ -120,10 +117,11 @@ var G = G || {};
 			return;
 		}
 
-		console.log('queueWinAnimation=', record);
 		var reelStrips = this.slotInit.reelStrips;
 		var symbolsPerReel = this.setup.symbolsPerReel;
 		var replacementSymbolIndex = this.setup.reelAnimation.symbols.replacement.index;
+
+
 		this.replacements = _.map(record.replacement, function(replacementStr) {
 			return parseInt(replacementStr, 10);
 		});
@@ -138,7 +136,6 @@ var G = G || {};
 			var vStrip = reelStrips[i].slice(stopIndex, stopIndex + symbolsPerReel);
 			_.each(vStrip, pushSymbol);
 		}
-		console.log('visibleSymbolIndexes', visibleSymbolIndexes);
 		var maxSymbolsNum = visibleSymbolIndexes.length;
 		var winningSymbols = _.filter(visibleSymbolIndexes, function(symbolIndex) {
 			return symbolIndex === replacementSymbolIndex;
@@ -146,30 +143,7 @@ var G = G || {};
 
 		var command;
 		var paylineIndexes = [];
-		//var spriteSymbolMap = this.setup.reelAnimation.symbols.spriteMap;
 
-		if (winningSymbols.length === maxSymbolsNum) {
-			console.warn("Big Win Anim: ", this.replacements);
-			isBigWin = true;
-			var winningItems = _.filter(this.replacements, function(symbolIndex) {
-				return symbolIndex === self.replacements[0];
-			});
-
-			console.log("winningItemsLen=", winningItems.length);
-			switch(winningItems.length) {
-				case 5 :
-					console.log('play 3x5 win anim typeId=', winningItems[0]);
-					break;
-				case 4 :
-					console.log('play 3x4 win anim typeId=', winningItems[0]);
-					break;
-				case 3 :
-					console.log('play 3x4 win anim typeId=', winningItems[0]);
-					break;
-				default :
-					throw "big win anim error, not enough replacements for big win: " + winningItems.length + " should be greater than 2";
-			}
-		}
 
 		var mapFrameLabels = function(data, index) {
 			if (data.frameLabel === self.replacementLabel) {
@@ -198,8 +172,46 @@ var G = G || {};
 		command.init(this.setup, paylineIndexes, 0);
 		commands.unshift(command);
 
+		if (winningSymbols.length === maxSymbolsNum) {
+			var replacementIndex = this.replacements[0];
+			var numSymbols = _.filter(this.replacements, function(symbolIndex) {
+				return symbolIndex === replacementIndex;
+			}).length;
+			var winningFrameLabel = this.symbolData[replacementIndex].frameLabel;
+			this.insertBigWinCommands(commands, numSymbols, winningFrameLabel);
+		}
+
 		this.winAnimationQueue.setupQueue(commands);
 	};
+
+	/**
+	 * Adds big win animation to the beginning of a win animation command queue
+	 *
+	 * @method insertBigWinCommands
+	 * @param commands
+	 * @param numSymbols
+	 * @param winningFrameLabel
+	 */
+	p.insertBigWinCommands = function(commands, numSymbols, winningFrameLabel) {
+		var command;
+		var useCombined = false;
+
+		command = new G.RemoveBigWinCommand();
+		command.callNextDelay = 500;
+		commands.unshift(command);
+
+		command = new G.BigWinCommand();
+		command.init(this.setup, numSymbols);
+		command.callNextDelay = 2000;
+		commands.unshift(command);
+
+		//@todo set to true when combined sprites can be used
+		command = new G.SymbolAnimCommand();
+		command.init(this.setup, [0,1,2], numSymbols, winningFrameLabel, true, useCombined);
+		command.callNextDelay = 500;
+		commands.unshift(command);
+	};
+
 
 	/**
 	 * Takes an array of frameLabels along a payline and the winningType in spinResponse
@@ -214,23 +226,25 @@ var G = G || {};
 	p.getNumWinsOnPayline = function(frameLabels, winningType) {
 		var self = this;
 		var i, len = frameLabels.length;
-		//var wildSymbolId = 0;
+		var wildSymbolId = 0;
+		var winningSymbolCount = 0;
 
 		var getSymbol = function(label) {
-			console.log('getSymbol', self.symbolData, label);
 			return _.find(self.symbolData, function(symbol) {
 				return symbol.frameLabel === label;
 			});
 		};
 
-		var symbols = [];
 		for (i = 0; i < len; i++) {
-			symbols.push(getSymbol(frameLabels[i]));
+			var symbol = getSymbol(frameLabels[i]);
+			if (symbol.winType === winningType || symbol.winType === wildSymbolId) {
+				winningSymbolCount++;
+			} else {
+				return winningSymbolCount;
+			}
 		}
 
-		return _.filter(symbols, function(data) {
-			return data.winType === winningType;
-		}).length;
+		return winningSymbolCount;
 	};
 
 	/**
@@ -271,7 +285,6 @@ var G = G || {};
 	p.handleReelSpinComplete = function() {
 		console.log('handleReelSpinComplete', this.winAnimationQueue.gaffeType);
 		this.winAnimationQueue.play();
-		//allow client side gaffes:
 		if (this.winAnimationQueue.gaffeType.indexOf('client') >= 0) {
 			this.doClientSideGaffe();
 		}

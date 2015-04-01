@@ -20,25 +20,27 @@ var G = G || {};
 	p.constructor = BigWinCommand;
 
 	/**
-	 * Set this flag to true if this command should remove a previously played big win
+	 * Defines the big win animation type to play
 	 *
-	 * @property shouldClearExisting
-	 * @type {boolean}
-	 * @default false
+	 * - 3: 3x3 big win
+	 * - 4: 3x4 big win
+	 * - 5: 3x5 big win
+	 *
+	 * @property animationType
+	 * @type {number}
 	 */
-	p.shouldClearExisting = false;
+	p.animationType = 0;
 
 	/**
 	 * initialise command data and component
 	 *
 	 * @method init
 	 * @param {Object} setup
-	 * @param {boolean} shouldClearExisting -
+	 * @param {number} animationType
 	 */
-	p.init = function(setup, shouldClearExisting) {
+	p.init = function(setup, animationType) {
 		this.Command_init(setup);
-		this.shouldClearExisting = shouldClearExisting;
-		this.gameComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
+		this.animationType = animationType;
 	};
 
 	/**
@@ -46,11 +48,8 @@ var G = G || {};
 	 * @method execute
 	 */
 	p.execute = function() {
-		if (this.shouldClearExisting) {
-			this.gameComponent.hideAnimation();
-		} else {
-			this.gameComponent.playAnimation();
-		}
+		var bigWinComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
+		bigWinComponent.playAnimation(this.animationType);
 	};
 
 	G.BigWinCommand = createjs.promote(BigWinCommand, "Command");
