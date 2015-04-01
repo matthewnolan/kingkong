@@ -8,9 +8,6 @@
   "failSafeInitisalisation": 0,
   "enableDesktopView": 1,
   "domHelpers": 0,
-  "spinOnLoad": "deprecated",
-  "playWinAfterSpin": "deprecated",
-  "useLoader": "deprecated",
   "loadSounds": 0,
   "enableWinLineShadows": 0,
   "cheaperWinLineShadows": 0,
@@ -23,7 +20,6 @@
   "bezelW": 602,
   "bezelMarginL": 32,
   "bezelMarginT": 49,
-  "bezelHeightTotal": "deprecated",
   "symbolsPerReel": 3,
   "symbolsPerReelPadding": 1,
   "howManyReelsTallIsReel": 9,
@@ -31,9 +27,6 @@
   "symbolH": 103,
   "symbolMarginBottom": 0,
   "reelMarginRight": 5,
-
-  "spinState": "deprecated",
-  "isMobile": "deprecated",
   "defaultBet": 50,
   "defaultBigWin" : 140000,
   "defaultCredits": 10340,
@@ -84,6 +77,12 @@
     {"src": "assets/sprites/static-images.json", "id": "staticImages", "type":"spritesheet"},
     {"src": "assets/sprites/testingNew.json", "id": "symbolAnims", "type":"spritesheet"}
   ],
+
+  "spritesScaleFactor": {
+    "bigWinAnimSymbol": 0.72,
+    "staticImages": 1,
+    "symbolAnims": 0.83333
+  },
 
   "winLines": [
     {

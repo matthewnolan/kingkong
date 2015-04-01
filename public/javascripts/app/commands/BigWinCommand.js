@@ -32,15 +32,23 @@ var G = G || {};
 	p.animationType = 0;
 
 	/**
+	 *
+	 * @type {string}
+	 */
+	p.animationFrameLabel = "";
+
+	/**
 	 * initialise command data and component
 	 *
 	 * @method init
 	 * @param {Object} setup
 	 * @param {number} animationType
+	 * @param {string} animationFrameLabel
 	 */
-	p.init = function(setup, animationType) {
+	p.init = function(setup, animationType, animationFrameLabel) {
 		this.Command_init(setup);
 		this.animationType = animationType;
+		this.animationFrameLabel = animationFrameLabel;
 	};
 
 	/**
@@ -49,7 +57,7 @@ var G = G || {};
 	 */
 	p.execute = function() {
 		var bigWinComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
-		bigWinComponent.playAnimation(this.animationType);
+		bigWinComponent.playAnimation(this.animationType, this.animationFrameLabel);
 	};
 
 	G.BigWinCommand = createjs.promote(BigWinCommand, "Command");

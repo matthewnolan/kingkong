@@ -524,7 +524,7 @@ this.G = this.G || {};
 		symbolWinsComponent.drawSprites();
 
 		var bigWinComponent = new G.BigWinComponent();
-		bigWinComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetBigWinAnimSymbol);
+		bigWinComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetBigWinAnimSymbol, this.assets.spriteSheetSymbolAnims);
 		bigWinComponent.cacheCompleted.add(this.checkCacheInitialised, this);
 		bigWinComponent.x = bezelMarginL;
 		bigWinComponent.y = bezelMarginT;

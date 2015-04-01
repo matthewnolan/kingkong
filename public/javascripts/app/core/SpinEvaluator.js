@@ -196,12 +196,8 @@ var G = G || {};
 		var command;
 		var useCombined = false;
 
-		command = new G.RemoveBigWinCommand();
-		command.callNextDelay = 500;
-		commands.unshift(command);
-
 		command = new G.BigWinCommand();
-		command.init(this.setup, numSymbols);
+		command.init(this.setup, numSymbols, winningFrameLabel + "intro__001");
 		command.callNextDelay = 2000;
 		commands.unshift(command);
 
