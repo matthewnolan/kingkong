@@ -58,6 +58,11 @@ var G = G || {};
 	p.shouldPlayCombinedSprite = false;
 
 	/**
+	 * @TODO del this if dont need
+	*/
+	p.shouldUseGaffSprite = false;
+
+	/**
 	 * initialise setup, gameComponent and command data
 	 *
 	 * @method init
@@ -68,6 +73,7 @@ var G = G || {};
 	 * @param {boolean} autoAppend
 	 * @param {boolean} shouldPlayCombinedSprite
 	 */
+
 	p.init = function(setup, paylineIndexes, numSymbols, frameLabel, autoAppend, shouldPlayCombinedSprite) {
 		this.Command_init(setup);
 		var i, len = paylineIndexes.length;
@@ -79,6 +85,7 @@ var G = G || {};
 		this.frameLabel = frameLabel;
 		this.autoAppend = autoAppend || this.autoAppend;
 		this.shouldPlayCombinedSprite = shouldPlayCombinedSprite || this.shouldPlayCombinedSprite;
+
 	};
 
 	/**

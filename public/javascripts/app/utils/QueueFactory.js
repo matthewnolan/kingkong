@@ -111,20 +111,34 @@ var G = G || {};
 				reels.modifySymbolData(modifySymbols);
 				meter.prepareMockWin(this.setup.defaultBigWin);
 
-				command = new G.BigWinCommand();
-				command.init(this.setup, 5);
-				command.callNextDelay = 1200;
+
+				// command = new G.SymbolAnimCommand();
+				// command.init(this.setup, [0,1,2], 5, 'm1-sprite__000', true);
+				// queue.push(command);
+
+				// command = new G.BigWinCommand();
+				// command.init(this.setup, 5);
+				// command.callNextDelay = 1200;
+				// queue.push(command);
+
+
+				// command = new G.BigWinCommand();
+				// command.callNextDelay = 100;
+				// command.init(this.setup, true);
+
+				// command = new G.RemoveBigWinCommand();
+
+command = new G.BigWinCommand();
+command.init(this.setup, 5);
+command.callNextDelay = 1200;
+
+queue.push(command);
+command = new G.RemoveBigWinCommand();
+command.callNextDelay = 0;
+command.init(this.setup);
+
 				queue.push(command);
 
-				command = new G.RemoveBigWinCommand();
-				command.callNextDelay = 0;
-				command.init(this.setup);
-
-				queue.push(command);
-
-				command = new G.SymbolAnimCommand();
-				command.init(this.setup, [0,1,2], 5, 'M1intro__001_resume');
-				queue.push(command);
 
 				var winLineIndexes = [];
 				var winningLines = this.setup.winLines;

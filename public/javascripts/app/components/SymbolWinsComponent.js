@@ -32,6 +32,9 @@ var G = G || {};
 	 */
 	p.symbolAnims = null;
 
+
+	p.gaffAnims = null;
+
 	/**
 	 * Scale the symbols by this amount, determined by the scale reduction (n) used in Texturepacker to the ratio 1/n
 	 *
@@ -47,7 +50,11 @@ var G = G || {};
 	 * @property symbolsMatrix
 	 * @type {createjs.Sprite[][]}
 	 */
-	p.symbolsMatrix = [];
+	p.symbolsMatrix = [];	
+
+
+
+	p.gaffSymbolsMatrix = [];
 
 	/**
 	 * Store a reference to any sprite currently playing an animation.
@@ -80,9 +87,10 @@ var G = G || {};
 	 * @param {G.SignalDispatcher} signalDispatcher
 	 * @param {createjs.SpriteSheet} symbolAnims - the data object returned by the preloader when loading this symbol_anims.json
 	 */
-	p.init = function(setup, signalDispatcher, symbolAnims) {
+	p.init = function(setup, signalDispatcher, symbolAnims, gaffAnims) {
 		this.GameComponent_init(setup, signalDispatcher);
 		this.symbolAnims = symbolAnims;
+		this.gaffAnims = gaffAnims;
 		this.scaleFactor = 1 / setup.spritesScaleFactor.symbolAnims;
 	};
 
@@ -119,6 +127,8 @@ var G = G || {};
 	};
 
 
+
+
 	/**
 	 * Draws a symbol sprite on each visible symbol on the reels
 	 *
@@ -126,7 +136,7 @@ var G = G || {};
 	 */
 	p.drawSprites = function() {
 		var spritesheet = this.symbolAnims;
-		var i, j, sprite;
+		var i, j, sprite, gaffSprite;
 		var reelLen = this.setup.numberOfReels;
 		var symbolLen = this.setup.symbolsPerReel;
 		var symbolW = this.setup.symbolW;
@@ -138,6 +148,10 @@ var G = G || {};
 		for (i = 0; i < reelLen; i++) {
 
 			this.symbolsMatrix.push([]);
+
+			this.gaffSymbolsMatrix.push([]);
+
+
 
 			for (j = 0; j < symbolLen; j++) {
 				sprite = new createjs.Sprite(spritesheet, 0);
@@ -152,6 +166,15 @@ var G = G || {};
 					G.Utils.callLater(this.playThisSprite, [sprite, "m1intro__001"], this, 0);
 				}
 				this.initialisedSpritesNum++;
+
+
+				gaffSprite = new createjs.Sprite(this.gaffAnims, 0);
+				gaffSprite.x = i * symbolW + i * reelMarginR;
+				gaffSprite.y = j * symbolH + j * symbolMarginB;
+				gaffSprite.scaleX = gaffSprite.scaleY = 1/0.7;
+				this.addChild(gaffSprite);
+				this.gaffSymbolsMatrix[i].push(gaffSprite);
+				gaffSprite.visible = false;				
 			}
 		}
 	};
@@ -243,6 +266,20 @@ var G = G || {};
 		for (i = 0; i < winSquaresNum; i++) {
 			lineIndex = winLineData[i];
 			var sprite = this.symbolsMatrix[i][lineIndex];
+			this.playThisSprite(sprite, frameLabel, autoAppend);
+		}
+	};	
+
+
+	p.playGaffAnimsOnWinLine = function(winLineData, winSquaresNum, frameLabel, autoAppend) {
+		var i, len = winLineData.length, lineIndex;
+		if (winSquaresNum > len) {
+			throw "Maximum number of winSquares exceeded";
+		}
+
+		for (i = 0; i < winSquaresNum; i++) {
+			lineIndex = winLineData[i];
+			var sprite = this.gaffSymbolsMatrix[i][lineIndex];
 			this.playThisSprite(sprite, frameLabel, autoAppend);
 		}
 	};
