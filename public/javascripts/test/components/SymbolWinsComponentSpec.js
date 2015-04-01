@@ -16,7 +16,12 @@ describe("SymbolWinsComponent Test", function () {
 			symbolH: 110,
 			reelMarginRight: 10,
 			symbolMarginBottom: 10,
-			failSafeInitialisation: 0
+			failSafeInitialisation: 0,
+			spritesScaleFactor: {
+				bigWinAnimSymbol: 0.72,
+				staticImages: 1,
+				symbolAnims: 0.83333
+			}
 		};
 		signalDispatcher = sinon.createStubInstance(G.SignalDispatcher);
 		symbolAnims = sinon.createStubInstance(createjs.SpriteSheet);
@@ -28,7 +33,7 @@ describe("SymbolWinsComponent Test", function () {
 	});
 
 	it("Class vars are set correctly", function () {
-		expect(this.class.SCALE_FACTOR).toEqual(1/0.83333);
+		expect(this.class.scaleFactor).toEqual(null);
 		expect(this.class.symbolAnims).toBeNull();
 		expect(this.class.symbolsMatrix).toEqual([]);
 		expect(this.class.currentlyPlayingSprites).toEqual([]);

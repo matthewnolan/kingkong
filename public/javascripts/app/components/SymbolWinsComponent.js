@@ -83,7 +83,7 @@ var G = G || {};
 	p.init = function(setup, signalDispatcher, symbolAnims) {
 		this.GameComponent_init(setup, signalDispatcher);
 		this.symbolAnims = symbolAnims;
-		this.scaleFactor = 1 / this.setup.spritesScaleFactor.symbolAnims;
+		this.scaleFactor = 1 / setup.spritesScaleFactor.symbolAnims;
 	};
 
 	/**
