@@ -20,9 +20,6 @@ app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.set('views', path.join(__dirname, 'views/'));
 
-var sendTests = function(req, res) {
-	res.sendfile(__dirname + "/public/tests.html");
-};
 
 var renderTests = function(req, res) {
 	res.render('test');

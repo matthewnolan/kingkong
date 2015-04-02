@@ -50,7 +50,7 @@ module.exports = function (grunt) {
 				version: '2.1.3',
 				host : 'http://127.0.0.1:<%=connect.phantom.options.port%>/',
 				outfile : 'public/_SpecRunner.html',
-				keepRunner: true
+				keepRunner: false
 			}
 		},
 

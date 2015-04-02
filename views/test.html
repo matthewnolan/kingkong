@@ -10,6 +10,7 @@
     <link rel="icon" type="image/png" href="assets/favicon/favicon-16x16.png" sizes="16x16">
     <link rel="stylesheet" href="stylesheets/jasmine.css">
 
+    <!-- Include Application Deps -->
     <% include partials/src-dev %>
 
     <!-- Test Vendor Deps -->
@@ -21,26 +22,36 @@
     <script src="javascripts/vendor/jasmine-signals/jasmine-signals.js"></script>
     <script src="javascripts/vendor/js-imagediff/imagediff.js"></script>
 
-    <!-- Test Helpers -->
-    <script src="javascripts/test/utils/TestHelpersSpec.js"></script>
-
-    <!-- Test Specs -->
+    <!-- Tests -->
     <script src="javascripts/test/MainSpec.js"></script>
-    <script src="javascripts/test/core/PreloaderSpec.js"></script>
-    <script src="javascripts/test/core/GameSpec.js"></script>
-    <script src="javascripts/test/core/ServerInterfaceSpec.js"></script>
-    <script src="javascripts/test/core/SignalDispatcherSpec.js"></script>
-    <script src="javascripts/test/commands/CommandSpec.js"></script>
+    <script src="javascripts/test/commands/BigWinCommandSpec.js"></script>
     <script src="javascripts/test/commands/CommandQueueSpec.js"></script>
+    <script src="javascripts/test/commands/CommandSpec.js"></script>
+    <script src="javascripts/test/commands/CustomCommandSpec.js"></script>
+    <script src="javascripts/test/commands/FireworksCommandSpec.js"></script>
+    <script src="javascripts/test/commands/SymbolAnimCommandSpec.js"></script>
     <script src="javascripts/test/commands/WinLineCommandSpec.js"></script>
+    <script src="javascripts/test/components/BigWinComponentSpec.js"></script>
+    <script src="javascripts/test/components/DjSpec.js"></script>
+    <script src="javascripts/test/components/GaffeButtonSpec.js"></script>
+    <script src="javascripts/test/components/GaffeMenuComponentSpec.js"></script>
     <script src="javascripts/test/components/GameComponentSpec.js"></script>
+    <script src="javascripts/test/components/MeterComponentSpec.js"></script>
+    <script src="javascripts/test/components/ParticlesComponentSpec.js"></script>
     <script src="javascripts/test/components/ReelSpec.js"></script>
     <script src="javascripts/test/components/ReelsComponentSpec.js"></script>
     <script src="javascripts/test/components/SymbolWinsComponentSpec.js"></script>
-    <script src="javascripts/test/components/WinLinesComponentSpec.js"></script>
     <script src="javascripts/test/components/WinLineSpec.js"></script>
-    <script src="javascripts/test/components/DjSpec.js"></script>
+    <script src="javascripts/test/components/WinLinesComponentSpec.js"></script>
+    <script src="javascripts/test/core/GameDataSpec.js"></script>
+    <script src="javascripts/test/core/GameSpec.js"></script>
+    <script src="javascripts/test/core/PreloaderSpec.js"></script>
+    <script src="javascripts/test/core/ServerInterfaceSpec.js"></script>
+    <script src="javascripts/test/core/SignalDispatcherSpec.js"></script>
+    <script src="javascripts/test/core/SpinEvaluatorSpec.js"></script>
     <script src="javascripts/test/utils/QueueFactorySpec.js"></script>
+    <script src="javascripts/test/utils/TestHelpersSpec.js"></script>
+    <script src="javascripts/test/utils/UtilsSpec.js"></script>
 </head>
 <body>
 </body>
