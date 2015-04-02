@@ -184,14 +184,15 @@ var G = G || {};
 	};
 
 	/**
-	 *
+	 * Gaffe spin requests handled by reelsComponent so that it knows a spin has been requested.
+	 * Calls ServerInterface to make an api request for the gaffe (requestUrl)
 	 *
 	 * @method handleGaffSpinRequest
-	 * @param request
+	 * @param requestUrl
 	 */
-	p.handleGaffeSpinRequest = function(request) {
+	p.handleGaffeSpinRequest = function(requestUrl) {
 		this.spinRequested = true;
-		this.serverInterface.requestGaffeSpin(request)
+		this.serverInterface.requestGaffeSpin(requestUrl);
 	};
 
 	/**
