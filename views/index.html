@@ -66,6 +66,13 @@
 
 
 <script>
+
+    <%if (prod) { %>
+        var clientServer = {};
+        clientServer.enviroment = "prod";
+    <% } %>
+
+
     (function(window) {
         /**
          * Application Entry Point
@@ -73,7 +80,10 @@
         var main = new G.Main();
         main.init();
 
+
     })(window);
+
+
 </script>
 </body>
 </html>

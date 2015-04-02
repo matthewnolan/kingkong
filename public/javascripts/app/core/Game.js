@@ -331,6 +331,11 @@ this.G = this.G || {};
 	p.onSetupLoaded = function(setup) {
 		this.setup = setup;
 
+		// TODO andy how to do this without fail test onSetupLoaded function should save the setup in this class
+		// if (G.Utils.serverParams["enviroment"] === "prod"){
+		// 	this.setup.enableDesktopView = 1;
+		// }
+
 		if (this.setup.enableDesktopView && device.desktop()) {
 			this.STAGE_SCALE_MODE = "NO_SCALE";
 			var body = document.querySelector("body");

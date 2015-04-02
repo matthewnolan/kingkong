@@ -24,6 +24,7 @@ var G = G || {};
 	 */
 	Utils.init = function() {
 		Utils.parseQueryString();
+		Utils.parseClientServerObj();
 	};
 
 	/**
@@ -50,6 +51,16 @@ var G = G || {};
 	 * @type {{}}
 	 */
 	Utils.params = {};
+
+
+	/**
+	 * Global object to store enviroment vars passed from express 
+	 *
+	 * @type {{}}
+	 */
+	Utils.serverParams = {};
+
+
 
 	/**
 	 * Wrapper function useful for allowing setTimeout to be used inside loops where creating new functions is inefficient
@@ -121,6 +132,22 @@ var G = G || {};
 		}
 
 		G.Utils.params = params;
+	};
+
+
+	Utils.parseClientServerObj = function() {
+		// clientServer should be a var sitting in the global space, located in index.htm
+		var clientServer = clientServer || null;
+		if (typeof clientServer === null) {
+			return false;
+		}
+		var serverParams = {};
+
+		for (var prop in clientServer) {
+			serverParams[prop] = clientServer[prop];
+		}
+
+		G.Utils.serverParams = serverParams;
 	};
 
 
