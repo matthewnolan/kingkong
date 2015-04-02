@@ -25,7 +25,11 @@
     <meta name="msapplication-TileImage" content="assets/favicon/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <script src="javascripts/dist/kingkong.min.js"></script>
+    <%if (prod) { %>
+        <% include partials/src-min %>
+    <% } else { %>
+        <% include partials/src-dev %>
+    <% } %>
 
     <link rel="stylesheet" href="stylesheets/style.css">
 </head>
@@ -60,6 +64,7 @@
     </div>
 </div>
 
+
 <script>
     (function(window) {
         /**
@@ -68,10 +73,6 @@
         var main = new G.Main();
         main.init();
 
-        /**
-         * DOM Events for development
-         * @param val
-         */
     })(window);
 </script>
 </body>

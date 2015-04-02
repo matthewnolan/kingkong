@@ -5,12 +5,11 @@ describe("ReelsComponent Test", function () {
 
 	beforeEach(function () {
 		this.class = new G.ReelsComponent();
-		sinon.stub(this.class, "initDomEvents");
 		G.Utils.shuffle = jasmine.createSpy("Utils.shuffle");
 	});
 
 	afterEach(function () {
-		this.class.initDomEvents.restore();
+
 	});
 
 	it("Class can be instantiated", function () {

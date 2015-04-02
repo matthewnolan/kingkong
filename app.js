@@ -20,22 +20,24 @@ app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.set('views', path.join(__dirname, 'views/'));
 
-var sendIndex = function (req, res) {
-	res.sendfile(__dirname + "/public/index.html");
-};
-
 var sendTests = function(req, res) {
 	res.sendfile(__dirname + "/public/tests.html");
 };
 
-var sendClassStructure = function(req, res) {
-	res.sendfile(__dirname + "/src/architecture/ClassStructure.pdf");
-};
-
-app.get('/', sendIndex);
 app.get('/test', sendTests);
 app.get('/tests', sendTests);
-app.get('/classes', sendClassStructure);
+
+app.get('/', function(req, res) {
+	res.render('index', {
+		prod: true
+	});
+});
+
+app.get('/dev', function(req, res) {
+	res.render('index', {
+		prod: false
+	});
+});
 
 //configure mock node server api
 app.use('/api', require('./routes/server/api').api);

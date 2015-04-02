@@ -13,14 +13,6 @@ module.exports = function(grunt) {
 		grunt.file.delete('.temp/');
 	});
 
-	grunt.registerTask('copy-prod-index', 'Copying html template for minified js (index.html)', function() {
-		grunt.file.copy('src/html-templates/index-prod.html', 'public/index.html');
-	});
-
-	grunt.registerTask('copy-dev-index', 'Copying html template for un-concatenated development files (index.html)', function() {
-		grunt.file.copy('src/html-templates/index-dev.html', 'public/index.html');
-	});
-
 	grunt.registerTask('easel-packer', 'EaselPacking spritesheet json like a boss...', function() {
 
 		var arr = grunt.file.expand({}, 'src/texturepacker/*.json');
