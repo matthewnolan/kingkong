@@ -1,3 +1,4 @@
+// Express 4
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -19,7 +20,6 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.set('views', path.join(__dirname, 'views/'));
-
 
 var renderTests = function(req, res) {
 	res.render('test');

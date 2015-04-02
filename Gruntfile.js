@@ -32,8 +32,9 @@ module.exports = function (grunt) {
 			}
 		},
 
-		// Task configuration.
-		// load order of source files is important, so start with any Super Types then load the whole app src
+		// Testing configuration
+		// load order of source files is important, so start with any base classes, then load the whole app src
+		// To debug headless tests in the browser set keepRunner: true, then load public/_SpecRunner.html in the browser
 		jasmine: {
 			src: [
 				'public/javascripts/app/commands/Command.js',
@@ -53,8 +54,7 @@ module.exports = function (grunt) {
 				keepRunner: false
 			}
 		},
-
-		// Configure a mochaTest task
+		// Server tests
 		mochaTest: {
 			test: {
 				options: {
@@ -65,7 +65,6 @@ module.exports = function (grunt) {
 				src: ['test/**/*.js']
 			}
 		},
-
 		connect: {
 			serve: {
 				options: {
@@ -94,7 +93,7 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-
+		// Build tasks
 		concat: {
 			options: {
 				banner: '<%= banner %>',
@@ -198,7 +197,7 @@ module.exports = function (grunt) {
 				spawn: true
 			}
 		},
-
+		// Compile docs
 		yuidoc: {
 			compile: {
 				name: '<%= pkg.name %>',
@@ -223,8 +222,7 @@ module.exports = function (grunt) {
 				}]
 			}
 		},
-
-
+		// grunt add - Adds a new class the app sources using prompts
 		"file-creator": {
 			"create-class": {
 				files: [
@@ -261,7 +259,6 @@ module.exports = function (grunt) {
 				]
 			}
 		},
-
 		prompt: {
 			"file-creator": {
 				options: {
