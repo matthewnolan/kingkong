@@ -134,7 +134,15 @@ this.G = this.G || {};
 	 */
 	p.loadGameAssets = function() {
 		// this.assetsLoader.loadManifest(this.setup.imageDataManifest, false);
-		this.assetsLoader.loadManifest(this.setup.spritesManifest, false);
+
+		// TODO remove this if statement. This is temporary to AB test jpg/png for producers.
+		if (G.Utils.params["useJpgSymbolAnims"] == "true") {
+			console.log("-----loading testingNewJpg");
+			this.assetsLoader.loadManifest(this.setup.spritesManifestTempLoadJpgSymbolAnims, false);
+		} else {
+			this.assetsLoader.loadManifest(this.setup.spritesManifest, false);
+		}
+
 		if (this.setup.loadSounds) {
 			this.assetsLoader.loadManifest(this.setup.soundsManifest, false);
 		}

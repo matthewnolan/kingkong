@@ -78,6 +78,9 @@ var G = G || {};
 	 */
 	p.mockWin = 0;
 
+
+	p.currencySymbol = "$";
+
 	/**
 	 * @method init
 	 * @param setup

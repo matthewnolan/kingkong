@@ -77,6 +77,12 @@
     {"src": "assets/sprites/testingNew.json", "id": "symbolAnims", "type":"spritesheet"}
   ],
 
+  "spritesManifestTempLoadJpgSymbolAnims" : [
+    {"src": "assets/sprites/bigwin_1_symbol.json", "id": "bigWinAnimSymbol", "type":"spritesheet"},
+    {"src": "assets/sprites/static-images.json", "id": "staticImages", "type":"spritesheet"},
+    {"src": "assets/sprites/testingNewJpg.json", "id": "symbolAnims", "type":"spritesheet"}
+  ],
+
   "spritesScaleFactor": {
     "bigWinAnimSymbol": 0.7,
     "staticImages": 1,
