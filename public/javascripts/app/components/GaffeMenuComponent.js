@@ -119,7 +119,7 @@ var G = G || {};
 			button.drawButton();
 			button.x = 20 + i * button.width + i * 10;
 			button.y = 40;
-			button.on("click", this.buttonClicked, this);
+			button.on("click", this.gaffeButtonClicked, this);
 			//button.clicked.addOnce(this.buttonClicked, this);
 			this.hScrollContainer.addChild(button);
 			this.gaffeButtons.push(button);
@@ -294,7 +294,7 @@ var G = G || {};
 	 * @method buttonClicked
 	 * @param e
 	 */
-	p.buttonClicked = function(e) {
+	p.gaffeButtonClicked = function(e) {
 		console.log('buttonClicked', this, e.currentTarget);
 		var button = e.currentTarget;
 		this.deselectGaffeButtons(button);

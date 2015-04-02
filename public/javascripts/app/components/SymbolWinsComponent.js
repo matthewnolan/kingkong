@@ -302,14 +302,12 @@ var G = G || {};
 	 * @param {boolean} autoAppend if flag is true, append the animation suffix to the frameLabels
 	 */
 	p.playMixedAnims = function(payline, winSquaresNum, frameLabels, autoAppend) {
-		console.log('playMixedAnims:', payline, winSquaresNum, frameLabels, autoAppend);
 		var reelIndex;
 		var symbolIndex;
 		for (reelIndex = 0; reelIndex < winSquaresNum; reelIndex++) {
 			symbolIndex = payline[reelIndex];
 			var sprite = this.symbolsMatrix[reelIndex][symbolIndex];
 			var frameLabel = frameLabels[reelIndex];
-			console.log('reel' + reelIndex + " play:" + frameLabel);
 			this.playThisSprite(sprite, frameLabel, autoAppend);
 		}
 	};

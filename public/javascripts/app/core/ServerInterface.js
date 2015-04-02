@@ -51,15 +51,16 @@ this.G = this.G || {};
 	p.init = function(signalDispatcher, gameData) {
 		this.signalDispatcher = signalDispatcher;
 		this.signalDispatcher.spinRequested.add(this.requestSpin, this);
-		this.signalDispatcher.gaffeSpinRequested.add(this.requestGaffeSpin, this);
 		this.gameData = gameData;
 	};
 
 	/**
+	 * Specific to 'gaffeing', these requests
+	 *
 	 * @method requestGaffeSpin
-	 * @param {String} gaffeLink
+	 * @param {String} request the api get url
 	 */
-	p.requestGaffeSpin = function(gaffeLink) {
+	p.requestGaffeSpin = function(request) {
 		var self = this;
 
 		var success = function(json) {
@@ -74,7 +75,7 @@ this.G = this.G || {};
 			return res.json();
 		};
 
-		fetch(gaffeLink)
+		fetch(request)
 			.then(response)
 			.then(success)
 			.catch(error);

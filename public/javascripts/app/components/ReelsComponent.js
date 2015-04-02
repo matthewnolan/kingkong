@@ -114,6 +114,7 @@ var G = G || {};
 	 */
 	p.init = function(setup, signalDispatcher, serverInterface, symbolSprites, slotInitResponse) {
 		this.GameComponent_init(setup, signalDispatcher);
+		this.signalDispatcher.gaffeSpinRequested.add(this.handleGaffeSpinRequest, this);
 		this.reelsMap = setup.reelMap;
 		this.serverInterface = serverInterface;
 		this.symbolSprites = symbolSprites;
@@ -183,6 +184,17 @@ var G = G || {};
 	};
 
 	/**
+	 *
+	 *
+	 * @method handleGaffSpinRequest
+	 * @param request
+	 */
+	p.handleGaffeSpinRequest = function(request) {
+		this.spinRequested = true;
+		this.serverInterface.requestGaffeSpin(request)
+	};
+
+	/**
 	 * requestSpin is called every time the user initiates a spin (either via the keyboard or swipe to spin gesture on touch devices)
 	 * If spinRequest has not yet been made (ie the reels are stopped) then this makes a serverInterface.requestSpin call, and the spinRequest flag
 	 * is set to true.
@@ -193,11 +205,12 @@ var G = G || {};
 	 */
 	p.requestSpin = function() {
 		if (this.spinRequested) {
-
+			console.log('requesting slam');
 			this.slamSpin();
 
 		} else {
 
+			console.log('requesting spin');
 			this.spinRequested = true;
 			this.serverInterface.requestSpin();
 		}
@@ -348,6 +361,7 @@ var G = G || {};
 	 * @method slamSpin
 	 */
 	p.slamSpin = function() {
+		console.warn('slammingSpin now');
 		var self = this;
 		var reel, len = this.reels.length, i;
 
