@@ -24,8 +24,12 @@ var sendTests = function(req, res) {
 	res.sendfile(__dirname + "/public/tests.html");
 };
 
-app.get('/test', sendTests);
-app.get('/tests', sendTests);
+var renderTests = function(req, res) {
+	res.render('test');
+};
+
+app.get('/test', renderTests);
+app.get('/tests', renderTests);
 
 app.get('/', function(req, res) {
 	res.render('index', {

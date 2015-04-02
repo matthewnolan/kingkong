@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Kong Tests</title>
+
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/favicon/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="stylesheet" href="stylesheets/jasmine.css">
+
+    <% include partials/src-dev %>
+
+    <!-- Test Vendor Deps -->
+    <script src="javascripts/vendor/jasmine/jasmine.js"></script>
+    <script src="javascripts/vendor/jasmine/jasmine-html.js"></script>
+    <script src="javascripts/vendor/jasmine/boot.js"></script>
+    <script src="javascripts/vendor/sinonjs/sinon.js"></script>
+    <script src="javascripts/vendor/jasmine-sinon/jasmine-sinon.js"></script>
+    <script src="javascripts/vendor/jasmine-signals/jasmine-signals.js"></script>
+    <script src="javascripts/vendor/js-imagediff/imagediff.js"></script>
+
+    <!-- Test Helpers -->
+    <script src="javascripts/test/utils/TestHelpersSpec.js"></script>
+
+    <!-- Test Specs -->
+    <script src="javascripts/test/MainSpec.js"></script>
+    <script src="javascripts/test/core/PreloaderSpec.js"></script>
+    <script src="javascripts/test/core/GameSpec.js"></script>
+    <script src="javascripts/test/core/ServerInterfaceSpec.js"></script>
+    <script src="javascripts/test/core/SignalDispatcherSpec.js"></script>
+    <script src="javascripts/test/commands/CommandSpec.js"></script>
+    <script src="javascripts/test/commands/CommandQueueSpec.js"></script>
+    <script src="javascripts/test/commands/WinLineCommandSpec.js"></script>
+    <script src="javascripts/test/components/GameComponentSpec.js"></script>
+    <script src="javascripts/test/components/ReelSpec.js"></script>
+    <script src="javascripts/test/components/ReelsComponentSpec.js"></script>
+    <script src="javascripts/test/components/SymbolWinsComponentSpec.js"></script>
+    <script src="javascripts/test/components/WinLinesComponentSpec.js"></script>
+    <script src="javascripts/test/components/WinLineSpec.js"></script>
+    <script src="javascripts/test/components/DjSpec.js"></script>
+    <script src="javascripts/test/utils/QueueFactorySpec.js"></script>
+</head>
+<body>
+</body>
+</html>

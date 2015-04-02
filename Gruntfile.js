@@ -347,8 +347,8 @@ module.exports = function (grunt) {
 	// copies a new index.html from the dev/prod template);
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', 		  ['lint', 'test', 'version', 'uglify', 'docs']);
-	grunt.registerTask('build:skipLint',  ['test', 'version', 'uglify', 'docs', 'dev-index']);
-	grunt.registerTask('build:skipTests', ['version', 'uglify', 'docs', 'prod-index']);
+	grunt.registerTask('build:skipLint',  ['test', 'version', 'uglify', 'docs']);
+	grunt.registerTask('build:skipTests', ['version', 'uglify', 'docs']);
 	//Do a build with bumped version number
 	//usage: patch increments 0.0.1 to 0.0.2, feature increments 0.0.1 to 0.1.0, release increments 0.0.1 to 1.0.0)
 	grunt.registerTask('patch', 		  ['lint', 'test', 'bump:patch', 'version', 'uglify', 'docs']);
@@ -362,7 +362,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('doc',     ['yuidoc']);
 	grunt.registerTask('docs',    ['yuidoc']);
 	grunt.registerTask('add',     ['prompt:file-creator', 'file-creator']);
-	grunt.registerTask('version', ['temp-copy', 'replace:version', 'concat']);
+	grunt.registerTask('version', ['temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
 
 	//Testing
 	grunt.registerTask("phantom", "Launches phantom-based tests", ["connect:phantom", "jasmine"]);

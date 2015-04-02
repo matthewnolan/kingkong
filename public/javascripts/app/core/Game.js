@@ -84,10 +84,10 @@ this.G = this.G || {};
 	 *
 	 * @property version
 	 * @type {string}
-	 * @default "0.3.2"
+	 * @default "{{ VERSION }}"
 	 * @example "1.2.2" if minified
 	 */
-	p.version = "0.3.2";
+	p.version = "{{ VERSION }}";
 
 	/**
 	 * This is the main setup file for the application.  Many properties and features in the app can be enabled / disabled via this configuration.
