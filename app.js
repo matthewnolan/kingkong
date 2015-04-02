@@ -40,7 +40,7 @@ var auth = function(req, res, next) {
         return unauthorized(res);
     };
 
-    if (user.name === 'kong' && user.pass === 'isStrong') {
+    if (user.name === 'kong' && user.pass === 'strong') {
         return next();
     } else {
         return unauthorized(res);
