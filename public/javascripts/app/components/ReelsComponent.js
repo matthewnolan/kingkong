@@ -55,6 +55,7 @@ var G = G || {};
 	 * Setup contains a map array of all the symbol names. eg. 'ww', 'm1'. These are stored in the array at the index of the symbolId.
 	 * That way we can draw the correct symbols according to reelStrips data array, which is an array of symbolIds.
 	 *
+	 * @deprecated
 	 * @property reelMap
 	 * @type {Object}
 	 */
@@ -115,30 +116,30 @@ var G = G || {};
 	p.init = function(setup, signalDispatcher, serverInterface, symbolSprites, slotInitResponse) {
 		this.GameComponent_init(setup, signalDispatcher);
 		this.signalDispatcher.gaffeSpinRequested.add(this.handleGaffeSpinRequest, this);
-		this.reelsMap = setup.reelMap;
 		this.serverInterface = serverInterface;
 		this.symbolSprites = symbolSprites;
 		this.slotInitResponse = slotInitResponse;
 		this.reelsData = this.getInitialStrips(this.slotInitResponse.reelStrips);
-
-		var i, len = this.reelsData.length;
-		if (setup.reelAnimation.shuffleReels) {
-			for (i = 0; i < len; i++) {
-				G.Utils.shuffle(this.reelsData[i]);
-			}
-		}
 	};
 
 	/**
+	 * This function is necessary because the reelStrips arrays are so large, the spin animation cannot cope with animating such a
+	 * large amount of symbols in one strip without serious lag (I've tried it!)
+	 * (It's possible a blitted approach may get around this issue)
+	 * For now the initial reelStrips are made up of n symbols cut from the reelStrips array during initialisation (n = setup.json variable cutLength)
+	 * So we just take a slice from the initial stop value of the array and return the new reelStrips 2d array which we'll use to draw the reel symbols from.
+	 *
 	 * @method getInitialStrips
 	 * @param reelStrips
-	 * @returns {Array}
+	 * @returns {Array[]}
+	 * @todo make stop value dynamic and set it to the initialStops inside slotInit
 	 */
 	p.getInitialStrips = function(reelStrips) {
 		var i, len = reelStrips.length;
+		var initialStop = 0;
 		var temp = [];
 		for (i = 0; i < len; i++) {
-			temp.push(reelStrips[i].slice(0, this.setup.reelAnimation.symbols.cutLength));
+			temp.push(reelStrips[i].slice(initialStop, this.setup.reelAnimation.symbols.cutLength));
 		}
 		return temp;
 	};
@@ -219,11 +220,11 @@ var G = G || {};
 
 	/**
 	 * Reel Animations start here: configuration options are in setup.reelAnimation
-	 * 1. By default 10 symbols after and including the symbol at the stopIndex of the reelStrip are cut from the reelStrips array
-	 * 2. Existing symbols on the reels are switched to those symbols.  Switching takes place off the visible canvas after the first spin cycle,
+	 * - 1. By default 10 symbols after and including the symbol at the stopIndex of the reelStrip are cut from the reelStrips array
+	 * - 2. Existing symbols on the reels are switched to those symbols.  Switching takes place off the visible canvas after the first spin cycle,
 	 * to give the existing symbols time to animate from the reels.
-	 * 3. If a symbolIndex in the reelStrip array equals the replacementId defined in the setup.json then a replacement is made based on the spinResponse.
-	 * 4. Starts the reels spinning and passes the correct symbol index to stop to
+	 * - 3. If a symbolIndex in the reelStrip array equals the replacementId defined in the setup.json then a replacement is made based on the spinResponse.
+	 * - 4. Starts the reels spinning and passes the correct symbol index to stop to
 	 * See (G.Reel) for more info about how reel strips are drawn and animated.
 	 *
 	 * @method serverSpinStart
@@ -316,6 +317,7 @@ var G = G || {};
 	 * Stops reels if they are currently spinning.
 	 * Clear any winline/animation overlays
 	 * Play Spin Sound
+	 *
 	 * @method spinReels
 	 */
 	p.spinReels = function(indexes) {
@@ -380,19 +382,6 @@ var G = G || {};
 	};
 
 	/**
-	 * method updateSpinSpeed
-	 * @param val {Number}
-	 */
-	p.updateSpinSpeed = function(val) {
-		var i, len = this.reels.length, reel;
-		for (i = 0; i < len; i++)
-		{
-			reel = this.reels[i];
-			reel.spinSpeedIncrement(val/100);
-		}
-	};
-
-	/**
 	 * Signal handler called when reel.reelSpinEnd is dispatched.  When all reels have finished
 	 * this method dispatches the signalDispatcher.reelSpinComplete signal.
 	 *
@@ -403,6 +392,21 @@ var G = G || {};
 		{
 			this.spinRequested = false;
 			this.signalDispatcher.reelSpinCompleted.dispatch();
+		}
+	};
+
+	/**
+	 * For debugging purposes, provides a hook to update Reels' spinSpeed
+	 *
+	 * @method updateSpinSpeed
+	 * @param val {Number}
+	 */
+	p.updateSpinSpeed = function(val) {
+		var i, len = this.reels.length, reel;
+		for (i = 0; i < len; i++)
+		{
+			reel = this.reels[i];
+			reel.spinSpeedIncrement(val/100);
 		}
 	};
 
