@@ -2,10 +2,8 @@
   "name": "kingkong",
   "version": "0.3.3",
   "authors": [
-    "Andy Hayes <andygoestohollywood@gmail.com>",
-    "Matt Nolan <matthewnolan415@gmail.com>"
+    "Andy Hayes <andygoestohollywood@gmail.com>\nMatt Nolan <matthewnolan415@gmail.com>"
   ],
-  "license": "@HighFiveGame (c)2015",
   "private": true,
   "ignore": [
     "**/.*",

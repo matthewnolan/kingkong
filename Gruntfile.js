@@ -31,6 +31,16 @@ module.exports = function (grunt) {
 				globalReplace: false
 			}
 		},
+		sync: {
+			all: {
+				options: {
+					// sync specific options
+					sync: ['name', 'version', 'private']
+					// optional: specify source and destination filenames
+
+				}
+			}
+		},
 
 		// Testing configuration
 		// load order of source files is important, so start with any base classes, then load the whole app src
@@ -336,19 +346,22 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-text-replace');
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-contrib-yuidoc');
+	grunt.loadNpmTasks('grunt-npm2bower-sync');
 
 	// Build tasks
 	//-------------------
 	// 1: Run JS Hint
 	// 2: Run Unit Tests (client and server),
 	// 3: Optionally bumps version (see 3b)
-	// 4: Then inject version number
-	// 5: Concatenates and minfies
+	// 4: Concatenate and inject version number
+	// 5: Minify
+	// 6; Compile Docs
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', 		  ['lint', 'test', 'version', 'uglify', 'docs']);
 	grunt.registerTask('build:skipLint',  ['test', 'version', 'uglify', 'docs']);
 	grunt.registerTask('build:skipTests', ['version', 'uglify', 'docs']);
-	// 3b: Version bumping (release:feature:patch)
+
+	// *3b: Version bump (release:feature:patch)
 	grunt.registerTask('patch', 		  ['lint', 'test', 'bump:patch', 'version', 'uglify', 'docs']);
 	grunt.registerTask('feature', 		  ['lint', 'test', 'bump:minor', 'version', 'uglify', 'docs']);
 	grunt.registerTask('release', 		  ['lint', 'test', 'bump:major', 'version', 'uglify', 'docs']);
@@ -359,8 +372,10 @@ module.exports = function (grunt) {
 	grunt.registerTask('doc',     ['yuidoc']);
 	grunt.registerTask('docs',    ['yuidoc']);
 	grunt.registerTask('add',     ['prompt:file-creator', 'file-creator']);
-	grunt.registerTask('version', ['temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
+	grunt.registerTask('version', ['sync', 'temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
+
 	//Testing
+	//-------
 	grunt.registerTask("phantom", "Launches phantom-based tests", ["connect:phantom", "jasmine"]);
 	grunt.registerTask('test', 	['mochaTest', 'phantom']);
 	grunt.registerTask('lint', 	['jshint']);
