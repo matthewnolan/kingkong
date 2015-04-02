@@ -30,13 +30,13 @@ app.get('/tests', renderTests);
 
 app.get('/', function(req, res) {
 	res.render('index', {
-		prod: true
+		prod: false
 	});
 });
 
-app.get('/dev', function(req, res) {
+app.get('/prod', function(req, res) {
 	res.render('index', {
-		prod: false
+		prod: true
 	});
 });
 

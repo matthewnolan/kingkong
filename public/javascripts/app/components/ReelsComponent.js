@@ -194,7 +194,7 @@ var G = G || {};
 	p.requestSpin = function() {
 		if (this.spinRequested) {
 
-			this.hammerSpin();
+			this.slamSpin();
 
 		} else {
 
@@ -306,6 +306,8 @@ var G = G || {};
 	 */
 	p.spinReels = function(indexes) {
 
+		console.log('spinReels', indexes);
+
 		var self = this;
 		var i, len = this.reels.length, reel, delay;
 		var maxDelay = this.setup.reelAnimation.delay.max;
@@ -341,11 +343,11 @@ var G = G || {};
 	};
 
 	/**
+	 * Schedules the reels to stop immediately
 	 *
-	 *
-	 * @method hammerSpin
+	 * @method slamSpin
 	 */
-	p.hammerSpin = function() {
+	p.slamSpin = function() {
 		var self = this;
 		var reel, len = this.reels.length, i;
 

@@ -77,7 +77,7 @@ describe("TestHelpers Test", function () {
 		//Give some time for the sprite to update to stage
 		setTimeout(function() {
 			sprite.gotoAndStop(256);
-			self.compareImage("javascripts/test/assets/m1-sprite__000.png", done, expect, 0.2);
+			self.compareImage("javascripts/test/assets/m1-sprite__000.png", done, expect, 0.1);
 		}, timeToUpdateStage);
 	});
 

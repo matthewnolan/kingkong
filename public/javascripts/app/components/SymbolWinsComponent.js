@@ -45,6 +45,12 @@ var G = G || {};
 	p.scaleFactor = null;
 
 	/**
+	 *
+	 * @type {null}
+	 */
+	p.scaleFactorGaffe = null;
+
+	/**
 	 * The 2D array where sprites are stored.  Each sprite is initialised with the Symbols Sprite Sheet.
 	 *
 	 * @property symbolsMatrix
@@ -79,6 +85,7 @@ var G = G || {};
 	 */
 	p.animationLabelSuffix = "intro__001";
 
+
 	/**
 	 * init the game component vars.
 	 *
@@ -92,6 +99,9 @@ var G = G || {};
 		this.symbolAnims = symbolAnims;
 		this.gaffAnims = gaffAnims;
 		this.scaleFactor = 1 / setup.spritesScaleFactor.symbolAnims;
+		this.scaleFactorGaffe = 1 / setup.spritesScaleFactor.bigWinAnimSymbol;
+
+
 	};
 
 	/**
@@ -151,8 +161,6 @@ var G = G || {};
 
 			this.gaffSymbolsMatrix.push([]);
 
-
-
 			for (j = 0; j < symbolLen; j++) {
 				sprite = new createjs.Sprite(spritesheet, 0);
 				sprite.x = i * symbolW + i * reelMarginR;
@@ -167,11 +175,10 @@ var G = G || {};
 				}
 				this.initialisedSpritesNum++;
 
-
 				gaffSprite = new createjs.Sprite(this.gaffAnims, 0);
 				gaffSprite.x = i * symbolW + i * reelMarginR;
 				gaffSprite.y = j * symbolH + j * symbolMarginB;
-				gaffSprite.scaleX = gaffSprite.scaleY = 1/0.7;
+				gaffSprite.scaleX = gaffSprite.scaleY = this.scaleFactorGaffe;
 				this.addChild(gaffSprite);
 				this.gaffSymbolsMatrix[i].push(gaffSprite);
 				gaffSprite.visible = false;				

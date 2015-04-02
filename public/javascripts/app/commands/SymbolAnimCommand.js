@@ -58,11 +58,6 @@ var G = G || {};
 	p.shouldPlayCombinedSprite = false;
 
 	/**
-	 * @TODO del this if dont need
-	*/
-	p.shouldUseGaffSprite = false;
-
-	/**
 	 * initialise setup, gameComponent and command data
 	 *
 	 * @method init
@@ -80,12 +75,10 @@ var G = G || {};
 		for (i = 0; i < len; i++) {
 			this.paylines.push(this.setup.winLines[paylineIndexes[i]].data);
 		}
-		this.gameComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		this.numSymbols = numSymbols;
 		this.frameLabel = frameLabel;
 		this.autoAppend = autoAppend || this.autoAppend;
 		this.shouldPlayCombinedSprite = shouldPlayCombinedSprite || this.shouldPlayCombinedSprite;
-
 	};
 
 	/**
@@ -94,15 +87,13 @@ var G = G || {};
 	 * @method execute
 	 */
 	p.execute = function() {
-		console.log(this.animId);
-
+		var symbolWinsComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		var i, len = this.paylines.length;
 		for (i = 0; i < len; i++) {
 			if (this.shouldPlayCombinedSprite) {
-				//@todo implement combined sprite playing
-				console.warn("combined sprite playing not implemented");
+				symbolWinsComponent.playGaffAnimsOnWinLine(this.paylines[i], this.numSymbols, "m1-sprite__000", false);
 			} else {
-				this.gameComponent.showAnimsOnWinLine(this.paylines[i], this.numSymbols, this.frameLabel.toLowerCase(), this.autoAppend);
+				symbolWinsComponent.showAnimsOnWinLine(this.paylines[i], this.numSymbols, this.frameLabel.toLowerCase(), this.autoAppend);
 			}
 		}
 	};

@@ -89,6 +89,8 @@ var G = G || {};
 		this.symbolAnimsSpriteSheet = symbolAnimsSpriteSheet;
 		this.SCALE_FACTOR = 1 / this.setup.spritesScaleFactor.bigWinAnimSymbol;
 
+
+
 		/**
 		 *
 		 * "spritesScaling": [
@@ -199,7 +201,6 @@ var G = G || {};
 	 * @param frameLabel - the small symbol frameLabel
 	 */
 	p.playAnimation = function(type, frameLabel) {
-		console.warn('>>>>>> playAnimation: ', type, frameLabel);
 		var sprite;
 		var label;
 		switch(type) {

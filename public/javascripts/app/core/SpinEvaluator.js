@@ -125,7 +125,6 @@ var G = G || {};
 		this.replacements = _.map(record.replacement, function(replacementStr) {
 			return parseInt(replacementStr, 10);
 		});
-		console.log(reelStrips);
 		len = reelStrips.length;
 		var visibleSymbolIndexes = [];
 		var pushSymbol = function(symbolIndex) {
@@ -194,16 +193,16 @@ var G = G || {};
 	 */
 	p.insertBigWinCommands = function(commands, numSymbols, winningFrameLabel) {
 		var command;
-		var useCombined = false;
+		var useCombinedSpritesheet = true;
 
 		command = new G.BigWinCommand();
+		//@todo implement autoAppend frameLabel in BigWinCommand
 		command.init(this.setup, numSymbols, winningFrameLabel + "intro__001");
 		command.callNextDelay = 2000;
 		commands.unshift(command);
 
-		//@todo set to true when combined sprites can be used
 		command = new G.SymbolAnimCommand();
-		command.init(this.setup, [0,1,2], numSymbols, winningFrameLabel, true, useCombined);
+		command.init(this.setup, [0,1,2], numSymbols, winningFrameLabel, true, useCombinedSpritesheet);
 		command.callNextDelay = 500;
 		commands.unshift(command);
 	};
@@ -279,7 +278,6 @@ var G = G || {};
 	 * @method handleReeSpinComplete
 	 */
 	p.handleReelSpinComplete = function() {
-		console.log('handleReelSpinComplete', this.winAnimationQueue.gaffeType);
 		this.winAnimationQueue.play();
 		if (this.winAnimationQueue.gaffeType.indexOf('client') >= 0) {
 			this.doClientSideGaffe();
