@@ -14,7 +14,6 @@ this.G = this.G || {};
 	 *
 	 * @class Preloader
 	 * @constructor
-	 * @uses createjs.LoadQueue - PreloadJS framework for loading externally stored assets. see
 	 */
 	var Preloader = function() {};
 

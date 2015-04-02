@@ -10,6 +10,7 @@ var G = G || {};
 	 * One Reel defined by this class. Contains a sprite map for mapping sprite ids to symbol sprites.
 	 * Sets up and executes the spin animation Tween when reels are spun.
 	 * Stops the tween when spinning is ended and signals to the ReelComponent.
+	 *
 	 * @class Reel
 	 * @extends createjs.Container
 	 * @constructor
@@ -22,25 +23,33 @@ var G = G || {};
 	p.constructor = Reel;
 
 	/**
-	 * array of symbolData to map
+	 * array of symbolData: initial drawing of reels uses this array of data to draw symbols based on symbolId.
+	 * See setup.json for symbolIds and slotInit for the default reelstrips configuration.
+	 *
 	 * @property reelData
 	 * @type {Array}
 	 */
 	p.reelData = [];
 
 	/**
+	 * Good old setup.json stored here
+	 *
 	 * @property setup
 	 * @type {Object}
 	 */
 	p.setup = null;
 
 	/**
+	 * Reference to signalDispatcher
+	 *
 	 * @property signalDispatcher
 	 * @type {G.SignalDispatcher}
 	 */
 	p.signalDispatcher = null;
 
 	/**
+	 * SpriteSheet containing static reel symbol images.
+	 *
 	 * @property symbolSprites
 	 * @type {createjs.SpriteSheet}
 	 */
@@ -49,6 +58,7 @@ var G = G || {};
 	/**
 	 * wraps symbol sprites for easier modification there are 2 of these containers because each reel contains duplicate symbols
 	 * for wrapping purposes during spin.
+	 *
 	 * @property wrap1
 	 * @type {createjs.Sprite[]}
 	 */
@@ -56,6 +66,7 @@ var G = G || {};
 
 	/**
 	 * wraps symbol sprites for easier modification there are 2 of these containers because each reel contains duplicate symbols
+	 *
 	 * @property wrap2
 	 * @type {createjs.Sprite[]}
 	 */
@@ -63,42 +74,53 @@ var G = G || {};
 
 	/**
 	 * contains an extra row of symbol sprites which are appended above the first row of symbols, so there are some
-	 * visible sprites in case the reels are spun to first index position.
+	 * visible sprites in case the reels are spun to first index position. Stored here so they can be modified on spin
+	 *
+	 * @property upperBuffer
 	 * @type {createjs.Sprite[]}
 	 */
 	p.upperBuffer = [];
 
 	/**
-	 * @contains an extra 2 rows of symbols sprites which are appended to the last row of symbols, so there are some
+	 * contains an extra 2 rows of symbols sprites which are appended to the last row of symbols, so there are some
 	 * visible sprites in case the reels are spun to last index position.
+	 *
+	 * @property lowerBuffer
 	 * @type {Array}
 	 */
 	p.lowerBuffer = [];
 
 	/**
+	 * Set flag to true to debug animation y positions.
+	 *
 	 * @property logEnabled
 	 * @type {boolean}
+	 * @default false
 	 */
 	p.logEnabled = false;
 
 	/**
 	 * Set this number to -2, to schedule the reel spin animation to stop, -1 will make the spin continue to loop for an infinite number spins.
+	 *
 	 * @property sheduleSpinStop
 	 * @type {number}
+	 * @default -2
 	 */
 	p.scheduleSpinStop = -2;
 
 	/**
 	 * Dynamically alter the speed of reels by changing this percentage:
+	 *
 	 * eg. 0.5 = half speed reels
 	 * @type {number}
 	 */
 	p.speedPercentage = 0.5;
 
 	/**
-	 * Maximum Speed the reels can spin in pixels per second
+	 * Maximum Speed the reels can spin (pixels per second)
+	 *
 	 * @const speedConstant
-	 * @default 6000
+	 * @default 5000
 	 * @type {number}
 	 */
 	p.speedConstant = 5000;
@@ -115,13 +137,16 @@ var G = G || {};
 
 	/**
 	 * Stores the current spin tween animation
+	 *
 	 * @property tween
 	 * @type {null}
 	 */
 	p.tween = null;
 
 	/**
-	 * dispatched when a spin animation on this reel is completed
+	 * dispatched when a spin animation on this reel is completed.
+	 * Used by ReelsContainer to notify the app of a completed spin animation
+	 *
 	 * @property reelSpinEnd
 	 * @type {Signal}
 	 */
@@ -136,12 +161,15 @@ var G = G || {};
 
 	/**
 	 * The index position the reels must stop at.  Represents the index position inside this.reelsData where the top symbol will stop at.
+	 *
 	 * @property spinResultIndex
 	 * @type {number}
 	 */
 	p.spinResultIndex = 0;
 
 	/**
+	 * Flag set to true when this.modifyReelData is called
+	 *
 	 * @property scheduleSymbolUpdate
 	 * @type {boolean}
 	 */
@@ -156,10 +184,19 @@ var G = G || {};
 	 */
 	p.scaleFactor = null;
 
-	p.hammerRequested = false;
+	/**
+	 * Flag set to true when a slam is called on this reel.
+	 * Slamming happens when a user hits space bar during a spin, to stop the reels
+	 *
+	 * @property isSlamming
+	 * @type {boolean}
+	 * @default false
+	 */
+	p.isSlamming = false;
 
 	/**
 	 * Initialise Class vars and passes in instance of setup, symbolSprites, and initial reelData
+	 *
 	 * @method init
 	 * @param setup
 	 * @param signalDispatcher
@@ -185,9 +222,9 @@ var G = G || {};
 	/**
 	 * Call this when spin data is received.
 	 * The sprites on this reel will be scheduled to update according to the spin data after 1 spin loop.
-	 * @see updateSymbolSprites
+	 *
 	 * @method modifyReelData
-	 * @param {Number[]} reelData
+	 * @param {number[]} reelData array of symbolId's to modify to.
 	 */
 	p.modifyReelData = function(reelData) {
 		if (reelData.length !== this.reelData.length) {
@@ -200,7 +237,7 @@ var G = G || {};
 	/**
 	 * If reelData has been modified then schedule this function on during the first spin 'loop'.
 	 * This will then update the reel sprites according to the new reelData array
-	 * @see modifyReelData
+	 *
 	 * @method updateSymbolSprites
 	 */
 	p.updateSymbolSprites = function() {
@@ -222,7 +259,7 @@ var G = G || {};
 			}
 		}
 
-		if (this.hammerRequested) {
+		if (this.isSlamming) {
 			clearInterval(this.stopTimeout);
 			this.scheduleSpinStop = -2;
 			this.speedPercentage = 1;
@@ -238,7 +275,7 @@ var G = G || {};
 	 * A buffer (n number of symbols - configurable) is also drawn above and below the 2 wraps to allow for elastic bounce easing on spin animations and to facilitate
 	 * the spin animation.
 	 *
-	 * The fullset of slotInit.reelstips is not drawn here, as animating 90+ symbols in a reelstrip at once is too costly for the cpu / gpu.
+	 * The fullset of slotInit.reelstips is not drawn here, as animating 90+ symbols in a reelstrip is very laggy
 	 * So during init, a 10 cut version of the reelStrips iss created.
 	 *
 	 * @method drawReel
@@ -336,13 +373,14 @@ var G = G || {};
 
 	/**
 	 * Spin this reel to the specified index position with a given delay
+	 *
 	 * @method spinToIndex
 	 * @param {Number} index - index of symbol on this reel to spin to (top left of reel should spin to this index)
 	 * @param {Number} delay - Millis til this spin will start
 	 */
 	p.spinToIndex = function(index, delay) {
 		var self = this;
-		this.hammerRequested = false;
+		this.isSlamming = false;
 		this.speedPercentage = 0.5;
 		var symbolH = this.setup.symbolH;
 		var symbolMarginB = this.setup.symbolMarginBottom;
@@ -378,6 +416,7 @@ var G = G || {};
 
 	/**
 	 * Returns the time required to tween this reel through a set of this.reelData.length symbols
+	 *
 	 * @method getTime
 	 * @returns {number}
 	 */
@@ -391,6 +430,7 @@ var G = G || {};
 
 	/**
 	 * Begins a new loop of spinning animation beginning at this.y 0 and ending at the end of 1 set of symbols
+	 *
 	 * @method loopSpin
 	 */
 	p.loopSpin = function() {
@@ -426,6 +466,7 @@ var G = G || {};
 
 	/**
 	 * Returns the time required for the stop tween animation (from this.y 0 to the symbol stop index). Uses number of pixels as the distance
+	 *
 	 * @method getStopTime
 	 * @param {number} index - the symbol index the tween animation is going to stop at
 	 * @returns {number}
@@ -439,7 +480,13 @@ var G = G || {};
 		return distanceInPixels / (this.speedPercentage * this.speedConstant / 1000);
 	};
 
-
+	/**
+	 * Tweens this reelStrip to the y position of the spinResultIndex
+	 * Schedules a reelStop sound via playSound signal
+	 * Calls handleSpinComplete on when tween is finished.
+	 *
+	 * @method stopSpinTween
+	 */
 	p.stopSpinTween = function() {
 		console.log('stopSpinTween', this.spinResultIndex);
 		var self = this;
@@ -487,7 +534,7 @@ var G = G || {};
 	 */
 	p.scheduleFastStop = function() {
 		if (this.scheduleSpinStop > -2) {
-			this.hammerRequested = true;
+			this.isSlamming = true;
 		}
 	};
 

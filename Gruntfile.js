@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 				files: ['package.json'],
 				updateConfigs: ['pkg'],
 				commit: false,
-				commitMessage: 'Release v%VERSION%',
+				commitMessage : 'Release v%VERSION%',
 				commitFiles: ['package.json'],
 				createTag: true,
 				tagName: 'v%VERSION%',
@@ -324,7 +324,6 @@ module.exports = function (grunt) {
 						}
 					]
 				}
-
 			}
 		}
 	});
@@ -347,6 +346,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-contrib-yuidoc');
 	grunt.loadNpmTasks('grunt-npm2bower-sync');
+	grunt.loadNpmTasks('grunt-file-append');
 
 	// Build tasks
 	//-------------------

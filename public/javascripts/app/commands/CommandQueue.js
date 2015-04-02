@@ -149,6 +149,7 @@ var G = G || {};
 	};
 
 	/**
+	 * @deprecated
 	 * @method pause
 	 */
 	p.pause = function() {
@@ -159,6 +160,7 @@ var G = G || {};
 	};
 
 	/**
+	 * @deprecated
 	 * @method resume
 	 */
 	p.resume = function() {

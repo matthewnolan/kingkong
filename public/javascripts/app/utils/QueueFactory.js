@@ -8,6 +8,7 @@ var G = G || {};
 
 	/**
 	 * Constructs queues for the CommandQueue for the purpose of displaying winning animations
+	 *
 	 * @class QueueFactory
 	 * @constructor
 	 */

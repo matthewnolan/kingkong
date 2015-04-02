@@ -275,9 +275,18 @@ var G = G || {};
 			var sprite = this.symbolsMatrix[i][lineIndex];
 			this.playThisSprite(sprite, frameLabel, autoAppend);
 		}
-	};	
+	};
 
 
+	/**
+	 * Plays anims from the alternative spritesheet, as we need to bundle some small wins with their big win animation in separate spritesheets
+	 *
+	 * @method playGaffAnimsOnWinLine
+	 * @param winLineData
+	 * @param winSquaresNum
+	 * @param frameLabel
+	 * @param autoAppend
+	 */
 	p.playGaffAnimsOnWinLine = function(winLineData, winSquaresNum, frameLabel, autoAppend) {
 		var i, len = winLineData.length, lineIndex;
 		if (winSquaresNum > len) {

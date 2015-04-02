@@ -16,7 +16,6 @@ var G = G || {};
 	 * @class ParticlesComponent
 	 * @extends G.GameComponent
 	 * @constructor
-	 * @uses Proton
 	 */
 	var ParticlesComponent = function() {
 		this.GameComponent_constructor();
@@ -37,7 +36,7 @@ var G = G || {};
 	p.renderer = null;
 
 	/**
-	 *
+	 * @property canvas
 	 * @type {HTMLElement}
 	 */
 	p.canvas = null;
@@ -45,23 +44,36 @@ var G = G || {};
 	/**
 	 * proton layer is scaled independently of the rest of the application because
 	 * Proton rendering is handled by Proton.
+	 *
+	 * @property stageScale
 	 * @type {number}
 	 */
 	p.stageScale = 1;
 
 	/**
+	 * The setInterval for launching fireworks
 	 *
+	 * @property fireworkInterval
 	 * @type {number}
+	 * @default null
 	 */
-	p.timeout = 1;
+	p.fireworkInterval = null;
 
 	/**
+	 * The setTimeout int for animationDuration
 	 *
+	 * @property animationDurationTimeout
 	 * @type {number}
+	 * @default null
 	 */
-	p.animationDurationTimeout = 1;
+	p.animationDurationTimeout = null;
 
-
+	/**
+	 * Point reference of fireWork spawns
+	 *
+	 * @property fireWorkSpawnPosition
+	 * @type {{x: number, y: number}}
+	 */
 	p.fireWorkSpawnPosition = {
 		x: 0,
 		y: 0
@@ -119,7 +131,7 @@ var G = G || {};
 		self.launchFirework(0.7);
 		self.launchFirework(0.8);
 
-		this.timeout = setInterval(function() {
+		this.fireworkInterval = setInterval(function() {
 			self.launchFirework(0.2);
 			self.launchFirework(0.3);
 			self.launchFirework(0.5);
@@ -137,7 +149,7 @@ var G = G || {};
 		console.log('smoke off', this);
 
 		clearTimeout(this.animationDurationTimeout);
-		clearInterval(this.timeout);
+		clearInterval(this.fireworkInterval);
 	};
 
 	p.createDaisyShower = function() {

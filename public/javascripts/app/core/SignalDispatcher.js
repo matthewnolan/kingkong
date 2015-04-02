@@ -11,6 +11,7 @@ var G = G || {};
 	 * Signal Dispatcher is the core communication component of the application.  Ensure it is passed into any Class which might need to talk to another.
 	 * In this context we can listen to gameData signals, and have the signalDispatcher dispatch a signal which can be listened to by GameComponents which require
 	 * to be notified when some server data has been received.  Eg. ReelsComponent can spin the reels when a spin response is received.
+	 *
 	 * @class SignalDispatcher
 	 * @constructor
 	 */

@@ -31,7 +31,7 @@ var G = G || {};
 
 	/**
 	 * A version number which can be shown on the menu.
-	 * nb. do a grunt build:prod to generate the index.html and inject the version number from package.json.
+	 * nb. Only shows correct version when loading minified source
 	 *
 	 * @property version
 	 * @type {string}
@@ -302,6 +302,12 @@ var G = G || {};
 		this.hide();
 	};
 
+	/**
+	 * switch fps between 30 and 60
+	 *
+	 * @method fpsClicked
+	 * @param e
+	 */
 	p.fpsClicked = function(e) {
 		//console.log("fpsClicked", this, e);
 		this.signalDispatcher.fpsSwitched.dispatch();
@@ -315,20 +321,6 @@ var G = G || {};
 			button.select();
 		}
 
-	};
-
-	p.showerSwitched = function(e) {
-		this.signalDispatcher.fireworkLaunched.dispatch();
-		var button = e.currentTarget;
-
-		if (button.selected) {
-			button.deselect();
-			button.changeLabel("Off");
-		} else {
-			button.changeLabel("ON!");
-			button.select();
-			this.hide();
-		}
 	};
 
 	/**
@@ -379,6 +371,11 @@ var G = G || {};
 			.call(this.handleComplete);
 	};
 
+	/**
+	 * For testing currency symbol switcheroo
+	 *
+	 * @method changeWinText
+	 */
 	p.changeWinText = function(){
 		this.currentCurrency++;
 		if (this.currentCurrency === this.setup.currencySymbol.length) {

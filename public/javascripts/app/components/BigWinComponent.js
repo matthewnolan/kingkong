@@ -88,17 +88,6 @@ var G = G || {};
 		this.combinationSpriteSheet = combinationSpriteSheet;
 		this.symbolAnimsSpriteSheet = symbolAnimsSpriteSheet;
 		this.SCALE_FACTOR = 1 / this.setup.spritesScaleFactor.bigWinAnimSymbol;
-
-
-
-		/**
-		 *
-		 * "spritesScaling": [
-		 {"bigWinAnimSymbol" : 0.72 },
-		 {"staticImages" : 1 },
-		 {"symbolAnims" : 0.83333 }
-		 ],
-		 */
 	};
 
 	/**
@@ -107,16 +96,7 @@ var G = G || {};
 	 * @method drawSprites
 	 */
 	p.drawSprites = function() {
-
-		/*
-		 "symbolW": 116,
-		 "symbolH": 103,
-		 "symbolMarginBottom": 0,
-		 "reelMarginRight": 5,
-		 */
 		var symbolsScale = 1 / this.setup.spritesScaleFactor.symbolAnims;
-
-		console.log('symbolsScale, ', symbolsScale);
 
 		var symbolW = this.setup.symbolW;
 		var symbolH = this.setup.symbolH;

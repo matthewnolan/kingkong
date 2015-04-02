@@ -138,7 +138,9 @@ var G = G || {};
 
 
 	/**
+	 * Draw win lines
 	 *
+	 * @method drawWinLines
 	 */
 	p.drawWinLines = function() {
 		var marginL = this.setup.bezelMarginL;

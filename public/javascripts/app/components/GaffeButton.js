@@ -8,8 +8,7 @@ var G = G || {};
 
 	/**
 	 * @class GaffeButton
-	 * @extends G.Container
-	 * @uses createjs.Container
+	 * @extends createjs.Container
 	 * @constructor
 	 */
 	var GaffeButton = function() {

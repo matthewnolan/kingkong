@@ -9,10 +9,10 @@ var G = G || {};
 	/**
 	 * Responsible for drawing a winLine dynamically.
 	 * Many of these are drawn and cached inside WinLinesComponent, which shows and hides these winLines as required.
+	 *
 	 * @class WinLine
 	 * @constructor
 	 * @extends createjs.Container
-	 * @uses createjs.Graphics
 	 */
 	var WinLine = function () {
 		this.Container_constructor();

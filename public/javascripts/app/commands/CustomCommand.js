@@ -6,6 +6,12 @@ var G = G || {};
 (function() {
     "use strict";
 
+	/**
+	 * For testing functionality inside a command queue.. put what you want in one of these
+	 *
+	 * @class CustomCommand
+	 * @constructor
+	 */
     var CustomCommand = function() {
         this.Command_constructor();
     };

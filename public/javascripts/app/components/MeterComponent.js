@@ -12,6 +12,7 @@ var G = G || {};
 	 *
 	 * @class MeterComponent
 	 * @constructor
+	 * @extends G.GameComponent
 	 */
 	var MeterComponent = function() {
 		this.GameComponent_constructor();
@@ -20,6 +21,7 @@ var G = G || {};
 	p.constructor = MeterComponent;
 
 	/**
+	 * Reference to winText textField - displays the winning amount of credits in the top right
 	 *
 	 * @property winText
 	 * @default null
@@ -28,6 +30,7 @@ var G = G || {};
 	p.winText = null;
 
 	/**
+	 * Reference to creditText textField - displays the current number of credits a user has
 	 *
 	 * @property creditText
 	 * @default null
@@ -36,30 +39,41 @@ var G = G || {};
 	p.creditText = null;
 
 	/**
+	 * Reference to tempBalance which is used to tween balance rollups
 	 *
+	 * @property tempBalance
 	 * @type {number}
 	 */
 	p.tempBalance = 0;
 
 	/**
+	 * Reference to tempWinAmount which is used to tween win amount rollups
+	 *
+	 * @property tempWinAmount
 	 * @type {number}
 	 */
 	p.tempWinAmount = 0;
 
 	/**
+	 * The user's currentBalance
 	 *
+	 * @property currentBalance
 	 * @type {number}
 	 */
 	p.currentBalance = 0;
 
 	/**
+	 * The user's currentWinAMount
 	 *
+	 * @property currentWinAmount
 	 * @type {number}
 	 */
 	p.currentWinAmount = 0;
 
 	/**
+	 * Used during gaffeing to fool the class into thinking a win has happened for testing rollups
 	 *
+	 * @property mockWin
 	 * @type {number}
 	 */
 	p.mockWin = 0;
@@ -85,6 +99,11 @@ var G = G || {};
 		this.mockSpinPayment();
 	};
 
+	/**
+	 * Resets win amount to 0 during a spin
+	 *
+	 * @method resetWinAmount
+	 */
 	p.resetWinAmount = function() {
 		this.tempWinAmount = 0;
 		this.handleWinAmountChange();
