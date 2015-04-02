@@ -6,7 +6,7 @@
   "enableTabPausing": 1,
   "scale" : "NONE",
   "failSafeInitisalisation": 0,
-  "enableDesktopView": 0,
+  "enableDesktopView": 1,
   "loadSounds": 0,
   "enableWinLineShadows": 0,
   "cheaperWinLineShadows": 0,
