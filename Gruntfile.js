@@ -362,9 +362,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('build:skipTests', ['version', 'uglify', 'docs']);
 
 	// *3b: Version bump (release:feature:patch)
-	grunt.registerTask('patch', 		  ['lint', 'test', 'bump:patch', 'version', 'uglify', 'docs']);
-	grunt.registerTask('feature', 		  ['lint', 'test', 'bump:minor', 'version', 'uglify', 'docs']);
-	grunt.registerTask('release', 		  ['lint', 'test', 'bump:major', 'version', 'uglify', 'docs']);
+	grunt.registerTask('patch', 		  ['lint', 'test', 'version:patch', 'uglify', 'docs']);
+	grunt.registerTask('feature', 		  ['lint', 'test', 'version:feature', 'uglify', 'docs']);
+	grunt.registerTask('release', 		  ['lint', 'test', 'version:release', 'uglify', 'docs']);
 
 	// Development support
 	//--------------------
@@ -372,7 +372,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('doc',     ['yuidoc']);
 	grunt.registerTask('docs',    ['yuidoc']);
 	grunt.registerTask('add',     ['prompt:file-creator', 'file-creator']);
-	grunt.registerTask('version', ['sync', 'temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
+	grunt.registerTask('version:patch', ['bump:patch', 'sync', 'temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
+	grunt.registerTask('version:feature', ['bump:minor', 'sync', 'temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
+	grunt.registerTask('version:release', ['bump:major', 'sync', 'temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
 
 	//Testing
 	//-------
