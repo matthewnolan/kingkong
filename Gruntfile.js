@@ -133,7 +133,7 @@ module.exports = function (grunt) {
 					'!public/javascripts/vendor/jasmine-sinon/**/*.js',
 					'!public/javascripts/vendor/sinonjs/**/*.js'
 				],
-				dest: 'public/javascripts/dist/<%= pkg.name %>.js'
+				dest: 'public/javascripts/min/<%= pkg.name %>.js'
 			}
 		},
 		uglify: {
@@ -142,7 +142,7 @@ module.exports = function (grunt) {
 			},
 			dist: {
 				src: '<%= concat.dist.dest %>',
-				dest: 'public/javascripts/dist/<%= pkg.name %>.min.js'
+				dest: 'public/javascripts/min/<%= pkg.name %>.min.js'
 			}
 		},
 		jshint: {
