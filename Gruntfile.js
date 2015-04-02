@@ -322,10 +322,10 @@ module.exports = function (grunt) {
 		}
 	});
 
-	// Bespoke Grunt Tasks (@hayes_maker)
+	// Our own custom grunt tasks
 	grunt.loadTasks('./modules/grunt/');
 
-	// These plugins provide necessary tasks.
+	// 3rd party grunt tasks
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -340,30 +340,29 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
-	//Defualt build tasks
-	// Run Linter and Unit Tests (client and server),
-	// injects current Version number to minified source code,
-	// uglifies
-	// copies a new index.html from the dev/prod template);
+	// Build tasks
+	//-------------------
+	// 1: Run JS Hint
+	// 2: Run Unit Tests (client and server),
+	// 3: Optionally bumps version (see 3b)
+	// 4: Then inject version number
+	// 5: Concatenates and minfies
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', 		  ['lint', 'test', 'version', 'uglify', 'docs']);
 	grunt.registerTask('build:skipLint',  ['test', 'version', 'uglify', 'docs']);
 	grunt.registerTask('build:skipTests', ['version', 'uglify', 'docs']);
-	//Do a build with bumped version number
-	//usage: patch increments 0.0.1 to 0.0.2, feature increments 0.0.1 to 0.1.0, release increments 0.0.1 to 1.0.0)
+	// 3b: Version bumping (release:feature:patch)
 	grunt.registerTask('patch', 		  ['lint', 'test', 'bump:patch', 'version', 'uglify', 'docs']);
-	grunt.registerTask('patch:prod', 	  ['lint', 'test', 'bump:patch', 'version', 'uglify', 'docs']);
 	grunt.registerTask('feature', 		  ['lint', 'test', 'bump:minor', 'version', 'uglify', 'docs']);
-	grunt.registerTask('feature:prod', 	  ['lint', 'test', 'bump:minor', 'version', 'uglify', 'docs']);
 	grunt.registerTask('release', 		  ['lint', 'test', 'bump:major', 'version', 'uglify', 'docs']);
-	grunt.registerTask('release:prod', 	  ['lint', 'test', 'bump:major', 'version', 'uglify', 'docs']);
-	//development support
-	grunt.registerTask('texture', ['easel-packer']);
+
+	// Development support
+	//--------------------
+	grunt.registerTask('texture', ['easel-packer']); // Builds easeljs animations in the texture-packer json output & copies png + json to assets/sprites
 	grunt.registerTask('doc',     ['yuidoc']);
 	grunt.registerTask('docs',    ['yuidoc']);
 	grunt.registerTask('add',     ['prompt:file-creator', 'file-creator']);
 	grunt.registerTask('version', ['temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
-
 	//Testing
 	grunt.registerTask("phantom", "Launches phantom-based tests", ["connect:phantom", "jasmine"]);
 	grunt.registerTask('test', 	['mochaTest', 'phantom']);
