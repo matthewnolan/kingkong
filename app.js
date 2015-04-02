@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var basicAuth = require('basic-auth');
 
 var app = express();
 
@@ -21,14 +22,36 @@ app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.set('views', path.join(__dirname, 'views/'));
 
+
 var renderTests = function(req, res) {
 	res.render('test');
 };
 
+
+var auth = function(req, res, next) {
+    function unauthorized(res) {
+        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+        return res.send(401);
+    };
+
+    var user = basicAuth(req);
+
+    if (!user || !user.name || !user.pass) {
+        return unauthorized(res);
+    };
+
+    if (user.name === 'kong' && user.pass === 'isStrong') {
+        return next();
+    } else {
+        return unauthorized(res);
+    };
+};
+
+
 app.get('/test', renderTests);
 app.get('/tests', renderTests);
 
-app.get('/', function(req, res) {
+app.get('/', auth, function(req, res) {
 	res.render('index', {
 		prod: true
 	});

@@ -59494,9 +59494,6 @@ var G = G || {};
 		}
 		var serverParams = {};
 
-		// dev is default
-		G.Utils.serverParams.enviroment = "prod"; 
-
 		for (var prop in clientServer) {
 			serverParams[prop] = clientServer[prop];
 		}
