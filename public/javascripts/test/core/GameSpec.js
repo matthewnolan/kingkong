@@ -7,7 +7,8 @@ describe("Game Test", function () {
 
 	G.Utils = {
 		init: jasmine.createSpy("Utils.init"),
-		gameComponents: []
+		gameComponents: [],
+		serverParams: {}
 	};
 
 	beforeEach(function () {
