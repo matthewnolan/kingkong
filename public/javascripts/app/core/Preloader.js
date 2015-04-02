@@ -136,7 +136,7 @@ this.G = this.G || {};
 		// this.assetsLoader.loadManifest(this.setup.imageDataManifest, false);
 
 		// TODO remove this if statement. This is temporary to AB test jpg/png for producers.
-		if (G.Utils.params["useJpgSymbolAnims"] == "true") {
+		if ( _.has(G.Utils.params, 'useJpgSymbolAnims')) {
 			console.log("-----loading testingNewJpg");
 			this.assetsLoader.loadManifest(this.setup.spritesManifestTempLoadJpgSymbolAnims, false);
 		} else {
