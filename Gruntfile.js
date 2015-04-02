@@ -372,6 +372,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('doc',     ['yuidoc']);
 	grunt.registerTask('docs',    ['yuidoc']);
 	grunt.registerTask('add',     ['prompt:file-creator', 'file-creator']);
+	grunt.registerTask('version', ['temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
 	grunt.registerTask('version:patch', ['bump:patch', 'sync', 'temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
 	grunt.registerTask('version:feature', ['bump:minor', 'sync', 'temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
 	grunt.registerTask('version:release', ['bump:major', 'sync', 'temp-copy', 'replace:version', 'concat', 'temp-copy-return']);
