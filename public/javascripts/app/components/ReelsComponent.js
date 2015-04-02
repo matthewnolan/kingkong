@@ -126,7 +126,6 @@ var G = G || {};
 				G.Utils.shuffle(this.reelsData[i]);
 			}
 		}
-		this.initDomEvents();
 	};
 
 	/**
@@ -387,23 +386,7 @@ var G = G || {};
 		{
 			this.spinRequested = false;
 			this.signalDispatcher.reelSpinCompleted.dispatch();
-			//this.spinResponse = null;
-			//this.cutSymbolIds = null;
 		}
-	};
-
-	/**
-	 * DOM events
-	 * for development only
-	 * @method initDomEvents
-	 */
-	p.initDomEvents = function() {
-		var self = this;
-		var gasPedal = document.querySelector('#gasPedal');
-		gasPedal.addEventListener("input", function() {
-			var newSpeed = gasPedal.value;
-			self.updateSpinSpeed(newSpeed);
-		});
 	};
 
 	G.ReelsComponent = createjs.promote(ReelsComponent, "GameComponent");

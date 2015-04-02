@@ -7,22 +7,22 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
-    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="android-chrome-192x192.png" sizes="192x192">
-    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="android-chrome-manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/favicon/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="assets/favicon/android-chrome-manifest.json">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="msapplication-TileImage" content="assets/favicon/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Vendor -->
@@ -61,23 +61,6 @@
     </div>
 </div>
 
-<div class="dom-helpers">
-    <h4>Spin Demo (Press space to spin - again to stop)</h4>
-    <label for="gasPedal">Spin Speed</label>
-    <input type="range" id="gasPedal" min="0" value="50" max="100" step="1" onchange="window.updateSpeed(value)" oninput="window.updateSpeed(value)">
-    <div class="spin-perc"></div>
-    <div class="spin-speed"></div>
-    <label for="spinToIndex">Spin To Index</label>
-    <input id="spinToIndex" type="number" min="0" max="16" value="0" />
-    <div>
-        <a href="tests.html">Tests</a>
-        <a href="/doc/">Documentation</a>
-    </div>
-</div>
-
-
-
-
 <script>
     (function(window) {
         /**
@@ -90,16 +73,6 @@
          * DOM Events for development
          * @param val
          */
-        window.updateSpeed = function(val) {
-            currentSpinSpeed = Math.round(val/100 * 6000);
-
-            var spinPerc = document.querySelector('div.spin-perc');
-            var spinSpeed = document.querySelector('div.spin-speed');
-
-            spinPerc.innerHTML = val.toString() + "%";
-            spinSpeed.innerHTML = currentSpinSpeed.toString() + 'pps';
-        };
-        window.updateSpeed(50);
     })(window);
 </script>
 </body>

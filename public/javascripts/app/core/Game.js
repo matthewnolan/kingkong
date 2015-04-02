@@ -703,11 +703,6 @@ this.G = this.G || {};
 		mc.on('pinchout', function() {
 			self.gaffeMenu.show();
 		});
-
-		if (!this.setup.domHelpers) {
-			var domHelpers = document.querySelector(".dom-helpers");
-			domHelpers.parentNode.removeChild(domHelpers);
-		}
 	};
 
 	/**

@@ -7,19 +7,15 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/assets/favicon/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//configure mock node server api
-app.use('/api', require('./routes/server/api').api);
 
-
+//view engine
 app.engine('html', require('ejs').renderFile);
-// view engine setup
-
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.set('views', path.join(__dirname, 'views/'));
@@ -40,6 +36,9 @@ app.get('/', sendIndex);
 app.get('/test', sendTests);
 app.get('/tests', sendTests);
 app.get('/classes', sendClassStructure);
+
+//configure mock node server api
+app.use('/api', require('./routes/server/api').api);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
