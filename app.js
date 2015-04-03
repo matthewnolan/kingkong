@@ -22,34 +22,31 @@ app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.set('views', path.join(__dirname, 'views/'));
 
+//Auth
+var auth = function(req, res, next) {
+	function unauthorized(res) {
+		res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+		return res.send(401);
+	}
+	var user = basicAuth(req);
+	if (!user || !user.name || !user.pass) {
+		return unauthorized(res);
+	}
+	if (user.name === 'kong' && user.pass === 'strong') {
+		return next();
+	} else {
+		return unauthorized(res);
+	}
+};
 
+//Routes (move these to routes dir)
 var renderTests = function(req, res) {
 	res.render('test');
 };
 
-
-var auth = function(req, res, next) {
-    function unauthorized(res) {
-        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-        return res.send(401);
-    };
-
-    var user = basicAuth(req);
-
-    if (!user || !user.name || !user.pass) {
-        return unauthorized(res);
-    };
-
-    if (user.name === 'kong' && user.pass === 'strong') {
-        return next();
-    } else {
-        return unauthorized(res);
-    };
-};
-
-
 app.get('/test', renderTests);
 app.get('/tests', renderTests);
+
 
 app.get('/', auth, function(req, res) {
 	res.render('index', {

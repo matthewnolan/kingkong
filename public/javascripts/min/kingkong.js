@@ -1,4 +1,4 @@
-/*! kingkong 0.3.3 - 2015-04-02
+/*! kingkong 0.3.3 - 2015-04-03
 * Copyright (c) 2015 Licensed @HighFiveGames */
 /*!
 * EaselJS
