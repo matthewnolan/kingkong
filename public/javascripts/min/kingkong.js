@@ -1,4 +1,4 @@
-/*! kingkong 0.3.3 - 2015-04-03
+/*! kingkong 0.3.4 - 2015-04-03
 * Copyright (c) 2015 Licensed @HighFiveGames */
 /*!
 * EaselJS
@@ -55564,9 +55564,9 @@ this.G = this.G || {};
 	 *
 	 * @property version
 	 * @type {string}
-	 * @default "0.3.3"
+	 * @default "0.3.4"
 	 */
-	p.version = "0.3.3";
+	p.version = "0.3.4";
 
 	/**
 	 * This is the main setup file for the application.  Many properties and features in the app can be enabled / disabled via this configuration.
