@@ -10073,8 +10073,8 @@ this.createjs = this.createjs||{};
 	 * running from the label index to the next label. For example, if there is a label named "foo" at frame 0 and a label
 	 * named "bar" at frame 10, in a MovieClip with 15 frames, it will add an animation named "foo" that runs from frame
 	 * index 0 to 9, and an animation named "bar" that runs from frame index 10 to 14.
-		 *
-		 * Note that this will iterate through the full MovieClip with actionsEnabled set to false, ending on the last frame.
+	 *
+	 * Note that this will iterate through the full MovieClip with actionsEnabled set to false, ending on the last frame.
 	 * @method addMovieClip
 	 * @param {MovieClip} source The source MovieClip instance to add to the sprite sheet.
 	 * @param {Rectangle} [sourceRect] A {{#crossLink "Rectangle"}}{{/crossLink}} defining the portion of the source to
@@ -12153,6 +12153,1096 @@ this.createjs = this.createjs || {};
 	s.buildDate = /*=date*/"Fri, 12 Dec 2014 17:32:57 GMT"; // injected by build process
 
 })();
+// namespace:
+this.createjs = this.createjs||{};
+
+(function() {
+	"use strict";
+
+
+	/**
+	 * A SpriteContainer is a nestable display list that enables aggressively optimized rendering of bitmap content.
+	 * In order to accomplish these optimizations, SpriteContainer enforces a few restrictions on its content.
+	 *
+	 * Restrictions:
+	 *     - only Sprite, SpriteContainer, BitmapText and DOMElement are allowed to be added as children.
+	 *     - a spriteSheet MUST be either be passed into the constructor or defined on the first child added.
+	 *     - all children (with the exception of DOMElement) MUST use the same spriteSheet.
+	 *
+	 * <h4>Example</h4>
+	 *
+	 *      var data = {
+	 *          images: ["sprites.jpg"],
+	 *          frames: {width:50, height:50},
+	 *          animations: {run:[0,4], jump:[5,8,"run"]}
+	 *      };
+	 *      var spriteSheet = new createjs.SpriteSheet(data);
+	 *      var container = new createjs.SpriteContainer(spriteSheet);
+	 *      container.addChild(spriteInstance, spriteInstance2);
+	 *      container.x = 100;
+	 *
+	 * <strong>Note:</strong> SpriteContainer is not included in the minified version of EaselJS.
+	 *
+	 * @class SpriteContainer
+	 * @extends Container
+	 * @constructor
+	 * @param {SpriteSheet} [spriteSheet] The spriteSheet to use for this SpriteContainer and its children.
+	 **/
+	function SpriteContainer(spriteSheet) {
+		this.Container_constructor();
+		
+		
+	// public properties:
+		/**
+		 * The SpriteSheet that this container enforces use of.
+		 * @property spriteSheet
+		 * @type {SpriteSheet}
+		 * @readonly
+		 **/
+		this.spriteSheet = spriteSheet;
+	}
+	var p = createjs.extend(SpriteContainer, createjs.Container);
+
+	/**
+	 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
+	 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
+	 * for details.
+	 *
+	 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
+	 *
+	 * @method initialize
+	 * @protected
+	 * @deprecated
+	 */
+	// p.initialize = function() {}; // searchable for devs wondering where it is.
+	
+
+// public methods:
+	/**
+	 * Adds a child to the top of the display list.
+	 * Only children of type SpriteContainer, Sprite, Bitmap, BitmapText, or DOMElement are allowed.
+	 * The child must have the same spritesheet as this container (unless it's a DOMElement).
+	 * If a spritesheet hasn't been defined, this container uses this child's spritesheet.
+	 *
+	 * <h4>Example</h4>
+	 *      container.addChild(bitmapInstance);
+	 *
+	 *  You can also add multiple children at once:
+	 *
+	 *      container.addChild(bitmapInstance, shapeInstance, textInstance);
+	 *
+	 * @method addChild
+	 * @param {DisplayObject} child The display object to add.
+	 * @return {DisplayObject} The child that was added, or the last child if multiple children were added.
+	 **/
+	p.addChild = function(child) {
+		if (child == null) { return child; }
+		if (arguments.length > 1) {
+			return this.addChildAt.apply(this, Array.prototype.slice.call(arguments).concat([this.children.length]));
+		} else {
+			return this.addChildAt(child, this.children.length);
+		}
+	};
+
+	/**
+	 * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and
+	 * setting its parent to this Container.
+	 * Only children of type SpriteContainer, Sprite, Bitmap, BitmapText, or DOMElement are allowed.
+	 * The child must have the same spritesheet as this container (unless it's a DOMElement).
+	 * If a spritesheet hasn't been defined, this container uses this child's spritesheet.
+	 *
+	 * <h4>Example</h4>
+	 *      addChildAt(child1, index);
+	 *
+	 * You can also add multiple children, such as:
+	 *
+	 *      addChildAt(child1, child2, ..., index);
+	 *
+	 * The index must be between 0 and numChildren. For example, to add myShape under otherShape in the display list,
+	 * you could use:
+	 *
+	 *      container.addChildAt(myShape, container.getChildIndex(otherShape));
+	 *
+	 * This would also bump otherShape's index up by one. Fails silently if the index is out of range.
+	 *
+	 * @method addChildAt
+	 * @param {DisplayObject} child The display object to add.
+	 * @param {Number} index The index to add the child at.
+	 * @return {DisplayObject} Returns the last child that was added, or the last child if multiple children were added.
+	 **/
+	p.addChildAt = function(child, index) {
+		var l = arguments.length;
+		var indx = arguments[l-1]; // can't use the same name as the index param or it replaces arguments[1]
+		if (indx < 0 || indx > this.children.length) { return arguments[l-2]; }
+		if (l > 2) {
+			for (var i=0; i<l-1; i++) { this.addChildAt(arguments[i], indx+i); }
+			return arguments[l-2];
+		}
+		if (child._spritestage_compatibility >= 1) {
+			// The child is compatible with SpriteStage/SpriteContainer.
+		} else {
+			console && console.log("Error: You can only add children of type SpriteContainer, Sprite, BitmapText, or DOMElement [" + child.toString() + "]");
+			return child;
+		}
+		if (child._spritestage_compatibility <= 4) {
+			var spriteSheet = child.spriteSheet;
+			if ((!spriteSheet || !spriteSheet._images || spriteSheet._images.length > 1) || (this.spriteSheet && this.spriteSheet !== spriteSheet)) {
+				console && console.log("Error: A child's spriteSheet must be equal to its parent spriteSheet and only use one image. [" + child.toString() + "]");
+				return child;
+			}
+			this.spriteSheet = spriteSheet;
+		}
+		if (child.parent) { child.parent.removeChild(child); }
+		child.parent = this;
+		this.children.splice(index, 0, child);
+		return child;
+	};
+
+	/**
+	 * Returns a string representation of this object.
+	 * @method toString
+	 * @return {String} a string representation of the instance.
+	 **/
+	p.toString = function() {
+		return "[SpriteContainer (name="+  this.name +")]";
+	};
+
+
+	createjs.SpriteContainer = createjs.promote(SpriteContainer, "Container");
+}());
+
+/**
+ * @module EaselJS
+ */
+
+// namespace:
+this.createjs = this.createjs||{};
+
+(function() {
+	"use strict";
+
+
+	// Set which classes are compatible with SpriteStage.
+	// The order is important!!! If it's changed/appended, make sure that any logic that 
+	// checks _spritestage_compatibility accounts for it!
+	[createjs.SpriteContainer, createjs.Sprite, createjs.BitmapText, createjs.Bitmap, createjs.DOMElement].forEach(function(_class, index) {
+		_class.prototype._spritestage_compatibility = index + 1;
+	});
+	
+
+// constructor:
+	/**
+	 * A sprite stage is the root level {{#crossLink "Container"}}{{/crossLink}} for an aggressively optimized display list. Each time its {{#crossLink "Stage/tick"}}{{/crossLink}}
+	 * method is called, it will render its display list to its target canvas. WebGL content is fully compatible with the existing Context2D renderer.
+	 * On devices or browsers that don't support WebGL, content will automatically be rendered via canvas 2D.
+	 *
+	 * Restrictions:
+	 *     - only Sprite, SpriteContainer, BitmapText, Bitmap and DOMElement are allowed to be added to the display list.
+	 *     - a child being added (with the exception of DOMElement) MUST have an image or spriteSheet defined on it.
+	 *     - a child's image/spriteSheet MUST never change while being on the display list.
+	 *
+	 * <h4>Example</h4>
+	 * This example creates a sprite stage, adds a child to it, then uses {{#crossLink "Ticker"}}{{/crossLink}} to update the child
+	 * and redraw the stage using {{#crossLink "SpriteStage/update"}}{{/crossLink}}.
+	 *
+	 *      var stage = new createjs.SpriteStage("canvasElementId", false, false);
+	 *      stage.updateViewport(800, 600);
+	 *      var image = new createjs.Bitmap("imagePath.png");
+	 *      stage.addChild(image);
+	 *      createjs.Ticker.addEventListener("tick", handleTick);
+	 *      function handleTick(event) {
+	 *          image.x += 10;
+	 *          stage.update();
+	 *      }
+	 *
+	 * <strong>Note:</strong> SpriteStage is not included in the minified version of EaselJS.
+	 *
+	 * @class SpriteStage
+	 * @extends Stage
+	 * @constructor
+	 * @param {HTMLCanvasElement | String | Object} canvas A canvas object that the SpriteStage will render to, or the string id
+	 * of a canvas object in the current document.
+	 * @param {Boolean} preserveDrawingBuffer If true, the canvas is NOT auto-cleared by WebGL (spec discourages true). Useful if you want to use p.autoClear = false.
+	 * @param {Boolean} antialias Specifies whether or not the browser's WebGL implementation should try to perform antialiasing.
+	 **/
+	function SpriteStage(canvas, preserveDrawingBuffer, antialias) {
+		this.Stage_constructor(canvas);
+		
+		
+	// private properties:
+		/**
+		 * Specifies whether or not the canvas is auto-cleared by WebGL. Spec discourages true.
+		 * If true, the canvas is NOT auto-cleared by WebGL. Value is ignored if `_alphaEnabled` is false.
+		 * Useful if you want to use `autoClear = false`.
+		 * @property _preserveDrawingBuffer
+		 * @protected
+		 * @type {Boolean}
+		 * @default false
+		 **/
+		this._preserveDrawingBuffer = preserveDrawingBuffer||false;
+	
+		/**
+		 * Specifies whether or not the browser's WebGL implementation should try to perform antialiasing.
+		 * @property _antialias
+		 * @protected
+		 * @type {Boolean}
+		 * @default false
+		 **/
+		this._antialias = antialias||false;
+	
+		/**
+		 * The width of the canvas element.
+		 * @property _viewportWidth
+		 * @protected
+		 * @type {Number}
+		 * @default 0
+		 **/
+		this._viewportWidth = 0;
+	
+		/**
+		 * The height of the canvas element.
+		 * @property _viewportHeight
+		 * @protected
+		 * @type {Number}
+		 * @default 0
+		 **/
+		this._viewportHeight = 0;
+	
+		/**
+		 * A 2D projection matrix used to convert WebGL's clipspace into normal pixels.
+		 * @property _projectionMatrix
+		 * @protected
+		 * @type {Float32Array}
+		 * @default null
+		 **/
+		this._projectionMatrix = null;
+	
+		/**
+		 * The current WebGL canvas context.
+		 * @property _webGLContext
+		 * @protected
+		 * @type {WebGLRenderingContext}
+		 * @default null
+		 **/
+		this._webGLContext = null;
+	
+		/**
+		 * Indicates whether or not an error has been detected when dealing with WebGL.
+		 * If the is true, the behavior should be to use Canvas 2D rendering instead.
+		 * @property _webGLErrorDetected
+		 * @protected
+		 * @type {Boolean}
+		 * @default false
+		 **/
+		this._webGLErrorDetected = false;
+	
+		/**
+		 * The color to use when the WebGL canvas has been cleared.
+		 * @property _clearColor
+		 * @protected
+		 * @type {Object}
+		 * @default null
+		 **/
+		this._clearColor = null;
+		
+		/**
+		 * The maximum number of textures WebGL can work with per draw call.
+		 * @property _maxTexturesPerDraw
+		 * @protected
+		 * @type {Number}
+		 * @default 1
+		 **/
+		this._maxTexturesPerDraw = 1; // TODO: this is currently unused.
+	
+		/**
+		 * The maximum total number of boxes points that can be defined per draw call.
+		 * @property _maxBoxesPointsPerDraw
+		 * @protected
+		 * @type {Number}
+		 * @default null
+		 **/
+		this._maxBoxesPointsPerDraw = null;
+	
+		/**
+		 * The maximum number of boxes (sprites) that can be drawn in one draw call.
+		 * @property _maxBoxesPerDraw
+		 * @protected
+		 * @type {Number}
+		 * @default null
+		 **/
+		this._maxBoxesPerDraw = null;
+	
+		/**
+		 * The maximum number of indices that can be drawn in one draw call.
+		 * @property _maxIndicesPerDraw
+		 * @protected
+		 * @type {Number}
+		 * @default null
+		 **/
+		this._maxIndicesPerDraw = null;
+	
+		/**
+		 * The shader program used to draw everything.
+		 * @property _shaderProgram
+		 * @protected
+		 * @type {WebGLProgram}
+		 * @default null
+		 **/
+		this._shaderProgram = null;
+	
+		/**
+		 * The vertices data for the current draw call.
+		 * @property _vertices
+		 * @protected
+		 * @type {Float32Array}
+		 * @default null
+		 **/
+		this._vertices = null;
+	
+		/**
+		 * The buffer that contains all the vertices data.
+		 * @property _verticesBuffer
+		 * @protected
+		 * @type {WebGLBuffer}
+		 * @default null
+		 **/
+		this._verticesBuffer = null;
+	
+		/**
+		 * The indices to the vertices defined in this._vertices.
+		 * @property _indices
+		 * @protected
+		 * @type {Uint16Array}
+		 * @default null
+		 **/
+		this._indices = null;
+	
+		/**
+		 * The buffer that contains all the indices data.
+		 * @property _indicesBuffer
+		 * @protected
+		 * @type {WebGLBuffer}
+		 * @default null
+		 **/
+		this._indicesBuffer = null;
+	
+		/**
+		 * The current box index being defined for drawing.
+		 * @property _currentBoxIndex
+		 * @protected
+		 * @type {Number}
+		 * @default -1
+		 **/
+		this._currentBoxIndex = -1;
+	
+		/**
+		 * The current texture that will be used to draw into the GPU.
+		 * @property _drawTexture
+		 * @protected
+		 * @type {WebGLTexture}
+		 * @default null
+		 **/
+		this._drawTexture = null;
+		
+		
+	// setup:
+		this._initializeWebGL();
+	}
+	var p = createjs.extend(SpriteStage, createjs.Stage);
+
+	// TODO: deprecated
+	// p.initialize = function() {}; // searchable for devs wondering where it is. REMOVED. See docs for details.
+
+
+// constants:
+	/**
+	 * The number of properties defined per vertex in p._verticesBuffer.
+	 * x, y, textureU, textureV, alpha
+	 * @property NUM_VERTEX_PROPERTIES
+	 * @static
+	 * @final
+	 * @type {Number}
+	 * @readonly
+	 **/
+	SpriteStage.NUM_VERTEX_PROPERTIES = 5;
+
+	/**
+	 * The number of points in a box...obviously :)
+	 * @property POINTS_PER_BOX
+	 * @static
+	 * @final
+	 * @type {Number}
+	 * @readonly
+	 **/
+	SpriteStage.POINTS_PER_BOX = 4;
+
+	/**
+	 * The number of vertex properties per box.
+	 * @property NUM_VERTEX_PROPERTIES_PER_BOX
+	 * @static
+	 * @final
+	 * @type {Number}
+	 * @readonly
+	 **/
+	SpriteStage.NUM_VERTEX_PROPERTIES_PER_BOX = SpriteStage.POINTS_PER_BOX * SpriteStage.NUM_VERTEX_PROPERTIES;
+
+	/**
+	 * The number of indices needed to define a box using triangles.
+	 * 6 indices = 2 triangles = 1 box
+	 * @property INDICES_PER_BOX
+	 * @static
+	 * @final
+	 * @type {Number}
+	 * @readonly
+	 **/
+	SpriteStage.INDICES_PER_BOX = 6;
+
+	/**
+	 * The maximum size WebGL allows for element index numbers: 16 bit unsigned integer
+	 * @property MAX_INDEX_SIZE
+	 * @static
+	 * @final
+	 * @type {Number}
+	 * @readonly
+	 **/
+	SpriteStage.MAX_INDEX_SIZE = Math.pow(2, 16);
+
+	/**
+	 * The amount used to increment p._maxBoxesPointsPerDraw when the maximum has been reached.
+	 * If the maximum size of element index WebGL allows for (SpriteStage.MAX_INDEX_SIZE) was used,
+	 * the array size for p._vertices would equal 1280kb and p._indices 192kb. But since mobile phones
+	 * with less memory need to be accounted for, the maximum size is somewhat arbitrarily divided by 4,
+	 * reducing the array sizes to 320kb and 48kb respectively.
+	 * @property MAX_BOXES_POINTS_INCREMENT
+	 * @static
+	 * @final
+	 * @type {Number}
+	 * @readonly
+	 **/
+	SpriteStage.MAX_BOXES_POINTS_INCREMENT = SpriteStage.MAX_INDEX_SIZE / 4;
+
+
+// getter / setters:
+	/**
+	 * Indicates whether WebGL is being used for rendering. For example, this would be false if WebGL is not
+	 * supported in the browser.
+	 * @readonly
+	 * @property isWebGL
+	 * @type {Boolean}
+	 **/
+	p._get_isWebGL = function() {
+		return !!this._webGLContext;
+	};
+	
+	try {
+		Object.defineProperties(p, {
+			isWebGL: { get: p._get_isWebGL }
+		});
+	} catch (e) {} // TODO: use Log
+
+
+// public methods:
+	/**
+	 * Adds a child to the top of the display list.
+	 * Only children of type SpriteContainer, Sprite, Bitmap, BitmapText, or DOMElement are allowed.
+	 * Children also MUST have either an image or spriteSheet defined on them (unless it's a DOMElement).
+	 *
+	 * <h4>Example</h4>
+	 *      container.addChild(bitmapInstance);
+	 *
+	 *  You can also add multiple children at once:
+	 *
+	 *      container.addChild(bitmapInstance, shapeInstance, textInstance);
+	 *
+	 * @method addChild
+	 * @param {DisplayObject} child The display object to add.
+	 * @return {DisplayObject} The child that was added, or the last child if multiple children were added.
+	 **/
+	p.addChild = function(child) {
+		if (child == null) { return child; }
+		if (arguments.length > 1) {
+			return this.addChildAt.apply(this, Array.prototype.slice.call(arguments).concat([this.children.length]));
+		} else {
+			return this.addChildAt(child, this.children.length);
+		}
+	};
+
+	/**
+	 * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and
+	 * setting its parent to this Container.
+	 * Only children of type SpriteContainer, Sprite, Bitmap, BitmapText, or DOMElement are allowed.
+	 * Children also MUST have either an image or spriteSheet defined on them (unless it's a DOMElement).
+	 * 
+	 * <h4>Example</h4>
+	 *
+	 *      addChildAt(child1, index);
+	 *
+	 * You can also add multiple children, such as:
+	 *
+	 *      addChildAt(child1, child2, ..., index);
+	 *
+	 * The index must be between 0 and numChildren. For example, to add myShape under otherShape in the display list,
+	 * you could use:
+	 *
+	 *      container.addChildAt(myShape, container.getChildIndex(otherShape));
+	 *
+	 * This would also bump otherShape's index up by one. Fails silently if the index is out of range.
+	 *
+	 * @method addChildAt
+	 * @param {DisplayObject} child The display object to add.
+	 * @param {Number} index The index to add the child at.
+	 * @return {DisplayObject} Returns the last child that was added, or the last child if multiple children were added.
+	 **/
+	p.addChildAt = function(child, index) {
+		var l = arguments.length;
+		var indx = arguments[l-1]; // can't use the same name as the index param or it replaces arguments[1]
+		if (indx < 0 || indx > this.children.length) { return arguments[l-2]; }
+		if (l > 2) {
+			for (var i=0; i<l-1; i++) { this.addChildAt(arguments[i], indx+i); }
+			return arguments[l-2];
+		}
+		if (child._spritestage_compatibility >= 1) {
+			// The child is compatible with SpriteStage.
+		} else {
+			console && console.log("Error: You can only add children of type SpriteContainer, Sprite, Bitmap, BitmapText, or DOMElement. [" + child.toString() + "]");
+			return child;
+		}
+		if (!child.image && !child.spriteSheet && child._spritestage_compatibility <= 4) {
+			console && console.log("Error: You can only add children that have an image or spriteSheet defined on them. [" + child.toString() + "]");
+			return child;
+		}
+		if (child.parent) { child.parent.removeChild(child); }
+		child.parent = this;
+		this.children.splice(index, 0, child);
+		return child;
+	};
+
+	/** docced in super class **/
+	p.update = function(props) {
+		if (!this.canvas) { return; }
+		if (this.tickOnUpdate) { this.tick(props); }
+		this.dispatchEvent("drawstart"); // TODO: make cancellable?
+		if (this.autoClear) { this.clear(); }
+		var ctx = this._setWebGLContext();
+		if (ctx) {
+			// Use WebGL.
+			this.draw(ctx, false);
+		} else {
+			// Use 2D.
+			ctx = this.canvas.getContext("2d");
+			ctx.save();
+			this.updateContext(ctx);
+			this.draw(ctx, false);
+			ctx.restore();
+		}
+		this.dispatchEvent("drawend");
+	};
+
+	/**
+	 * Clears the target canvas. Useful if {{#crossLink "Stage/autoClear:property"}}{{/crossLink}} is set to `false`.
+	 * @method clear
+	 **/
+	p.clear = function() {
+		if (!this.canvas) { return; }
+		var ctx = this._setWebGLContext();
+		if (ctx) {
+			// Use WebGL.
+			ctx.clear(ctx.COLOR_BUFFER_BIT);
+		} else {
+			// Use 2D.
+			ctx = this.canvas.getContext("2d");
+			ctx.setTransform(1, 0, 0, 1, 0, 0);
+			ctx.clearRect(0, 0, this.canvas.width + 1, this.canvas.height + 1);
+		}
+	};
+
+	/**
+	 * Draws the stage into the specified context (using WebGL) ignoring its visible, alpha, shadow, and transform.
+	 * If WebGL is not supported in the browser, it will default to a 2D context.
+	 * Returns true if the draw was handled (useful for overriding functionality).
+	 *
+	 * NOTE: This method is mainly for internal use, though it may be useful for advanced uses.
+	 * @method draw
+	 * @param {CanvasRenderingContext2D} ctx The canvas 2D context object to draw into.
+	 * @param {Boolean} [ignoreCache=false] Indicates whether the draw operation should ignore any current cache.
+	 * For example, used for drawing the cache (to prevent it from simply drawing an existing cache back
+	 * into itself).
+	 **/
+	p.draw = function(ctx, ignoreCache) {
+		if (typeof WebGLRenderingContext !== 'undefined' && (ctx === this._webGLContext || ctx instanceof WebGLRenderingContext)) {		
+			this._drawWebGLKids(this.children, ctx);
+			return true;
+		} else {
+			return this.Stage_draw(ctx, ignoreCache);
+		}
+	};
+
+	/**
+	 * Update the WebGL viewport. Note that this does NOT update the canvas element's width/height.
+	 * @method updateViewport
+	 * @param {Number} width
+	 * @param {Number} height
+	 **/
+	p.updateViewport = function (width, height) {
+		this._viewportWidth = width;
+		this._viewportHeight = height;
+
+		if (this._webGLContext) {
+			this._webGLContext.viewport(0, 0, this._viewportWidth, this._viewportHeight);
+
+			if (!this._projectionMatrix) {
+				this._projectionMatrix = new Float32Array([0, 0, 0, 0, 0, 1, -1, 1, 1]);
+			}
+			this._projectionMatrix[0] = 2 / width;
+			this._projectionMatrix[4] = -2 / height;
+		}
+	};
+
+	/**
+	 * Clears an image's texture to free it up for garbage collection.
+	 * @method clearImageTexture
+	 * @param  {HTMLImageElement} image
+	 **/
+	p.clearImageTexture = function(image) {
+		image.__easeljs_texture = null;
+	};
+
+	/**
+	 * Returns a string representation of this object.
+	 * @method toString
+	 * @return {String} a string representation of the instance.
+	 **/
+	p.toString = function() {
+		return "[SpriteStage (name="+  this.name +")]";
+	};
+
+	// private methods:
+
+	/**
+	 * Initializes rendering with WebGL using the current canvas element.
+	 * @method _initializeWebGL
+	 * @protected
+	 **/
+	p._initializeWebGL = function() {
+		this._clearColor = { r: 0.0, g: 0.0, b: 0.0, a: 0.0 };
+
+		this._setWebGLContext();
+	};
+
+	/**
+	 * Sets the WebGL context to use for future draws.
+	 * @method _setWebGLContext
+	 * @return {WebGLRenderingContext}   The newly created context.
+	 * @protected
+	 **/
+	p._setWebGLContext = function() {
+		if (this.canvas) {
+			if (!this._webGLContext || this._webGLContext.canvas !== this.canvas) {
+				// A context hasn't been defined yet,
+				// OR the defined context belongs to a different canvas, so reinitialize.
+				this._initializeWebGLContext();
+			}
+		} else {
+			this._webGLContext = null;
+		}
+		return this._webGLContext;
+	};
+
+	/**
+	 * Sets up the WebGL context for rendering.
+	 * @method _initializeWebGLContext
+	 * @protected
+	 **/
+	p._initializeWebGLContext = function() {
+		var options = {
+			depth: false, // Disable the depth buffer as it isn't used.
+			alpha: true, // Make the canvas background transparent.
+			preserveDrawingBuffer: this._preserveDrawingBuffer,
+			antialias: this._antialias,
+			premultipliedAlpha: true // Assume the drawing buffer contains colors with premultiplied alpha.
+		};
+		var ctx = this._webGLContext = this.canvas.getContext("webgl", options) || this.canvas.getContext("experimental-webgl", options);
+
+		if (!ctx) {
+			// WebGL is not supported in this browser.
+			return;
+		}
+
+		// Enforcing 1 texture per draw for now until an optimized implementation for multiple textures is made:
+		this._maxTexturesPerDraw = 1; // ctx.getParameter(ctx.MAX_TEXTURE_IMAGE_UNITS);
+
+		// Set the default color the canvas should render when clearing:
+		this._setClearColor(this._clearColor.r, this._clearColor.g, this._clearColor.b, this._clearColor.a);
+
+		// Enable blending and set the blending functions that work with the premultiplied alpha settings:
+		ctx.enable(ctx.BLEND);
+		ctx.blendFuncSeparate(ctx.SRC_ALPHA, ctx.ONE_MINUS_SRC_ALPHA, ctx.ONE, ctx.ONE_MINUS_SRC_ALPHA);
+
+		// Do not premultiply textures' alpha channels when loading them in:
+		ctx.pixelStorei(ctx.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+
+		// Create the shader program that will be used for drawing:
+		this._createShaderProgram(ctx);
+
+		if (this._webGLErrorDetected) {
+			// Error detected during this._createShaderProgram().
+			this._webGLContext = null;
+			return;
+		}
+
+		// Create the vertices and indices buffers.
+		this._createBuffers(ctx);
+
+		// Update the viewport with the initial canvas dimensions:
+		this.updateViewport(this._viewportWidth || this.canvas.width || 0, this._viewportHeight || this.canvas.height || 0);
+	};
+
+	/**
+	 * Sets the color to use when the WebGL canvas has been cleared.
+	 * @method _setClearColor
+	 * @param {Number} r A number between 0 and 1.
+	 * @param {Number} g A number between 0 and 1.
+	 * @param {Number} b A number between 0 and 1.
+	 * @param {Number} a A number between 0 and 1.
+	 * @protected
+	 **/
+	p._setClearColor = function (r, g, b, a) {
+		this._clearColor.r = r;
+		this._clearColor.g = g;
+		this._clearColor.b = b;
+		this._clearColor.a = a;
+
+		if (this._webGLContext) {
+			this._webGLContext.clearColor(r, g, b, a);
+		}
+	};
+
+	/**
+	 * Creates the shader program that's going to be used to draw everything.
+	 * @method _createShaderProgram
+	 * @param {WebGLRenderingContext} ctx
+	 * @protected
+	 **/
+	p._createShaderProgram = function(ctx) {
+
+
+		var fragmentShader = this._createShader(ctx, ctx.FRAGMENT_SHADER,
+			"precision mediump float;" +
+
+			"uniform sampler2D uSampler0;" +
+
+			"varying vec3 vTextureCoord;" +
+
+			"void main(void) {" +
+				"vec4 color = texture2D(uSampler0, vTextureCoord.st);" +
+				"gl_FragColor = vec4(color.rgb, color.a * vTextureCoord.z);" +
+			"}"
+		);
+
+		var vertexShader = this._createShader(ctx, ctx.VERTEX_SHADER,
+			"attribute vec2 aVertexPosition;" +
+			"attribute vec3 aTextureCoord;" +
+
+			"uniform mat3 uPMatrix;" +
+
+			"varying vec3 vTextureCoord;" +
+
+			"void main(void) {" +
+				"vTextureCoord = aTextureCoord;" +
+
+				"gl_Position = vec4((uPMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);" +
+			"}"
+		);
+
+		if (this._webGLErrorDetected || !fragmentShader || !vertexShader) { return; }
+
+		var program = ctx.createProgram();
+		ctx.attachShader(program, fragmentShader);
+		ctx.attachShader(program, vertexShader);
+		ctx.linkProgram(program);
+
+		if(!ctx.getProgramParameter(program, ctx.LINK_STATUS)) {
+			// alert("Could not link program. " + ctx.getProgramInfoLog(program));
+			this._webGLErrorDetected = true;
+			return;
+		}
+
+		program.vertexPositionAttribute = ctx.getAttribLocation(program, "aVertexPosition");
+		program.textureCoordAttribute = ctx.getAttribLocation(program, "aTextureCoord");
+
+		program.sampler0uniform = ctx.getUniformLocation(program, "uSampler0");
+
+		ctx.enableVertexAttribArray(program.vertexPositionAttribute);
+		ctx.enableVertexAttribArray(program.textureCoordAttribute);
+
+		program.pMatrixUniform = ctx.getUniformLocation(program, "uPMatrix");
+
+		ctx.useProgram(program);
+
+		this._shaderProgram = program;
+	};
+
+	/**
+	 * Creates a shader from the specified string.
+	 * @method _createShader
+	 * @param  {WebGLRenderingContext} ctx
+	 * @param  {Number} type               The type of shader to create.
+	 * @param  {String} str                The definition for the shader.
+	 * @return {WebGLShader}
+	 * @protected
+	 **/
+	p._createShader = function(ctx, type, str) {
+		var shader = ctx.createShader(type);
+		ctx.shaderSource(shader, str);
+		ctx.compileShader(shader);
+
+		if (!ctx.getShaderParameter(shader, ctx.COMPILE_STATUS)) {
+			// alert("Could not compile shader. " + ctx.getShaderInfoLog(shader));
+			this._webGLErrorDetected = true;
+			return null;
+		}
+
+		return shader;
+	};
+
+	/**
+	 * Sets up the necessary vertices and indices buffers.
+	 * @method _createBuffers
+	 * @param {WebGLRenderingContext} ctx
+	 * @protected
+	 **/
+	p._createBuffers = function(ctx) {
+		this._verticesBuffer = ctx.createBuffer();
+		ctx.bindBuffer(ctx.ARRAY_BUFFER, this._verticesBuffer);
+
+		var byteCount = SpriteStage.NUM_VERTEX_PROPERTIES * 4; // ctx.FLOAT = 4 bytes
+		ctx.vertexAttribPointer(this._shaderProgram.vertexPositionAttribute, 2, ctx.FLOAT, ctx.FALSE, byteCount, 0);
+		ctx.vertexAttribPointer(this._shaderProgram.textureCoordAttribute, 3, ctx.FLOAT, ctx.FALSE, byteCount, 2 * 4);
+
+		this._indicesBuffer = ctx.createBuffer();
+
+		this._setMaxBoxesPoints(ctx, SpriteStage.MAX_BOXES_POINTS_INCREMENT);
+	};
+
+	/**
+	 * Updates the maximum total number of boxes points that can be defined per draw call,
+	 * and updates the buffers with the new array length sizes.
+	 * @method _setMaxBoxesPoints
+	 * @param {WebGLRenderingContext} ctx
+	 * @param {Number} value              The new this._maxBoxesPointsPerDraw value.
+	 * @protected
+	 **/
+	p._setMaxBoxesPoints = function (ctx, value) {
+		this._maxBoxesPointsPerDraw = value;
+		this._maxBoxesPerDraw = (this._maxBoxesPointsPerDraw / SpriteStage.POINTS_PER_BOX) | 0;
+		this._maxIndicesPerDraw = this._maxBoxesPerDraw * SpriteStage.INDICES_PER_BOX;
+
+		ctx.bindBuffer(ctx.ARRAY_BUFFER, this._verticesBuffer);
+		this._vertices = new Float32Array(this._maxBoxesPerDraw * SpriteStage.NUM_VERTEX_PROPERTIES_PER_BOX);
+		ctx.bufferData(ctx.ARRAY_BUFFER, this._vertices, ctx.DYNAMIC_DRAW);
+
+		// Set up indices for multiple boxes:
+		this._indices = new Uint16Array(this._maxIndicesPerDraw); // Indices are set once and reused.
+		for (var i = 0, l = this._indices.length; i < l; i += SpriteStage.INDICES_PER_BOX) {
+			var j = i * SpriteStage.POINTS_PER_BOX / SpriteStage.INDICES_PER_BOX;
+
+			// Indices for the 2 triangles that make the box:
+			this._indices[i]     = j;
+			this._indices[i + 1] = j + 1;
+			this._indices[i + 2] = j + 2;
+			this._indices[i + 3] = j;
+			this._indices[i + 4] = j + 2;
+			this._indices[i + 5] = j + 3;
+		}
+		ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, this._indicesBuffer);
+		ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, this._indices, ctx.STATIC_DRAW);
+	};
+	
+	/**
+	 * Sets up an image's WebGL texture.
+	 * @method _setupImageTexture
+	 * @param {WebGLRenderingContext} ctx The canvas WebGL context object to draw into.
+	 * @param {Object} image
+	 * @return {WebGLTexture}
+	 * @protected
+	 **/
+	p._setupImageTexture = function(ctx, image) {
+		if (image && (image.complete || image.getContext || image.readyState >= 2)) {
+			// Create and use a new texture for this image if it doesn't already have one:
+			var texture = image.__easeljs_texture;
+			if (!texture) {
+				texture = image.__easeljs_texture = ctx.createTexture();
+				ctx.bindTexture(ctx.TEXTURE_2D, texture);
+				ctx.texImage2D(ctx.TEXTURE_2D, 0, ctx.RGBA, ctx.RGBA, ctx.UNSIGNED_BYTE, image);
+				ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MIN_FILTER, ctx.NEAREST);
+				ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MAG_FILTER, ctx.LINEAR);
+				ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_WRAP_S, ctx.CLAMP_TO_EDGE);
+				ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
+			}
+			return texture;
+		}
+	};
+
+	/**
+	 * Draw all the kids into the WebGL context.
+	 * @method _drawWebGLKids
+	 * @param {Array} kids                The list of kids to draw.
+	 * @param {WebGLRenderingContext} ctx The canvas WebGL context object to draw into.
+	 * @param {Matrix2D} parentMVMatrix   The parent's global transformation matrix.
+	 * @protected
+	 **/
+	p._drawWebGLKids = function(kids, ctx, parentMVMatrix) {
+		var kid, mtx,
+			snapToPixelEnabled = this.snapToPixelEnabled,
+			image = null,
+			leftSide = 0, topSide = 0, rightSide = 0, bottomSide = 0,
+			vertices = this._vertices,
+			numVertexPropertiesPerBox = SpriteStage.NUM_VERTEX_PROPERTIES_PER_BOX,
+			maxIndexSize = SpriteStage.MAX_INDEX_SIZE,
+			maxBoxIndex = this._maxBoxesPerDraw - 1;
+
+		for (var i = 0, l = kids.length; i < l; i++) {
+			kid = kids[i];
+			if (!kid.isVisible()) { continue; }
+			
+			// Get the texture for this display branch:
+			var image = kid.image || (kid.spriteSheet && kid.spriteSheet._images[0]), texture = image.__easeljs_texture;
+			if (!texture && !(texture = this._setupImageTexture(ctx, image))) { continue; } // no texture available (ex. may not be loaded yet).
+			
+			mtx = kid._props.matrix;
+
+			// Get the kid's global matrix (relative to the stage):
+			mtx = (parentMVMatrix ? mtx.copy(parentMVMatrix) : mtx.identity()).appendTransform(kid.x, kid.y, kid.scaleX, kid.scaleY, kid.rotation, kid.skewX, kid.skewY, kid.regX, kid.regY);
+
+			// Set default texture coordinates:
+			var uStart = 0, uEnd = 1,
+				vStart = 0, vEnd = 1;
+
+			// Define the untransformed bounding box sides and get the kid's image to use for textures:
+			if (kid._spritestage_compatibility === 4) {
+				leftSide = 0;
+				topSide = 0;
+				rightSide = image.width;
+				bottomSide = image.height;
+			} else if (kid._spritestage_compatibility === 2) {
+				var frame = kid.spriteSheet.getFrame(kid.currentFrame),
+					rect = frame.rect;
+
+				leftSide = -frame.regX;
+				topSide = -frame.regY;
+				rightSide = leftSide + rect.width;
+				bottomSide = topSide + rect.height;
+
+				uStart = rect.x / image.width;
+				vStart = rect.y / image.height;
+				uEnd = uStart + (rect.width / image.width);
+				vEnd = vStart + (rect.height / image.height);
+			} else {
+				image = null;
+
+				// Update BitmapText instances:
+				if (kid._spritestage_compatibility === 3) {
+					// TODO: this might change in the future to use a more general approach.
+					kid._updateText();
+				}
+			}
+
+			// Detect if this kid is a new display branch:
+			if (!parentMVMatrix && kid._spritestage_compatibility <= 4 && texture !== this._drawTexture) {
+				// Draw to the GPU if a texture is already in use:
+				this._drawToGPU(ctx);
+				this._drawTexture = texture;
+			}
+
+			if (image !== null) {
+				// Set vertices' data:
+
+				var offset = ++this._currentBoxIndex * numVertexPropertiesPerBox,
+					a = mtx.a,
+					b = mtx.b,
+					c = mtx.c,
+					d = mtx.d,
+					tx = mtx.tx,
+					ty = mtx.ty;
+
+				if (snapToPixelEnabled && kid.snapToPixel) {
+					tx = tx + (tx < 0 ? -0.5 : 0.5) | 0;
+					ty = ty + (ty < 0 ? -0.5 : 0.5) | 0;
+				}
+
+				// Positions (calculations taken from Matrix2D.transformPoint):
+				vertices[offset]      = leftSide  * a + topSide    * c + tx;
+				vertices[offset + 1]  = leftSide  * b + topSide    * d + ty;
+				vertices[offset + 5]  = leftSide  * a + bottomSide * c + tx;
+				vertices[offset + 6]  = leftSide  * b + bottomSide * d + ty;
+				vertices[offset + 10] = rightSide * a + bottomSide * c + tx;
+				vertices[offset + 11] = rightSide * b + bottomSide * d + ty;
+				vertices[offset + 15] = rightSide * a + topSide    * c + tx;
+				vertices[offset + 16] = rightSide * b + topSide    * d + ty;
+
+				// Texture coordinates:
+				vertices[offset + 2]  = vertices[offset + 7]  = uStart;
+				vertices[offset + 12] = vertices[offset + 17] = uEnd;
+				vertices[offset + 3]  = vertices[offset + 18] = vStart;
+				vertices[offset + 8]  = vertices[offset + 13] = vEnd;
+
+				// Alphas:
+				vertices[offset + 4] = vertices[offset + 9] = vertices[offset + 14] = vertices[offset + 19] = kid.alpha;
+
+				// Draw to the GPU if the maximum number of boxes per a draw has been reached:
+				if (this._currentBoxIndex === maxBoxIndex) {
+					this._drawToGPU(ctx);
+					this._drawTexture = texture;
+
+					// If possible, increase the amount of boxes that can be used per draw call:
+					if (this._maxBoxesPointsPerDraw < maxIndexSize) {
+						this._setMaxBoxesPoints(ctx, this._maxBoxesPointsPerDraw + SpriteStage.MAX_BOXES_POINTS_INCREMENT);
+						maxBoxIndex = this._maxBoxesPerDraw - 1;
+					}
+				}
+			}
+
+			// Draw children:
+			if (kid.children) {
+				this._drawWebGLKids(kid.children, ctx, mtx);
+				maxBoxIndex = this._maxBoxesPerDraw - 1;
+			}
+		}
+		
+		// draw anything remaining, if this is the stage:
+		if (!parentMVMatrix) { this._drawToGPU(ctx); }
+	};
+
+	/**
+	 * Draws all the currently defined boxes to the GPU.
+	 * @method _drawToGPU
+	 * @param {WebGLRenderingContext} ctx The canvas WebGL context object to draw into.
+	 * @protected
+	 **/
+	p._drawToGPU = function(ctx) {
+		if (!this._drawTexture) { return; }
+		var numBoxes = this._currentBoxIndex + 1;
+		
+		ctx.activeTexture(ctx.TEXTURE0);
+		ctx.bindTexture(ctx.TEXTURE_2D, this._drawTexture);
+		ctx.uniform1i(this._shaderProgram.sampler0uniform, 0);
+
+		ctx.bindBuffer(ctx.ARRAY_BUFFER, this._verticesBuffer);
+
+		ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, this._indicesBuffer);
+		ctx.uniformMatrix3fv(this._shaderProgram.pMatrixUniform, false, this._projectionMatrix);
+		ctx.bufferSubData(ctx.ARRAY_BUFFER, 0, this._vertices);
+		ctx.drawElements(ctx.TRIANGLES, numBoxes * SpriteStage.INDICES_PER_BOX, ctx.UNSIGNED_SHORT, 0);
+
+		// Reset draw vars:
+		this._currentBoxIndex = -1;
+		this._drawTexture = null;
+	};
+
+
+	createjs.SpriteStage = createjs.promote(SpriteStage, "Stage");
+}());
+
 /*!
 * PreloadJS
 * Visit http://createjs.com/ for documentation, updates and examples.
@@ -29737,6 +30827,966 @@ this.createjs = this.createjs || {};
 /*! device.js 0.2.0 */
 (function(){var a,b,c,d,e,f,g,h,i,j;b=window.device,a={},window.device=a,d=window.document.documentElement,j=window.navigator.userAgent.toLowerCase(),a.ios=function(){return a.iphone()||a.ipod()||a.ipad()},a.iphone=function(){return e("iphone")},a.ipod=function(){return e("ipod")},a.ipad=function(){return e("ipad")},a.android=function(){return e("android")},a.androidPhone=function(){return a.android()&&e("mobile")},a.androidTablet=function(){return a.android()&&!e("mobile")},a.blackberry=function(){return e("blackberry")||e("bb10")||e("rim")},a.blackberryPhone=function(){return a.blackberry()&&!e("tablet")},a.blackberryTablet=function(){return a.blackberry()&&e("tablet")},a.windows=function(){return e("windows")},a.windowsPhone=function(){return a.windows()&&e("phone")},a.windowsTablet=function(){return a.windows()&&e("touch")&&!a.windowsPhone()},a.fxos=function(){return(e("(mobile;")||e("(tablet;"))&&e("; rv:")},a.fxosPhone=function(){return a.fxos()&&e("mobile")},a.fxosTablet=function(){return a.fxos()&&e("tablet")},a.meego=function(){return e("meego")},a.cordova=function(){return window.cordova&&"file:"===location.protocol},a.nodeWebkit=function(){return"object"==typeof window.process},a.mobile=function(){return a.androidPhone()||a.iphone()||a.ipod()||a.windowsPhone()||a.blackberryPhone()||a.fxosPhone()||a.meego()},a.tablet=function(){return a.ipad()||a.androidTablet()||a.blackberryTablet()||a.windowsTablet()||a.fxosTablet()},a.desktop=function(){return!a.tablet()&&!a.mobile()},a.portrait=function(){return window.innerHeight/window.innerWidth>1},a.landscape=function(){return window.innerHeight/window.innerWidth<1},a.noConflict=function(){return window.device=b,this},e=function(a){return-1!==j.indexOf(a)},g=function(a){var b;return b=new RegExp(a,"i"),d.className.match(b)},c=function(a){g(a)||(d.className+=" "+a)},i=function(a){g(a)&&(d.className=d.className.replace(" "+a,""))},a.ios()?a.ipad()?c("ios ipad tablet"):a.iphone()?c("ios iphone mobile"):a.ipod()&&c("ios ipod mobile"):c(a.android()?a.androidTablet()?"android tablet":"android mobile":a.blackberry()?a.blackberryTablet()?"blackberry tablet":"blackberry mobile":a.windows()?a.windowsTablet()?"windows tablet":a.windowsPhone()?"windows mobile":"desktop":a.fxos()?a.fxosTablet()?"fxos tablet":"fxos mobile":a.meego()?"meego mobile":a.nodeWebkit()?"node-webkit":"desktop"),a.cordova()&&c("cordova"),f=function(){a.landscape()?(i("portrait"),c("landscape")):(i("landscape"),c("portrait"))},h=window.hasOwnProperty("onorientationchange")?"orientationchange":"resize",window.addEventListener?window.addEventListener(h,f,!1):window.attachEvent?window.attachEvent(h,f):window[h]=f,f(),"function"==typeof define&&"object"==typeof define.amd&&define.amd?define(function(){return a}):"undefined"!=typeof module&&module.exports?module.exports=a:window.device=a}).call(this);
 this.createjs=this.createjs||{},function(){"use strict";function a(a,b,c,d,e,f,g,h){isNaN(a)||(this.color=a),void 0!==b&&(this.alpha=b),this._blurFilter=new createjs.BlurFilter(c,d,f),void 0!==e&&(this.strength=e),this.inner=!!g,this.knockout=!!h}var b=a.prototype=Object.create(createjs.Filter.prototype);b.constructor=a,b.alpha=1,b.strength=1,b.inner=!1,b.knockout=!1,Object.defineProperties(b,{color:{get:function(){return this._red<<16|this._green<<8|this._blue},set:function(a){return this._red=a>>16&255,this._green=a>>8&255,this._blue=255&a,this.color},enumerable:!0},blurX:{get:function(){return this._blurFilter.blurX},set:function(a){return this._blurFilter.blurX=a},enumerable:!0},blurY:{get:function(){return this._blurFilter.blurY},set:function(a){return this._blurFilter.blurY=a},enumerable:!0},quality:{get:function(){return this._blurFilter.quality},set:function(a){return this._blurFilter.quality=a},enumerable:!0}}),b._red=255,b._green=0,b._blue=0,b._blurFilter=null,b.getBounds=function(){return this.inner?null:this._blurFilter.getBounds()},b.applyFilter=function(a,b,c,d,e,f,g,h){if((this.alpha<=0||this.strength<=0)&&!this.knockout)return!0;f=f||a,void 0===g&&(g=b),void 0===h&&(h=c);var i=f.getImageData(g,h,d,e),j=i.data,k=document.createElement("canvas");k.width=d,k.height=e;for(var l=k.getContext("2d"),m=l.getImageData(0,0,d,e),n=m.data,o=this.inner,p=this._red,q=this._green,r=this._blue,s=0,t=n.length;t>s;s+=4){var u=s+3,v=j[u];o?255!==v&&(n[s]=p,n[s+1]=q,n[s+2]=r,n[u]=255-v):0!==v&&(n[s]=p,n[s+1]=q,n[s+2]=r,n[u]=v)}l.putImageData(m,0,0);var w=this.strength;if(w>0){this._blurFilter.applyFilter(l,0,0,d,e),w>255&&(w=255);for(var x=1;w>x;x++)l.drawImage(k,0,0)}var y=this.alpha;0>y?y=0:y>1&&(y=1);var z;return z=this.knockout?o?"source-in":"source-out":o?"source-atop":"destination-over",f.save(),f.setTransform(1,0,0,1,0,0),f.globalAlpha=y,f.globalCompositeOperation=z,f.drawImage(k,g,h),f.restore(),!0},b.clone=function(){var a=this._blurFilter;return new createjs.GlowFilter(this.color,this.alpha,a.blurX,a.blurY,this.strength,a.quality,this.inner,this.knockout)},b.toString=function(){return"[GlowFilter]"},createjs.GlowFilter=a}(window),this.createjs=this.createjs||{},function(){"use strict";function a(a,c,d,e,f,g,h,i,j,k,l){void 0!==a&&(this._distance=a),void 0!==c&&(this._angle=(c%360+360)%360),b.call(this,this._distance,this._angle),isNaN(d)||(this.color=d),void 0!==e&&(this.alpha=e),this._blurFilter=new createjs.BlurFilter(f,g,i),void 0!==h&&(this.strength=h>>0),this.inner=!!j,this.knockout=!!k,this.hideObject=!!l}function b(a,b){var c=b*createjs.Matrix2D.DEG_TO_RAD;this._offsetX=Math.cos(c)*a,this._offsetY=Math.sin(c)*a}var c=a.prototype=Object.create(createjs.Filter.prototype);c.constructor=a,c.alpha=1,c.strength=1,c.inner=!1,c.knockout=!1,c.hideObject=!1,Object.defineProperties(c,{angle:{get:function(){return this._angle},set:function(a){return a=(a%360+360)%360,b.call(this,this._distance,a),this._angle=a},enumerable:!0},distance:{get:function(){return this._distance},set:function(a){return b.call(this,a,this._angle),this._distance=a},enumerable:!0},color:{get:function(){return this._red<<16|this._green<<8|this._blue},set:function(a){return this._red=a>>16&255,this._green=a>>8&255,this._blue=255&a,this.color},enumerable:!0},blurX:{get:function(){return this._blurFilter.blurX},set:function(a){return this._blurFilter.blurX=a},enumerable:!0},blurY:{get:function(){return this._blurFilter.blurY},set:function(a){return this._blurFilter.blurY=a},enumerable:!0},quality:{get:function(){return this._blurFilter.quality},set:function(a){return this._blurFilter.quality=a},enumerable:!0}}),c._angle=45,c._distance=4,c._offsetX=0,c._offsetY=0,c._red=0,c._green=0,c._blue=0,c._blurFilter=null,c.getBounds=function(){if(this.inner)return null;var a=this._blurFilter.getBounds(),b=this._offsetX,c=this._offsetY;return 0!==b&&(0>b?(a.x+=b,a.width+=-b):a.width+=b),0!==c&&(0>c?(a.y+=c,a.height+=-c):a.height+=c),a},c.applyFilter=function(a,b,c,d,e,f,g,h){if((this.alpha<=0||this.strength<=0)&&!this.knockout&&!this.hideObject)return!0;f=f||a,void 0===g&&(g=b),void 0===h&&(h=c);var i=f.getImageData(g,h,d,e),j=i.data,k=document.createElement("canvas");k.width=d,k.height=e;for(var l=k.getContext("2d"),m=l.getImageData(0,0,d,e),n=m.data,o=this.inner,p=this._red,q=this._green,r=this._blue,s=0,t=n.length;t>s;s+=4){var u=s+3,v=j[u];o?255!==v&&(n[s]=p,n[s+1]=q,n[s+2]=r,n[u]=255-v):0!==v&&(n[s]=p,n[s+1]=q,n[s+2]=r,n[u]=v)}l.putImageData(m,0,0);var w=this.strength;if(w>0){this._blurFilter.applyFilter(l,0,0,d,e),w>255&&(w=255);for(var x=1;w>x;x++)l.drawImage(k,0,0)}var y=this.alpha;0>y?y=0:y>1&&(y=1);var z;return z=this.knockout?o?"source-in":"source-out":this.hideObject?o?"source-in":"copy":o?"source-atop":"destination-over",f.save(),f.setTransform(1,0,0,1,0,0),f.globalAlpha=y,f.globalCompositeOperation=z,f.drawImage(k,g+this._offsetX,h+this._offsetY),f.restore(),!0},c.clone=function(){var a=this._blurFilter;return new createjs.DropShadowFilter(this._distance,this._angle,this.color,this.alpha,a.blurX,a.blurY,this.strength,a.quality,this.inner,this.knockout,this.hideObject)},c.toString=function(){return"[DropShadowFilter]"},createjs.DropShadowFilter=a}(window);
+/*!
+ * @overview es6-promise - a tiny implementation of Promises/A+.
+ * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
+ * @license   Licensed under MIT license
+ *            See https://raw.githubusercontent.com/jakearchibald/es6-promise/master/LICENSE
+ * @version   2.0.0
+ */
+
+(function() {
+    "use strict";
+
+    function $$utils$$objectOrFunction(x) {
+      return typeof x === 'function' || (typeof x === 'object' && x !== null);
+    }
+
+    function $$utils$$isFunction(x) {
+      return typeof x === 'function';
+    }
+
+    function $$utils$$isMaybeThenable(x) {
+      return typeof x === 'object' && x !== null;
+    }
+
+    var $$utils$$_isArray;
+
+    if (!Array.isArray) {
+      $$utils$$_isArray = function (x) {
+        return Object.prototype.toString.call(x) === '[object Array]';
+      };
+    } else {
+      $$utils$$_isArray = Array.isArray;
+    }
+
+    var $$utils$$isArray = $$utils$$_isArray;
+    var $$utils$$now = Date.now || function() { return new Date().getTime(); };
+    function $$utils$$F() { }
+
+    var $$utils$$o_create = (Object.create || function (o) {
+      if (arguments.length > 1) {
+        throw new Error('Second argument not supported');
+      }
+      if (typeof o !== 'object') {
+        throw new TypeError('Argument must be an object');
+      }
+      $$utils$$F.prototype = o;
+      return new $$utils$$F();
+    });
+
+    var $$asap$$len = 0;
+
+    var $$asap$$default = function asap(callback, arg) {
+      $$asap$$queue[$$asap$$len] = callback;
+      $$asap$$queue[$$asap$$len + 1] = arg;
+      $$asap$$len += 2;
+      if ($$asap$$len === 2) {
+        // If len is 1, that means that we need to schedule an async flush.
+        // If additional callbacks are queued before the queue is flushed, they
+        // will be processed by this flush that we are scheduling.
+        $$asap$$scheduleFlush();
+      }
+    };
+
+    var $$asap$$browserGlobal = (typeof window !== 'undefined') ? window : {};
+    var $$asap$$BrowserMutationObserver = $$asap$$browserGlobal.MutationObserver || $$asap$$browserGlobal.WebKitMutationObserver;
+
+    // test for web worker but not in IE10
+    var $$asap$$isWorker = typeof Uint8ClampedArray !== 'undefined' &&
+      typeof importScripts !== 'undefined' &&
+      typeof MessageChannel !== 'undefined';
+
+    // node
+    function $$asap$$useNextTick() {
+      return function() {
+        process.nextTick($$asap$$flush);
+      };
+    }
+
+    function $$asap$$useMutationObserver() {
+      var iterations = 0;
+      var observer = new $$asap$$BrowserMutationObserver($$asap$$flush);
+      var node = document.createTextNode('');
+      observer.observe(node, { characterData: true });
+
+      return function() {
+        node.data = (iterations = ++iterations % 2);
+      };
+    }
+
+    // web worker
+    function $$asap$$useMessageChannel() {
+      var channel = new MessageChannel();
+      channel.port1.onmessage = $$asap$$flush;
+      return function () {
+        channel.port2.postMessage(0);
+      };
+    }
+
+    function $$asap$$useSetTimeout() {
+      return function() {
+        setTimeout($$asap$$flush, 1);
+      };
+    }
+
+    var $$asap$$queue = new Array(1000);
+
+    function $$asap$$flush() {
+      for (var i = 0; i < $$asap$$len; i+=2) {
+        var callback = $$asap$$queue[i];
+        var arg = $$asap$$queue[i+1];
+
+        callback(arg);
+
+        $$asap$$queue[i] = undefined;
+        $$asap$$queue[i+1] = undefined;
+      }
+
+      $$asap$$len = 0;
+    }
+
+    var $$asap$$scheduleFlush;
+
+    // Decide what async method to use to triggering processing of queued callbacks:
+    if (typeof process !== 'undefined' && {}.toString.call(process) === '[object process]') {
+      $$asap$$scheduleFlush = $$asap$$useNextTick();
+    } else if ($$asap$$BrowserMutationObserver) {
+      $$asap$$scheduleFlush = $$asap$$useMutationObserver();
+    } else if ($$asap$$isWorker) {
+      $$asap$$scheduleFlush = $$asap$$useMessageChannel();
+    } else {
+      $$asap$$scheduleFlush = $$asap$$useSetTimeout();
+    }
+
+    function $$$internal$$noop() {}
+    var $$$internal$$PENDING   = void 0;
+    var $$$internal$$FULFILLED = 1;
+    var $$$internal$$REJECTED  = 2;
+    var $$$internal$$GET_THEN_ERROR = new $$$internal$$ErrorObject();
+
+    function $$$internal$$selfFullfillment() {
+      return new TypeError("You cannot resolve a promise with itself");
+    }
+
+    function $$$internal$$cannotReturnOwn() {
+      return new TypeError('A promises callback cannot return that same promise.')
+    }
+
+    function $$$internal$$getThen(promise) {
+      try {
+        return promise.then;
+      } catch(error) {
+        $$$internal$$GET_THEN_ERROR.error = error;
+        return $$$internal$$GET_THEN_ERROR;
+      }
+    }
+
+    function $$$internal$$tryThen(then, value, fulfillmentHandler, rejectionHandler) {
+      try {
+        then.call(value, fulfillmentHandler, rejectionHandler);
+      } catch(e) {
+        return e;
+      }
+    }
+
+    function $$$internal$$handleForeignThenable(promise, thenable, then) {
+       $$asap$$default(function(promise) {
+        var sealed = false;
+        var error = $$$internal$$tryThen(then, thenable, function(value) {
+          if (sealed) { return; }
+          sealed = true;
+          if (thenable !== value) {
+            $$$internal$$resolve(promise, value);
+          } else {
+            $$$internal$$fulfill(promise, value);
+          }
+        }, function(reason) {
+          if (sealed) { return; }
+          sealed = true;
+
+          $$$internal$$reject(promise, reason);
+        }, 'Settle: ' + (promise._label || ' unknown promise'));
+
+        if (!sealed && error) {
+          sealed = true;
+          $$$internal$$reject(promise, error);
+        }
+      }, promise);
+    }
+
+    function $$$internal$$handleOwnThenable(promise, thenable) {
+      if (thenable._state === $$$internal$$FULFILLED) {
+        $$$internal$$fulfill(promise, thenable._result);
+      } else if (promise._state === $$$internal$$REJECTED) {
+        $$$internal$$reject(promise, thenable._result);
+      } else {
+        $$$internal$$subscribe(thenable, undefined, function(value) {
+          $$$internal$$resolve(promise, value);
+        }, function(reason) {
+          $$$internal$$reject(promise, reason);
+        });
+      }
+    }
+
+    function $$$internal$$handleMaybeThenable(promise, maybeThenable) {
+      if (maybeThenable.constructor === promise.constructor) {
+        $$$internal$$handleOwnThenable(promise, maybeThenable);
+      } else {
+        var then = $$$internal$$getThen(maybeThenable);
+
+        if (then === $$$internal$$GET_THEN_ERROR) {
+          $$$internal$$reject(promise, $$$internal$$GET_THEN_ERROR.error);
+        } else if (then === undefined) {
+          $$$internal$$fulfill(promise, maybeThenable);
+        } else if ($$utils$$isFunction(then)) {
+          $$$internal$$handleForeignThenable(promise, maybeThenable, then);
+        } else {
+          $$$internal$$fulfill(promise, maybeThenable);
+        }
+      }
+    }
+
+    function $$$internal$$resolve(promise, value) {
+      if (promise === value) {
+        $$$internal$$reject(promise, $$$internal$$selfFullfillment());
+      } else if ($$utils$$objectOrFunction(value)) {
+        $$$internal$$handleMaybeThenable(promise, value);
+      } else {
+        $$$internal$$fulfill(promise, value);
+      }
+    }
+
+    function $$$internal$$publishRejection(promise) {
+      if (promise._onerror) {
+        promise._onerror(promise._result);
+      }
+
+      $$$internal$$publish(promise);
+    }
+
+    function $$$internal$$fulfill(promise, value) {
+      if (promise._state !== $$$internal$$PENDING) { return; }
+
+      promise._result = value;
+      promise._state = $$$internal$$FULFILLED;
+
+      if (promise._subscribers.length === 0) {
+      } else {
+        $$asap$$default($$$internal$$publish, promise);
+      }
+    }
+
+    function $$$internal$$reject(promise, reason) {
+      if (promise._state !== $$$internal$$PENDING) { return; }
+      promise._state = $$$internal$$REJECTED;
+      promise._result = reason;
+
+      $$asap$$default($$$internal$$publishRejection, promise);
+    }
+
+    function $$$internal$$subscribe(parent, child, onFulfillment, onRejection) {
+      var subscribers = parent._subscribers;
+      var length = subscribers.length;
+
+      parent._onerror = null;
+
+      subscribers[length] = child;
+      subscribers[length + $$$internal$$FULFILLED] = onFulfillment;
+      subscribers[length + $$$internal$$REJECTED]  = onRejection;
+
+      if (length === 0 && parent._state) {
+        $$asap$$default($$$internal$$publish, parent);
+      }
+    }
+
+    function $$$internal$$publish(promise) {
+      var subscribers = promise._subscribers;
+      var settled = promise._state;
+
+      if (subscribers.length === 0) { return; }
+
+      var child, callback, detail = promise._result;
+
+      for (var i = 0; i < subscribers.length; i += 3) {
+        child = subscribers[i];
+        callback = subscribers[i + settled];
+
+        if (child) {
+          $$$internal$$invokeCallback(settled, child, callback, detail);
+        } else {
+          callback(detail);
+        }
+      }
+
+      promise._subscribers.length = 0;
+    }
+
+    function $$$internal$$ErrorObject() {
+      this.error = null;
+    }
+
+    var $$$internal$$TRY_CATCH_ERROR = new $$$internal$$ErrorObject();
+
+    function $$$internal$$tryCatch(callback, detail) {
+      try {
+        return callback(detail);
+      } catch(e) {
+        $$$internal$$TRY_CATCH_ERROR.error = e;
+        return $$$internal$$TRY_CATCH_ERROR;
+      }
+    }
+
+    function $$$internal$$invokeCallback(settled, promise, callback, detail) {
+      var hasCallback = $$utils$$isFunction(callback),
+          value, error, succeeded, failed;
+
+      if (hasCallback) {
+        value = $$$internal$$tryCatch(callback, detail);
+
+        if (value === $$$internal$$TRY_CATCH_ERROR) {
+          failed = true;
+          error = value.error;
+          value = null;
+        } else {
+          succeeded = true;
+        }
+
+        if (promise === value) {
+          $$$internal$$reject(promise, $$$internal$$cannotReturnOwn());
+          return;
+        }
+
+      } else {
+        value = detail;
+        succeeded = true;
+      }
+
+      if (promise._state !== $$$internal$$PENDING) {
+        // noop
+      } else if (hasCallback && succeeded) {
+        $$$internal$$resolve(promise, value);
+      } else if (failed) {
+        $$$internal$$reject(promise, error);
+      } else if (settled === $$$internal$$FULFILLED) {
+        $$$internal$$fulfill(promise, value);
+      } else if (settled === $$$internal$$REJECTED) {
+        $$$internal$$reject(promise, value);
+      }
+    }
+
+    function $$$internal$$initializePromise(promise, resolver) {
+      try {
+        resolver(function resolvePromise(value){
+          $$$internal$$resolve(promise, value);
+        }, function rejectPromise(reason) {
+          $$$internal$$reject(promise, reason);
+        });
+      } catch(e) {
+        $$$internal$$reject(promise, e);
+      }
+    }
+
+    function $$$enumerator$$makeSettledResult(state, position, value) {
+      if (state === $$$internal$$FULFILLED) {
+        return {
+          state: 'fulfilled',
+          value: value
+        };
+      } else {
+        return {
+          state: 'rejected',
+          reason: value
+        };
+      }
+    }
+
+    function $$$enumerator$$Enumerator(Constructor, input, abortOnReject, label) {
+      this._instanceConstructor = Constructor;
+      this.promise = new Constructor($$$internal$$noop, label);
+      this._abortOnReject = abortOnReject;
+
+      if (this._validateInput(input)) {
+        this._input     = input;
+        this.length     = input.length;
+        this._remaining = input.length;
+
+        this._init();
+
+        if (this.length === 0) {
+          $$$internal$$fulfill(this.promise, this._result);
+        } else {
+          this.length = this.length || 0;
+          this._enumerate();
+          if (this._remaining === 0) {
+            $$$internal$$fulfill(this.promise, this._result);
+          }
+        }
+      } else {
+        $$$internal$$reject(this.promise, this._validationError());
+      }
+    }
+
+    $$$enumerator$$Enumerator.prototype._validateInput = function(input) {
+      return $$utils$$isArray(input);
+    };
+
+    $$$enumerator$$Enumerator.prototype._validationError = function() {
+      return new Error('Array Methods must be provided an Array');
+    };
+
+    $$$enumerator$$Enumerator.prototype._init = function() {
+      this._result = new Array(this.length);
+    };
+
+    var $$$enumerator$$default = $$$enumerator$$Enumerator;
+
+    $$$enumerator$$Enumerator.prototype._enumerate = function() {
+      var length  = this.length;
+      var promise = this.promise;
+      var input   = this._input;
+
+      for (var i = 0; promise._state === $$$internal$$PENDING && i < length; i++) {
+        this._eachEntry(input[i], i);
+      }
+    };
+
+    $$$enumerator$$Enumerator.prototype._eachEntry = function(entry, i) {
+      var c = this._instanceConstructor;
+      if ($$utils$$isMaybeThenable(entry)) {
+        if (entry.constructor === c && entry._state !== $$$internal$$PENDING) {
+          entry._onerror = null;
+          this._settledAt(entry._state, i, entry._result);
+        } else {
+          this._willSettleAt(c.resolve(entry), i);
+        }
+      } else {
+        this._remaining--;
+        this._result[i] = this._makeResult($$$internal$$FULFILLED, i, entry);
+      }
+    };
+
+    $$$enumerator$$Enumerator.prototype._settledAt = function(state, i, value) {
+      var promise = this.promise;
+
+      if (promise._state === $$$internal$$PENDING) {
+        this._remaining--;
+
+        if (this._abortOnReject && state === $$$internal$$REJECTED) {
+          $$$internal$$reject(promise, value);
+        } else {
+          this._result[i] = this._makeResult(state, i, value);
+        }
+      }
+
+      if (this._remaining === 0) {
+        $$$internal$$fulfill(promise, this._result);
+      }
+    };
+
+    $$$enumerator$$Enumerator.prototype._makeResult = function(state, i, value) {
+      return value;
+    };
+
+    $$$enumerator$$Enumerator.prototype._willSettleAt = function(promise, i) {
+      var enumerator = this;
+
+      $$$internal$$subscribe(promise, undefined, function(value) {
+        enumerator._settledAt($$$internal$$FULFILLED, i, value);
+      }, function(reason) {
+        enumerator._settledAt($$$internal$$REJECTED, i, reason);
+      });
+    };
+
+    var $$promise$all$$default = function all(entries, label) {
+      return new $$$enumerator$$default(this, entries, true /* abort on reject */, label).promise;
+    };
+
+    var $$promise$race$$default = function race(entries, label) {
+      /*jshint validthis:true */
+      var Constructor = this;
+
+      var promise = new Constructor($$$internal$$noop, label);
+
+      if (!$$utils$$isArray(entries)) {
+        $$$internal$$reject(promise, new TypeError('You must pass an array to race.'));
+        return promise;
+      }
+
+      var length = entries.length;
+
+      function onFulfillment(value) {
+        $$$internal$$resolve(promise, value);
+      }
+
+      function onRejection(reason) {
+        $$$internal$$reject(promise, reason);
+      }
+
+      for (var i = 0; promise._state === $$$internal$$PENDING && i < length; i++) {
+        $$$internal$$subscribe(Constructor.resolve(entries[i]), undefined, onFulfillment, onRejection);
+      }
+
+      return promise;
+    };
+
+    var $$promise$resolve$$default = function resolve(object, label) {
+      /*jshint validthis:true */
+      var Constructor = this;
+
+      if (object && typeof object === 'object' && object.constructor === Constructor) {
+        return object;
+      }
+
+      var promise = new Constructor($$$internal$$noop, label);
+      $$$internal$$resolve(promise, object);
+      return promise;
+    };
+
+    var $$promise$reject$$default = function reject(reason, label) {
+      /*jshint validthis:true */
+      var Constructor = this;
+      var promise = new Constructor($$$internal$$noop, label);
+      $$$internal$$reject(promise, reason);
+      return promise;
+    };
+
+    var $$es6$promise$promise$$counter = 0;
+
+    function $$es6$promise$promise$$needsResolver() {
+      throw new TypeError('You must pass a resolver function as the first argument to the promise constructor');
+    }
+
+    function $$es6$promise$promise$$needsNew() {
+      throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");
+    }
+
+    var $$es6$promise$promise$$default = $$es6$promise$promise$$Promise;
+
+    /**
+      Promise objects represent the eventual result of an asynchronous operation. The
+      primary way of interacting with a promise is through its `then` method, which
+      registers callbacks to receive either a promise’s eventual value or the reason
+      why the promise cannot be fulfilled.
+
+      Terminology
+      -----------
+
+      - `promise` is an object or function with a `then` method whose behavior conforms to this specification.
+      - `thenable` is an object or function that defines a `then` method.
+      - `value` is any legal JavaScript value (including undefined, a thenable, or a promise).
+      - `exception` is a value that is thrown using the throw statement.
+      - `reason` is a value that indicates why a promise was rejected.
+      - `settled` the final resting state of a promise, fulfilled or rejected.
+
+      A promise can be in one of three states: pending, fulfilled, or rejected.
+
+      Promises that are fulfilled have a fulfillment value and are in the fulfilled
+      state.  Promises that are rejected have a rejection reason and are in the
+      rejected state.  A fulfillment value is never a thenable.
+
+      Promises can also be said to *resolve* a value.  If this value is also a
+      promise, then the original promise's settled state will match the value's
+      settled state.  So a promise that *resolves* a promise that rejects will
+      itself reject, and a promise that *resolves* a promise that fulfills will
+      itself fulfill.
+
+
+      Basic Usage:
+      ------------
+
+      ```js
+      var promise = new Promise(function(resolve, reject) {
+        // on success
+        resolve(value);
+
+        // on failure
+        reject(reason);
+      });
+
+      promise.then(function(value) {
+        // on fulfillment
+      }, function(reason) {
+        // on rejection
+      });
+      ```
+
+      Advanced Usage:
+      ---------------
+
+      Promises shine when abstracting away asynchronous interactions such as
+      `XMLHttpRequest`s.
+
+      ```js
+      function getJSON(url) {
+        return new Promise(function(resolve, reject){
+          var xhr = new XMLHttpRequest();
+
+          xhr.open('GET', url);
+          xhr.onreadystatechange = handler;
+          xhr.responseType = 'json';
+          xhr.setRequestHeader('Accept', 'application/json');
+          xhr.send();
+
+          function handler() {
+            if (this.readyState === this.DONE) {
+              if (this.status === 200) {
+                resolve(this.response);
+              } else {
+                reject(new Error('getJSON: `' + url + '` failed with status: [' + this.status + ']'));
+              }
+            }
+          };
+        });
+      }
+
+      getJSON('/posts.json').then(function(json) {
+        // on fulfillment
+      }, function(reason) {
+        // on rejection
+      });
+      ```
+
+      Unlike callbacks, promises are great composable primitives.
+
+      ```js
+      Promise.all([
+        getJSON('/posts'),
+        getJSON('/comments')
+      ]).then(function(values){
+        values[0] // => postsJSON
+        values[1] // => commentsJSON
+
+        return values;
+      });
+      ```
+
+      @class Promise
+      @param {function} resolver
+      Useful for tooling.
+      @constructor
+    */
+    function $$es6$promise$promise$$Promise(resolver) {
+      this._id = $$es6$promise$promise$$counter++;
+      this._state = undefined;
+      this._result = undefined;
+      this._subscribers = [];
+
+      if ($$$internal$$noop !== resolver) {
+        if (!$$utils$$isFunction(resolver)) {
+          $$es6$promise$promise$$needsResolver();
+        }
+
+        if (!(this instanceof $$es6$promise$promise$$Promise)) {
+          $$es6$promise$promise$$needsNew();
+        }
+
+        $$$internal$$initializePromise(this, resolver);
+      }
+    }
+
+    $$es6$promise$promise$$Promise.all = $$promise$all$$default;
+    $$es6$promise$promise$$Promise.race = $$promise$race$$default;
+    $$es6$promise$promise$$Promise.resolve = $$promise$resolve$$default;
+    $$es6$promise$promise$$Promise.reject = $$promise$reject$$default;
+
+    $$es6$promise$promise$$Promise.prototype = {
+      constructor: $$es6$promise$promise$$Promise,
+
+    /**
+      The primary way of interacting with a promise is through its `then` method,
+      which registers callbacks to receive either a promise's eventual value or the
+      reason why the promise cannot be fulfilled.
+
+      ```js
+      findUser().then(function(user){
+        // user is available
+      }, function(reason){
+        // user is unavailable, and you are given the reason why
+      });
+      ```
+
+      Chaining
+      --------
+
+      The return value of `then` is itself a promise.  This second, 'downstream'
+      promise is resolved with the return value of the first promise's fulfillment
+      or rejection handler, or rejected if the handler throws an exception.
+
+      ```js
+      findUser().then(function (user) {
+        return user.name;
+      }, function (reason) {
+        return 'default name';
+      }).then(function (userName) {
+        // If `findUser` fulfilled, `userName` will be the user's name, otherwise it
+        // will be `'default name'`
+      });
+
+      findUser().then(function (user) {
+        throw new Error('Found user, but still unhappy');
+      }, function (reason) {
+        throw new Error('`findUser` rejected and we're unhappy');
+      }).then(function (value) {
+        // never reached
+      }, function (reason) {
+        // if `findUser` fulfilled, `reason` will be 'Found user, but still unhappy'.
+        // If `findUser` rejected, `reason` will be '`findUser` rejected and we're unhappy'.
+      });
+      ```
+      If the downstream promise does not specify a rejection handler, rejection reasons will be propagated further downstream.
+
+      ```js
+      findUser().then(function (user) {
+        throw new PedagogicalException('Upstream error');
+      }).then(function (value) {
+        // never reached
+      }).then(function (value) {
+        // never reached
+      }, function (reason) {
+        // The `PedgagocialException` is propagated all the way down to here
+      });
+      ```
+
+      Assimilation
+      ------------
+
+      Sometimes the value you want to propagate to a downstream promise can only be
+      retrieved asynchronously. This can be achieved by returning a promise in the
+      fulfillment or rejection handler. The downstream promise will then be pending
+      until the returned promise is settled. This is called *assimilation*.
+
+      ```js
+      findUser().then(function (user) {
+        return findCommentsByAuthor(user);
+      }).then(function (comments) {
+        // The user's comments are now available
+      });
+      ```
+
+      If the assimliated promise rejects, then the downstream promise will also reject.
+
+      ```js
+      findUser().then(function (user) {
+        return findCommentsByAuthor(user);
+      }).then(function (comments) {
+        // If `findCommentsByAuthor` fulfills, we'll have the value here
+      }, function (reason) {
+        // If `findCommentsByAuthor` rejects, we'll have the reason here
+      });
+      ```
+
+      Simple Example
+      --------------
+
+      Synchronous Example
+
+      ```javascript
+      var result;
+
+      try {
+        result = findResult();
+        // success
+      } catch(reason) {
+        // failure
+      }
+      ```
+
+      Errback Example
+
+      ```js
+      findResult(function(result, err){
+        if (err) {
+          // failure
+        } else {
+          // success
+        }
+      });
+      ```
+
+      Promise Example;
+
+      ```javascript
+      findResult().then(function(result){
+        // success
+      }, function(reason){
+        // failure
+      });
+      ```
+
+      Advanced Example
+      --------------
+
+      Synchronous Example
+
+      ```javascript
+      var author, books;
+
+      try {
+        author = findAuthor();
+        books  = findBooksByAuthor(author);
+        // success
+      } catch(reason) {
+        // failure
+      }
+      ```
+
+      Errback Example
+
+      ```js
+
+      function foundBooks(books) {
+
+      }
+
+      function failure(reason) {
+
+      }
+
+      findAuthor(function(author, err){
+        if (err) {
+          failure(err);
+          // failure
+        } else {
+          try {
+            findBoooksByAuthor(author, function(books, err) {
+              if (err) {
+                failure(err);
+              } else {
+                try {
+                  foundBooks(books);
+                } catch(reason) {
+                  failure(reason);
+                }
+              }
+            });
+          } catch(error) {
+            failure(err);
+          }
+          // success
+        }
+      });
+      ```
+
+      Promise Example;
+
+      ```javascript
+      findAuthor().
+        then(findBooksByAuthor).
+        then(function(books){
+          // found books
+      }).catch(function(reason){
+        // something went wrong
+      });
+      ```
+
+      @method then
+      @param {Function} onFulfilled
+      @param {Function} onRejected
+      Useful for tooling.
+      @return {Promise}
+    */
+      then: function(onFulfillment, onRejection) {
+        var parent = this;
+        var state = parent._state;
+
+        if (state === $$$internal$$FULFILLED && !onFulfillment || state === $$$internal$$REJECTED && !onRejection) {
+          return this;
+        }
+
+        var child = new this.constructor($$$internal$$noop);
+        var result = parent._result;
+
+        if (state) {
+          var callback = arguments[state - 1];
+          $$asap$$default(function(){
+            $$$internal$$invokeCallback(state, child, callback, result);
+          });
+        } else {
+          $$$internal$$subscribe(parent, child, onFulfillment, onRejection);
+        }
+
+        return child;
+      },
+
+    /**
+      `catch` is simply sugar for `then(undefined, onRejection)` which makes it the same
+      as the catch block of a try/catch statement.
+
+      ```js
+      function findAuthor(){
+        throw new Error('couldn't find that author');
+      }
+
+      // synchronous
+      try {
+        findAuthor();
+      } catch(reason) {
+        // something went wrong
+      }
+
+      // async with promises
+      findAuthor().catch(function(reason){
+        // something went wrong
+      });
+      ```
+
+      @method catch
+      @param {Function} onRejection
+      Useful for tooling.
+      @return {Promise}
+    */
+      'catch': function(onRejection) {
+        return this.then(null, onRejection);
+      }
+    };
+
+    var $$es6$promise$polyfill$$default = function polyfill() {
+      var local;
+
+      if (typeof global !== 'undefined') {
+        local = global;
+      } else if (typeof window !== 'undefined' && window.document) {
+        local = window;
+      } else {
+        local = self;
+      }
+
+      var es6PromiseSupport =
+        "Promise" in local &&
+        // Some of these methods are missing from
+        // Firefox/Chrome experimental implementations
+        "resolve" in local.Promise &&
+        "reject" in local.Promise &&
+        "all" in local.Promise &&
+        "race" in local.Promise &&
+        // Older version of the spec had a resolver object
+        // as the arg rather than a function
+        (function() {
+          var resolve;
+          new local.Promise(function(r) { resolve = r; });
+          return $$utils$$isFunction(resolve);
+        }());
+
+      if (!es6PromiseSupport) {
+        local.Promise = $$es6$promise$promise$$default;
+      }
+    };
+
+    var es6$promise$umd$$ES6Promise = {
+      'Promise': $$es6$promise$promise$$default,
+      'polyfill': $$es6$promise$polyfill$$default
+    };
+
+    /* global define:true module:true window: true */
+    if (typeof define === 'function' && define['amd']) {
+      define(function() { return es6$promise$umd$$ES6Promise; });
+    } else if (typeof module !== 'undefined' && module['exports']) {
+      module['exports'] = es6$promise$umd$$ES6Promise;
+    } else if (typeof this !== 'undefined') {
+      this['ES6Promise'] = es6$promise$umd$$ES6Promise;
+    }
+}).call(this);
 (function() {
   'use strict';
 
@@ -53515,7 +55565,6 @@ this.G = this.G || {};
 	 * @property version
 	 * @type {string}
 	 * @default "0.3.3"
-	 * @example "1.2.2" if minified
 	 */
 	p.version = "0.3.3";
 
@@ -53691,10 +55740,11 @@ this.G = this.G || {};
 	p.initComplete = false;
 
 	/**
-	 * Game entry point
+	 * Game initialisation - it all starts here
 	 *
 	 * Creates and initialises Game framework classes in this order:
-	 * 1. Stats (for profiling)
+	 * 0. Init Utils.params
+	 * 1. Stats
 	 * 2. SignalDispatcher
 	 * 3. GameData
 	 * 4. ServerInterface
@@ -53703,7 +55753,7 @@ this.G = this.G || {};
 	 *
 	 * Game initialisation is continued when the ServerInterface returns SlotInitResponse
 	 *
-	 * @method init:
+	 * @method init
 	 */
 	p.init = function() {
 		this.stats = new Stats();
@@ -54428,7 +56478,6 @@ this.G = this.G || {};
 	 * handle errors in asset loading phase gracefully
 	 * @method handleAssetsError
 	 * @param {createjs.Event} e - The error event.
-	 * @todo display a reasonable error message to the user
 	 */
 	p.handleAssetsError = function(e) {
 		alert("Error loading game assets\n" + e.message);
@@ -59380,7 +61429,7 @@ var G = G || {};
 
 	/**
 	 * Array container for all GameComponents.
-	 * Can be accessed directly or via the helper method getGameComponentByClass
+	 * GameComponents should automatically add themselves to the gameComponents array during init (when their init super is called).
 	 *
 	 * @property gameComponents
 	 * @type {G.GameComponent[]}
@@ -59411,7 +61460,18 @@ var G = G || {};
 	 */
 	Utils.serverParams = {};
 
-
+	/**
+	 * Pass the fully qualified class name of component {eg. G.ReelsComponent} to return the component instance.
+	 *
+	 * @method getGameComponentByClass -
+	 * @param {class} componentClass - must be the class type of a G.GameComponent
+	 * @returns {G.GameComponent} - the instance
+	 */
+	Utils.getGameComponentByClass = function (componentClass) {
+		return _.find(Utils.gameComponents, function(component) {
+			return component instanceof componentClass;
+		});
+	};
 
 	/**
 	 * Wrapper function useful for allowing setTimeout to be used inside loops where creating new functions is inefficient
@@ -59448,17 +61508,6 @@ var G = G || {};
 			arr[randomIndex] = temporaryValue;
 		}
 		return arr;
-	};
-
-	/**
-	 * @method getGameComponentByClass - pass the type of component {eg. G.ReelsComponent} to return the component instance
-	 * @param {class} componentClass - must be the class type of a G.GameComponent
-	 * @returns {G.GameComponent} - the instance
-	 */
-	Utils.getGameComponentByClass = function (componentClass) {
-		return _.find(Utils.gameComponents, function(component) {
-			return component instanceof componentClass;
-		});
 	};
 
 	/**

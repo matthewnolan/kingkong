@@ -10071,8 +10071,8 @@ this.createjs = this.createjs||{};
 	 * running from the label index to the next label. For example, if there is a label named "foo" at frame 0 and a label
 	 * named "bar" at frame 10, in a MovieClip with 15 frames, it will add an animation named "foo" that runs from frame
 	 * index 0 to 9, and an animation named "bar" that runs from frame index 10 to 14.
-		 *
-		 * Note that this will iterate through the full MovieClip with actionsEnabled set to false, ending on the last frame.
+	 *
+	 * Note that this will iterate through the full MovieClip with actionsEnabled set to false, ending on the last frame.
 	 * @method addMovieClip
 	 * @param {MovieClip} source The source MovieClip instance to add to the sprite sheet.
 	 * @param {Rectangle} [sourceRect] A {{#crossLink "Rectangle"}}{{/crossLink}} defining the portion of the source to

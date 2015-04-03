@@ -85,7 +85,6 @@ this.G = this.G || {};
 	 * @property version
 	 * @type {string}
 	 * @default "{{ VERSION }}"
-	 * @example "1.2.2" if minified
 	 */
 	p.version = "{{ VERSION }}";
 
