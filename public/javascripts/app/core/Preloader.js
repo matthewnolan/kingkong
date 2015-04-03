@@ -153,7 +153,6 @@ this.G = this.G || {};
 	 * handle errors in asset loading phase gracefully
 	 * @method handleAssetsError
 	 * @param {createjs.Event} e - The error event.
-	 * @todo display a reasonable error message to the user
 	 */
 	p.handleAssetsError = function(e) {
 		alert("Error loading game assets\n" + e.message);

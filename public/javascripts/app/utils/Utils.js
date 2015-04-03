@@ -29,7 +29,7 @@ var G = G || {};
 
 	/**
 	 * Array container for all GameComponents.
-	 * Can be accessed directly or via the helper method getGameComponentByClass
+	 * GameComponents should automatically add themselves to the gameComponents array during init (when their init super is called).
 	 *
 	 * @property gameComponents
 	 * @type {G.GameComponent[]}
@@ -60,7 +60,18 @@ var G = G || {};
 	 */
 	Utils.serverParams = {};
 
-
+	/**
+	 * Pass the fully qualified class name of component {eg. G.ReelsComponent} to return the component instance.
+	 *
+	 * @method getGameComponentByClass -
+	 * @param {class} componentClass - must be the class type of a G.GameComponent
+	 * @returns {G.GameComponent} - the instance
+	 */
+	Utils.getGameComponentByClass = function (componentClass) {
+		return _.find(Utils.gameComponents, function(component) {
+			return component instanceof componentClass;
+		});
+	};
 
 	/**
 	 * Wrapper function useful for allowing setTimeout to be used inside loops where creating new functions is inefficient
@@ -97,17 +108,6 @@ var G = G || {};
 			arr[randomIndex] = temporaryValue;
 		}
 		return arr;
-	};
-
-	/**
-	 * @method getGameComponentByClass - pass the type of component {eg. G.ReelsComponent} to return the component instance
-	 * @param {class} componentClass - must be the class type of a G.GameComponent
-	 * @returns {G.GameComponent} - the instance
-	 */
-	Utils.getGameComponentByClass = function (componentClass) {
-		return _.find(Utils.gameComponents, function(component) {
-			return component instanceof componentClass;
-		});
 	};
 
 	/**

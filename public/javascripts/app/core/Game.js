@@ -261,10 +261,11 @@ this.G = this.G || {};
 	p.initComplete = false;
 
 	/**
-	 * Game entry point
+	 * Game initialisation - it all starts here
 	 *
 	 * Creates and initialises Game framework classes in this order:
-	 * 1. Stats (for profiling)
+	 * 0. Init Utils.params
+	 * 1. Stats
 	 * 2. SignalDispatcher
 	 * 3. GameData
 	 * 4. ServerInterface
@@ -273,7 +274,7 @@ this.G = this.G || {};
 	 *
 	 * Game initialisation is continued when the ServerInterface returns SlotInitResponse
 	 *
-	 * @method init:
+	 * @method init
 	 */
 	p.init = function() {
 		this.stats = new Stats();
