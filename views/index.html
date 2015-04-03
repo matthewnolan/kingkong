@@ -56,6 +56,27 @@
         <div id="qrcode">
             <p>Try it on your phone</p>
         </div>
+        <div id="meter">
+            <fieldset>
+                <legend>Meter Component</legend>
+                <label for="linesField">LINES</label>
+                <input id="linesField" type="number" value="30" step="5" max="30"/>
+                <label for="betField">PER LINE</label>
+                <input id="betField" type="number" value="25.00" min="25" step="125"/>
+                <span id="totalBetText">BET: 750.00</span>
+                <br />
+
+                <button id="maxBet" class="medium">MAX BET</button>
+                <button id="spinReels" class="medium">SPIN</button>
+                <br />
+
+                <button id="autoSpin" class="small">AUTO</button>
+                <button id="payTable" class="small">PAYTABLE</button>
+                <button id="cashOut" class="small">CASH OUT</button>
+
+            </fieldset>
+
+        </div>
     </div>
     <div id="debug">
         <div class="content">

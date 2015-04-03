@@ -1,5 +1,5 @@
 body {
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
     height: 100%;
     margin: 0;
     overflow: hidden;
@@ -104,7 +104,8 @@ body.layoutDesktop #appContainer #desktopControls {
     color:#fff;
     margin: 20px auto;
     padding: 10px;
-    width: 773px;  
+    width: 760px;
+    height: 270px;
 }
 body.layoutDesktop #appContainer #canvasHolder #app {
     top:28px;
@@ -123,4 +124,37 @@ body.layoutDesktop #appContainer #qrcode {
 
 body.layoutDesktop #appContainer #qrcode img {
     border: 9px solid #fff;
+    float: left;
+}
+
+#meter {
+    position: relative;
+    left: 20px;
+}
+
+#meter fieldset legend {
+    font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#meter fieldset {
+    width: 60%;
+    font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#meter input {
+    margin:0 20px 20px 10px;
+    width: 50px;
+}
+
+button.medium {
+    font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 100px;
+    height: 40px;
+}
+
+button.small {
+    width: 80px;
+    height: 20px;
 }
