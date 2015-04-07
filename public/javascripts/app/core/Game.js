@@ -22,9 +22,9 @@ this.G = this.G || {};
 	 * We use a signalDispatcher object passed into GameComponents to handle communication between different components.
 	 *
 	 * GameComponents: The app contains a number of gameComponents.  A GameComponent is a createjs.Container, a DisplayObject which may be added to the canvas.
-	 * They may also contains some game logic, for example: the reels must be displayed according the margin values passed in via the setup.json.
+	 * They also contain some game logic, for example: the reels must be displayed according the margin values passed in via the setup.json.
 	 * Also, a reel may animate and dispatch an event(signal) when completed.
-	 * For this reason all GameComponents are passed references to the setup.j	son and a SignalDispatcher.
+	 * For this reason all GameComponents are passed references to the setup.json and a SignalDispatcher.
 	 * All GameComponents are also added to the static G.Utils.gameComponents array, which gives the application the freedom to call up gameComponents at any time when
 	 * required without necessarily having to use the signalDispatcher.
 	 *
@@ -584,6 +584,7 @@ this.G = this.G || {};
 		this.signalDispatcher.init(this.setup, this.commandQueue);
 		this.spinEvaluator.init(this.setup, this.signalDispatcher, this.commandQueue, this.gameData.slotInitResponseData);
 		this.initComplete = true;
+		console.log('App Initialised');
 	};
 
 	/**
@@ -657,15 +658,21 @@ this.G = this.G || {};
 			}
 		});
 
+		/**
+		 * Enables touch events on the canvas if Touch capabilities are available
+		 *
+		 * @method Touch.enable
+		 */
 		createjs.Touch.enable(this.stage);
 
 		/**
+		 * Browser window requires focus to call these handlers
 		 * 32|0 = ENTER/SPACE - SPIN REELS
 		 * 71   = G           - GAFFEE MENU
 		 * 70   = F
 		 *
-		 * @method window.document.onKeydown
-		 * @param e
+		 * @method onKeydown GlobalEventHandler
+		 * @param e {Event} HTML5 onkeydown Event
 		 */
 		window.document.onkeydown = function(e) {
 
@@ -686,28 +693,19 @@ this.G = this.G || {};
 			}
 		};
 
+		/**
+		 * Hammerjs - get the canvas app and set gesture actions
+		 */
 		var myElement = document.querySelector('#app');
 		var mc = new Hammer(myElement);
 		mc.get('swipe').set({
 			direction: Hammer.DIRECTION_DOWN,
 			threshold: 1
 		});
-
-		mc.get('pinch').set({
-			enable: true
-		});
-
-		mc.on('swipe', function() {
-			self.reelsComponent.requestSpin();
-		});
-
-		mc.on('pinchin', function() {
-			self.gaffeMenu.hide();
-		});
-
-		mc.on('pinchout', function() {
-			self.gaffeMenu.show();
-		});
+		mc.get('pinch').set({ enable: true });
+		mc.on('swipe', function() { self.reelsComponent.requestSpin(); });
+		mc.on('pinchin', function() { self.gaffeMenu.hide(); });
+		mc.on('pinchout', function() { self.gaffeMenu.show(); });
 	};
 
 	/**

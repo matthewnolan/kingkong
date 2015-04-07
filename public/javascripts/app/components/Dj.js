@@ -42,15 +42,6 @@ var G = G || {};
     };
 
 	/**
-	 * @deprecated
-	 * @method nameDrop
-	 * @param name
-	 */
-    p.nameDrop = function(name) {
-        console.log("my homie " + name);
-    };
-
-	/**
 	 * Plays a sound if not muted
 	 *
 	 * @method playSound

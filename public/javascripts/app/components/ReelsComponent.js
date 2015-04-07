@@ -365,19 +365,15 @@ var G = G || {};
 	 */
 	p.slamSpin = function() {
 		console.warn('slammingSpin now');
-		var self = this;
 		var reel, len = this.reels.length, i;
 
 		for (i = 0; i < len; i++)
 		{
 			reel = this.reels[i];
 			reel.scheduleFastStop();
-		}
 
-		setTimeout(function() {
-				self.signalDispatcher.stopSound.dispatch("spin1");
-			}, 200
-		);
+		}
+		this.signalDispatcher.stopSound.dispatch("spin1");
 
 	};
 
@@ -392,6 +388,7 @@ var G = G || {};
 		{
 			this.spinRequested = false;
 			this.signalDispatcher.reelSpinCompleted.dispatch();
+			//
 		}
 	};
 

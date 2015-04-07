@@ -201,6 +201,9 @@ var G = G || {};
 		command.callNextDelay = 2000;
 		commands.unshift(command);
 
+		command = new G.RemoveBigWinCommand();
+		commands.push(command);
+
 		command = new G.SymbolAnimCommand();
 		command.init(this.setup, [0,1,2], numSymbols, winningFrameLabel, true, useCombinedSpritesheet);
 		command.callNextDelay = 500;

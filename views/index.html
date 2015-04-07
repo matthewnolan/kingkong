@@ -67,7 +67,7 @@
                 <br />
 
                 <button id="maxBet" class="medium">MAX BET</button>
-                <button id="spinReels" class="medium">SPIN</button>
+                <button id="spinReels" onclick="window.onSpinButtonClick()" class="medium">SPIN</button>
                 <br />
 
                 <button id="autoSpin" class="small">AUTO</button>
@@ -86,24 +86,35 @@
 </div>
 
 
+<%if (prod) { %>
 <script>
+    clientServer = {};
+    clientServer.enviroment = "prod";
+</script>
+<% } %>
 
-    <%if (prod) { %>
-        var clientServer = {};
-        clientServer.enviroment = "prod";
-    <% } %>
 
+<script>
 
     (function(window) {
         /**
         *  Required for older browsers to support Promises
         * */
-        ES6Promise.polyfill();
+        window.ES6Promise.polyfill();
         /**
          * Application Entry Point
          * */
         var main = new G.Main();
         main.init();
+
+        /**
+         * HTML DOM Elements can talk to the game like this.
+         * These are for the Meter Component Buttons
+         */
+        window.onSpinButtonClick = function() {
+            var reels = G.Utils.getGameComponentByClass(G.ReelsComponent);
+            reels.requestSpin();
+        };
 
 
     })(window);

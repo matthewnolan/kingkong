@@ -7,7 +7,7 @@
   "scale" : "NONE",
   "failSafeInitisalisation": 0,
   "enableDesktopView": 1,
-  "loadSounds": 0,
+  "loadSounds": 1,
   "enableWinLineShadows": 0,
   "cheaperWinLineShadows": 0,
   "winAnimDelay": 3000,
