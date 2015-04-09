@@ -12,6 +12,8 @@ var spinWin1 = require('./requests/spin3');
 
  You’ll have to login. Please use these creds:
  rmg1@rmg.com / rmg123456
+
+ run SOSMax to get the logs
  */
 
 //gaffes

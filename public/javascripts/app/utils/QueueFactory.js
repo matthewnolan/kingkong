@@ -97,7 +97,7 @@ var G = G || {};
 				// command.init(this.setup, symbolWins, [7], 2, 'F6intro__001');
 				// command.callNextDelay = 0;
 				// queue.push(command);
-				reels.visible = false;
+				//reels.visible = false;
 				
 
 				break;
@@ -129,14 +129,14 @@ var G = G || {};
 
 				// command = new G.RemoveBigWinCommand();
 
-command = new G.BigWinCommand();
-command.init(this.setup, 5);
-command.callNextDelay = 1200;
+				command = new G.BigWinCommand();
+				command.init(this.setup, 5);
+				command.callNextDelay = 1200;
 
-queue.push(command);
-command = new G.RemoveBigWinCommand();
-command.callNextDelay = 0;
-command.init(this.setup);
+				queue.push(command);
+				command = new G.RemoveBigWinCommand();
+				command.callNextDelay = 0;
+				command.init(this.setup);
 
 				queue.push(command);
 

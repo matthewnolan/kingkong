@@ -13,7 +13,7 @@ this.G = this.G || {};
 	 *
 	 * Responsibilities explained:
 	 *
-	 * Preloading: Creates and initialises a G.Preloader which goes and fetches required sound and graphic assets.
+	 * Preloading: Creates and initialises a G.Preloader which goes and fetches required configuration, sound and graphic assets.
 	 *
 	 * Server: Creates and initialises a G.ServerInterface which can talk to the server. (Currently the Node server for development purposes).
 	 *
@@ -58,7 +58,7 @@ this.G = this.G || {};
 	 * Devices:
 	 * This application is designed to play on multiple devices, browsers and screen resolutions.  Having said this, it is not possible to design
 	 * an application which can run on any browser on any device and on any screen size. There are limitations and these should be considered.
-	 * @todo create a device compatiibility matrix
+	 * @todo implement supports.json device optimising
 	 *
 	 * @class Game
 	 * @constructor
@@ -297,7 +297,7 @@ this.G = this.G || {};
 		this.stage = new createjs.Stage("app");
 
 		createjs.Ticker.on("tick", this.handleTick, this);
-		createjs.Ticker.timingMode = createjs.Ticker.TIMEOUT;
+		createjs.Ticker.timingMode = createjs.Ticker.RAF;
 		createjs.Ticker.setFPS(this.currentMaxFps);
 
 		this.proton = new Proton();
