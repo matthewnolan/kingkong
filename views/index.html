@@ -97,10 +97,14 @@
 <script>
 
     (function(window) {
+
         /**
         *  Required for older browsers to support Promises
         * */
-        window.ES6Promise.polyfill();
+        if (!window.Promise) {
+            window.ES6Promise.polyfill();
+        }
+
         /**
          * Application Entry Point
          * */

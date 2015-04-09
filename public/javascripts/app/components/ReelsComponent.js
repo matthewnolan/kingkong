@@ -110,7 +110,7 @@ var G = G || {};
 	 * @param {Object} setup - the setup json data object
 	 * @param {G.SignalDispatcher} signalDispatcher - game's signal dispatcher used to dispatch signals to the rest of the application
 	 * @param {G.ServerInterface} serverInterface - reference to the game's server interface required to make the spin request
-	 * @param {Object} symbolSprites - the createjs spritesheet data object required to pass to the createjs.SpriteSheet constructor
+	 * @param {createjs.SpriteSheet} symbolSprites - the createjs spritesheet data object required to pass to the createjs.SpriteSheet constructor
 	 * @param {Object} slotInitResponse - the slot init response from the server.
 	 */
 	p.init = function(setup, signalDispatcher, serverInterface, symbolSprites, slotInitResponse) {
