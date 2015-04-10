@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>public/javascripts/app/core/Game.js - kingkong</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1><a href="../index.html"><img src="../assets/css/kong-header.png" width="389" height="100">kingkong: public/javascripts/app/core/Game.js v0.3.4</a></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.3.4</em>
+        </div>
+    </div>
+    <div class="yui3-g">
+
+        <div id="sidebar" class="yui3-u">
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
+                            <li><a href="../classes/Command.html">Command</a></li>
+                            <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                            <li><a href="../classes/CustomCommand.html">CustomCommand</a></li>
+                            <li><a href="../classes/Dj.html">Dj</a></li>
+                            <li><a href="../classes/FireworksCommand.html">FireworksCommand</a></li>
+                            <li><a href="../classes/G.BigWinCommand.html">G.BigWinCommand</a></li>
+                            <li><a href="../classes/GaffeButton.html">GaffeButton</a></li>
+                            <li><a href="../classes/GaffeMenuComponent.html">GaffeMenuComponent</a></li>
+                            <li><a href="../classes/Game.html">Game</a></li>
+                            <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                            <li><a href="../classes/GameData.html">GameData</a></li>
+                            <li><a href="../classes/Main.html">Main</a></li>
+                            <li><a href="../classes/MeterComponent.html">MeterComponent</a></li>
+                            <li><a href="../classes/ParticlesComponent.html">ParticlesComponent</a></li>
+                            <li><a href="../classes/Preloader.html">Preloader</a></li>
+                            <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                            <li><a href="../classes/Reel.html">Reel</a></li>
+                            <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                            <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
+                            <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
+                            <li><a href="../classes/SpinEvaluator.html">SpinEvaluator</a></li>
+                            <li><a href="../classes/SymbolAnimCommand.html">SymbolAnimCommand</a></li>
+                            <li><a href="../classes/SymbolWinsComponent.html">SymbolWinsComponent</a></li>
+                            <li><a href="../classes/Utils.html">Utils</a></li>
+                            <li><a href="../classes/WinLine.html">WinLine</a></li>
+                            <li><a href="../classes/WinLineCommand.html">WinLineCommand</a></li>
+                            <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div id="fileTree" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Files</h2>
+                </div>
+                <div class="bd">
+                    <ul><li>public/<ul><li>javascripts/<ul><li>app/<ul><li><a href="../files/public_javascripts_app_Main.js.html">Main.js</a></li><li>commands/<ul><li><a href="../files/public_javascripts_app_commands_BigWinCommand.js.html">BigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_Command.js.html">Command.js</a></li><li><a href="../files/public_javascripts_app_commands_CommandQueue.js.html">CommandQueue.js</a></li><li><a href="../files/public_javascripts_app_commands_CustomCommand.js.html">CustomCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_FireworksCommand.js.html">FireworksCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_RemoveBigWinCommand.js.html">RemoveBigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_SymbolAnimCommand.js.html">SymbolAnimCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_WinLineCommand.js.html">WinLineCommand.js</a></li></ul></li><li>components/<ul><li><a href="../files/public_javascripts_app_components_BigWinComponent.js.html">BigWinComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Dj.js.html">Dj.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeButton.js.html">GaffeButton.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html">GaffeMenuComponent.js</a></li><li><a href="../files/public_javascripts_app_components_GameComponent.js.html">GameComponent.js</a></li><li><a href="../files/public_javascripts_app_components_MeterComponent.js.html">MeterComponent.js</a></li><li><a href="../files/public_javascripts_app_components_ParticlesComponent.js.html">ParticlesComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Reel.js.html">Reel.js</a></li><li><a href="../files/public_javascripts_app_components_ReelsComponent.js.html">ReelsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_SymbolWinsComponent.js.html">SymbolWinsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_WinLine.js.html">WinLine.js</a></li><li><a href="../files/public_javascripts_app_components_WinLinesComponent.js.html">WinLinesComponent.js</a></li></ul></li><li>core/<ul><li><a href="../files/public_javascripts_app_core_Game.js.html">Game.js</a></li><li><a href="../files/public_javascripts_app_core_GameData.js.html">GameData.js</a></li><li><a href="../files/public_javascripts_app_core_Preloader.js.html">Preloader.js</a></li><li><a href="../files/public_javascripts_app_core_ServerInterface.js.html">ServerInterface.js</a></li><li><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html">SignalDispatcher.js</a></li><li><a href="../files/public_javascripts_app_core_SpinEvaluator.js.html">SpinEvaluator.js</a></li></ul></li><li>utils/<ul><li><a href="../files/public_javascripts_app_utils_QueueFactory.js.html">QueueFactory.js</a></li><li><a href="../files/public_javascripts_app_utils_Utils.js.html">Utils.js</a></li></ul></li></ul></li></ul></li></ul></li></ul>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><h4>public/javascripts/app/core/Game.js</h4>
+
+<pre class="code prettyprint linenums">
+/*! kingkong 0.0.1 - 2015-02-02
+ * Copyright (c) 2015 Licensed @HighFiveGames */
+
+this.G = this.G || {};
+
+(function () {
+	&quot;use strict&quot;;
+
+	/**
+	 * Game is the root of the application.  It creates everything a king kong game needs in order to run.  And is responsible for initialising
+	 * Preloading, SignalDispatcher, Server connection, GameData, GameComponents and the Display.  Scaling and UserInterface Events are also handled here.
+	 * It also provides some dependency injection to the Games Components, which becomes the core method GameComponents use to talk to each other.
+	 *
+	 * Responsibilities explained:
+	 *
+	 * Preloading: Creates and initialises a G.Preloader which goes and fetches required sound and graphic assets.
+	 *
+	 * Server: Creates and initialises a G.ServerInterface which can talk to the server. (Currently the Node server for development purposes).
+	 *
+	 * Signals: We use signalsjs to handle communications around the application.  Signals are test friendly, and robust event dispatching system which don&#x27;t rely on
+	 * &quot;magic&quot; strings to work.  They also support custom parameters, which gets rid of the need to create custom event classes.
+	 * We use a signalDispatcher object passed into GameComponents to handle communication between different components.
+	 *
+	 * GameComponents: The app contains a number of gameComponents.  A GameComponent is a createjs.Container, a DisplayObject which may be added to the canvas.
+	 * They may also contains some game logic, for example: the reels must be displayed according the margin values passed in via the setup.json.
+	 * Also, a reel may animate and dispatch an event(signal) when completed.
+	 * For this reason all GameComponents are passed references to the setup.j	son and a SignalDispatcher.
+	 * All GameComponents are also added to the static G.Utils.gameComponents array, which gives the application the freedom to call up gameComponents at any time when
+	 * required without necessarily having to use the signalDispatcher.
+	 *
+	 * GameData: Creates and initialises a G.GameData.  When data is returned from the server, it uses GameData to store the returned responses and notify the signalDispatcher
+	 * that data has returned.
+
+	 * Stage and Ticker: Stage and Ticker are createjs concepts.  Stage is the root display object of the Canvas, and is the container where all createjs display objects
+	 * must be added to.  Ticker is responsible for updating the stage at regular intervals.  We currently sync stage updates with requestAnimationFrame
+	 * in order to ensure that animations are as smooth as possible on newer browsers which support requestAnimationFrame.
+	 * It is recommened to read this to understand more: http://createjs.com/tutorials/Animation%20and%20Ticker/
+	 *
+	 * See more info at: http://createjs.com/Home
+	 *
+	 * Proton: Is particle animation system used by this application - It was chosen because it supports createjs and other rendering engines.
+	 * It also performed very well in tests. It is created here in Game because it is required to be updated during the createjs.Ticker cycle.
+	 *
+	 * See more info at:  https://github.com/a-jie/Proton
+	 *
+	 * Scaling: In order to support multiple screen resolutions, the application is created at a native scale size of 667px x 375px.
+	 * This value should be set as the setup.json&#x27;s &quot;scale&quot; value.
+	 * The application supports multiple scale modes to help support as many device sizes as possible:
+	 * 	&quot;FULL_ASPECT&quot;:
+	 * 		This scales the application up or down to fit into the the devices viewport while maintaining aspect ratio.  Viewport is the window size, and iframe or WebView container size should be respected.
+	 * 	&quot;FULL_BROWSER&quot;:
+	 * 		This scales the application up or down to fit into the viewport dimensions precisely.  This will cause stretching on devices that don&#x27;t match the native aspect
+	 * 		ratio.
+	 * 	&quot;NONE&quot; or any other value:
+	* 		No scaling is performed, and the application is created at the native dimensions.
+	 *
+	 *
+	 * Devices:
+	 * This application is designed to play on multiple devices, browsers and screen resolutions.  Having said this, it is not possible to design
+	 * an application which can run on any browser on any device and on any screen size. There are limitations and these should be considered.
+	 * @todo create a device compatiibility matrix
+	 *
+	 * @class Game
+	 * @constructor
+	 */
+	var Game = function() {};
+	var p = Game.prototype;
+	p.constructor = Game;
+
+	/**
+	 * Decides what scale mode is used to determine the scale and position of the canvas
+	 * this value is overridden by whatever value is inside setup.json &#x27;scale&#x27;
+	 *
+ 	 * @Property STAGE_SCALE_MODE
+	 * @type {string}
+	 * @example &quot;NO_SCALE&quot; - uses the default setup.json stageScale value;
+	 * @example &quot;FULL_BROWSER&quot; - stretches the app to the viewport size;
+	 * @default &#x27;FULL_ASPECT - scales the app to the viewport, maintining aspect ratio&#x27;
+	 */
+	p.STAGE_SCALE_MODE = &quot;FULL_ASPECT&quot;;
+
+	/**
+	 * Displayed in gaffeMenu - version is injected by the build process.
+	 *
+	 * @property version
+	 * @type {string}
+	 * @default &quot;{{ VERSION }}&quot;
+	 */
+	p.version = &quot;{{ VERSION }}&quot;;
+
+	/**
+	 * This is the main setup file for the application.  Many properties and features in the app can be enabled / disabled via this configuration.
+	 * The first thing Game does is look for the setup.json in the default directory and try to load it.  Once loaded it sets this property from the loaded
+	 * json object.
+	 *
+
+	 * @property setup
+	 * @type {Object}
+	 * @see /assets/config/setup.json
+	 * @default null
+	 */
+	p.setup = null;
+
+	/**
+	 * This is created during init and talks to the server.  It is used by GameComponents to make requests to the server.
+	 * Responses are delivered to the GameComponents via signalDispatcher.
+	 *
+	 * @property serverInterface
+	 * @type {G.ServerInterface}
+	 * @default null
+	 */
+	p.serverInterface = null;
+
+	/**
+	 * This is created during init and passed around the application to GameComponents, or any part of the application that requires to talk or listen to another part.
+	 * Signals created on this object can be dispatched and handled by any class which has this reference.
+	 *
+	 * @property signalDispatcher
+	 * @type {G.SignalDispatcher}
+	 * @default null
+	 */
+	p.signalDispatcher = null;
+
+	/**
+	 * SpinEvaluator listens to the reelComplete signal, and prepares win animations based on any wins in the spinResponse.
+	 *
+	 * @property spinEvaluator
+	 * @type {G.SpinEvaluator}
+	 * @default null
+	 *
+	 */
+	p.spinEvaluator = null;
+
+
+	/**
+	 * The maxFps the app will try to achieve.  This is not the guaranteed FPS in your device.  This value can be switched via Gaffe.
+	 * @property currentMaxFps
+	 * @type {number}
+	 * @default 60
+	 */
+	p.currentMaxFps = 60;
+
+	/**
+	 * Object contains references to assets loaded via preloader.
+	 * This can then be used to pass to GameComponents which require loaded assets.
+	 *
+	 * @property assets
+	 * @type {Object}
+	 * @default null
+	 */
+	p.assets = null;
+
+	/**
+	 * GameComponent responsible for running particle animations.
+	 *
+	 * @property particlesComponent
+	 * @type {G.ParticlesComponent}
+	 * @default null
+	 */
+	p.particlesComponent = null;
+
+	/**
+	 * GameComponent responsible for drawing and animating the Reels.
+	 *
+	 * @property reelsComponent
+	 * @type {G.ReelsComponent}
+	 * @default null
+	 */
+	p.reelsComponent = null;
+
+	/**
+	 * GameComponent responsible for drawing and the logic inside the gaffeMenu
+	 *
+	 * @property reelsComponent
+	 * @type {G.GaffeMenuComponent}
+	 * @default null
+	 */
+	p.gaffeMenu = null;
+
+	/**
+	 * GameData stores data returned from the server via ServerInterface requests
+	 * It can dispatch signalDispatcher signals to notify GameComponents some serverResponse has happened.
+	 * @property gameData
+	 * @type {G.GameData}
+	 * @default null
+	 */
+	p.gameData = null;
+
+	/**
+	 * The Proton object used by tha animation system and updated by Ticker stage updates.
+	 *
+	 * @property proton
+	 * @type {Proton}
+	 * @default null
+	 */
+	p.proton = null;
+
+	/**
+	 * Cache the createjs.Stage object for stage updates
+	 *
+	 * @property stage
+	 * @type {createjs.Stage}
+	 * @default null
+	 */
+	p.stage = null;
+
+	/**
+	 * Default stageScale value. If defined in setup.json this value is overridden
+	 *
+	 * @property stageScale
+	 * @type {number}
+	 * @default 1
+	 */
+	p.stageScale = 1;
+
+	/**
+	 * Number of initialised game components to check have initialised before loader is removed.  If the setup.json defines
+	 * failSafeDelay then it waits for Reels, WinLines and BigWin Animation to play before it removes the preloader
+	 *
+	 * @property initialisedNum
+	 * @type {number}
+	 * @default 3
+	 *
+	 */
+	p.initailisedNum = 3;
+
+	/**
+	 * Caches the preloader HTML element which covers the app during loading and initialisation
+	 *
+	 * @property preloaderEl
+	 * @type {HTMLElement}
+	 * @default null
+	 */
+	p.preloaderEl = null;
+
+	/**
+	 * Cache HTML Canvas Element for scaling
+	 *
+	 * @property canvas
+	 * @type {HTMLElement}
+	 * @default null
+	 */
+	p.canvas = null;
+
+	/**
+	 * Command Queue for winAnimations - based on the Command design pattern.
+	 *
+	 * @property commandQueue;
+	 * @type {G.CommandQueue}
+	 * @default null
+	 */
+	p.commandQueue = null;
+
+	/**
+	 * Set to true when all game and core components have been initialised are available
+	 *
+	 * @property gameInitComplete
+	 * @type {boolean}
+	 */
+	p.initComplete = false;
+
+	/**
+	 * Game initialisation - it all starts here
+	 *
+	 * Creates and initialises Game framework classes in this order:
+	 * 0. Init Utils.params
+	 * 1. Stats
+	 * 2. SignalDispatcher
+	 * 3. GameData
+	 * 4. ServerInterface
+	 * 5. Stage
+	 * 6. Proton
+	 *
+	 * Game initialisation is continued when the ServerInterface returns SlotInitResponse
+	 *
+	 * @method init
+	 */
+	p.init = function() {
+		this.stats = new Stats();
+
+		G.Utils.init();
+		console.log(&#x27;G.Utils.params&#x27;, G.Utils.params);
+
+		this.signalDispatcher = new G.SignalDispatcher();
+		this.signalDispatcher.fpsSwitched.add(this.fpsSwitch, this);
+
+		this.gameData = new G.GameData();
+		this.gameData.init(this.signalDispatcher);
+		this.gameData.slotInitCompleted.add(this.slotInitReceived, this);
+
+		this.serverInterface = new G.ServerInterface();
+		this.serverInterface.init(this.signalDispatcher, this.gameData);
+		this.serverInterface.requestSlotInit();
+
+		this.spinEvaluator = new G.SpinEvaluator();
+
+		this.stage = new createjs.Stage(&quot;app&quot;);
+
+		createjs.Ticker.on(&quot;tick&quot;, this.handleTick, this);
+		createjs.Ticker.timingMode = createjs.Ticker.TIMEOUT;
+		createjs.Ticker.setFPS(this.currentMaxFps);
+
+		this.proton = new Proton();
+	};
+
+	/**
+	 * When Slot Init is Received, then Preloader is created and setup.json begins loading
+	 * App then waits for assetsLoadComplete signal to be dispatched by preloader.
+	 * Preloader element is cached so it can be removed later.
+	 *
+	 * @method slotInitReceived
+	 */
+	p.slotInitReceived = function() {
+		var preloader = new G.Preloader();
+		preloader.init(this, this.SETUP_URL);
+		preloader.setupComplete.add(this.onSetupLoaded, this);
+		preloader.assetsLoaded.add(this.onAssetsLoadComplete, this);
+		preloader.startLoad();
+
+		this.preloaderEl = document.querySelector(&quot;#preloader&quot;);
+	};
+
+
+	/**
+	 * SignalHandler which caches setup.json object when it has finished loading.
+	 *
+	 * @method onSetupLoaded
+	 * @param {Object} setup - Setup Object which is loaded from setup.json file
+	 *
+	 */
+	p.onSetupLoaded = function(setup) {
+		this.setup = setup;
+
+
+		// if (G.Utils.serverParams[&quot;enviroment&quot;] === &quot;prod&quot;){
+		// 	this.setup.enableDesktopView = 1;
+		// }
+
+		if (this.setup.enableDesktopView &amp;&amp; device.desktop()) {
+			this.STAGE_SCALE_MODE = &quot;NO_SCALE&quot;;
+			var body = document.querySelector(&quot;body&quot;);
+			body.className = body.className + &quot; layoutDesktop&quot;;
+			if (QRCode){
+				new QRCode(document.getElementById(&quot;qrcode&quot;), {
+					text: window.location.href,
+					width: 200,
+					height: 200
+				});
+			}
+		}
+		if (!setup.failSafeInitisalisation) {
+			this.initailisedNum = 1;
+		}
+	};
+
+	/**
+	 * Signal Handler called when assetsLoadComplete is dispatched by preloader.
+	 * Assets are cached and the application continues to initialisation phase.
+	 * 1. Rescale the application according the setup.json config,
+	 * 2. Setup the main display, creates GameComponents and adds them to the stage.
+	 * 3. Proton animation system is created.
+	 *
+	 * @method onAssetsLoadComplete
+	 * @param {Object} assets - the preloaded game assets which are cached and passed to GameComponents which need it.
+	 *
+	 */
+	p.onAssetsLoadComplete = function(assets) {
+		this.assets = assets;
+
+		this.rescale();
+		this.setupDisplay();
+		this.initUIEvents();
+		this.createProton();
+		this.wireApp();
+	};
+
+
+	/**
+	 * Scales Application according to setup.json scaling configuration
+	 *
+	 * AVAILABLE STAGE_SCALE_MODE = &quot;FULL ASPECT&quot; || &quot;FULL_BROWSER&quot; || &quot;NO_SCALE&quot; or ANY OTHER VALUE
+	 * &quot;FULL_ASPECT&quot; - scale the application to the visible window size, whilst maintaining the app&#x27;s native apsect ratio.  This will display black borders
+	 * when a devices apsect ratio doesn&#x27;t match the app&#x27;s.
+	 * &quot;FULL_BROWSER&quot; - scale the application to fit the entire window size, stretching the graphics if the aspect ratios do not match.
+	 * &quot;NO_SCALE&quot; - do not scale the application at all.
+	 *
+	 * If the setup.json&#x27;s enableDesktopView is turned on, the app is set automatically to not scale.
+	 * Stores the final scale value inside G.Utils, for access anywhere in the application.
+	 *
+	 * @method rescale
+	 */
+	p.rescale = function() {
+		var stageW = this.setup.stageW || 667;
+		var stageH = this.setup.stageH || 375;
+		var browserW = window.innerWidth;
+		var browserH = window.innerHeight;
+		this.stageScale = this.setup.stageScale || 1;
+		var stageScaleW = this.stageScale, stageScaleH = this.stageScale;
+		var appLeft = 0;
+		var appWidth = Math.floor(stageW * stageScaleW);
+		var appHeight = Math.floor(stageH * stageScaleH);
+
+		if (this.setup.scale &amp;&amp; !this.setup.enableDesktopView) {
+			this.STAGE_SCALE_MODE = this.setup.scale;
+		}
+
+		switch(this.STAGE_SCALE_MODE) {
+			case &quot;FULL_ASPECT&quot; :
+				stageScaleH = this.stageScale = stageScaleW = browserH / stageH;
+				appWidth = Math.floor(stageW * stageScaleW);
+				appHeight = Math.floor(stageH * stageScaleH);
+
+				if (appWidth &gt; browserW) {
+					stageScaleW = this.stageScale = stageScaleH = browserW / stageW;
+				}
+				appLeft = Math.floor(browserW / 2 - appWidth /2);
+				break;
+			case &quot;FULL_BROWSER&quot; :
+				stageScaleH = browserH / stageH;
+				stageScaleW = browserW / stageW;
+				appWidth = Math.floor(stageW * stageScaleW);
+				appHeight = Math.floor(stageH * stageScaleH);
+				this.stageScale = stageScaleW;
+				break;
+			case &quot;NO_SCALE&quot; :
+				//defaults are fine
+				break;
+			default :
+
+				break;
+		}
+		this.stage.scaleX = stageScaleW;
+		this.stage.scaleY = stageScaleH;
+
+		//No negative left cropping
+		appLeft = appLeft &lt; 0? 0 : appLeft;
+		var styleWidth = appWidth.toString() + &quot;px&quot;;
+		var styleHeight = appHeight.toString() + &quot;px&quot;;
+		var styleLeft = appLeft.toString() + &quot;px&quot;;
+		this.preloaderEl.style.width = styleWidth;
+		this.preloaderEl.style.height = styleHeight;
+		this.preloaderEl.style.left = styleLeft;
+
+		var mainCanvas = document.querySelector(&quot;#app&quot;);
+		mainCanvas.setAttribute(&quot;width&quot;, styleWidth );
+		mainCanvas.setAttribute(&quot;height&quot;, styleHeight);
+		mainCanvas.style.left = styleLeft;
+
+		this.canvas = mainCanvas;
+
+		G.Utils.currentScale = this.stageScale;
+
+		//html console (useful for mobile debug)
+		if (this.setup.htmlDebug) {
+			console.log(&#x27;window.screen.availHeight=&#x27;, window.screen.availHeight);
+			var debugStr = &quot;setup.htmlDebug:&quot; + this.setup.htmlDebug;
+			debugStr += &quot;&lt;br/&gt;availHeight=&quot; + window.screen.availHeight;
+			debugStr += &quot;&lt;br/&gt;availWidth=&quot; + window.screen.availWidth;
+			debugStr+= &quot;&lt;br/&gt;innerHeight=&quot; + window.innerHeight;
+			debugStr+= &quot;&lt;br/&gt;innerWidth=&quot; + window.innerWidth;
+
+			if (window.innerHeight &gt; window.innerWidth) {
+				debugStr+=&quot;&lt;br/&gt;portrait mode&quot;;
+			} else {
+				debugStr+=&quot;&lt;br/&gt;landscape mode&quot;;
+			}
+			//canvas console
+			//var debug = new createjs.Text(&quot;debug:\n&quot; + debugStr, &quot;14px Arial&quot;, &quot;#ffffff&quot;);
+			//this.stage.addChild(debug);
+			//debug.y = 0;
+			//debug.x = 0;
+			//html console
+			var debug = document.querySelector(&quot;#console&quot;);
+			debug.innerHTML = debugStr;
+		}
+	};
+
+	/**
+	 * Initialise and create GaemComponents and add them to the display.
+	 * Adds stats to the window for profiling
+	 * Masks the reels inside the bezel area.
+	 *
+	 * nb. These are potentially expensive cpu operations, but everything done here is done after Preload and during app initialisation.
+	 * Any filters applied to display objects will magnify the length of time this function takes to complete.
+	 * @method setupDisplay
+	 */
+	p.setupDisplay = function() {
+		var bezelMarginL = this.setup.bezelMarginL;
+		var bezelMarginT = this.setup.bezelMarginT;
+		var bezelW = this.setup.bezelW;
+		var bezelH = this.setup.bezelH;
+		//init background
+		// var spriteSheet = new createjs.SpriteSheet(this.assets.spriteSheetStatics);
+		var spriteSheet = this.assets.spriteSheetStatics;
+		var sprite = new createjs.Sprite(spriteSheet, &#x27;ui-bezel&#x27;);
+		// console.log(this.setup.bezelW, this.setup.bezelH);
+		this.stage.addChild(sprite);
+
+		//stats
+		this.stats.setMode(0); // 0: fps, 1: ms
+		this.stats.domElement.style.position = &#x27;absolute&#x27;;
+		this.stats.domElement.style.bottom = &#x27;0px&#x27;;
+		this.stats.domElement.style.left = &#x27;0px&#x27;;
+		document.body.appendChild( this.stats.domElement );
+
+		//init reels
+		var reelsComponent = new G.ReelsComponent();
+		reelsComponent.init(this.setup, this.signalDispatcher, this.serverInterface, spriteSheet, this.gameData.slotInitResponseData);
+		reelsComponent.drawReels();
+		reelsComponent.x = bezelMarginL;
+		reelsComponent.y = bezelMarginT;
+		this.stage.addChild(reelsComponent);
+		this.reelsComponent = reelsComponent;
+
+		//init mask
+		var sceneMask = new createjs.Shape();
+		sceneMask.graphics.setStrokeStyle(0)
+			.drawRect(bezelMarginL, bezelMarginT, bezelW, bezelH)
+			.closePath();
+		this.stage.addChild(sceneMask);
+
+		//init symbolWins
+		var symbolWinsComponent = new G.SymbolWinsComponent();
+		symbolWinsComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetSymbolAnims, this.assets.spriteSheetBigWinAnimSymbol);
+		symbolWinsComponent.cacheCompleted.add(this.checkCacheInitialised, this);
+		symbolWinsComponent.x = bezelMarginL;
+		symbolWinsComponent.y = bezelMarginT;
+		this.stage.addChild(symbolWinsComponent);
+		symbolWinsComponent.drawSprites();
+
+		var bigWinComponent = new G.BigWinComponent();
+		bigWinComponent.init(this.setup, this.signalDispatcher, this.assets.spriteSheetBigWinAnimSymbol, this.assets.spriteSheetSymbolAnims);
+		bigWinComponent.cacheCompleted.add(this.checkCacheInitialised, this);
+		bigWinComponent.x = bezelMarginL;
+		bigWinComponent.y = bezelMarginT;
+		this.stage.addChild(bigWinComponent);
+		bigWinComponent.drawSprites();
+
+		//init winLines
+		var winLinesComponent = new G.WinLinesComponent();
+		winLinesComponent.init(this.setup, this.signalDispatcher);
+		winLinesComponent.cacheCompleted.add(this.checkCacheInitialised, this);
+		this.stage.addChild(winLinesComponent);
+		winLinesComponent.drawComponent();
+
+		var meterComponent = new G.MeterComponent();
+		meterComponent.init(this.setup, this.signalDispatcher);
+		meterComponent.drawComponent();
+		this.stage.addChild(meterComponent);
+
+        // init Dj
+        var djComponent = new G.Dj();
+        djComponent.init(this.setup, this.signalDispatcher);
+        // djComponent.nameDrop(&quot;doc&quot;);
+
+		var gaffeMenu = new G.GaffeMenuComponent(this.version);
+		gaffeMenu.init(this.setup, this.signalDispatcher);
+		gaffeMenu.drawMenu();
+		this.stage.addChild(gaffeMenu);
+		gaffeMenu.x = bezelMarginL + (bezelW / 2);
+		gaffeMenu.y = bezelMarginT + (bezelH / 2);
+		this.gaffeMenu = gaffeMenu;
+
+		this.particlesComponent = new G.ParticlesComponent();
+
+		if (!this.setup.devMode) {
+			reelsComponent.mask = sceneMask;
+		}
+	};
+
+	/**
+	 * Application wiring is done here
+	 * Application communitcation:
+	 * GameComponents talk to each other by dispatching and handling Signals
+	 * Core components also use the signal dispatcher.
+	 * EG. Spin Evaluator listens to the reelComplete signal and prepares a CommandQueue (for win animations).
+	 *
+	 * @method wireApp
+	 *
+	 */
+	p.wireApp = function() {
+		this.commandQueue = new G.CommandQueue();
+		this.commandQueue.init(this.setup);
+		this.signalDispatcher.init(this.setup, this.commandQueue);
+		this.spinEvaluator.init(this.setup, this.signalDispatcher, this.commandQueue, this.gameData.slotInitResponseData);
+		this.initComplete = true;
+	};
+
+	/**
+	 * This function is called everytime a GameComponent with caching enabled has finished rendering.
+	 * When initialisedNum has reduced to 0, all game components requiring async initialisation and graphics caching has completed
+	 * and the preloader element is removed from the dom.
+	 *
+	 * @method checkInitialised
+	 */
+	p.checkCacheInitialised = function() {
+		if (--this.initailisedNum === 0) {
+			this.preloaderEl.style.display = &quot;none&quot;;
+		}
+	};
+
+	/**
+	 * Render Tick which updates Stage and any profiling tool.
+	 *
+	 * @see  http://createjs.com/tutorials/Animation%20and%20Ticker
+	 * @method handleTick
+	 */
+	p.handleTick = function() {
+		this.stats.begin();
+		this.proton.update();
+		this.stage.update();
+		this.stats.end();
+	};
+
+	/**
+	 * User Control is initialised: Keyboard control / touch controls
+	 * if User Control shouldn&#x27;t be enabled during app initialisation phase, then execute this function later.
+	 * @todo - implement turn on/off user interaction events.
+	 * @method initUIEvents
+	 */
+	p.initUIEvents = function() {
+		var self = this;
+
+		/**
+		 * Fix position of app on rotate
+		 */
+		window.addEventListener(&#x27;resize&#x27;, function() {
+			window.scrollTo(0, 0);
+			self.rescale();
+		}, true);
+
+		/**
+		 * @experimental feature
+		 * resume the app on focus (tab restored)
+		 */
+		window.addEventListener(&#x27;focus&#x27;, function() {
+			//document.title = &#x27;focused&#x27;;
+			if (self.initComplete &amp;&amp; self.setup.enableTabPausing) {
+				//self.enableTicker();
+				//self.commandQueue.resume();
+				createjs.Ticker.setPaused(false);
+
+			}
+
+		});
+
+		/**
+		 * @experimental feature
+		 * pause the app on window blur event (eg tab switched)
+		 */
+		window.addEventListener(&#x27;blur&#x27;, function() {
+			//document.title = &#x27;not focused&#x27;;
+			if (self.initComplete &amp;&amp; self.setup.enableTabPausing) {
+				//self.disableTicker();
+				//self.commandQueue.pause();
+				createjs.Ticker.setPaused(true);
+			}
+		});
+
+		createjs.Touch.enable(this.stage);
+
+		/**
+		 * 32|0 = ENTER/SPACE - SPIN REELS
+		 * 71   = G           - GAFFEE MENU
+		 * 70   = F
+		 *
+		 * @method window.document.onKeydown
+		 * @param e
+		 */
+		window.document.onkeydown = function(e) {
+
+			switch(e.keyCode) {
+				//space //enter
+				case 32:
+                case 0:
+                    e.preventDefault();
+					self.reelsComponent.requestSpin();
+					break;
+				////shift+g
+				case 71 :
+					self.gaffeMenu.show();
+					break;
+				case 70 :
+					self.signalDispatcher.fireworkLaunched.dispatch();
+					break;
+			}
+		};
+
+		var myElement = document.querySelector(&#x27;#app&#x27;);
+		var mc = new Hammer(myElement);
+		mc.get(&#x27;swipe&#x27;).set({
+			direction: Hammer.DIRECTION_DOWN,
+			threshold: 1
+		});
+
+		mc.get(&#x27;pinch&#x27;).set({
+			enable: true
+		});
+
+		mc.on(&#x27;swipe&#x27;, function() {
+			self.reelsComponent.requestSpin();
+		});
+
+		mc.on(&#x27;pinchin&#x27;, function() {
+			self.gaffeMenu.hide();
+		});
+
+		mc.on(&#x27;pinchout&#x27;, function() {
+			self.gaffeMenu.show();
+		});
+	};
+
+	/**
+	 * Initialise Proton particle system and pass the info to the particles GameComponent
+	 *
+	 * @method createProton
+	 */
+	p.createProton = function() {
+		this.renderer = new Proton.Renderer(&#x27;easel&#x27;, this.proton, this.stage);
+		this.particlesComponent.init(this.setup, this.signalDispatcher, this.canvas, this.stageScale, this.proton, this.renderer);
+	};
+
+	/**
+	 * Switch between 30 and 60fps via the gaffe menu button labelled &quot;60&quot; or &quot;30&quot;
+	 *
+	 * @method fpsSwitch
+	 */
+	p.fpsSwitch = function() {
+		console.log(&#x27;fpsSwitched&#x27;);
+
+		if (this.currentMaxFps === 60) {
+			this.currentMaxFps = 30;
+		} else {
+			this.currentMaxFps = 60;
+		}
+		createjs.Ticker.setFPS(this.currentMaxFps);
+	};
+
+	G.Game = Game;
+
+})();
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/js/tabs.js"></script>
+</body>
+</html>

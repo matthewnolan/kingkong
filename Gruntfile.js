@@ -2,6 +2,9 @@
 var appTemplates = require('./modules/utils/appTemplates.js');
 var change = require('./node_modules/change-case/change-case.js');
 
+// imagemin plugins
+var pngquant = require('imagemin-pngquant');
+
 module.exports = function (grunt) {
 
 	// Project configuration.
@@ -221,7 +224,32 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-
+		copy: {
+			assets: {
+				expand: true,
+				cwd: 'src/assets',
+				src: ["**/*.json"],
+				dest: "public/assets/"
+			}
+		},
+		imagemin: {
+			dynamic: {
+				options: {
+					use: [pngquant()]
+				},
+				files: [{
+					expand: true,
+					cwd: 'src/assets/',
+					src: ['**/*.{png,jpg,gif}'],
+					dest: 'public/assets/'
+				}]
+			}
+		},
+		'json-minify': {
+			build: {
+				files: 'public/assets/**/*.json'
+			}
+		},
 		replace: {
 			"version": {
 				src: ['public/javascripts/app/core/Game.js'],
@@ -332,6 +360,7 @@ module.exports = function (grunt) {
 	grunt.loadTasks('./modules/grunt/');
 
 	// 3rd party grunt tasks
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -347,6 +376,9 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-yuidoc');
 	grunt.loadNpmTasks('grunt-npm2bower-sync');
 	grunt.loadNpmTasks('grunt-file-append');
+	grunt.loadNpmTasks('grunt-contrib-imagemin');
+	grunt.loadNpmTasks('grunt-json-minify');
+	grunt.loadNpmTasks('grunt-newer');
 
 	// Build tasks
 	//-------------------
@@ -360,6 +392,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', 		  ['lint', 'test', 'version', 'uglify', 'docs']);
 	grunt.registerTask('build:skipLint',  ['test', 'version', 'uglify', 'docs']);
 	grunt.registerTask('build:skipTests', ['version', 'uglify', 'docs']);
+
+	// Asset optimisation
+	grunt.registerTask('optimise', ['newer:copy:assets', 'newer:imagemin', 'json-minify']);
 
 	// *3b: Version bump (release:feature:patch)
 	grunt.registerTask('patch', 		  ['lint', 'test', 'version:patch', 'uglify', 'docs']);

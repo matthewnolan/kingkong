@@ -3,7 +3,6 @@
  */
 
 module.exports = function(grunt) {
-
 	grunt.registerTask('temp-copy', 'Copying Game.js for temp version', function() {
 		grunt.file.copy('public/javascripts/app/core/Game.js', '.temp/Game.js');
 	});
@@ -120,17 +119,17 @@ module.exports = function(grunt) {
 
 			file['images'] = ['assets/sprites/' + name + '.png'];
 
-			grunt.file.copy('src/texturepacker/' + name + '.png', './public/assets/sprites/' + name + '.png');
+			var spriteAssetsDestination = './src/assets/sprites/';
+			grunt.file.copy('src/texturepacker/' + name + '.png', spriteAssetsDestination + name + '.png');
 			grunt.log.write(name + '.png Exported ' ).ok();
 
-			grunt.file.write('./public/assets/sprites/' + filePath, JSON.stringify(file, null, '\t'));
-			grunt.file.copy('./public/assets/sprites/' + filePath, './public/assets/sprites/' + filename);
+			grunt.file.write(spriteAssetsDestination + filePath, JSON.stringify(file, null, '\t'));
+			grunt.file.copy(spriteAssetsDestination + filePath, spriteAssetsDestination + filename);
 			grunt.log.write(filename + ' Exported ').ok();
 		}
 
-		grunt.file.delete('./public/assets/sprites/src/');
+		grunt.file.delete(spriteAssetsDestination+'src/');
 		grunt.log.write('Cleaning and Copying EaselJS Sprite Data ').ok();
 
 	});
-
 };

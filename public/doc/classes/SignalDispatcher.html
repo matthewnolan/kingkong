@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SignalDispatcher - kingkong</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1><a href="../index.html"><img src="../assets/css/kong-header.png" width="389" height="100">kingkong: SignalDispatcher v0.3.4</a></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.3.4</em>
+        </div>
+    </div>
+    <div class="yui3-g">
+
+        <div id="sidebar" class="yui3-u">
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
+                            <li><a href="../classes/Command.html">Command</a></li>
+                            <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                            <li><a href="../classes/CustomCommand.html">CustomCommand</a></li>
+                            <li><a href="../classes/Dj.html">Dj</a></li>
+                            <li><a href="../classes/FireworksCommand.html">FireworksCommand</a></li>
+                            <li><a href="../classes/G.BigWinCommand.html">G.BigWinCommand</a></li>
+                            <li><a href="../classes/GaffeButton.html">GaffeButton</a></li>
+                            <li><a href="../classes/GaffeMenuComponent.html">GaffeMenuComponent</a></li>
+                            <li><a href="../classes/Game.html">Game</a></li>
+                            <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                            <li><a href="../classes/GameData.html">GameData</a></li>
+                            <li><a href="../classes/Main.html">Main</a></li>
+                            <li><a href="../classes/MeterComponent.html">MeterComponent</a></li>
+                            <li><a href="../classes/ParticlesComponent.html">ParticlesComponent</a></li>
+                            <li><a href="../classes/Preloader.html">Preloader</a></li>
+                            <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                            <li><a href="../classes/Reel.html">Reel</a></li>
+                            <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                            <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
+                            <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
+                            <li><a href="../classes/SpinEvaluator.html">SpinEvaluator</a></li>
+                            <li><a href="../classes/SymbolAnimCommand.html">SymbolAnimCommand</a></li>
+                            <li><a href="../classes/SymbolWinsComponent.html">SymbolWinsComponent</a></li>
+                            <li><a href="../classes/Utils.html">Utils</a></li>
+                            <li><a href="../classes/WinLine.html">WinLine</a></li>
+                            <li><a href="../classes/WinLineCommand.html">WinLineCommand</a></li>
+                            <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="methods-on-page" class="sidebox on-page">
+                <div class="hd">
+                    <h2 class="no-toc">Methods On Page</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="#methods_handleGaffeSelected">handleGaffeSelected</a></li>
+                            <li><a href="#methods_handleReelSpinStart">handleReelSpinStart</a></li>
+                            <li><a href="#methods_init">init</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            <div id="fileTree" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Files</h2>
+                </div>
+                <div class="bd">
+                    <ul><li>public/<ul><li>javascripts/<ul><li>app/<ul><li><a href="../files/public_javascripts_app_Main.js.html">Main.js</a></li><li>commands/<ul><li><a href="../files/public_javascripts_app_commands_BigWinCommand.js.html">BigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_Command.js.html">Command.js</a></li><li><a href="../files/public_javascripts_app_commands_CommandQueue.js.html">CommandQueue.js</a></li><li><a href="../files/public_javascripts_app_commands_CustomCommand.js.html">CustomCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_FireworksCommand.js.html">FireworksCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_RemoveBigWinCommand.js.html">RemoveBigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_SymbolAnimCommand.js.html">SymbolAnimCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_WinLineCommand.js.html">WinLineCommand.js</a></li></ul></li><li>components/<ul><li><a href="../files/public_javascripts_app_components_BigWinComponent.js.html">BigWinComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Dj.js.html">Dj.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeButton.js.html">GaffeButton.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html">GaffeMenuComponent.js</a></li><li><a href="../files/public_javascripts_app_components_GameComponent.js.html">GameComponent.js</a></li><li><a href="../files/public_javascripts_app_components_MeterComponent.js.html">MeterComponent.js</a></li><li><a href="../files/public_javascripts_app_components_ParticlesComponent.js.html">ParticlesComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Reel.js.html">Reel.js</a></li><li><a href="../files/public_javascripts_app_components_ReelsComponent.js.html">ReelsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_SymbolWinsComponent.js.html">SymbolWinsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_WinLine.js.html">WinLine.js</a></li><li><a href="../files/public_javascripts_app_components_WinLinesComponent.js.html">WinLinesComponent.js</a></li></ul></li><li>core/<ul><li><a href="../files/public_javascripts_app_core_Game.js.html">Game.js</a></li><li><a href="../files/public_javascripts_app_core_GameData.js.html">GameData.js</a></li><li><a href="../files/public_javascripts_app_core_Preloader.js.html">Preloader.js</a></li><li><a href="../files/public_javascripts_app_core_ServerInterface.js.html">ServerInterface.js</a></li><li><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html">SignalDispatcher.js</a></li><li><a href="../files/public_javascripts_app_core_SpinEvaluator.js.html">SpinEvaluator.js</a></li></ul></li><li>utils/<ul><li><a href="../files/public_javascripts_app_utils_QueueFactory.js.html">QueueFactory.js</a></li><li><a href="../files/public_javascripts_app_utils_Utils.js.html">Utils.js</a></li></ul></li></ul></li></ul></li></ul></li></ul>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><h4>Class SignalDispatcher</h4>
+<span class="foundat">Class defined in: <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:9</code></a></span>
+<div class="intro"><p>Central Hub for providing Signals for the app to dispatch and listen to.
+Signal Dispatcher is the core communication component of the application.  Ensure it is passed into any Class which might need to talk to another.
+In this context we can listen to gameData signals, and have the signalDispatcher dispatch a signal which can be listened to by GameComponents which require
+to be notified when some server data has been received.  Eg. ReelsComponent can spin the reels when a spin response is received.</p>
+</div>
+
+    <a name="methods_SignalDispatcher"></a>
+    <div class="method item">
+         <strong class="name"><code>SignalDispatcher</code></strong>( <code>  </code> ) 
+        <br>
+        <span class="foundat">
+            
+            <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:9</code></a>
+        </span><br>
+        
+    </div>
+
+<div id="classdocs">
+    <ul>
+        <li><a href="#methods">Methods</a></li>
+        <li><a href="#props">Properties</a></li>
+    </ul>
+    <div>
+            <div id="methods">
+<a name="methods_handleGaffeSelected"></a>
+<div class="method item">
+     <strong class="name"><code>handleGaffeSelected</code></strong>( <code>gaffeType </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l163"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:163</code></a>
+    </span><br>
+    <p>Dispatched by the GaffeMenu when a gaffe button is selected.
+Sets the commandQueue gaffe type for animating the final win, and starts spinning the reels.</p>
+
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>gaffeType</code> <strong>&lt;String&gt;</strong>
+        <ul>
+<li>the menu option string</li>
+</ul>
+
+        </li>
+    </ul>
+</div>
+<a name="methods_handleReelSpinStart"></a>
+<div class="method item">
+     <strong class="name"><code>handleReelSpinStart</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l144"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:144</code></a>
+    </span><br>
+    <p>Dispached by ReelsComponent when the reel spin begins.
+This class calls the components which require to update the display at the start of each spin, eg, clearing win animations queue and graphics.</p>
+
+</div>
+<a name="methods_init"></a>
+<div class="method item">
+     <strong class="name"><code>init</code></strong>( <code>setup, commandQueue </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l118"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:118</code></a>
+    </span><br>
+    <p>Initialise the SignalDispatcher with setup object and gameComponents.
+Initialise signal handlers</p>
+
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>setup</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+        <li>
+            <code>commandQueue</code> <strong>&lt;G.CommandQueue&gt;</strong>
+         
+        </li>
+    </ul>
+</div>
+            </div>
+            <div id="props">
+                <a name="props_balanceChanged"></a>
+                <div class="props item">
+                    <code>balanceChanged</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l71"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:71</code></a></span>
+                    <p>Signal dispatched to update the balance</p>
+                
+                </div>
+                <a name="props_fireworkLaunched"></a>
+                <div class="props item">
+                    <code>fireworkLaunched</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l63"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:63</code></a></span>
+                    <p>Signal dispatched when F key is pressed to fire a firework particle for profiling app performance.</p>
+                
+                </div>
+                <a name="props_fpsSwitched"></a>
+                <div class="props item">
+                    <code>fpsSwitched</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l55"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:55</code></a></span>
+                    <p>Signal dispatched by the GaffeMenu when FPS switch is used.</p>
+                
+                </div>
+                <a name="props_gaffeSelect"></a>
+                <div class="props item">
+                    <code>gaffeSelect</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l31"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:31</code></a></span>
+                    <p>Signal dispatched by the GaffeMenu when a gaffe is selected.</p>
+                
+                </div>
+                <a name="props_gaffeSpinRequested"></a>
+                <div class="props item">
+                    <code>gaffeSpinRequested</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l111"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:111</code></a></span>
+                    
+                </div>
+                <a name="props_playSound"></a>
+                <div class="props item">
+                    <code>playSound</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l79"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:79</code></a></span>
+                    <p>dispatch this signal to play a sound.</p>
+                
+                </div>
+                <a name="props_reelSpinComplete"></a>
+                <div class="props item">
+                    <code>reelSpinComplete</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l39"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:39</code></a></span>
+                    <p>Signal dispatched by the ReelsComponent when all reel animations have stopped</p>
+                
+                </div>
+                <a name="props_reelSpinStart"></a>
+                <div class="props item">
+                    <code>reelSpinStart</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l47"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:47</code></a></span>
+                    <p>Signal dispatched by the ReelsComponent when the reel animations have just started.</p>
+                
+                </div>
+                <a name="props_serverSpinRequested"></a>
+                <div class="props item">
+                    <code>serverSpinRequested</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l95"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:95</code></a></span>
+                    <p>Dispatch this signal to start a request for a spinResponse from the server.</p>
+                
+                </div>
+                <a name="props_setup"></a>
+                <div class="props item">
+                    <code>setup</code> &lt;<strong>Object</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l22"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:22</code></a></span>
+                    <p>The application config file (setup.json)</p>
+                
+                </div>
+                <a name="props_spinReponseReceived"></a>
+                <div class="props item">
+                    <code>spinReponseReceived</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l103"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:103</code></a></span>
+                    <p>Signal dispatched by GameData Object when server response received</p>
+                
+                </div>
+                <a name="props_stopSound"></a>
+                <div class="props item">
+                    <code>stopSound</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html#l87"><code>public&#x2F;javascripts&#x2F;app&#x2F;core&#x2F;SignalDispatcher.js:87</code></a></span>
+                    <p>dispatch this signal to stop a sound.</p>
+                
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/js/tabs.js"></script>
+</body>
+</html>

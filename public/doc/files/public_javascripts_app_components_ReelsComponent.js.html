@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>public/javascripts/app/components/ReelsComponent.js - kingkong</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1><a href="../index.html"><img src="../assets/css/kong-header.png" width="389" height="100">kingkong: public/javascripts/app/components/ReelsComponent.js v0.3.4</a></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.3.4</em>
+        </div>
+    </div>
+    <div class="yui3-g">
+
+        <div id="sidebar" class="yui3-u">
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
+                            <li><a href="../classes/Command.html">Command</a></li>
+                            <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                            <li><a href="../classes/CustomCommand.html">CustomCommand</a></li>
+                            <li><a href="../classes/Dj.html">Dj</a></li>
+                            <li><a href="../classes/FireworksCommand.html">FireworksCommand</a></li>
+                            <li><a href="../classes/G.BigWinCommand.html">G.BigWinCommand</a></li>
+                            <li><a href="../classes/GaffeButton.html">GaffeButton</a></li>
+                            <li><a href="../classes/GaffeMenuComponent.html">GaffeMenuComponent</a></li>
+                            <li><a href="../classes/Game.html">Game</a></li>
+                            <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                            <li><a href="../classes/GameData.html">GameData</a></li>
+                            <li><a href="../classes/Main.html">Main</a></li>
+                            <li><a href="../classes/MeterComponent.html">MeterComponent</a></li>
+                            <li><a href="../classes/ParticlesComponent.html">ParticlesComponent</a></li>
+                            <li><a href="../classes/Preloader.html">Preloader</a></li>
+                            <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                            <li><a href="../classes/Reel.html">Reel</a></li>
+                            <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                            <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
+                            <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
+                            <li><a href="../classes/SpinEvaluator.html">SpinEvaluator</a></li>
+                            <li><a href="../classes/SymbolAnimCommand.html">SymbolAnimCommand</a></li>
+                            <li><a href="../classes/SymbolWinsComponent.html">SymbolWinsComponent</a></li>
+                            <li><a href="../classes/Utils.html">Utils</a></li>
+                            <li><a href="../classes/WinLine.html">WinLine</a></li>
+                            <li><a href="../classes/WinLineCommand.html">WinLineCommand</a></li>
+                            <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div id="fileTree" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Files</h2>
+                </div>
+                <div class="bd">
+                    <ul><li>public/<ul><li>javascripts/<ul><li>app/<ul><li><a href="../files/public_javascripts_app_Main.js.html">Main.js</a></li><li>commands/<ul><li><a href="../files/public_javascripts_app_commands_BigWinCommand.js.html">BigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_Command.js.html">Command.js</a></li><li><a href="../files/public_javascripts_app_commands_CommandQueue.js.html">CommandQueue.js</a></li><li><a href="../files/public_javascripts_app_commands_CustomCommand.js.html">CustomCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_FireworksCommand.js.html">FireworksCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_RemoveBigWinCommand.js.html">RemoveBigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_SymbolAnimCommand.js.html">SymbolAnimCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_WinLineCommand.js.html">WinLineCommand.js</a></li></ul></li><li>components/<ul><li><a href="../files/public_javascripts_app_components_BigWinComponent.js.html">BigWinComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Dj.js.html">Dj.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeButton.js.html">GaffeButton.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html">GaffeMenuComponent.js</a></li><li><a href="../files/public_javascripts_app_components_GameComponent.js.html">GameComponent.js</a></li><li><a href="../files/public_javascripts_app_components_MeterComponent.js.html">MeterComponent.js</a></li><li><a href="../files/public_javascripts_app_components_ParticlesComponent.js.html">ParticlesComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Reel.js.html">Reel.js</a></li><li><a href="../files/public_javascripts_app_components_ReelsComponent.js.html">ReelsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_SymbolWinsComponent.js.html">SymbolWinsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_WinLine.js.html">WinLine.js</a></li><li><a href="../files/public_javascripts_app_components_WinLinesComponent.js.html">WinLinesComponent.js</a></li></ul></li><li>core/<ul><li><a href="../files/public_javascripts_app_core_Game.js.html">Game.js</a></li><li><a href="../files/public_javascripts_app_core_GameData.js.html">GameData.js</a></li><li><a href="../files/public_javascripts_app_core_Preloader.js.html">Preloader.js</a></li><li><a href="../files/public_javascripts_app_core_ServerInterface.js.html">ServerInterface.js</a></li><li><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html">SignalDispatcher.js</a></li><li><a href="../files/public_javascripts_app_core_SpinEvaluator.js.html">SpinEvaluator.js</a></li></ul></li><li>utils/<ul><li><a href="../files/public_javascripts_app_utils_QueueFactory.js.html">QueueFactory.js</a></li><li><a href="../files/public_javascripts_app_utils_Utils.js.html">Utils.js</a></li></ul></li></ul></li></ul></li></ul></li></ul>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><h4>public/javascripts/app/components/ReelsComponent.js</h4>
+
+<pre class="code prettyprint linenums">
+/*! kingkong 0.0.1 - 2015-02-03
+* Copyright (c) 2015 Licensed @HighFiveGames */
+
+var G = G || {};
+
+(function () {
+	&quot;use strict&quot;;
+
+	/**
+	 * GameComponent responsible for creating the G.Reels (ReelStrips) drawing symbols to each reel and launching the spin animation on them.
+	 * This class makes spinRequests via the serverInterface, and handles the responses by updating the reels according the to the
+	 * stops array.
+	 * It also dispatches a signalDispatcher.reelSpinComplete signal when all reel animations have completed
+	 *
+	 * @class ReelsComponent
+	 * @extends G.GameComponent
+	 * @constructor
+	 */
+	var ReelsComponent = function() {
+		this.GameComponent_constructor();
+	};
+
+	var p = createjs.extend(ReelsComponent, G.GameComponent);
+
+	p.constructor = ReelsComponent;
+
+	/**
+	 * the createjs spritesheet data object required to pass to the createjs.SpriteSheet constructor in order to draw the symbols.
+	 * This is passed from Game during initialisation.
+	 *
+	 * @property symbolSprites
+	 * @type {Object}
+	 */
+	p.symbolSprites = null;
+
+	/**
+	 * These are the default symbols drawn to the reels.
+	 * This may need to be created from the slotInit response at some point.
+	 *
+	 * @property reelsData
+	 * @type {null}
+	 */
+	p.reelsData = null;
+
+
+	/**
+	 * Container for the G.Reel sub components, 1 per reel.
+	 *
+	 * @property reels
+	 * @type {G.Reel[]}
+	 */
+	p.reels = [];
+
+	/**
+	 * Setup contains a map array of all the symbol names. eg. &#x27;ww&#x27;, &#x27;m1&#x27;. These are stored in the array at the index of the symbolId.
+	 * That way we can draw the correct symbols according to reelStrips data array, which is an array of symbolIds.
+	 *
+	 * @deprecated
+	 * @property reelMap
+	 * @type {Object}
+	 */
+	p.reelMap = null;
+
+	/**
+	 * Keeps a count of the number of reels which are currenlty animating.  When a reel dispatches it&#x27;s complete signal, this number is
+	 * reduced.  When the number of reels spinning becomes 0 this component can fire it&#x27;s reelsSpinComplete signal via the signalDispatcher.
+	 *
+	 * @property reelsSpinning
+	 * @type {number}
+	 */
+	p.reelsSpinning = 0;
+
+	/**
+	 * If a spinRequest has been made to the server we do not want to make another spin request.  Instead, we would like
+	 * to hammer the reels to stop.
+	 *
+	 * @property spinRequested
+	 * @type {boolean}
+	 */
+	p.spinRequested = false;
+
+	/**
+	 * The ServerInterface is required here to make spin Requests.
+	 *
+	 * @property serverInterface
+	 * @type {G.ServerInterface}
+	 */
+	p.serverInterface = null;
+
+	/**
+	 * This stores the last spin, and is dispatched with the reel complete
+	 * to allow SignalDispatcher to evaluate any wins.
+	 * @deprecated
+	 * @type {Object}
+	 * @default null
+	 */
+	p.spinResponse = null;
+
+	/**
+	 *
+	 * @property slotInit
+	 * @type {null}
+	 */
+	p.slotInitResponse = null;
+
+	/**
+	 * initialises the reelsComponent with required game data and assets
+	 *
+	 * @method init
+	 * @param {Object} setup - the setup json data object
+	 * @param {G.SignalDispatcher} signalDispatcher - game&#x27;s signal dispatcher used to dispatch signals to the rest of the application
+	 * @param {G.ServerInterface} serverInterface - reference to the game&#x27;s server interface required to make the spin request
+	 * @param {Object} symbolSprites - the createjs spritesheet data object required to pass to the createjs.SpriteSheet constructor
+	 * @param {Object} slotInitResponse - the slot init response from the server.
+	 */
+	p.init = function(setup, signalDispatcher, serverInterface, symbolSprites, slotInitResponse) {
+		this.GameComponent_init(setup, signalDispatcher);
+		this.signalDispatcher.gaffeSpinRequested.add(this.handleGaffeSpinRequest, this);
+		this.serverInterface = serverInterface;
+		this.symbolSprites = symbolSprites;
+		this.slotInitResponse = slotInitResponse;
+		this.reelsData = this.getInitialStrips(this.slotInitResponse.reelStrips);
+	};
+
+	/**
+	 * This function is necessary because the reelStrips arrays are so large, the spin animation cannot cope with animating such a
+	 * large amount of symbols in one strip without serious lag (I&#x27;ve tried it!)
+	 * (It&#x27;s possible a blitted approach may get around this issue)
+	 * For now the initial reelStrips are made up of n symbols cut from the reelStrips array during initialisation (n = setup.json variable cutLength)
+	 * So we just take a slice from the initial stop value of the array and return the new reelStrips 2d array which we&#x27;ll use to draw the reel symbols from.
+	 *
+	 * @method getInitialStrips
+	 * @param reelStrips
+	 * @returns {Array[]}
+	 * @todo make stop value dynamic and set it to the initialStops inside slotInit
+	 */
+	p.getInitialStrips = function(reelStrips) {
+		var i, len = reelStrips.length;
+		var initialStop = 0;
+		var temp = [];
+		for (i = 0; i &lt; len; i++) {
+			temp.push(reelStrips[i].slice(initialStop, this.setup.reelAnimation.symbols.cutLength));
+		}
+		return temp;
+	};
+
+	/**
+	 * Takes an array of symbol ID&#x27;s and passes them to each reel to modify symbol sprites at runtime on each reel
+	 * This is usually only done when the spin request server response has returned the stop positions, but can also be used
+	 * for calling and debugging win animations.
+	 *
+	 * @method modifySymbolData
+	 * @param {number[]} reelData
+	 * @param {boolean} reset
+	 */
+	p.modifySymbolData = function(reelData, reset) {
+		var modifiedReelData = reelData || [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		var i, len = this.reels.length, reel;
+		for (i = 0; i &lt; len; i++) {
+			reel = this.reels[i];
+			if (reset) {
+				modifiedReelData = this.reelsData[i];
+			}
+			reel.modifyReelData(modifiedReelData);
+		}
+	};
+
+	/**
+	 * Creates and initialises each reelstrip, and draws them to the display.
+	 *
+	 * @method drawReels
+	 */
+	p.drawReels = function() {
+		var i, len = this.reelsData.length, reel;
+		var symbolW = this.setup.symbolW;
+		var reelMarginR = this.setup.reelMarginRight;
+		for (i = 0; i &lt; len; i++) {
+			reel = new G.Reel();
+			reel.init(this.setup, this.signalDispatcher, this.symbolSprites, this.reelsData[i]);
+			this.addChild(reel);
+			reel.drawReel();
+			this.reels.push(reel);
+			reel.x = symbolW * i + reelMarginR * i;
+		}
+	};
+
+	/**
+	 * Gaffe spin requests handled by reelsComponent so that it knows a spin has been requested.
+	 * Calls ServerInterface to make an api request for the gaffe (requestUrl)
+	 *
+	 * @method handleGaffSpinRequest
+	 * @param requestUrl
+	 */
+	p.handleGaffeSpinRequest = function(requestUrl) {
+		this.spinRequested = true;
+		this.serverInterface.requestGaffeSpin(requestUrl);
+	};
+
+	/**
+	 * requestSpin is called every time the user initiates a spin (either via the keyboard or swipe to spin gesture on touch devices)
+	 * If spinRequest has not yet been made (ie the reels are stopped) then this makes a serverInterface.requestSpin call, and the spinRequest flag
+	 * is set to true.
+	 * Otherwise we slam the reels to stop them.
+	 * @todo: the duration of time after spinning before a user can slam the reels need to be configurable via the setup file, as some regions require a cool-down period between spins.
+	 *
+	 * @method requestSpin
+	 */
+	p.requestSpin = function() {
+		if (this.spinRequested) {
+			console.log(&#x27;requesting slam&#x27;);
+			this.slamSpin();
+
+		} else {
+
+			console.log(&#x27;requesting spin&#x27;);
+			this.spinRequested = true;
+			this.serverInterface.requestSpin();
+		}
+	};
+
+	/**
+	 * Reel Animations start here: configuration options are in setup.reelAnimation
+	 * - 1. By default 10 symbols after and including the symbol at the stopIndex of the reelStrip are cut from the reelStrips array
+	 * - 2. Existing symbols on the reels are switched to those symbols.  Switching takes place off the visible canvas after the first spin cycle,
+	 * to give the existing symbols time to animate from the reels.
+	 * - 3. If a symbolIndex in the reelStrip array equals the replacementId defined in the setup.json then a replacement is made based on the spinResponse.
+	 * - 4. Starts the reels spinning and passes the correct symbol index to stop to
+	 * See (G.Reel) for more info about how reel strips are drawn and animated.
+	 *
+	 * @method serverSpinStart
+	 * @param {Object} spinResponse - the spin response containing the spinRecords and stops array
+	 * @todo support a spinResponse which contains multiple spin records
+	 */
+	p.serverSpinStart = function(spinResponse) {
+
+		console.log(&#x27;serverSpin Start&#x27;, spinResponse);
+		//this.spinResponse = spinResponse;
+		var reelStrips = this.slotInitResponse.reelStrips;
+		//todo support multiple spin records
+		var record = spinResponse.spinRecords[0];
+		if (record.stops.length &gt; 1) {
+			console.warn(&quot;multiple spin records not yet supported&quot;);
+		}
+
+		var replacements = _.map(record.replacement, function(replacementStr) {
+			return parseInt(replacementStr, 10);
+		});
+
+		console.log(&#x27;replacement=&#x27;, replacements);
+		//todo support multiple spin records
+		var stops = record.stops;
+		var replacementId = this.setup.reelAnimation.symbols.replacement.index;
+		var stripData;
+		var startIndex = 0;
+		var endIndex = 0;
+		var stopIndexes = [];
+		var numSymbolsBefore = this.setup.reelAnimation.symbols.stopVal;
+		var numSymbolsAfter = this.setup.reelAnimation.symbols.cutLength - numSymbolsBefore;
+		var i, j, len = reelStrips.length, strip;
+		for (i = 0; i &lt; len; i++) {
+			stripData = [];
+			strip = reelStrips[i];
+			var tempStop = stops[i] - numSymbolsBefore;
+			var tempEnd = stops[i] + numSymbolsAfter;
+			if (tempStop &lt; 0) {
+				startIndex = strip.length + tempStop;
+				for (j = startIndex; j &lt; strip.length; j++) {
+					if (strip[j] === replacementId) {
+						stripData.push(replacements[i]);
+					} else {
+						stripData.push(strip[j]);
+					}
+				}
+				for (j = 0; j &lt; tempEnd; j++ ) {
+					if (strip[j] === replacementId) {
+						stripData.push(replacements[i]);
+					} else {
+						stripData.push(strip[j]);
+					}
+				}
+			} else {
+				startIndex = tempStop;
+			}
+
+			if (tempEnd &gt; strip.length) {
+				startIndex = tempStop;
+				endIndex = tempEnd - strip.length;
+				for (j = startIndex; j &lt; strip.length; j++) {
+					if (strip[j] === replacementId) {
+						stripData.push(replacements[i]);
+					} else {
+						stripData.push(strip[j]);
+					}
+				}
+				for (j = 0; j &lt; endIndex; j++) {
+					stripData.push(strip[j]);
+				}
+			} else {
+				endIndex = tempEnd;
+				for (j = startIndex; j &lt; endIndex; j++) {
+					if (strip[j] === replacementId) {
+						stripData.push(replacements[i]);
+					} else {
+						stripData.push(strip[j]);
+					}
+				}
+			}
+			//this.cutSymbolIds = stripData;
+			this.reels[i].modifyReelData(stripData);
+			stopIndexes.push(numSymbolsBefore);
+		}
+		this.spinReels(stopIndexes);
+	};
+
+	/**
+	 * Spins all reels with a delay configuration from setup.json
+	 * Stops reels if they are currently spinning.
+	 * Clear any winline/animation overlays
+	 * Play Spin Sound
+	 *
+	 * @method spinReels
+	 */
+	p.spinReels = function(indexes) {
+
+		console.log(&#x27;spinReels&#x27;, indexes);
+
+		var self = this;
+		var i, len = this.reels.length, reel, delay;
+		var maxDelay = this.setup.reelAnimation.delay.max;
+
+		var getDelay = function(i) {
+			if (self.setup.reelAnimation.delay.random === true) {
+				return Math.random() * maxDelay;
+			}
+			if (self.setup.reelAnimation.delay.sequenced === true) {
+				return maxDelay / self.reels.length * i;
+			}
+		};
+
+		if (!indexes) {
+			indexes = [0,0,0,0,0];
+		}
+
+		console.log(&#x27;spinToIndex=&#x27;, indexes);
+
+		if (this.reelsSpinning === 0) {
+			self.signalDispatcher.playSound.dispatch(&quot;spin1&quot;);
+			//notify game components of a spin start
+			this.signalDispatcher.reelSpinStart.dispatch();
+			for (i = 0; i &lt; len; i++)
+			{
+				delay = getDelay(i);
+				reel = this.reels[i];
+				reel.spinToIndex(indexes[i], delay);
+				reel.reelSpinEnd.add(this.reelSpinEnd, this);
+				this.reelsSpinning++;
+			}
+		}
+	};
+
+	/**
+	 * Schedules the reels to stop immediately
+	 *
+	 * @method slamSpin
+	 */
+	p.slamSpin = function() {
+		console.warn(&#x27;slammingSpin now&#x27;);
+		var self = this;
+		var reel, len = this.reels.length, i;
+
+		for (i = 0; i &lt; len; i++)
+		{
+			reel = this.reels[i];
+			reel.scheduleFastStop();
+		}
+
+		setTimeout(function() {
+				self.signalDispatcher.stopSound.dispatch(&quot;spin1&quot;);
+			}, 200
+		);
+
+	};
+
+	/**
+	 * Signal handler called when reel.reelSpinEnd is dispatched.  When all reels have finished
+	 * this method dispatches the signalDispatcher.reelSpinComplete signal.
+	 *
+	 * @method reelSpinEnd
+	 */
+	p.reelSpinEnd = function() {
+		if (--this.reelsSpinning === 0)
+		{
+			this.spinRequested = false;
+			this.signalDispatcher.reelSpinCompleted.dispatch();
+		}
+	};
+
+	/**
+	 * For debugging purposes, provides a hook to update Reels&#x27; spinSpeed
+	 *
+	 * @method updateSpinSpeed
+	 * @param val {Number}
+	 */
+	p.updateSpinSpeed = function(val) {
+		var i, len = this.reels.length, reel;
+		for (i = 0; i &lt; len; i++)
+		{
+			reel = this.reels[i];
+			reel.spinSpeedIncrement(val/100);
+		}
+	};
+
+	G.ReelsComponent = createjs.promote(ReelsComponent, &quot;GameComponent&quot;);
+
+})();
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/js/tabs.js"></script>
+</body>
+</html>

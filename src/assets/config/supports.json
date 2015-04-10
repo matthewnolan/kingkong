@@ -1,0 +1,63 @@
+{
+  "devices": {
+    "groups":       ["old", "budget", "mid-range", "new", "flagship", "catch-all"],
+    "mobile": {
+      "old" :       ["iphone1", "iphone2", "iphone3", "iphone4", "ipad1", "ipad2", "galaxyS3", "galaxyAce2", "nexus1", "nexus2", "nexus3"],
+      "budget" :    ["iphone5c", "ipodTouch4", "ipodTouch5", "nexus4", "galaxyAce4", "galaxyCore2"],
+      "mid-range" : ["iphone5", "iphone5s", "ipad3", "ipad4", "ipadMini1", "galaxyNote3"],
+      "new" :       ["nexus5", "iphone6", "ipadAir1", "ipadMin2", "galaxyS4", "nexus7tab"],
+      "flagship" :  ["iphone6+", "nexus6", "galaxyS5", "ipadAir2", "ipadMini3", "htcOneM8"],
+      "catch-all" : []
+    },
+    "browsers" :    ["chrome-desktop", "chrome-mobile", "safari-mobile", "safari-desktop", "firefox", "ie-latest", "catch-all", "webview-android", "webview-ios"],
+    "OS" :          ["iOS", "Android", "WindowsPhone", "Windows", "MacOS", "Linux"]
+  },
+
+  "features" : {
+    "game" :            ["notSupported", "assetsHi", "assetsLow", "slowInit", "payLineShadows", "touchGestures", "sounds", "bigWinAnimations", "particles"],
+    "fps" :             [10, 12, 15, 20, 30, 60],
+    "timingModes":      ["RAF", "RAF_SYNCHED", "TIMEOUT"],
+    "timingModesInfo" : ["/* For more details on timingModes in createjs please read: http://createjs.com/tutorials/Animation%20and%20Ticker/ */"]
+  },
+
+  "supports" : {
+    "devices" : {
+      "old" :           ["notSupported"],
+      "budget" :        ["assetsLow", "slowInit", "bigWinAnimations", "touchGestures"],
+      "mid-range" :     ["assetsLow", "payLineShadows", "sounds", "bigWinAnimations"],
+      "new" :           ["assetsLow", "payLineShadows", "touchGestures", "sounds", "bigWinAnimations"],
+      "flagship" :      ["assetsHi", "payLineShadows", "touchGestures", "sounds", "bigWinAnimations", "particles"],
+      "catch-all" :     ["assetsLow", "slowInit", "touchGestures", "sounds", "bigWinAnimations"]
+    },
+    "browsers" : {
+      "chrome-desktop" : {
+        "timing" : "RAF_SYNCHED",
+        "fps" : 60
+      },
+      "chrome-mobile" : {
+        "timing" : "RAF_SYNCHED",
+        "fps" : 30
+      },
+      "safari-desktop" : {
+        "timing" : "TIMEOUT",
+        "fps" : "max"
+      },
+      "safari-mobile" : {
+        "timing" : "TIMEOUT",
+        "fps" : 30
+      },
+      "firefox" : {
+        "timing" : "TIMEOUT",
+        "fps" : "max"
+      },
+      "ie-latest" : {
+        "timing" : "TIMEOUT",
+        "fps" : "max"
+      },
+      "catch-all" : {
+        "timing" : "TIMEOUT",
+        "fps" : "max"
+      }
+    }
+  }
+}

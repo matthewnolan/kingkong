@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>GaffeMenuComponent - kingkong</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1><a href="../index.html"><img src="../assets/css/kong-header.png" width="389" height="100">kingkong: GaffeMenuComponent v0.3.4</a></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.3.4</em>
+        </div>
+    </div>
+    <div class="yui3-g">
+
+        <div id="sidebar" class="yui3-u">
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
+                            <li><a href="../classes/Command.html">Command</a></li>
+                            <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                            <li><a href="../classes/CustomCommand.html">CustomCommand</a></li>
+                            <li><a href="../classes/Dj.html">Dj</a></li>
+                            <li><a href="../classes/FireworksCommand.html">FireworksCommand</a></li>
+                            <li><a href="../classes/G.BigWinCommand.html">G.BigWinCommand</a></li>
+                            <li><a href="../classes/GaffeButton.html">GaffeButton</a></li>
+                            <li><a href="../classes/GaffeMenuComponent.html">GaffeMenuComponent</a></li>
+                            <li><a href="../classes/Game.html">Game</a></li>
+                            <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                            <li><a href="../classes/GameData.html">GameData</a></li>
+                            <li><a href="../classes/Main.html">Main</a></li>
+                            <li><a href="../classes/MeterComponent.html">MeterComponent</a></li>
+                            <li><a href="../classes/ParticlesComponent.html">ParticlesComponent</a></li>
+                            <li><a href="../classes/Preloader.html">Preloader</a></li>
+                            <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                            <li><a href="../classes/Reel.html">Reel</a></li>
+                            <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                            <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
+                            <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
+                            <li><a href="../classes/SpinEvaluator.html">SpinEvaluator</a></li>
+                            <li><a href="../classes/SymbolAnimCommand.html">SymbolAnimCommand</a></li>
+                            <li><a href="../classes/SymbolWinsComponent.html">SymbolWinsComponent</a></li>
+                            <li><a href="../classes/Utils.html">Utils</a></li>
+                            <li><a href="../classes/WinLine.html">WinLine</a></li>
+                            <li><a href="../classes/WinLineCommand.html">WinLineCommand</a></li>
+                            <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="methods-on-page" class="sidebox on-page">
+                <div class="hd">
+                    <h2 class="no-toc">Methods On Page</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="#methods_buttonClicked">buttonClicked</a></li>
+                            <li><a href="#methods_changeWinText">changeWinText</a></li>
+                            <li><a href="#methods_deselectGaffeButtons">deselectGaffeButtons</a></li>
+                            <li><a href="#methods_drawMenu">drawMenu</a></li>
+                            <li><a href="#methods_fpsClicked">fpsClicked</a></li>
+                            <li><a href="#methods_handleComplete">handleComplete</a></li>
+                            <li><a href="#methods_hide">hide</a></li>
+                            <li><a href="#methods_init">init</a></li>
+                            <li><a href="#methods_show">show</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            <div id="fileTree" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Files</h2>
+                </div>
+                <div class="bd">
+                    <ul><li>public/<ul><li>javascripts/<ul><li>app/<ul><li><a href="../files/public_javascripts_app_Main.js.html">Main.js</a></li><li>commands/<ul><li><a href="../files/public_javascripts_app_commands_BigWinCommand.js.html">BigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_Command.js.html">Command.js</a></li><li><a href="../files/public_javascripts_app_commands_CommandQueue.js.html">CommandQueue.js</a></li><li><a href="../files/public_javascripts_app_commands_CustomCommand.js.html">CustomCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_FireworksCommand.js.html">FireworksCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_RemoveBigWinCommand.js.html">RemoveBigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_SymbolAnimCommand.js.html">SymbolAnimCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_WinLineCommand.js.html">WinLineCommand.js</a></li></ul></li><li>components/<ul><li><a href="../files/public_javascripts_app_components_BigWinComponent.js.html">BigWinComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Dj.js.html">Dj.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeButton.js.html">GaffeButton.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html">GaffeMenuComponent.js</a></li><li><a href="../files/public_javascripts_app_components_GameComponent.js.html">GameComponent.js</a></li><li><a href="../files/public_javascripts_app_components_MeterComponent.js.html">MeterComponent.js</a></li><li><a href="../files/public_javascripts_app_components_ParticlesComponent.js.html">ParticlesComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Reel.js.html">Reel.js</a></li><li><a href="../files/public_javascripts_app_components_ReelsComponent.js.html">ReelsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_SymbolWinsComponent.js.html">SymbolWinsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_WinLine.js.html">WinLine.js</a></li><li><a href="../files/public_javascripts_app_components_WinLinesComponent.js.html">WinLinesComponent.js</a></li></ul></li><li>core/<ul><li><a href="../files/public_javascripts_app_core_Game.js.html">Game.js</a></li><li><a href="../files/public_javascripts_app_core_GameData.js.html">GameData.js</a></li><li><a href="../files/public_javascripts_app_core_Preloader.js.html">Preloader.js</a></li><li><a href="../files/public_javascripts_app_core_ServerInterface.js.html">ServerInterface.js</a></li><li><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html">SignalDispatcher.js</a></li><li><a href="../files/public_javascripts_app_core_SpinEvaluator.js.html">SpinEvaluator.js</a></li></ul></li><li>utils/<ul><li><a href="../files/public_javascripts_app_utils_QueueFactory.js.html">QueueFactory.js</a></li><li><a href="../files/public_javascripts_app_utils_Utils.js.html">Utils.js</a></li></ul></li></ul></li></ul></li></ul></li></ul>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><h4>Class GaffeMenuComponent</h4>
+<span class="foundat">Class defined in: <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:9</code></a></span>
+<div class="intro"><p>A GaffeMenu component which you can call show/hide from to show and hide the menu
+should also draw some buttons based on setup.json&#39;s gaffes</p>
+</div>
+
+    <a name="methods_GaffeMenuComponent"></a>
+    <div class="method item">
+         <strong class="name"><code>GaffeMenuComponent</code></strong>( <code>version </code> ) 
+        <br>
+        <span class="foundat">
+            
+            <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:9</code></a>
+        </span><br>
+        
+        <strong>Parameters:</strong>
+        <ul class="params">
+            <li>
+                <code>version</code> <strong>&lt;String&gt;</strong>
+             
+            </li>
+        </ul>
+    </div>
+
+<div id="classdocs">
+    <ul>
+        <li><a href="#methods">Methods</a></li>
+        <li><a href="#props">Properties</a></li>
+    </ul>
+    <div>
+            <div id="methods">
+<a name="methods_buttonClicked"></a>
+<div class="method item">
+     <strong class="name"><code>buttonClicked</code></strong>( <code>e </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l292"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:292</code></a>
+    </span><br>
+    <p>dispatch to SignalDispatcher to update gaffe type</p>
+
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>e</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+    </ul>
+</div>
+<a name="methods_changeWinText"></a>
+<div class="method item">
+     <strong class="name"><code>changeWinText</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l374"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:374</code></a>
+    </span><br>
+    <p>For testing currency symbol switcheroo</p>
+
+</div>
+<a name="methods_deselectGaffeButtons"></a>
+<div class="method item">
+     <strong class="name"><code>deselectGaffeButtons</code></strong>( <code>[button] </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l326"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:326</code></a>
+    </span><br>
+    
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>[button]</code> <strong>&lt;G.GaffeButton&gt;</strong>
+        <p>do not deselect this button</p>
+
+        </li>
+    </ul>
+</div>
+<a name="methods_drawMenu"></a>
+<div class="method item">
+     <strong class="name"><code>drawMenu</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l75"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:75</code></a>
+    </span><br>
+    
+</div>
+<a name="methods_fpsClicked"></a>
+<div class="method item">
+     <strong class="name"><code>fpsClicked</code></strong>( <code>e </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l305"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:305</code></a>
+    </span><br>
+    <p>switch fps between 30 and 60</p>
+
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>e</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+    </ul>
+</div>
+<a name="methods_handleComplete"></a>
+<div class="method item">
+     <strong class="name"><code>handleComplete</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l356"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:356</code></a>
+    </span><br>
+    <p>visible false</p>
+
+</div>
+<a name="methods_hide"></a>
+<div class="method item">
+     <strong class="name"><code>hide</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l364"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:364</code></a>
+    </span><br>
+    <p>Hides the gaffe menu</p>
+
+</div>
+<a name="methods_init"></a>
+<div class="method item">
+     <strong class="name"><code>init</code></strong>( <code>setup, signalDispatcher </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l66"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:66</code></a>
+    </span><br>
+    
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>setup</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+        <li>
+            <code>signalDispatcher</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+    </ul>
+</div>
+<a name="methods_show"></a>
+<div class="method item">
+     <strong class="name"><code>show</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l342"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:342</code></a>
+    </span><br>
+    <p>Shows the gaffe menu</p>
+
+</div>
+            </div>
+            <div id="props">
+                <a name="props_buttons"></a>
+                <div class="props item">
+                    <code>buttons</code> &lt;<strong>G.GaffeButton</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l24"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:24</code></a></span>
+                    <p>Store the buttons on the menu for deselection purposes</p>
+                
+                </div>
+                <a name="props_hScrollContainer;"></a>
+                <div class="props item">
+                    <code>hScrollContainer;</code> &lt;<strong>createjs.Container</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l41"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:41</code></a></span>
+                    <p>The gaffeing buttons get added to this container, which scrolls.</p>
+                
+                </div>
+                <a name="props_hScrollOffset"></a>
+                <div class="props item">
+                    <code>hScrollOffset</code> &lt;<strong>Null</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l50"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:50</code></a></span>
+                    
+                </div>
+                <a name="props_version"></a>
+                <div class="props item">
+                    <code>version</code> &lt;<strong>String</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l32"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:32</code></a></span>
+                    <p>A version number which can be shown on the menu.
+                nb. Only shows correct version when loading minified source</p>
+                
+                </div>
+                <a name="props_"></a>
+                <div class="props item">
+                    `` &lt;<strong>Number</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html#l58"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeMenuComponent.js:58</code></a></span>
+                    
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/js/tabs.js"></script>
+</body>
+</html>

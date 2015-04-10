@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>GaffeButton - kingkong</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1><a href="../index.html"><img src="../assets/css/kong-header.png" width="389" height="100">kingkong: GaffeButton v0.3.4</a></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.3.4</em>
+        </div>
+    </div>
+    <div class="yui3-g">
+
+        <div id="sidebar" class="yui3-u">
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
+                            <li><a href="../classes/Command.html">Command</a></li>
+                            <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                            <li><a href="../classes/CustomCommand.html">CustomCommand</a></li>
+                            <li><a href="../classes/Dj.html">Dj</a></li>
+                            <li><a href="../classes/FireworksCommand.html">FireworksCommand</a></li>
+                            <li><a href="../classes/G.BigWinCommand.html">G.BigWinCommand</a></li>
+                            <li><a href="../classes/GaffeButton.html">GaffeButton</a></li>
+                            <li><a href="../classes/GaffeMenuComponent.html">GaffeMenuComponent</a></li>
+                            <li><a href="../classes/Game.html">Game</a></li>
+                            <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                            <li><a href="../classes/GameData.html">GameData</a></li>
+                            <li><a href="../classes/Main.html">Main</a></li>
+                            <li><a href="../classes/MeterComponent.html">MeterComponent</a></li>
+                            <li><a href="../classes/ParticlesComponent.html">ParticlesComponent</a></li>
+                            <li><a href="../classes/Preloader.html">Preloader</a></li>
+                            <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                            <li><a href="../classes/Reel.html">Reel</a></li>
+                            <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                            <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
+                            <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
+                            <li><a href="../classes/SpinEvaluator.html">SpinEvaluator</a></li>
+                            <li><a href="../classes/SymbolAnimCommand.html">SymbolAnimCommand</a></li>
+                            <li><a href="../classes/SymbolWinsComponent.html">SymbolWinsComponent</a></li>
+                            <li><a href="../classes/Utils.html">Utils</a></li>
+                            <li><a href="../classes/WinLine.html">WinLine</a></li>
+                            <li><a href="../classes/WinLineCommand.html">WinLineCommand</a></li>
+                            <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="methods-on-page" class="sidebox on-page">
+                <div class="hd">
+                    <h2 class="no-toc">Methods On Page</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="#methods_changeLabel">changeLabel</a></li>
+                            <li><a href="#methods_deselect">deselect</a></li>
+                            <li><a href="#methods_drawButton">drawButton</a></li>
+                            <li><a href="#methods_handleClick">handleClick</a></li>
+                            <li><a href="#methods_init">init</a></li>
+                            <li><a href="#methods_select">select</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            <div id="fileTree" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Files</h2>
+                </div>
+                <div class="bd">
+                    <ul><li>public/<ul><li>javascripts/<ul><li>app/<ul><li><a href="../files/public_javascripts_app_Main.js.html">Main.js</a></li><li>commands/<ul><li><a href="../files/public_javascripts_app_commands_BigWinCommand.js.html">BigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_Command.js.html">Command.js</a></li><li><a href="../files/public_javascripts_app_commands_CommandQueue.js.html">CommandQueue.js</a></li><li><a href="../files/public_javascripts_app_commands_CustomCommand.js.html">CustomCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_FireworksCommand.js.html">FireworksCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_RemoveBigWinCommand.js.html">RemoveBigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_SymbolAnimCommand.js.html">SymbolAnimCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_WinLineCommand.js.html">WinLineCommand.js</a></li></ul></li><li>components/<ul><li><a href="../files/public_javascripts_app_components_BigWinComponent.js.html">BigWinComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Dj.js.html">Dj.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeButton.js.html">GaffeButton.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html">GaffeMenuComponent.js</a></li><li><a href="../files/public_javascripts_app_components_GameComponent.js.html">GameComponent.js</a></li><li><a href="../files/public_javascripts_app_components_MeterComponent.js.html">MeterComponent.js</a></li><li><a href="../files/public_javascripts_app_components_ParticlesComponent.js.html">ParticlesComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Reel.js.html">Reel.js</a></li><li><a href="../files/public_javascripts_app_components_ReelsComponent.js.html">ReelsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_SymbolWinsComponent.js.html">SymbolWinsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_WinLine.js.html">WinLine.js</a></li><li><a href="../files/public_javascripts_app_components_WinLinesComponent.js.html">WinLinesComponent.js</a></li></ul></li><li>core/<ul><li><a href="../files/public_javascripts_app_core_Game.js.html">Game.js</a></li><li><a href="../files/public_javascripts_app_core_GameData.js.html">GameData.js</a></li><li><a href="../files/public_javascripts_app_core_Preloader.js.html">Preloader.js</a></li><li><a href="../files/public_javascripts_app_core_ServerInterface.js.html">ServerInterface.js</a></li><li><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html">SignalDispatcher.js</a></li><li><a href="../files/public_javascripts_app_core_SpinEvaluator.js.html">SpinEvaluator.js</a></li></ul></li><li>utils/<ul><li><a href="../files/public_javascripts_app_utils_QueueFactory.js.html">QueueFactory.js</a></li><li><a href="../files/public_javascripts_app_utils_Utils.js.html">Utils.js</a></li></ul></li></ul></li></ul></li></ul></li></ul>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><h4>Class GaffeButton</h4>
+    Extends: createjs.Container<br>
+<span class="foundat">Class defined in: <a href="../files/public_javascripts_app_components_GaffeButton.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:9</code></a></span>
+<div class="intro"></div>
+
+    <a name="methods_GaffeButton"></a>
+    <div class="method item">
+         <strong class="name"><code>GaffeButton</code></strong>( <code>  </code> ) 
+        <br>
+        <span class="foundat">
+            
+            <a href="../files/public_javascripts_app_components_GaffeButton.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:9</code></a>
+        </span><br>
+        
+    </div>
+
+<div id="classdocs">
+    <ul>
+        <li><a href="#methods">Methods</a></li>
+        <li><a href="#props">Properties</a></li>
+    </ul>
+    <div>
+            <div id="methods">
+<a name="methods_changeLabel"></a>
+<div class="method item">
+     <strong class="name"><code>changeLabel</code></strong>( <code>str </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeButton.js.html#l185"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:185</code></a>
+    </span><br>
+    <p>Update the button label at runtime</p>
+
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>str</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+    </ul>
+</div>
+<a name="methods_deselect"></a>
+<div class="method item">
+     <strong class="name"><code>deselect</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeButton.js.html#l205"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:205</code></a>
+    </span><br>
+    <p>Deselects the button at runtime - updates the stroke to original color.</p>
+
+</div>
+<a name="methods_drawButton"></a>
+<div class="method item">
+     <strong class="name"><code>drawButton</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeButton.js.html#l144"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:144</code></a>
+    </span><br>
+    <p>Draws the Button based on the params</p>
+
+</div>
+<a name="methods_handleClick"></a>
+<div class="method item">
+     <strong class="name"><code>handleClick</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeButton.js.html#l175"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:175</code></a>
+    </span><br>
+    
+</div>
+<a name="methods_init"></a>
+<div class="method item">
+     <strong class="name"><code>init</code></strong>( <code>labelText, width, height, radius, strokeColor, fillColor, textColor </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeButton.js.html#l122"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:122</code></a>
+    </span><br>
+    <p>Sets up Button params</p>
+
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>labelText</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+        <li>
+            <code>width</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+        <li>
+            <code>height</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+        <li>
+            <code>radius</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+        <li>
+            <code>strokeColor</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+        <li>
+            <code>fillColor</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+        <li>
+            <code>textColor</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+    </ul>
+</div>
+<a name="methods_select"></a>
+<div class="method item">
+     <strong class="name"><code>select</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_components_GaffeButton.js.html#l195"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:195</code></a>
+    </span><br>
+    <p>Select the button at runtime - updates the stroke to green color</p>
+
+</div>
+            </div>
+            <div id="props">
+                <a name="props_clicked"></a>
+                <div class="props item">
+                    <code>clicked</code> &lt;<strong>Signal</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l89"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:89</code></a></span>
+                    <p>Signal dispatched when this button is clicked</p>
+                
+                </div>
+                <a name="props_cornerRadius"></a>
+                <div class="props item">
+                    <code>cornerRadius</code> &lt;<strong>Number</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l46"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:46</code></a></span>
+                    <p>Button corner radius</p>
+                
+                </div>
+                <a name="props_fillColor"></a>
+                <div class="props item">
+                    <code>fillColor</code> &lt;<strong>String</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l71"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:71</code></a></span>
+                    <p>Button fillColor</p>
+                
+                </div>
+                <a name="props_height"></a>
+                <div class="props item">
+                    <code>height</code> &lt;<strong>Number</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l37"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:37</code></a></span>
+                    <p>Button height</p>
+                
+                </div>
+                <a name="props_labelText"></a>
+                <div class="props item">
+                    <code>labelText</code> &lt;<strong>String</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l20"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:20</code></a></span>
+                    <p>Button label</p>
+                
+                </div>
+                <a name="props_labelTF"></a>
+                <div class="props item">
+                    <code>labelTF</code> &lt;<strong>createjs.Text</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l105"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:105</code></a></span>
+                    <p>Button label Textfield</p>
+                
+                </div>
+                <a name="props_selected"></a>
+                <div class="props item">
+                    <code>selected</code> &lt;<strong>Boolean</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l97"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:97</code></a></span>
+                    <p>Button is selected</p>
+                
+                </div>
+                <a name="props_strokeColor"></a>
+                <div class="props item">
+                    <code>strokeColor</code> &lt;<strong>String</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l62"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:62</code></a></span>
+                    <p>Button stroke color</p>
+                
+                </div>
+                <a name="props_textColor"></a>
+                <div class="props item">
+                    <code>textColor</code> &lt;<strong>String</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l80"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:80</code></a></span>
+                    <p>Button text color</p>
+                
+                </div>
+                <a name="props_type"></a>
+                <div class="props item">
+                    <code>type</code> &lt;<strong>String</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l113"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:113</code></a></span>
+                    <p>Button action type</p>
+                
+                </div>
+                <a name="props_width"></a>
+                <div class="props item">
+                    <code>width</code> &lt;<strong>Number</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_components_GaffeButton.js.html#l28"><code>public&#x2F;javascripts&#x2F;app&#x2F;components&#x2F;GaffeButton.js:28</code></a></span>
+                    <p>Button width</p>
+                
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/js/tabs.js"></script>
+</body>
+</html>

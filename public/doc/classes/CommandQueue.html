@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CommandQueue - kingkong</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1><a href="../index.html"><img src="../assets/css/kong-header.png" width="389" height="100">kingkong: CommandQueue v0.3.4</a></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.3.4</em>
+        </div>
+    </div>
+    <div class="yui3-g">
+
+        <div id="sidebar" class="yui3-u">
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/BigWinComponent.html">BigWinComponent</a></li>
+                            <li><a href="../classes/Command.html">Command</a></li>
+                            <li><a href="../classes/CommandQueue.html">CommandQueue</a></li>
+                            <li><a href="../classes/CustomCommand.html">CustomCommand</a></li>
+                            <li><a href="../classes/Dj.html">Dj</a></li>
+                            <li><a href="../classes/FireworksCommand.html">FireworksCommand</a></li>
+                            <li><a href="../classes/G.BigWinCommand.html">G.BigWinCommand</a></li>
+                            <li><a href="../classes/GaffeButton.html">GaffeButton</a></li>
+                            <li><a href="../classes/GaffeMenuComponent.html">GaffeMenuComponent</a></li>
+                            <li><a href="../classes/Game.html">Game</a></li>
+                            <li><a href="../classes/GameComponent.html">GameComponent</a></li>
+                            <li><a href="../classes/GameData.html">GameData</a></li>
+                            <li><a href="../classes/Main.html">Main</a></li>
+                            <li><a href="../classes/MeterComponent.html">MeterComponent</a></li>
+                            <li><a href="../classes/ParticlesComponent.html">ParticlesComponent</a></li>
+                            <li><a href="../classes/Preloader.html">Preloader</a></li>
+                            <li><a href="../classes/QueueFactory.html">QueueFactory</a></li>
+                            <li><a href="../classes/Reel.html">Reel</a></li>
+                            <li><a href="../classes/ReelsComponent.html">ReelsComponent</a></li>
+                            <li><a href="../classes/ServerInterface.html">ServerInterface</a></li>
+                            <li><a href="../classes/SignalDispatcher.html">SignalDispatcher</a></li>
+                            <li><a href="../classes/SpinEvaluator.html">SpinEvaluator</a></li>
+                            <li><a href="../classes/SymbolAnimCommand.html">SymbolAnimCommand</a></li>
+                            <li><a href="../classes/SymbolWinsComponent.html">SymbolWinsComponent</a></li>
+                            <li><a href="../classes/Utils.html">Utils</a></li>
+                            <li><a href="../classes/WinLine.html">WinLine</a></li>
+                            <li><a href="../classes/WinLineCommand.html">WinLineCommand</a></li>
+                            <li><a href="../classes/WinLinesComponent.html">WinLinesComponent</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="methods-on-page" class="sidebox on-page">
+                <div class="hd">
+                    <h2 class="no-toc">Methods On Page</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="#methods_executeNext">executeNext</a></li>
+                            <li><a href="#methods_flushQueue">flushQueue</a></li>
+                            <li><a href="#methods_init">init</a></li>
+                            <li><a href="#methods_pause">pause</a></li>
+                            <li><a href="#methods_play">play</a></li>
+                            <li><a href="#methods_resume">resume</a></li>
+                            <li><a href="#methods_setupQueue">setupQueue</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            <div id="fileTree" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Files</h2>
+                </div>
+                <div class="bd">
+                    <ul><li>public/<ul><li>javascripts/<ul><li>app/<ul><li><a href="../files/public_javascripts_app_Main.js.html">Main.js</a></li><li>commands/<ul><li><a href="../files/public_javascripts_app_commands_BigWinCommand.js.html">BigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_Command.js.html">Command.js</a></li><li><a href="../files/public_javascripts_app_commands_CommandQueue.js.html">CommandQueue.js</a></li><li><a href="../files/public_javascripts_app_commands_CustomCommand.js.html">CustomCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_FireworksCommand.js.html">FireworksCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_RemoveBigWinCommand.js.html">RemoveBigWinCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_SymbolAnimCommand.js.html">SymbolAnimCommand.js</a></li><li><a href="../files/public_javascripts_app_commands_WinLineCommand.js.html">WinLineCommand.js</a></li></ul></li><li>components/<ul><li><a href="../files/public_javascripts_app_components_BigWinComponent.js.html">BigWinComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Dj.js.html">Dj.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeButton.js.html">GaffeButton.js</a></li><li><a href="../files/public_javascripts_app_components_GaffeMenuComponent.js.html">GaffeMenuComponent.js</a></li><li><a href="../files/public_javascripts_app_components_GameComponent.js.html">GameComponent.js</a></li><li><a href="../files/public_javascripts_app_components_MeterComponent.js.html">MeterComponent.js</a></li><li><a href="../files/public_javascripts_app_components_ParticlesComponent.js.html">ParticlesComponent.js</a></li><li><a href="../files/public_javascripts_app_components_Reel.js.html">Reel.js</a></li><li><a href="../files/public_javascripts_app_components_ReelsComponent.js.html">ReelsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_SymbolWinsComponent.js.html">SymbolWinsComponent.js</a></li><li><a href="../files/public_javascripts_app_components_WinLine.js.html">WinLine.js</a></li><li><a href="../files/public_javascripts_app_components_WinLinesComponent.js.html">WinLinesComponent.js</a></li></ul></li><li>core/<ul><li><a href="../files/public_javascripts_app_core_Game.js.html">Game.js</a></li><li><a href="../files/public_javascripts_app_core_GameData.js.html">GameData.js</a></li><li><a href="../files/public_javascripts_app_core_Preloader.js.html">Preloader.js</a></li><li><a href="../files/public_javascripts_app_core_ServerInterface.js.html">ServerInterface.js</a></li><li><a href="../files/public_javascripts_app_core_SignalDispatcher.js.html">SignalDispatcher.js</a></li><li><a href="../files/public_javascripts_app_core_SpinEvaluator.js.html">SpinEvaluator.js</a></li></ul></li><li>utils/<ul><li><a href="../files/public_javascripts_app_utils_QueueFactory.js.html">QueueFactory.js</a></li><li><a href="../files/public_javascripts_app_utils_Utils.js.html">Utils.js</a></li></ul></li></ul></li></ul></li></ul></li></ul>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><h4>Class CommandQueue</h4>
+<span class="foundat">Class defined in: <a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:9</code></a></span>
+<div class="intro"><p>Based on the Command Pattern, a CommandQueue consists of an array of commands (the queue)
+And methods to play, pause, loop and flush the current queue.
+When set to play, the commandQueue will execute each command in the queue, then wait a period of time defined
+in the command, before executing the next command.
+Command Queues support infinite looping: when a loopIndex is found inside a command, it will loop back to this command when the queue has finished.</p>
+</div>
+
+    <a name="methods_CommandQueue"></a>
+    <div class="method item">
+         <strong class="name"><code>CommandQueue</code></strong>( <code>  </code> ) 
+        <br>
+        <span class="foundat">
+            
+            <a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l9"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:9</code></a>
+        </span><br>
+        
+    </div>
+
+<div id="classdocs">
+    <ul>
+        <li><a href="#methods">Methods</a></li>
+        <li><a href="#props">Properties</a></li>
+    </ul>
+    <div>
+            <div id="methods">
+<a name="methods_executeNext"></a>
+<div class="method item">
+     <strong class="name"><code>executeNext</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l122"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:122</code></a>
+    </span><br>
+    <p>executes the currently queued command and schedules a timeout to call the next in queue
+or finishes if at the end of the queue, or loops back (loops back to first command in queue with a loopIndex).</p>
+
+</div>
+<a name="methods_flushQueue"></a>
+<div class="method item">
+     <strong class="name"><code>flushQueue</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l173"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:173</code></a>
+    </span><br>
+    <p>clears any timeouts and prepares class for a new queue.</p>
+
+</div>
+<a name="methods_init"></a>
+<div class="method item">
+     <strong class="name"><code>init</code></strong>( <code>setup </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l79"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:79</code></a>
+    </span><br>
+    <p>Initialise command queue with setup and a new QueueFactory.</p>
+
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>setup</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+    </ul>
+</div>
+<a name="methods_pause"></a>
+<div class="method item">
+     <strong class="name"><code>pause</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l151"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:151</code></a>
+    </span><br>
+    
+</div>
+<a name="methods_play"></a>
+<div class="method item">
+     <strong class="name"><code>play</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l110"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:110</code></a>
+    </span><br>
+    <p>If there&#39;s a queue of commands, then play and reset the gaffeType.</p>
+
+</div>
+<a name="methods_resume"></a>
+<div class="method item">
+     <strong class="name"><code>resume</code></strong>( <code>  </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l162"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:162</code></a>
+    </span><br>
+    
+</div>
+<a name="methods_setupQueue"></a>
+<div class="method item">
+     <strong class="name"><code>setupQueue</code></strong>( <code>queue </code> ) 
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l91"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:91</code></a>
+    </span><br>
+    <p>Initialise a queue ready for playing</p>
+
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>queue</code> <strong>&lt;Object&gt;</strong>
+         
+        </li>
+    </ul>
+</div>
+            </div>
+            <div id="props">
+                <a name="props_currentIndex"></a>
+                <div class="props item">
+                    <code>currentIndex</code> &lt;<strong>Number</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l62"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:62</code></a></span>
+                    <p>index position of the command to play next in the queue.</p>
+                
+                </div>
+                <a name="props_gaffeType"></a>
+                <div class="props item">
+                    <code>gaffeType</code> &lt;<strong>String</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l70"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:70</code></a></span>
+                    <p>If gaffeType is changed to &#39;client*&#39;, then queue may be built from QueueFactory instead of the usual way.
+                For debugging purposes only</p>
+                
+                </div>
+                <a name="props_loopReturnIndex"></a>
+                <div class="props item">
+                    <code>loopReturnIndex</code> &lt;<strong>Number</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l45"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:45</code></a></span>
+                    <p>This is set to the currentIndex when a loopIndex is found on a command.</p>
+                
+                </div>
+                <a name="props_queue"></a>
+                <div class="props item">
+                    <code>queue</code> &lt;<strong>G.Command</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l29"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:29</code></a></span>
+                    <p>The primary queue which commands must be added to.</p>
+                
+                </div>
+                <a name="props_queueFactory"></a>
+                <div class="props item">
+                    <code>queueFactory</code> &lt;<strong>G.QueueFactory</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l54"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:54</code></a></span>
+                    <p>Helper class to create prebuilt win animations.</p>
+                
+                </div>
+                <a name="props_setup"></a>
+                <div class="props item">
+                    <code>setup</code> &lt;<strong>Object</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l23"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:23</code></a></span>
+                    
+                </div>
+                <a name="props_timeout"></a>
+                <div class="props item">
+                    <code>timeout</code> &lt;<strong>Number</strong>&gt;<br>
+                    <span class="foundat"><a href="../files/public_javascripts_app_commands_CommandQueue.js.html#l37"><code>public&#x2F;javascripts&#x2F;app&#x2F;commands&#x2F;CommandQueue.js:37</code></a></span>
+                    <p>The setTimeout for the queue.</p>
+                
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/js/tabs.js"></script>
+</body>
+</html>
