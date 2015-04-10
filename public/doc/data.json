@@ -2,7 +2,7 @@
     "project": {
         "name": "kingkong",
         "description": "",
-        "version": "0.3.4",
+        "version": "0.4.0",
         "url": ""
     },
     "files": {
@@ -550,9 +550,9 @@
             "extension_for": [],
             "file": "public/javascripts/app/core/Game.js",
             "line": 9,
-            "description": "Game is the root of the application.  It creates everything a king kong game needs in order to run.  And is responsible for initialising\nPreloading, SignalDispatcher, Server connection, GameData, GameComponents and the Display.  Scaling and UserInterface Events are also handled here.\nIt also provides some dependency injection to the Games Components, which becomes the core method GameComponents use to talk to each other.\n\nResponsibilities explained:\n\nPreloading: Creates and initialises a G.Preloader which goes and fetches required sound and graphic assets.\n\nServer: Creates and initialises a G.ServerInterface which can talk to the server. (Currently the Node server for development purposes).\n\nSignals: We use signalsjs to handle communications around the application.  Signals are test friendly, and robust event dispatching system which don't rely on\n\"magic\" strings to work.  They also support custom parameters, which gets rid of the need to create custom event classes.\nWe use a signalDispatcher object passed into GameComponents to handle communication between different components.\n\nGameComponents: The app contains a number of gameComponents.  A GameComponent is a createjs.Container, a DisplayObject which may be added to the canvas.\nThey may also contains some game logic, for example: the reels must be displayed according the margin values passed in via the setup.json.\nAlso, a reel may animate and dispatch an event(signal) when completed.\nFor this reason all GameComponents are passed references to the setup.j\tson and a SignalDispatcher.\nAll GameComponents are also added to the static G.Utils.gameComponents array, which gives the application the freedom to call up gameComponents at any time when\nrequired without necessarily having to use the signalDispatcher.\n\nGameData: Creates and initialises a G.GameData.  When data is returned from the server, it uses GameData to store the returned responses and notify the signalDispatcher\nthat data has returned.\n\nStage and Ticker: Stage and Ticker are createjs concepts.  Stage is the root display object of the Canvas, and is the container where all createjs display objects\nmust be added to.  Ticker is responsible for updating the stage at regular intervals.  We currently sync stage updates with requestAnimationFrame\nin order to ensure that animations are as smooth as possible on newer browsers which support requestAnimationFrame.\nIt is recommened to read this to understand more: http://createjs.com/tutorials/Animation%20and%20Ticker/\n\nSee more info at: http://createjs.com/Home\n\nProton: Is particle animation system used by this application - It was chosen because it supports createjs and other rendering engines.\nIt also performed very well in tests. It is created here in Game because it is required to be updated during the createjs.Ticker cycle.\n\nSee more info at:  https://github.com/a-jie/Proton\n\nScaling: In order to support multiple screen resolutions, the application is created at a native scale size of 667px x 375px.\nThis value should be set as the setup.json's \"scale\" value.\nThe application supports multiple scale modes to help support as many device sizes as possible:\n\t\"FULL_ASPECT\":\n\t\tThis scales the application up or down to fit into the the devices viewport while maintaining aspect ratio.  Viewport is the window size, and iframe or WebView container size should be respected.\n\t\"FULL_BROWSER\":\n\t\tThis scales the application up or down to fit into the viewport dimensions precisely.  This will cause stretching on devices that don't match the native aspect\n\t\tratio.\n\t\"NONE\" or any other value:\n\t\tNo scaling is performed, and the application is created at the native dimensions.\n\n\nDevices:\nThis application is designed to play on multiple devices, browsers and screen resolutions.  Having said this, it is not possible to design\nan application which can run on any browser on any device and on any screen size. There are limitations and these should be considered.",
+            "description": "Game is the root of the application.  It creates everything a king kong game needs in order to run.  And is responsible for initialising\nPreloading, SignalDispatcher, Server connection, GameData, GameComponents and the Display.  Scaling and UserInterface Events are also handled here.\nIt also provides some dependency injection to the Games Components, which becomes the core method GameComponents use to talk to each other.\n\nResponsibilities explained:\n\nPreloading: Creates and initialises a G.Preloader which goes and fetches required configuration, sound and graphic assets.\n\nServer: Creates and initialises a G.ServerInterface which can talk to the server. (Currently the Node server for development purposes).\n\nSignals: We use signalsjs to handle communications around the application.  Signals are test friendly, and robust event dispatching system which don't rely on\n\"magic\" strings to work.  They also support custom parameters, which gets rid of the need to create custom event classes.\nWe use a signalDispatcher object passed into GameComponents to handle communication between different components.\n\nGameComponents: The app contains a number of gameComponents.  A GameComponent is a createjs.Container, a DisplayObject which may be added to the canvas.\nThey also contain some game logic, for example: the reels must be displayed according the margin values passed in via the setup.json.\nAlso, a reel may animate and dispatch an event(signal) when completed.\nFor this reason all GameComponents are passed references to the setup.json and a SignalDispatcher.\nAll GameComponents are also added to the static G.Utils.gameComponents array, which gives the application the freedom to call up gameComponents at any time when\nrequired without necessarily having to use the signalDispatcher.\n\nGameData: Creates and initialises a G.GameData.  When data is returned from the server, it uses GameData to store the returned responses and notify the signalDispatcher\nthat data has returned.\n\nStage and Ticker: Stage and Ticker are createjs concepts.  Stage is the root display object of the Canvas, and is the container where all createjs display objects\nmust be added to.  Ticker is responsible for updating the stage at regular intervals.  We currently sync stage updates with requestAnimationFrame\nin order to ensure that animations are as smooth as possible on newer browsers which support requestAnimationFrame.\nIt is recommened to read this to understand more: http://createjs.com/tutorials/Animation%20and%20Ticker/\n\nSee more info at: http://createjs.com/Home\n\nProton: Is particle animation system used by this application - It was chosen because it supports createjs and other rendering engines.\nIt also performed very well in tests. It is created here in Game because it is required to be updated during the createjs.Ticker cycle.\n\nSee more info at:  https://github.com/a-jie/Proton\n\nScaling: In order to support multiple screen resolutions, the application is created at a native scale size of 667px x 375px.\nThis value should be set as the setup.json's \"scale\" value.\nThe application supports multiple scale modes to help support as many device sizes as possible:\n\t\"FULL_ASPECT\":\n\t\tThis scales the application up or down to fit into the the devices viewport while maintaining aspect ratio.  Viewport is the window size, and iframe or WebView container size should be respected.\n\t\"FULL_BROWSER\":\n\t\tThis scales the application up or down to fit into the viewport dimensions precisely.  This will cause stretching on devices that don't match the native aspect\n\t\tratio.\n\t\"NONE\" or any other value:\n\t\tNo scaling is performed, and the application is created at the native dimensions.\n\n\nDevices:\nThis application is designed to play on multiple devices, browsers and screen resolutions.  Having said this, it is not possible to design\nan application which can run on any browser on any device and on any screen size. There are limitations and these should be considered.",
             "todo": [
-                "create a device compatiibility matrix"
+                "implement supports.json device optimising"
             ],
             "is_constructor": 1
         },
@@ -1288,7 +1288,7 @@
         },
         {
             "file": "public/javascripts/app/components/BigWinComponent.js",
-            "line": 148,
+            "line": 158,
             "description": "Used during slow init (aka failSafeInitialisation)",
             "itemtype": "method",
             "name": "handleAnimationEnd",
@@ -1302,7 +1302,7 @@
         },
         {
             "file": "public/javascripts/app/components/BigWinComponent.js",
-            "line": 161,
+            "line": 171,
             "description": "Removes any big win animation currently playing or if none, has no effect.",
             "itemtype": "method",
             "name": "hideAnimation",
@@ -1310,7 +1310,7 @@
         },
         {
             "file": "public/javascripts/app/components/BigWinComponent.js",
-            "line": 174,
+            "line": 184,
             "description": "Plays a big win animation, which currently is a 3x5 m1 animation\nIf 3x3 or 3x4 type animations should play, we will play a scaled up version of symbolAnim.\nIf 3x5 type animation and is not an m1... we'll play m1 anyway.",
             "itemtype": "method",
             "name": "playAnimation",
@@ -1356,20 +1356,6 @@
         {
             "file": "public/javascripts/app/components/Dj.js",
             "line": 44,
-            "deprecated": true,
-            "itemtype": "method",
-            "name": "nameDrop",
-            "params": [
-                {
-                    "name": "name",
-                    "description": ""
-                }
-            ],
-            "class": "Dj"
-        },
-        {
-            "file": "public/javascripts/app/components/Dj.js",
-            "line": 53,
             "description": "Plays a sound if not muted",
             "itemtype": "method",
             "name": "playSound",
@@ -1384,7 +1370,7 @@
         },
         {
             "file": "public/javascripts/app/components/Dj.js",
-            "line": 66,
+            "line": 57,
             "description": "Stops a playing sound",
             "itemtype": "method",
             "name": "stopSound",
@@ -2595,7 +2581,7 @@
                 {
                     "name": "symbolSprites",
                     "description": "- the createjs spritesheet data object required to pass to the createjs.SpriteSheet constructor",
-                    "type": "Object"
+                    "type": "createjs.SpriteSheet"
                 },
                 {
                     "name": "slotInitResponse",
@@ -2716,7 +2702,7 @@
         },
         {
             "file": "public/javascripts/app/components/ReelsComponent.js",
-            "line": 384,
+            "line": 380,
             "description": "Signal handler called when reel.reelSpinEnd is dispatched.  When all reels have finished\nthis method dispatches the signalDispatcher.reelSpinComplete signal.",
             "itemtype": "method",
             "name": "reelSpinEnd",
@@ -2724,7 +2710,7 @@
         },
         {
             "file": "public/javascripts/app/components/ReelsComponent.js",
-            "line": 398,
+            "line": 395,
             "description": "For debugging purposes, provides a hook to update Reels' spinSpeed",
             "itemtype": "method",
             "name": "updateSpinSpeed",
@@ -2743,12 +2729,18 @@
             "description": "the spritesheet data for symbol win animations loaded by Preloader",
             "itemtype": "property",
             "name": "symbolAnims",
-            "type": "{Object}",
+            "type": "{createjs.SpriteSheet}",
             "class": "SymbolWinsComponent"
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 38,
+            "line": 35,
+            "type": "{createjs.SpriteSheet}",
+            "class": "SymbolWinsComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/SymbolWinsComponent.js",
+            "line": 41,
             "description": "Scale the symbols by this amount, determined by the scale reduction (n) used in Texturepacker to the ratio 1/n",
             "itemtype": "property",
             "name": "scaleFactor",
@@ -2759,13 +2751,13 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 47,
+            "line": 50,
             "type": "{null}",
             "class": "SymbolWinsComponent"
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 53,
+            "line": 56,
             "description": "The 2D array where sprites are stored.  Each sprite is initialised with the Symbols Sprite Sheet.",
             "itemtype": "property",
             "name": "symbolsMatrix",
@@ -2775,6 +2767,12 @@
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
             "line": 65,
+            "type": "{createjs.Sprite[]}",
+            "class": "SymbolWinsComponent"
+        },
+        {
+            "file": "public/javascripts/app/components/SymbolWinsComponent.js",
+            "line": 71,
             "description": "Store a reference to any sprite currently playing an animation.\nHelps remove them later",
             "itemtype": "property",
             "name": "currentlyPlayingSprites",
@@ -2783,21 +2781,21 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 73,
+            "line": 79,
             "description": "initialisedSpritesNum",
             "type": "{number}",
             "class": "SymbolWinsComponent"
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 79,
+            "line": 85,
             "description": "The animation label suffix, take this from the texture packer output.\nThe current convention is to have animation keys in this format: symbol.frameLabel + \"intro__001\";\nMay consider making this a setup.json variable.",
             "type": "{string}",
             "class": "SymbolWinsComponent"
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 89,
+            "line": 95,
             "description": "init the game component vars.",
             "itemtype": "method",
             "name": "init",
@@ -2822,7 +2820,7 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 107,
+            "line": 113,
             "description": "Call this function if you'd like to see a visual representation of where invisible sprites are located on the reels\nThis method is called if devmode in setup.json is switched on.",
             "itemtype": "method",
             "name": "drawDebug",
@@ -2830,7 +2828,7 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 142,
+            "line": 148,
             "description": "Draws a symbol sprite on each visible symbol on the reels",
             "itemtype": "method",
             "name": "drawSprites",
@@ -2838,7 +2836,7 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 189,
+            "line": 195,
             "description": "Clears and hides all currently playing sprites",
             "itemtype": "method",
             "name": "hideAll",
@@ -2846,7 +2844,7 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 202,
+            "line": 208,
             "description": "Helper method to hide a passed sprite",
             "itemtype": "method",
             "name": "hideThisSprite",
@@ -2861,7 +2859,7 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 212,
+            "line": 218,
             "description": "Helper method to show and play a passed sprite.  Animation is defined in the id parameter",
             "params": [
                 {
@@ -2884,7 +2882,7 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 227,
+            "line": 233,
             "description": "Plays the sprite animation for id at the passed row and col.",
             "itemtype": "method",
             "name": "playSpriteByRowCol",
@@ -2909,7 +2907,7 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 240,
+            "line": 246,
             "description": "event handler called when a sprite's animation is completed.\nCurrently it's set to call once only, and is used to call the cacheCompleted signals if all sprites have initialised.",
             "itemtype": "method",
             "name": "handleAnimationEnd",
@@ -2924,7 +2922,7 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 257,
+            "line": 263,
             "description": "This plays the same win anim across the payline for each winSquaresNum.\nOptionally append the animationLabelSuffix automatically.",
             "itemtype": "method",
             "name": "showAnimsOnWinLine",
@@ -2954,7 +2952,7 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 281,
+            "line": 287,
             "description": "Plays anims from the alternative spritesheet, as we need to bundle some small wins with their big win animation in separate spritesheets",
             "itemtype": "method",
             "name": "playGaffAnimsOnWinLine",
@@ -2980,7 +2978,7 @@
         },
         {
             "file": "public/javascripts/app/components/SymbolWinsComponent.js",
-            "line": 303,
+            "line": 309,
             "description": "To call different symbol anims on a single payline, use this function.\nOptionally append the animationLabelSuffix automatically.",
             "itemtype": "method",
             "name": "playMixedAnims",
@@ -3547,7 +3545,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 589,
+            "line": 590,
             "description": "This function is called everytime a GameComponent with caching enabled has finished rendering.\nWhen initialisedNum has reduced to 0, all game components requiring async initialisation and graphics caching has completed\nand the preloader element is removed from the dom.",
             "itemtype": "method",
             "name": "checkInitialised",
@@ -3555,7 +3553,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 602,
+            "line": 603,
             "description": "Render Tick which updates Stage and any profiling tool.",
             "see": [
                 "http://createjs.com/tutorials/Animation%20and%20Ticker"
@@ -3566,7 +3564,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 615,
+            "line": 616,
             "description": "User Control is initialised: Keyboard control / touch controls\nif User Control shouldn't be enabled during app initialisation phase, then execute this function later.",
             "todo": [
                 "- implement turn on/off user interaction events."
@@ -3577,39 +3575,54 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 624,
+            "line": 625,
             "description": "Fix position of app on rotate",
             "class": "Game"
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 632,
+            "line": 633,
             "experimental": "feature\nresume the app on focus (tab restored)",
             "class": "Game"
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 647,
+            "line": 648,
             "experimental": "feature\npause the app on window blur event (eg tab switched)",
             "class": "Game"
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 662,
-            "description": "32|0 = ENTER/SPACE - SPIN REELS\n71   = G           - GAFFEE MENU\n70   = F",
+            "line": 661,
+            "description": "Enables touch events on the canvas if Touch capabilities are available",
             "itemtype": "method",
-            "name": "window.document.onKeydown",
+            "name": "Touch.enable",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/core/Game.js",
+            "line": 668,
+            "description": "Browser window requires focus to call these handlers\n32|0 = ENTER/SPACE - SPIN REELS\n71   = G           - GAFFEE MENU\n70   = F",
+            "itemtype": "method",
+            "name": "onKeydown GlobalEventHandler",
             "params": [
                 {
                     "name": "e",
-                    "description": ""
+                    "description": "HTML5 onkeydown Event",
+                    "type": "Event"
                 }
             ],
             "class": "Game"
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 713,
+            "line": 696,
+            "description": "Hammerjs - get the canvas app and set gesture actions",
+            "class": "Game"
+        },
+        {
+            "file": "public/javascripts/app/core/Game.js",
+            "line": 711,
             "description": "Initialise Proton particle system and pass the info to the particles GameComponent",
             "itemtype": "method",
             "name": "createProton",
@@ -3617,7 +3630,7 @@
         },
         {
             "file": "public/javascripts/app/core/Game.js",
-            "line": 723,
+            "line": 721,
             "description": "Switch between 30 and 60fps via the gaffe menu button labelled \"60\" or \"30\"",
             "itemtype": "method",
             "name": "fpsSwitch",
@@ -4239,7 +4252,7 @@
         },
         {
             "file": "public/javascripts/app/core/SpinEvaluator.js",
-            "line": 211,
+            "line": 217,
             "description": "Takes an array of frameLabels along a payline and the winningType in spinResponse\nCompare the symbols along the payline match the winningType symbol id, or the wild symbol ID (hardcoded here to 0)\nand return the number of winning symbols on the payline",
             "itemtype": "method",
             "name": "getNumWinsOnPayline",
@@ -4263,7 +4276,7 @@
         },
         {
             "file": "public/javascripts/app/core/SpinEvaluator.js",
-            "line": 245,
+            "line": 251,
             "itemtype": "method",
             "name": "getSymbolLabelsOnPayline",
             "params": [
@@ -4284,7 +4297,7 @@
         },
         {
             "file": "public/javascripts/app/core/SpinEvaluator.js",
-            "line": 260,
+            "line": 266,
             "itemtype": "method",
             "name": "getSymbolDataOnPayline",
             "params": [
@@ -4305,7 +4318,7 @@
         },
         {
             "file": "public/javascripts/app/core/SpinEvaluator.js",
-            "line": 274,
+            "line": 280,
             "description": "Dispatched by ReelsComponent when the reel spin stops.\nHere we can setup any necessary win animations, and update the meter.",
             "itemtype": "method",
             "name": "handleReeSpinComplete",
@@ -4313,7 +4326,7 @@
         },
         {
             "file": "public/javascripts/app/core/SpinEvaluator.js",
-            "line": 287,
+            "line": 293,
             "itemtype": "method",
             "name": "doClientSideGaffe",
             "class": "SpinEvaluator"
@@ -4513,11 +4526,11 @@
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " public/javascripts/app/core/SpinEvaluator.js:245"
+            "line": " public/javascripts/app/core/SpinEvaluator.js:251"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " public/javascripts/app/core/SpinEvaluator.js:260"
+            "line": " public/javascripts/app/core/SpinEvaluator.js:266"
         },
         {
             "message": "replacing incorrect tag: returns with return",
@@ -4577,19 +4590,27 @@
         },
         {
             "message": "Missing item type",
-            "line": " public/javascripts/app/components/SymbolWinsComponent.js:47"
+            "line": " public/javascripts/app/components/SymbolWinsComponent.js:35"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public/javascripts/app/components/SymbolWinsComponent.js:50"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public/javascripts/app/components/SymbolWinsComponent.js:65"
         },
         {
             "message": "Missing item type\ninitialisedSpritesNum",
-            "line": " public/javascripts/app/components/SymbolWinsComponent.js:73"
-        },
-        {
-            "message": "Missing item type\nThe animation label suffix, take this from the texture packer output.\nThe current convention is to have animation keys in this format: symbol.frameLabel + \"intro__001\";\nMay consider making this a setup.json variable.",
             "line": " public/javascripts/app/components/SymbolWinsComponent.js:79"
         },
         {
+            "message": "Missing item type\nThe animation label suffix, take this from the texture packer output.\nThe current convention is to have animation keys in this format: symbol.frameLabel + \"intro__001\";\nMay consider making this a setup.json variable.",
+            "line": " public/javascripts/app/components/SymbolWinsComponent.js:85"
+        },
+        {
             "message": "Missing item type\nHelper method to show and play a passed sprite.  Animation is defined in the id parameter",
-            "line": " public/javascripts/app/components/SymbolWinsComponent.js:212"
+            "line": " public/javascripts/app/components/SymbolWinsComponent.js:218"
         },
         {
             "message": "Missing item type",
@@ -4597,15 +4618,19 @@
         },
         {
             "message": "Missing item type\nFix position of app on rotate",
-            "line": " public/javascripts/app/core/Game.js:624"
+            "line": " public/javascripts/app/core/Game.js:625"
         },
         {
             "message": "Missing item type",
-            "line": " public/javascripts/app/core/Game.js:632"
+            "line": " public/javascripts/app/core/Game.js:633"
         },
         {
             "message": "Missing item type",
-            "line": " public/javascripts/app/core/Game.js:647"
+            "line": " public/javascripts/app/core/Game.js:648"
+        },
+        {
+            "message": "Missing item type\nHammerjs - get the canvas app and set gesture actions",
+            "line": " public/javascripts/app/core/Game.js:696"
         },
         {
             "message": "Missing item type\nURL location where the Preloader can find the config file (setup.json)",
