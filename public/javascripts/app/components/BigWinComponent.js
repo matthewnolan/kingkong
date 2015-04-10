@@ -103,20 +103,20 @@ var G = G || {};
 		var symbolMarginB = this.setup.symbolMarginBottom;
 		var symbolMarginR = this.setup.reelMarginRight;
 		var width3x3 = symbolW * 3 + symbolMarginR * 2;
-		var height3x3 = symbolH * 3 + symbolMarginB * 2;
+		var heightx3 = symbolH * 3 + symbolMarginB * 2;
 		var width3x4 = symbolW * 4 + symbolMarginR * 3;
-		var height3x4 = symbolH * 3 + symbolMarginB * 2;
+		var width3x5 = symbolW * 5 + symbolMarginR * 4;
 		var scaleX_3x3 = (width3x3 / symbolW) * symbolsScale;
-		var scaleY_3x3 = (height3x3 / symbolH) * symbolsScale;
+		var scaleYx3 = (heightx3 / symbolH) * symbolsScale;
 		var scaleX_3x4 = (width3x4 / symbolW) * symbolsScale;
-		var scaleY_3x4 = (height3x4 / symbolH) * symbolsScale;
+		var scaleX_3x5 = (width3x5 / symbolW) * symbolsScale;
 
 		var sprite3x3 = new createjs.Sprite(this.symbolAnimsSpriteSheet, 0);
 		sprite3x3.x = 0;
 		sprite3x3.y = 0;
 		this.addChild(sprite3x3);
 		sprite3x3.scaleX = scaleX_3x3;
-		sprite3x3.scaleY = scaleY_3x3;
+		sprite3x3.scaleY = scaleYx3;
 		sprite3x3.visible = false;
 
 		var sprite3x4 = new createjs.Sprite(this.symbolAnimsSpriteSheet, 0);
@@ -124,23 +124,33 @@ var G = G || {};
 		sprite3x4.y = 0;
 		this.addChild(sprite3x4);
 		sprite3x4.scaleX = scaleX_3x4;
-		sprite3x4.scaleY = scaleY_3x4;
+		sprite3x4.scaleY = scaleYx3;
 		sprite3x4.visible = false;
 
-		var sprite3x5 = new createjs.Sprite(this.combinationSpriteSheet, 0);
+		var sprite3x5 = new createjs.Sprite(this.symbolAnimsSpriteSheet, 0);
 		sprite3x5.x = 0;
 		sprite3x5.y = 0;
-		sprite3x5.scaleX = sprite3x5.scaleY = this.SCALE_FACTOR;
 		this.addChild(sprite3x5);
+		sprite3x5.scaleX = scaleX_3x5;
+		sprite3x5.scaleY = scaleYx3;
 		sprite3x5.visible = false;
-		this.bigWins.push(sprite3x5);
+
+
+		var combinedSprite3x5 = new createjs.Sprite(this.combinationSpriteSheet, 0);
+		combinedSprite3x5.x = 0;
+		combinedSprite3x5.y = 0;
+		combinedSprite3x5.scaleX = combinedSprite3x5.scaleY = this.SCALE_FACTOR;
+		this.addChild(combinedSprite3x5);
+		combinedSprite3x5.visible = false;
+		this.bigWins.push(combinedSprite3x5);
 
 		this.sprite3x3 = sprite3x3;
 		this.sprite3x4 = sprite3x4;
 		this.sprite3x5 = sprite3x5;
+		this.sprite3x5_m1 = combinedSprite3x5;
 
 		if (this.setup.failSafeInitisalisation) {
-			sprite3x5.on("animationend", this.handleAnimationEnd, this);
+			combinedSprite3x5.on("animationend", this.handleAnimationEnd, this);
 			this.playAnimation();
 		}
 	};
@@ -183,20 +193,26 @@ var G = G || {};
 	p.playAnimation = function(type, frameLabel) {
 		var sprite;
 		var label;
-		switch(type) {
-			case 5:
-				sprite = this.sprite3x5;
-				label = "celebration1__000";
-				break;
-			case 4:
-				sprite = this.sprite3x4;
-				label = frameLabel;
-				break;
-			case 3:
-				sprite = this.sprite3x3;
-				label = frameLabel;
-				break;
+
+		if (type === 5 && frameLabel === "m1intro__001") {
+			sprite = this.sprite3x5_m1;
+			label = "celebration1__000";
+		} else {
+			label = frameLabel;
+			switch(type) {
+				case 5:
+					sprite = this.sprite3x5;
+					break;
+				case 4:
+					sprite = this.sprite3x4;
+					break;
+				case 3:
+					sprite = this.sprite3x3;
+					break;
+			}
 		}
+
+
 		//sprite.gotoAndStop(0);
 		sprite.visible = true;
 		sprite.gotoAndPlay(label);

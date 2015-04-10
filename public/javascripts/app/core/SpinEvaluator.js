@@ -195,14 +195,17 @@ var G = G || {};
 		var command;
 		var useCombinedSpritesheet = true;
 
+		console.log('insertBigWinCommands label:', winningFrameLabel);
+
+		command = new G.RemoveBigWinCommand();
+		command.callNextDelay = 0;
+		commands.unshift(command);
+
 		command = new G.BigWinCommand();
 		//@todo implement autoAppend frameLabel in BigWinCommand
 		command.init(this.setup, numSymbols, winningFrameLabel + "intro__001");
 		command.callNextDelay = 2000;
 		commands.unshift(command);
-
-		command = new G.RemoveBigWinCommand();
-		commands.push(command);
 
 		command = new G.SymbolAnimCommand();
 		command.init(this.setup, [0,1,2], numSymbols, winningFrameLabel, true, useCombinedSpritesheet);

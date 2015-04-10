@@ -90,8 +90,13 @@ var G = G || {};
 		var symbolWinsComponent = G.Utils.getGameComponentByClass(G.SymbolWinsComponent);
 		var i, len = this.paylines.length;
 		for (i = 0; i < len; i++) {
-			if (this.shouldPlayCombinedSprite) {
+			//this framelabel check is to cover the fact we only have m1 small anims combined with m1 big animation...
+			//don't try to recreate this if in the porting
+			if (this.shouldPlayCombinedSprite && this.frameLabel === "m1") {
+
 				symbolWinsComponent.playGaffAnimsOnWinLine(this.paylines[i], this.numSymbols, "m1-sprite__000", false);
+
+
 			} else {
 				symbolWinsComponent.showAnimsOnWinLine(this.paylines[i], this.numSymbols, this.frameLabel.toLowerCase(), this.autoAppend);
 			}

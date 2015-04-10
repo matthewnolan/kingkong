@@ -28,12 +28,15 @@ var G = G || {};
 	/**
 	 * the spritesheet data for symbol win animations loaded by Preloader
 	 * @property symbolAnims
-	 * @type {Object}
+	 * @type {createjs.SpriteSheet}
 	 */
 	p.symbolAnims = null;
 
-
-	p.gaffAnims = null;
+	/**
+	 *
+	 * @type {createjs.SpriteSheet}
+	 */
+	p.combinedAnims = null;
 
 	/**
 	 * Scale the symbols by this amount, determined by the scale reduction (n) used in Texturepacker to the ratio 1/n
@@ -56,11 +59,14 @@ var G = G || {};
 	 * @property symbolsMatrix
 	 * @type {createjs.Sprite[][]}
 	 */
-	p.symbolsMatrix = [];	
+	p.symbolsMatrix = [];
 
 
-
-	p.gaffSymbolsMatrix = [];
+	/**
+	 *
+	 * @type {createjs.Sprite[]}
+	 */
+	p.combinedSymbolsMatrix = [];
 
 	/**
 	 * Store a reference to any sprite currently playing an animation.
@@ -97,7 +103,7 @@ var G = G || {};
 	p.init = function(setup, signalDispatcher, symbolAnims, gaffAnims) {
 		this.GameComponent_init(setup, signalDispatcher);
 		this.symbolAnims = symbolAnims;
-		this.gaffAnims = gaffAnims;
+		this.combinedAnims = gaffAnims;
 		this.scaleFactor = 1 / setup.spritesScaleFactor.symbolAnims;
 		this.scaleFactorGaffe = 1 / setup.spritesScaleFactor.bigWinAnimSymbol;
 
@@ -159,7 +165,7 @@ var G = G || {};
 
 			this.symbolsMatrix.push([]);
 
-			this.gaffSymbolsMatrix.push([]);
+			this.combinedSymbolsMatrix.push([]);
 
 			for (j = 0; j < symbolLen; j++) {
 				sprite = new createjs.Sprite(spritesheet, 0);
@@ -175,12 +181,12 @@ var G = G || {};
 				}
 				this.initialisedSpritesNum++;
 
-				gaffSprite = new createjs.Sprite(this.gaffAnims, 0);
+				gaffSprite = new createjs.Sprite(this.combinedAnims, 0);
 				gaffSprite.x = i * symbolW + i * reelMarginR;
 				gaffSprite.y = j * symbolH + j * symbolMarginB;
 				gaffSprite.scaleX = gaffSprite.scaleY = this.scaleFactorGaffe;
 				this.addChild(gaffSprite);
-				this.gaffSymbolsMatrix[i].push(gaffSprite);
+				this.combinedSymbolsMatrix[i].push(gaffSprite);
 				gaffSprite.visible = false;				
 			}
 		}
@@ -295,7 +301,7 @@ var G = G || {};
 
 		for (i = 0; i < winSquaresNum; i++) {
 			lineIndex = winLineData[i];
-			var sprite = this.gaffSymbolsMatrix[i][lineIndex];
+			var sprite = this.combinedSymbolsMatrix[i][lineIndex];
 			this.playThisSprite(sprite, frameLabel, autoAppend);
 		}
 	};
