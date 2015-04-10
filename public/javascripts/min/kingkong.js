@@ -1,4 +1,4 @@
-/*! kingkong 0.3.4 - 2015-04-03
+/*! kingkong 0.3.4 - 2015-04-08
 * Copyright (c) 2015 Licensed @HighFiveGames */
 /*!
 * EaselJS
@@ -55469,6 +55469,1413 @@ return jQuery;
  *
  */
 (function(a,b){function bf(a,b,c,d){bf._super_.call(this),this.reset(a,b,c,d)}function be(a,b,c,d){be._super_.call(this),this.x=a,this.y=b,this.width=c,this.height=d}function bd(a,b){bd._super_.call(this),this.x=a,this.y=b}function bc(a,b,c){bc._super_.call(this),this.x=a,this.y=b,this.radius=c,this.angle=0,this.center={x:this.x,y:this.y}}function bb(a,b,d,e,f){bb._super_.call(this),d-a>=0?(this.x1=a,this.y1=b,this.x2=d,this.y2=e):(this.x1=d,this.y1=e,this.x2=a,this.y2=b),this.dx=this.x2-this.x1,this.dy=this.y2-this.y1,this.minx=Math.min(this.x1,this.x2),this.miny=Math.min(this.y1,this.y2),this.maxx=Math.max(this.x1,this.x2),this.maxy=Math.max(this.y1,this.y2),this.dot=this.x2*this.y1-this.x1*this.y2,this.xxyy=this.dx*this.dx+this.dy*this.dy,this.gradient=this.getGradient(),this.length=this.getLength(),this.direction=c.Util.initValue(f,">")}function ba(){this.vector=new c.Vector2D(0,0),this.random=0,this.crossType="dead",this.alert=!0}function _(a,b){_._super_.call(this,a,b),this.gl=this.element.getContext("experimental-webgl",{antialias:!0,stencil:!1,depth:!1}),this.gl||alert("Sorry your browser do not suppest WebGL!"),this.initVar(),this.setMaxRadius(),this.initShaders(),this.initBuffers(),this.gl.blendEquation(this.gl.FUNC_ADD),this.gl.blendFunc(this.gl.SRC_ALPHA,this.gl.ONE_MINUS_SRC_ALPHA),this.gl.enable(this.gl.BLEND)}function $(a,b,c){$._super_.call(this,a,b),this.context=this.element.getContext("2d"),this.imageData=null,this.rectangle=null,this.rectangle=c,this.createImageData(c)}function Z(a,b){Z._super_.call(this,a,b),this.stroke=null,this.context=this.element.getContext("2d"),this.bufferCache={}}function Y(a,b,c){Y._super_.call(this,a,b),this.stroke=c}function X(a,b){X._super_.call(this,a,b),this.stroke=null}function W(a,b,c){this.proton=a,this.element=b,this.stroke=c}function V(a,b,d){this.element=d,this.type=c.Util.initValue(a,"canvas"),this.proton=b,this.renderer=this.getRenderer()}function T(b,d,e){this.mouseTarget=c.Util.initValue(b,a),this.ease=c.Util.initValue(d,.7),this._allowEmitting=!1,this.initEventHandler(),T._super_.call(this,e)}function S(a){this.selfBehaviours=[],S._super_.call(this,a)}function R(a){this.initializes=[],this.particles=[],this.behaviours=[],this.emitTime=0,this.emitTotalTimes=-1,this.damping=.006,this.bindEmitter=!0,this.rate=new c.Rate(1,.1),R._super_.call(this,a),this.id="emitter_"+R.ID++}function Q(a,b,d,e){Q._super_.call(this,d,e),this.distanceVec=new c.Vector2D,this.centerPoint=c.Util.initValue(a,new c.Vector2D),this.force=c.Util.initValue(this.normalizeValue(b),100),this.name="GravityWell"}function P(a,b,c,d){P._super_.call(this,c,d),this.reset(a,b),this.name="Color"}function O(a,b,c,d,e){O._super_.call(this,d,e),this.reset(a,b,c),this.name="Rotate"}function N(a,b,c,d){N._super_.call(this,c,d),this.reset(a,b),this.name="Scale"}function M(a,b,c,d){M._super_.call(this,c,d),this.reset(a,b),this.name="Alpha"}function L(a,b,c,d){L._super_.call(this,c,d),this.reset(a,b),this.name="CrossZone"}function K(a,b,c,d,e){K._super_.call(this,d,e),this.reset(a,b,c),this.name="Collision"}function J(a,b,c){J._super_.call(this,0,a,b,c),this.name="Gravity"}function I(a,b,c,d,e){I._super_.call(this,a,b,c,d,e),this.force*=-1,this.name="Repulsion"}function H(a,b,c,d,e){H._super_.call(this,d,e),this.reset(a,b,c),this.time=0,this.name="RandomDrift"}function G(a,b,d,e,f){G._super_.call(this,e,f),this.targetPosition=c.Util.initValue(a,new c.Vector2D),this.radius=c.Util.initValue(d,1e3),this.force=c.Util.initValue(this.normalizeValue(b),100),this.radiusSq=this.radius*this.radius,this.attractionForce=new c.Vector2D,this.lengthSq=0,this.name="Attraction"}function F(a,b,d,e){F._super_.call(this,d,e),this.force=this.normalizeForce(new c.Vector2D(a,b)),this.name="Force"}function E(a,b,d){E._super_.call(this),this.image=this.setSpanValue(a),this.w=c.Util.initValue(b,20),this.h=c.Util.initValue(d,this.w)}function D(a,b,d){D._super_.call(this),this.radius=c.Util.setSpanValue(a,b,d)}function C(a,b,d){C._super_.call(this),this.massPan=c.Util.setSpanValue(a,b,d)}function B(a,b,d){B._super_.call(this),this.rPan=c.Util.setSpanValue(a),this.thaPan=c.Util.setSpanValue(b),this.type=c.Util.initValue(d,"vector")}function A(a){A._super_.call(this),this.zone=c.Util.initValue(a,new c.PointZone)}function z(a,b,d){z._super_.call(this),this.lifePan=c.Util.setSpanValue(a,b,d)}function x(){}function w(a,b){this.numPan=c.Util.initValue(a,1),this.timePan=c.Util.initValue(b,1),this.numPan=c.Util.setSpanValue(this.numPan),this.timePan=c.Util.setSpanValue(this.timePan),this.startTime=0,this.nextTime=0,this.init()}function v(a,b){this.id="Behaviour_"+v.id++,this.life=c.Util.initValue(a,Infinity),this.easing=c.ease.setEasingByName(b),this.age=0,this.energy=1,this.dead=!1,this.parents=[],this.name="Behaviour"}function t(a,b,c,d){this.x=a,this.y=b,this.width=c,this.height=d,this.bottom=this.y+this.height,this.right=this.x+this.width}function s(a){c.Util.isArray(a)?this.colorArr=a:this.colorArr=[a]}function r(a,b,d){this.isArray=!1,c.Util.isArray(a)?(this.isArray=!0,this.a=a):(this.a=c.Util.initValue(a,1),this.b=c.Util.initValue(b,this.a),this.center=c.Util.initValue(d,!1))}function l(a,b){this.proParticleCount=c.Util.initValue(a,0),this.releaseTime=c.Util.initValue(b,-1),this.poolList=[],this.timeoutID=0;for(var d=0;d<this.proParticleCount;d++)this.add();this.releaseTime>0&&(this.timeoutID=setTimeout(this.release,this.releaseTime/1e3))}function k(a){this.id="particle_"+k.ID++,this.reset(!0),c.Util.setPrototypeByObject(this,a)}function j(){this.mats=[],this.size=0;for(var a=0;a<20;a++)this.mats.push(c.Mat3.create([0,0,0,0,0,0,0,0,0]))}function f(a){this.type=a.type,this.particle=a.particle,this.emitter=a.emitter}function d(){this.initialize()}function c(a,b){this.proParticleCount=c.Util.initValue(a,c.POOL_MAX),this.integrationType=c.Util.initValue(b,c.EULER),this.emitters=[],this.renderers=[],this.time=0,this.oldTime=0,c.pool=new c.ParticlePool(this.proParticleCount),c.integrator=new c.NumericalIntegration(this.integrationType)}c.POOL_MAX=1e3,c.TIME_STEP=60,c.MEASURE=100,c.EULER="euler",c.RK2="runge-kutta2",c.RK4="runge-kutta4",c.VERLET="verlet",c.PARTICLE_CREATED="partilcleCreated",c.PARTICLE_UPDATE="partilcleUpdate",c.PARTICLE_SLEEP="particleSleep",c.PARTICLE_DEAD="partilcleDead",c.PROTON_UPDATE="protonUpdate",c.PROTON_UPDATE_AFTER="protonUpdateAfter",c.EMITTER_ADDED="emitterAdded",c.EMITTER_REMOVED="emitterRemoved",c.amendChangeTabsBug=!0,c.TextureBuffer={},c.TextureCanvasBuffer={},c.prototype={addRender:function(a){a.proton=this,this.renderers.push(a.proton)},addEmitter:function(a){this.emitters.push(a),a.parent=this,this.dispatchEvent(new c.Event({type:c.EMITTER_ADDED,emitter:a}))},removeEmitter:function(a){var b=this.emitters.indexOf(a);this.emitters.splice(b,1),a.parent=null,this.dispatchEvent(new c.Event({type:c.EMITTER_REMOVED,emitter:a}))},update:function(){this.dispatchEvent(new c.Event({type:c.PROTON_UPDATE})),this.oldTime||(this.oldTime=(new Date).getTime());var a=(new Date).getTime();this.elapsed=(a-this.oldTime)/1e3,c.amendChangeTabsBug&&this.amendChangeTabsBug(),this.oldTime=a;if(this.elapsed>0)for(var b=0;b<this.emitters.length;b++)this.emitters[b].update(this.elapsed);this.dispatchEvent(new c.Event({type:c.PROTON_UPDATE_AFTER}))},amendChangeTabsBug:function(){this.elapsed>.5&&(this.oldTime=(new Date).getTime(),this.elapsed=0)},getCount:function(){var a=0,b=this.emitters.length;for(var c=0;c<b;c++)a+=this.emitters[c].particles.length;return a},destory:function(){var a=this.emitters.length;for(var b=0;b<a;b++)this.emitters[b].destory(),delete this.emitters[b];this.emitters=[],this.time=0,this.oldTime=0,c.pool.release()}},a.Proton=c;var e=d.prototype;d.initialize=function(a){a.addEventListener=e.addEventListener,a.removeEventListener=e.removeEventListener,a.removeAllEventListeners=e.removeAllEventListeners,a.hasEventListener=e.hasEventListener,a.dispatchEvent=e.dispatchEvent},e._listeners=null,e.initialize=function(){},e.addEventListener=function(a,b){var c=this._listeners;c?this.removeEventListener(a,b):c=this._listeners={};var d=c[a];d||(d=c[a]=[]),d.push(b);return b},e.removeEventListener=function(a,b){var c=this._listeners;if(!!c){var d=c[a];if(!d)return;for(var e=0,f=d.length;e<f;e++)if(d[e]==b){f==1?delete c[a]:d.splice(e,1);break}}},e.removeAllEventListeners=function(a){a?this._listeners&&delete this._listeners[a]:this._listeners=null},e.dispatchEvent=function(a){var b=!1,c=this._listeners;if(a&&c){var d=c[a.type];if(!d)return b;d=d.slice();for(var e=0,f=d.length;e<f;e++){var g=d[e];b=b||g(a)}}return!!b},e.hasEventListener=function(a){var b=this._listeners;return!!b&&!!b[a]},c.EventDispatcher=d,c.EventDispatcher.initialize(c.prototype),c.Event=f;var g=g||{initValue:function(a,c){var a=a!=null&&a!=b?a:c;return a},isArray:function(a){return typeof a=="object"&&a.hasOwnProperty("length")},destroyArray:function(a){a.length=0},destroyObject:function(a){for(var b in a)delete a[b]},getVector2D:function(a,b){if(typeof a=="object")return a;var d=new c.Vector2D(a,b);return d},judgeVector2D:function(a){var b="";if(a.hasOwnProperty("x")||a.hasOwnProperty("y")||a.hasOwnProperty("p")||a.hasOwnProperty("position"))b+="p";if(a.hasOwnProperty("vx")||a.hasOwnProperty("vx")||a.hasOwnProperty("v")||a.hasOwnProperty("velocity"))b+="v";if(a.hasOwnProperty("ax")||a.hasOwnProperty("ax")||a.hasOwnProperty("a")||a.hasOwnProperty("accelerate"))b+="a";return b},setVector2DByObject:function(a,b){b.hasOwnProperty("x")&&(a.p.x=b.x),b.hasOwnProperty("y")&&(a.p.y=b.y),b.hasOwnProperty("vx")&&(a.v.x=b.vx),b.hasOwnProperty("vy")&&(a.v.y=b.vy),b.hasOwnProperty("ax")&&(a.a.x=b.ax),b.hasOwnProperty("ay")&&(a.a.y=b.ay),b.hasOwnProperty("p")&&particle.p.copy(b.p),b.hasOwnProperty("v")&&particle.v.copy(b.v),b.hasOwnProperty("a")&&particle.a.copy(b.a),b.hasOwnProperty("position")&&particle.p.copy(b.position),b.hasOwnProperty("velocity")&&particle.v.copy(b.velocity),b.hasOwnProperty("accelerate")&&particle.a.copy(b.accelerate)},addPrototypeByObject:function(a,b,d){for(var e in b)d?d.indexOf(e)<0&&(a[e]=c.Util.getSpanValue(b[e])):a[e]=c.Util.getSpanValue(b[e]);return a},setPrototypeByObject:function(a,b,d){for(var e in b)a.hasOwnProperty(e)&&(d?d.indexOf(e)<0&&(a[e]=c.Util.getSpanValue(b[e])):a[e]=c.Util.getSpanValue(b[e]));return a},setSpanValue:function(a,b,d){return a instanceof c.Span?a:b?d?new c.Span(a,b,d):new c.Span(a,b):new c.Span(a)},getSpanValue:function(a){return a instanceof c.Span?a.getValue():a},inherits:function(a,b){a._super_=b;if(Object.create)a.prototype=Object.create(b.prototype,{constructor:{value:b}});else{var c=function(){};c.prototype=b.prototype,a.prototype=new c,a.prototype.constructor=a}},getImageData:function(a,b,c){a.drawImage(b,c.x,c.y);var d=a.getImageData(c.x,c.y,c.width,c.height);a.clearRect(c.x,c.y,c.width,c.height);return d},getImage:function(a,b,c,d){typeof a=="string"?this.loadAndSetImage(a,b,c,d):typeof a=="object"?this.loadAndSetImage(a.src,b,c,d):a instanceof Image&&this.loadedImage(a.src,b,c,d,a)},loadedImage:function(a,b,d,e,f){b.target=f,b.transform.src=a,c.TextureBuffer[a]||(c.TextureBuffer[a]=b.target);if(d)if(c.TextureCanvasBuffer[a])b.transform.canvas=c.TextureCanvasBuffer[a];else{var g=c.WebGLUtil.nhpot(b.target.width),h=c.WebGLUtil.nhpot(b.target.height);b.transform.canvas=c.DomUtil.createCanvas("canvas"+a,g,h);var i=b.transform.canvas.getContext("2d");i.drawImage(b.target,0,0,b.target.width,b.target.height),c.TextureCanvasBuffer[a]=b.transform.canvas}e&&e(b)},loadAndSetImage:function(a,b,d,e){if(c.TextureBuffer[a])this.loadedImage(a,b,d,e,c.TextureBuffer[a]);else{var f=this,g=new Image;g.onload=function(c){f.loadedImage(a,b,d,e,c.target)},g.src=a}},hexToRGB:function(a){var b=a.charAt(0)=="#"?a.substring(1,7):a,c=parseInt(b.substring(0,2),16),d=parseInt(b.substring(2,4),16),e=parseInt(b.substring(4,6),16);return{r:c,g:d,b:e}},rgbToHex:function(a){return"rgb("+a.r+", "+a.g+", "+a.b+")"}};c.Util=g;var h=h||{ipot:function(a){return(a&a-1)==0},nhpot:function(a){--a;for(var b=1;b<32;b<<=1)a=a|a>>b;return a+1},makeTranslation:function(a,b){return[1,0,0,0,1,0,a,b,1]},makeRotation:function(a){var b=Math.cos(a),c=Math.sin(a);return[b,-c,0,c,b,0,0,0,1]},makeScale:function(a,b){return[a,0,0,0,b,0,0,0,1]},matrixMultiply:function(a,b){var c=a[0],d=a[1],e=a[2],f=a[3],g=a[4],h=a[5],i=a[6],j=a[7],k=a[8],l=b[0],m=b[1],n=b[2],o=b[3],p=b[4],q=b[5],r=b[6],s=b[7],t=b[8];return[c*l+d*o+e*r,c*m+d*p+e*s,c*n+d*q+e*t,f*l+g*o+h*r,f*m+g*p+h*s,f*n+g*q+h*t,i*l+j*o+k*r,i*m+j*p+k*s,i*n+j*q+k*t]}};c.WebGLUtil=h;var i=i||{createCanvas:function(a,b,c,d){var e=document.createElement("canvas"),f=d?d:"absolute";e.id=a,e.width=b,e.height=c,e.style.position=f,e.style.opacity=0,this.transformDom(e,-500,-500,0,0);return e},transformDom:function(a,b,c,d,e){a.style.WebkitTransform="translate("+b+"px, "+c+"px) "+"scale("+d+") "+"rotate("+e+"deg)",a.style.MozTransform="translate("+b+"px, "+c+"px) "+"scale("+d+") "+"rotate("+e+"deg)",a.style.OTransform="translate("+b+"px, "+c+"px) "+"scale("+d+") "+"rotate("+e+"deg)",a.style.msTransform="translate("+b+"px, "+c+"px) "+"scale("+d+") "+"rotate("+e+"deg)",a.style.transform="translate("+b+"px, "+c+"px) "+"scale("+d+") "+"rotate("+e+"deg)"}};c.DomUtil=i,j.prototype.set=function(a,b){b==0?c.Mat3.set(a,this.mats[0]):c.Mat3.multiply(this.mats[b-1],a,this.mats[b]),this.size=Math.max(this.size,b+1)},j.prototype.push=function(a){this.size==0?c.Mat3.set(a,this.mats[0]):c.Mat3.multiply(this.mats[this.size-1],a,this.mats[this.size]),this.size++},j.prototype.pop=function(){this.size>0&&this.size--},j.prototype.top=function(){return this.mats[this.size-1]},c.MStack=j,k.ID=0,k.prototype={getDirection:function(){return Math.atan2(this.v.x,-this.v.y)*(180/Math.PI)},reset:function(a){this.life=Infinity,this.age=0,this.energy=1,this.dead=!1,this.sleep=!1,this.target=null,this.sprite=null,this.parent=null,this.mass=1,this.radius=10,this.alpha=1,this.scale=1,this.rotation=0,this.color=null,this.easing=c.ease.setEasingByName(c.easeLinear),a?(this.transform={},this.p=new c.Vector2D,this.v=new c.Vector2D,this.a=new c.Vector2D,this.old={p:new c.Vector2D,v:new c.Vector2D,a:new c.Vector2D},this.behaviours=[]):(c.Util.destroyObject(this.transform),this.p.set(0,0),this.v.set(0,0),this.a.set(0,0),this.old.p.set(0,0),this.old.v.set(0,0),this.old.a.set(0,0),this.removeAllBehaviours()),this.transform.rgb={r:255,g:255,b:255};return this},update:function(a,b){if(!this.sleep){this.age+=a;var c=this.behaviours.length,d;for(d=0;d<c;d++)this.behaviours[d]&&this.behaviours[d].applyBehaviour(this,a,b)}if(this.age>=this.life)this.destory();else{var e=this.easing(this.age/this.life);this.energy=Math.max(1-e,0)}},addBehaviour:function(a){this.behaviours.push(a),a.hasOwnProperty("parents")&&a.parents.push(this),a.initialize(this)},addBehaviours:function(a){var b=a.length,c;for(c=0;c<b;c++)this.addBehaviour(a[c])},removeBehaviour:function(a){var b=this.behaviours.indexOf(a);if(b>-1){var a=this.behaviours.splice(b,1);a.parents=null}},removeAllBehaviours:function(){c.Util.destroyArray(this.behaviours)},destory:function(){this.removeAllBehaviours(),this.energy=0,this.dead=!0,this.parent=null}},c.Particle=k,l.prototype={create:function(a){return a?new newTypeParticle:new c.Particle},getCount:function(){return this.poolList.length},add:function(){return this.poolList.push(this.create())},get:function(){return this.poolList.length===0?this.create():this.poolList.pop().reset()},set:function(a){if(this.poolList.length<c.POOL_MAX)return this.poolList.push(a)},release:function(){for(var a=0;a<this.poolList.length;a++)this.poolList[a].destory&&this.poolList[a].destory(),delete this.poolList[a];this.poolList=[]}},c.ParticlePool=l;var m={randomAToB:function(a,b,c){return c?Math.floor(Math.random()*(b-a))+a:a+Math.random()*(b-a)},randomFloating:function(a,b,c){return m.randomAToB(a-b,a+b,c)},randomZone:function(a){},degreeTransform:function(a){return a*Math.PI/180},toColor16:function(a){return"#"+a.toString(16)},randomColor:function(){return"#"+("00000"+(Math.random()*16777216<<0).toString(16)).slice(-6)}};c.MathUtils=m;var o=function(a){this.type=c.Util.initValue(a,c.EULER)};o.prototype={integrate:function(a,b,c){this.eulerIntegrate(a,b,c)},eulerIntegrate:function(a,b,c){a.sleep||(a.old.p.copy(a.p),a.old.v.copy(a.v),a.a.multiplyScalar(1/a.mass),a.v.add(a.a.multiplyScalar(b)),a.p.add(a.old.v.multiplyScalar(b)),c&&a.v.multiplyScalar(c),a.a.clear())}},c.NumericalIntegration=o;var p=function(a,b){this.x=a||0,this.y=b||0};p.prototype={set:function(a,b){this.x=a,this.y=b;return this},setX:function(a){this.x=a;return this},setY:function(a){this.y=a;return this},setComponent:function(a,b){switch(a){case 0:this.x=b;break;case 1:this.y=b;break;default:throw new Error("index is out of range: "+a)}},getGradient:function(){if(this.x!=0)return Math.atan2(this.y,this.x);if(this.y>0)return Math.PI/2;if(this.y<0)return-Math.PI/2},getComponent:function(a){switch(a){case 0:return this.x;case 1:return this.y;default:throw new Error("index is out of range: "+a)}},copy:function(a){this.x=a.x,this.y=a.y;return this},add:function(a,c){if(c!==b)return this.addVectors(a,c);this.x+=a.x,this.y+=a.y;return this},addXY:function(a,b){this.x+=a,this.y+=b;return this},addVectors:function(a,b){this.x=a.x+b.x,this.y=a.y+b.y;return this},addScalar:function(a){this.x+=a,this.y+=a;return this},sub:function(a,c){if(c!==b)return this.subVectors(a,c);this.x-=a.x,this.y-=a.y;return this},subVectors:function(a,b){this.x=a.x-b.x,this.y=a.y-b.y;return this},multiplyScalar:function(a){this.x*=a,this.y*=a;return this},divideScalar:function(a){a!==0?(this.x/=a,this.y/=a):this.set(0,0);return this},min:function(a){this.x>a.x&&(this.x=a.x),this.y>a.y&&(this.y=a.y);return this},max:function(a){this.x<a.x&&(this.x=a.x),this.y<a.y&&(this.y=a.y);return this},clamp:function(a,b){this.x<a.x?this.x=a.x:this.x>b.x&&(this.x=b.x),this.y<a.y?this.y=a.y:this.y>b.y&&(this.y=b.y);return this},negate:function(){return this.multiplyScalar(-1)},dot:function(a){return this.x*a.x+this.y*a.y},lengthSq:function(){return this.x*this.x+this.y*this.y},length:function(){return Math.sqrt(this.x*this.x+this.y*this.y)},normalize:function(){return this.divideScalar(this.length())},distanceTo:function(a){return Math.sqrt(this.distanceToSquared(a))},rotate:function(a){var b=this.x,c=this.y;this.x=b*Math.cos(a)+c*Math.sin(a),this.y=-b*Math.sin(a)+c*Math.cos(a);return this},distanceToSquared:function(a){var b=this.x-a.x,c=this.y-a.y;return b*b+c*c},setLength:function(a){var b=this.length();b!==0&&a!==b&&this.multiplyScalar(a/b);return this},lerp:function(a,b){this.x+=(a.x-this.x)*b,this.y+=(a.y-this.y)*b;return this},equals:function(a){return a.x===this.x&&a.y===this.y},toArray:function(){return[this.x,this.y]},clear:function(){this.x=0,this.y=0;return this},clone:function(){return new c.Vector2D(this.x,this.y)}},c.Vector2D=p;var q=function(a,b){this.r=Math.abs(a)||0,this.tha=b||0};q.prototype={set:function(a,b){this.r=a,this.tha=b;return this},setR:function(a){this.r=a;return this},setTha:function(a){this.tha=a;return this},copy:function(a){this.r=a.r,this.tha=a.tha;return this},toVector:function(){return new c.Vector2D(this.getX(),this.getY())},getX:function(){return this.r*Math.sin(this.tha)},getY:function(){return-this.r*Math.cos(this.tha)},normalize:function(){this.r=1;return this},equals:function(a){return a.r===this.r&&a.tha===this.tha},toArray:function(){return[this.r,this.tha]},clear:function(){this.r=0,this.tha=0;return this},clone:function(){return new c.Polar2D(this.r,this.tha)}},c.Polar2D=q,r.prototype={getValue:function(a){return this.isArray?this.a[Math.floor(this.a.length*Math.random())]:this.center?c.MathUtils.randomFloating(this.a,this.b,a):c.MathUtils.randomAToB(this.a,this.b,a)}},c.Span=r,c.getSpan=function(a,b,d){return new c.Span(a,b,d)},c.Util.inherits(s,c.Span),s.prototype.getValue=function(){var a=this.colorArr[Math.floor(this.colorArr.length*Math.random())];return a=="random"||a=="Random"?c.MathUtils.randomColor():a},c.ColorSpan=s,t.prototype={contains:function(a,b){return a<=this.right&&a>=this.x&&b<=this.bottom&&b>=this.y?!0:!1}},c.Rectangle=t;var u=u||{create:function(a){var b=new Float32Array(9);a&&this.set(a,b);return b},set:function(a,b){for(var c=0;c<9;c++)b[c]=a[c];return b},multiply:function(a,b,c){var d=a[0],e=a[1],f=a[2],g=a[3],h=a[4],i=a[6],j=a[7],k=b[0],l=b[1],m=b[2],n=b[3],o=b[4],p=b[6],q=b[7];c[0]=k*d+l*g,c[1]=k*e+l*h,c[2]=f*m,c[3]=n*d+o*g,c[4]=n*e+o*h,c[6]=p*d+q*g+i,c[7]=p*e+q*h+j;return c},inverse:function(a,b){var c=a[0],d=a[1],e=a[3],f=a[4],g=a[6],h=a[7],i=f,j=-e,k=h*e-f*g,l=c*i+d*j,m;m=1/l,b[0]=i*m,b[1]=-d*m,b[3]=j*m,b[4]=c*m,b[6]=k*m,b[7]=(-h*c+d*g)*m;return b},multiplyVec2:function(a,b,c){var d=b[0],e=b[1];c[0]=d*a[0]+e*a[3]+a[6],c[1]=d*a[1]+e*a[4]+a[7];return c}};c.Mat3=u,v.id=0,v.prototype={reset:function(a,b){this.life=c.Util.initValue(a,Infinity),this.easing=c.Util.initValue(b,c.ease.setEasingByName(c.easeLinear))},normalizeForce:function(a){return a.multiplyScalar(c.MEASURE)},normalizeValue:function(a){return a*c.MEASURE},initialize:function(a){},applyBehaviour:function(a,b,c){this.age+=b;if(this.age>=this.life||this.dead)this.energy=0,this.dead=!0,this.destory();else{var d=this.easing(a.age/a.life);this.energy=Math.max(1-d,0)}},destory:function(){var a,b=this.parents.length,c;for(c=0;c<b;c++)this.parents[c].removeBehaviour(this);this.parents=[]}},c.Behaviour=v,w.prototype={init:function(){this.startTime=0,this.nextTime=this.timePan.getValue()},getValue:function(a){this.startTime+=a;if(this.startTime>=this.nextTime){this.startTime=0,this.nextTime=this.timePan.getValue();return this.numPan.b==1?this.numPan.getValue(!1)>.5?1:0:this.numPan.getValue(!0)}return 0}},c.Rate=w,x.prototype.reset=function(){},x.prototype.init=function(a,b){b?this.initialize(b):this.initialize(a)},x.prototype.initialize=function(a){},c.Initialize=x;var y={initialize:function(a,b,d){var e=d.length,f;for(f=0;f<e;f++)d[f]instanceof c.Initialize?d[f].init(a,b):c.InitializeUtil.init(a,b,d[f]);c.InitializeUtil.bindEmitter(a,b)},init:function(a,b,d){c.Util.setPrototypeByObject(b,d),c.Util.setVector2DByObject(b,d)},bindEmitter:function(a,b){a.bindEmitter&&(b.p.add(a.p),b.v.add(a.v),b.a.add(a.a),b.v.rotate(c.MathUtils.degreeTransform(a.rotation)))}};c.InitializeUtil=y,c.Util.inherits(z,c.Initialize),z.prototype.initialize=function(a){this.lifePan.a==Infinity?a.life=Infinity:a.life=this.lifePan.getValue()},c.Life=z,c.Util.inherits(A,c.Initialize),A.prototype.reset=function(a){this.zone=c.Util.initValue(a,new c.PointZone)},A.prototype.initialize=function(a){this.zone.getPosition(),a.p.x=this.zone.vector.x,a.p.y=this.zone.vector.y},c.Position=A,c.P=A,c.Util.inherits(B,c.Initialize),B.prototype.reset=function(a,b,d){this.rPan=c.Util.setSpanValue(a),this.thaPan=c.Util.setSpanValue(b),this.type=c.Util.initValue(d,"vector")},B.prototype.normalizeVelocity=function(a){return a*c.MEASURE},B.prototype.initialize=function(a){if(this.type=="p"||this.type=="P"||this.type=="polar"){var b=new c.Polar2D(this.normalizeVelocity(this.rPan.getValue()),this.thaPan.getValue()*Math.PI/180);a.v.x=b.getX(),a.v.y=b.getY()}else a.v.x=this.normalizeVelocity(this.rPan.getValue()),a.v.y=this.normalizeVelocity(this.thaPan.getValue())},c.Velocity=B,c.V=B,c.Util.inherits(C,c.Initialize),C.prototype.initialize=function(a){a.mass=this.massPan.getValue()},c.Mass=C,c.Util.inherits(D,c.Initialize),D.prototype.reset=function(a,b,d){this.radius=c.Util.setSpanValue(a,b,d)},D.prototype.initialize=function(a){a.radius=this.radius.getValue(),a.transform.oldRadius=a.radius},c.Radius=D,c.Util.inherits(E,c.Initialize),E.prototype.initialize=function(a){var b=this.image.getValue();typeof b=="string"?a.target={width:this.w,height:this.h,src:b}:a.target=b},E.prototype.setSpanValue=function(a){return a instanceof c.ColorSpan?a:new c.ColorSpan(a)},c.ImageTarget=E,c.Util.inherits(F,c.Behaviour),F.prototype.reset=function(a,b,d,e){this.force=this.normalizeForce(new c.Vector2D(a,b)),d&&F._super_.prototype.reset.call(this,d,e)},F.prototype.applyBehaviour=function(a,b,c){F._super_.prototype.applyBehaviour.call(this,a,b,c),a.a.add(this.force)},c.Force=F,c.F=F,c.Util.inherits(G,c.Behaviour),G.prototype.reset=function(a,b,d,e,f){this.targetPosition=c.Util.initValue(a,new c.Vector2D),this.radius=c.Util.initValue(d,1e3),this.force=c.Util.initValue(this.normalizeValue(b),100),this.radiusSq=this.radius*this.radius,this.attractionForce=new c.Vector2D,this.lengthSq=0,e&&G._super_.prototype.reset.call(this,e,f)},G.prototype.applyBehaviour=function(a,b,c){G._super_.prototype.applyBehaviour.call(this,a,b,c),this.attractionForce.copy(this.targetPosition),this.attractionForce.sub(a.p),this.lengthSq=this.attractionForce.lengthSq(),this.lengthSq>4e-6&&this.lengthSq<this.radiusSq&&(this.attractionForce.normalize(),this.attractionForce.multiplyScalar(1-this.lengthSq/this.radiusSq),this.attractionForce.multiplyScalar(this.force),a.a.add(this.attractionForce))},c.Attraction=G,c.Util.inherits(H,c.Behaviour),H.prototype.reset=function(a,b,d,e,f){this.panFoce=new c.Vector2D(a,b),this.panFoce=this.normalizeForce(this.panFoce),this.delay=d,e&&H._super_.prototype.reset.call(this,e,f)},H.prototype.applyBehaviour=function(a,b,d){H._super_.prototype.applyBehaviour.call(this,a,b,d),this.time+=b,this.time>=this.delay&&(a.a.addXY(c.MathUtils.randomAToB(-this.panFoce.x,this.panFoce.x),c.MathUtils.randomAToB(-this.panFoce.y,this.panFoce.y)),this.time=0)},c.RandomDrift=H,c.Util.inherits(I,c.Attraction),I.prototype.reset=function(a,b,c,d,e){I._super_.prototype.reset.call(this,a,b,c,d,e),this.force*=-1},c.Repulsion=I,c.Util.inherits(J,c.Force),J.prototype.reset=function(a,b,c){J._super_.prototype.reset.call(this,0,a,b,c)},c.Gravity=J,c.G=J,c.Util.inherits(K,c.Behaviour),K.prototype.reset=function(a,b,d,e,f){this.emitter=c.Util.initValue(a,null),this.mass=c.Util.initValue(b,!0),this.callback=c.Util.initValue(d,null),this.collisionPool=[],this.delta=new c.Vector2D,e&&K._super_.prototype.reset.call(this,e,f)},K.prototype.applyBehaviour=function(a,b,c){var d=this.emitter?this.emitter.particles.slice(c):this.pool.slice(c),e,f,g,h,i,j=d.length;for(var k=0;k<j;k++)e=d[k],e!==a&&(this.delta.copy(e.p),this.delta.sub(a.p),f=this.delta.lengthSq(),distance=a.radius+e.radius,f<=distance*distance&&(g=distance-Math.sqrt(f),g+=.5,totalMass=a.mass+e.mass,h=this.mass?e.mass/totalMass:.5,i=this.mass?a.mass/totalMass:.5,a.p.add(this.delta.clone().normalize().multiplyScalar(g*-h)),e.p.add(this.delta.normalize().multiplyScalar(g*i)),this.callback&&this.callback(a,e)))},c.Collision=K,c.Util.inherits(L,c.Behaviour),L.prototype.reset=function(a,b,d,e){this.zone=a,this.zone.crossType=c.Util.initValue(b,"dead"),d&&L._super_.prototype.reset.call(this,d,e)},L.prototype.applyBehaviour=function(a,b,c){L._super_.prototype.applyBehaviour.call(this,a,b,c),this.zone.crossing(a)},c.CrossZone=L,c.Util.inherits(M,c.Behaviour),M.prototype.reset=function(a,d,e,f){d==null||d==b?this.same=!0:this.same=!1,this.a=c.Util.setSpanValue(c.Util.initValue(a,1)),this.b=c.Util.setSpanValue(d),e&&M._super_.prototype.reset.call(this,e,f)},M.prototype.initialize=function(a){a.transform.alphaA=this.a.getValue(),this.same?a.transform.alphaB=a.transform.alphaA:a.transform.alphaB=this.b.getValue()},M.prototype.applyBehaviour=function(a,b,c){M._super_.prototype.applyBehaviour.call(this,a,b,c),a.alpha=a.transform.alphaB+(a.transform.alphaA-a.transform.alphaB)*this.energy,a.alpha<.001&&(a.alpha=0)},c.Alpha=M,c.Util.inherits(N,c.Behaviour),N.prototype.reset=function(a,d,e,f){d==null||d==b?this.same=!0:this.same=!1,this.a=c.Util.setSpanValue(c.Util.initValue(a,1)),this.b=c.Util.setSpanValue(d),e&&N._super_.prototype.reset.call(this,e,f)},N.prototype.initialize=function(a){a.transform.scaleA=this.a.getValue(),a.transform.oldRadius=a.radius,this.same?a.transform.scaleB=a.transform.scaleA:a.transform.scaleB=this.b.getValue()},N.prototype.applyBehaviour=function(a,b,c){N._super_.prototype.applyBehaviour.call(this,a,b,c),a.scale=a.transform.scaleB+(a.transform.scaleA-a.transform.scaleB)*this.energy,a.scale<1e-4&&(a.scale=0),a.radius=a.transform.oldRadius*a.scale},c.Scale=N,c.Util.inherits(O,c.Behaviour),O.prototype.reset=function(a,d,e,f,g){d==null||d==b?this.same=!0:this.same=!1,this.a=c.Util.setSpanValue(c.Util.initValue(a,"Velocity")),this.b=c.Util.setSpanValue(c.Util.initValue(d,0)),this.style=c.Util.initValue(e,"to"),f&&O._super_.prototype.reset.call(this,f,g)},O.prototype.initialize=function(a){a.rotation=this.a.getValue(),a.transform.rotationA=this.a.getValue(),this.same||(a.transform.rotationB=this.b.getValue())},O.prototype.applyBehaviour=function(a,b,c){O._super_.prototype.applyBehaviour.call(this,a,b,c);if(!this.same)this.style=="to"||this.style=="TO"||this.style=="_"?a.rotation+=a.transform.rotationB+(a.transform.rotationA-a.transform.rotationB)*this.energy:a.rotation+=a.transform.rotationB;else if(this.a.a=="V"||this.a.a=="Velocity"||this.a.a=="v")a.rotation=a.getDirection()},c.Rotate=O,c.Util.inherits(P,c.Behaviour),P.prototype.reset=function(a,b,c,d){this.color1=this.setSpanValue(a),this.color2=this.setSpanValue(b),c&&P._super_.prototype.reset.call(this,c,d)},P.prototype.initialize=function(a){a.color=this.color1.getValue(),a.transform.beginRGB=c.Util.hexToRGB(a.color),this.color2&&(a.transform.endRGB=c.Util.hexToRGB(this.color2.getValue()))},P.prototype.applyBehaviour=function(a,b,c){this.color2?(P._super_.prototype.applyBehaviour.call(this,a,b,c),a.transform.rgb.r=a.transform.endRGB.r+(a.transform.beginRGB.r-a.transform.endRGB.r)*this.energy,a.transform.rgb.g=a.transform.endRGB.g+(a.transform.beginRGB.g-a.transform.endRGB.g)*this.energy,a.transform.rgb.b=a.transform.endRGB.b+(a.transform.beginRGB.b-a.transform.endRGB.b)*this.energy,a.transform.rgb.r=parseInt(a.transform.rgb.r,10),a.transform.rgb.g=parseInt(a.transform.rgb.g,10),a.transform.rgb.b=parseInt(a.transform.rgb.b,10)):(a.transform.rgb.r=a.transform.beginRGB.r,a.transform.rgb.g=a.transform.beginRGB.g,a.transform.rgb.b=a.transform.beginRGB.b)},P.prototype.setSpanValue=function(a){return a?a instanceof c.ColorSpan?a:new c.ColorSpan(a):null},c.Color=P,c.Util.inherits(Q,c.Behaviour),Q.prototype.reset=function(a,b,d,e){this.distanceVec=new c.Vector2D,this.centerPoint=c.Util.initValue(a,new c.Vector2D),this.force=c.Util.initValue(this.normalizeValue(b),100),d&&Q._super_.prototype.reset.call(this,d,e)},Q.prototype.initialize=function(a){},Q.prototype.applyBehaviour=function(a,b,c){this.distanceVec.set(this.centerPoint.x-a.p.x,this.centerPoint.y-a.p.y);var d=this.distanceVec.lengthSq();if(d!=0){var e=this.distanceVec.length(),f=this.force*b/(d*e);a.v.x+=f*this.distanceVec.x,a.v.y+=f*this.distanceVec.y}},c.GravityWell=Q,R.ID=0,c.Util.inherits(R,c.Particle),c.EventDispatcher.initialize(R.prototype),R.prototype.emit=function(a,b){this.emitTime=0,this.emitTotalTimes=c.Util.initValue(a,Infinity),b==!0||b=="life"||b=="destroy"?a=="once"?this.life=1:this.life=this.emitTotalTimes:isNaN(b)||(this.life=b),this.rate.init()},R.prototype.stopEmit=function(){this.emitTotalTimes=-1,this.emitTime=0},R.prototype.removeAllParticles=function(){for(var a=0;a<this.particles.length;a++)this.particles[a].dead=!0},R.prototype.createParticle=function(a,b){var d=c.pool.get();this.setupParticle(d,a,b),this.dispatchEvent(new c.Event({type:c.PARTICLE_CREATED,particle:d}));return d},R.prototype.addSelfInitialize=function(a){a.init?a.init(this):this.initAll()},R.prototype.addInitialize=function(){var a=arguments.length,b;for(b=0;b<a;b++)this.initializes.push(arguments[b])},R.prototype.removeInitialize=function(a){var b=this.initializes.indexOf(a);b>-1&&this.initializes.splice(b,1)},R.prototype.removeInitializers=function(){c.Util.destroyArray(this.initializes)},R.prototype.addBehaviour=function(){var a=arguments.length,b;for(b=0;b<a;b++)this.behaviours.push(arguments[b]),arguments[b].hasOwnProperty("parents")&&arguments[b].parents.push(this)},R.prototype.removeBehaviour=function(a){var b=this.behaviours.indexOf(a);b>-1&&this.behaviours.splice(b,1)},R.prototype.removeAllBehaviours=function(){c.Util.destroyArray(this.behaviours)},R.prototype.integrate=function(a){var b=1-this.damping;c.integrator.integrate(this,a,b);var d=this.particles.length,e;for(e=0;e<d;e++){var f=this.particles[e];f.update(a,e),c.integrator.integrate(f,a,b),this.dispatchEvent(new c.Event({type:c.PARTICLE_UPDATE,particle:f}))}},R.prototype.emitting=function(a){if(this.emitTotalTimes=="once"){var b=this.rate.getValue(99999),c;for(c=0;c<b;c++)this.createParticle();this.emitTotalTimes="none"}else if(!isNaN(this.emitTotalTimes)){this.emitTime+=a;if(this.emitTime<this.emitTotalTimes){var b=this.rate.getValue(a),c;for(c=0;c<b;c++)this.createParticle()}}},R.prototype.update=function(a){this.age+=a,(this.age>=this.life||this.dead)&&this.destroy(),this.emitting(a),this.integrate(a);var b,d=this.particles.length,e;for(e=d-1;e>=0;e--)b=this.particles[e],b.dead&&(c.pool.set(b),this.particles.splice(e,1),this.dispatchEvent(new c.Event({type:c.PARTICLE_DEAD,particle:b})))},R.prototype.setupParticle=function(a,b,d){var e=this.initializes,f=this.behaviours;b&&(b instanceof Array?e=b:e=[b]),d&&(d instanceof Array?f=d:f=[d]),c.InitializeUtil.initialize(this,a,e),a.addBehaviours(f),a.parent=this,this.particles.push(a)},R.prototype.destroy=function(){this.dead=!0,this.emitTotalTimes=-1,this.particles.length==0&&(this.removeInitializers(),this.removeAllBehaviours(),this.parent&&this.parent.removeEmitter(this))},c.Emitter=R,c.Util.inherits(S,c.Emitter),S.prototype.addSelfBehaviour=function(){var a=arguments.length,b;for(b=0;b<a;b++)this.selfBehaviours.push(arguments[b])},S.prototype.removeSelfBehaviour=function(a){var b=this.selfBehaviours.indexOf(a);b>-1&&this.selfBehaviours.splice(b,1)},S.prototype.update=function(a){S._super_.prototype.update.call(this,a);if(!this.sleep){var b=this.selfBehaviours.length,c;for(c=0;c<b;c++)this.selfBehaviours[c].applyBehaviour(this,a,c)}},c.BehaviourEmitter=S,c.Util.inherits(T,c.Emitter),T.prototype.initEventHandler=function(){var a=this;this.mousemoveHandler=function(b){a.mousemove.call(a,b)},this.mousedownHandler=function(b){a.mousedown.call(a,b)},this.mouseupHandler=function(b){a.mouseup.call(a,b)},this.mouseTarget.addEventListener("mousemove",this.mousemoveHandler,!1)},T.prototype.emit=function(){this._allowEmitting=!0},T.prototype.stopEmit=function(){this._allowEmitting=!1},T.prototype.mousemove=function(a){if(a.layerX||a.layerX==0)this.p.x+=(a.layerX-this.p.x)*this.ease,this.p.y+=(a.layerY-this.p.y)*this.ease;else if(a.offsetX||a.offsetX==0)this.p.x+=(a.offsetX-this.p.x)*this.ease,this.p.y+=(a.offsetY-this.p.y)*this.ease;this._allowEmitting&&T._super_.prototype.emit.call(this,"once")},T.prototype.destroy=function(){T._super_.prototype.destroy.call(this),this.mouseTarget.removeEventListener("mousemove",this.mousemoveHandler,!1)},c.FollowEmitter=T;var U=U||{easeLinear:function(a){return a},easeInQuad:function(a){return Math.pow(a,2)},easeOutQuad:function(a){return-(Math.pow(a-1,2)-1)},easeInOutQuad:function(a){if((a/=.5)<1)return.5*Math.pow(a,2);return-0.5*((a-=2)*a-2)},easeInCubic:function(a){return Math.pow(a,3)},easeOutCubic:function(a){return Math.pow(a-1,3)+1},easeInOutCubic:function(a){if((a/=.5)<1)return.5*Math.pow(a,3);return.5*(Math.pow(a-2,3)+2)},easeInQuart:function(a){return Math.pow(a,4)},easeOutQuart:function(a){return-(Math.pow(a-1,4)-1)},easeInOutQuart:function(a){if((a/=.5)<1)return.5*Math.pow(a,4);return-0.5*((a-=2)*Math.pow(a,3)-2)},easeInSine:function(a){return-Math.cos(a*(Math.PI/2))+1},easeOutSine:function(a){return Math.sin(a*(Math.PI/2))},easeInOutSine:function(a){return-0.5*(Math.cos(Math.PI*a)-1)},easeInExpo:function(a){return a===0?0:Math.pow(2,10*(a-1))},easeOutExpo:function(a){return a===1?1:-Math.pow(2,-10*a)+1},easeInOutExpo:function(a){if(a===0)return 0;if(a===1)return 1;if((a/=.5)<1)return.5*Math.pow(2,10*(a-1));return.5*(-Math.pow(2,-10*--a)+2)},easeInCirc:function(a){return-(Math.sqrt(1-a*a)-1)},easeOutCirc:function(a){return Math.sqrt(1-Math.pow(a-1,2))},easeInOutCirc:function(a){if((a/=.5)<1)return-0.5*(Math.sqrt(1-a*a)-1);return.5*(Math.sqrt(1-(a-=2)*a)+1)},easeInBack:function(a){var b=1.70158;return a*a*((b+1)*a-b)},easeOutBack:function(a){var b=1.70158;return(a=a-1)*a*((b+1)*a+b)+1},easeInOutBack:function(a){var b=1.70158;if((a/=.5)<1)return.5*a*a*(((b*=1.525)+1)*a-b);return.5*((a-=2)*a*(((b*=1.525)+1)*a+b)+2)},setEasingByName:function(a){switch(a){case"easeLinear":return c.ease.easeLinear;case"easeInQuad":return c.ease.easeInQuad;case"easeOutQuad":return c.ease.easeOutQuad;case"easeInOutQuad":return c.ease.easeInOutQuad;case"easeInCubic":return c.ease.easeInCubic;case"easeOutCubic":return c.ease.easeOutCubic;case"easeInOutCubic":return c.ease.easeInOutCubic;case"easeInQuart":return c.ease.easeInQuart;case"easeOutQuart":return c.ease.easeOutQuart;case"easeInOutQuart":return c.ease.easeInOutQuart;case"easeInSine":return c.ease.easeInSine;case"easeOutSine":return c.ease.easeOutSine;case"easeInOutSine":return c.ease.easeInOutSine;case"easeInExpo":return c.ease.easeInExpo;case"easeOutExpo":return c.ease.easeOutExpo;case"easeInOutExpo":return c.ease.easeInOutExpo;case"easeInCirc":return c.ease.easeInCirc;case"easeOutCirc":return c.ease.easeOutCirc;case"easeInOutCirc":return c.ease.easeInOutCirc;case"easeInBack":return c.ease.easeInBack;case"easeOutBack":return c.ease.easeOutBack;case"easeInOutBack":return c.ease.easeInOutBack;default:return c.ease.easeLinear}}};c.ease=U,c.easeLinear="easeLinear",c.easeInQuad="easeInQuad",c.easeOutQuad="easeOutQuad",c.easeInOutQuad="easeInOutQuad",c.easeInCubic="easeInCubic",c.easeOutCubic="easeOutCubic",c.easeInOutCubic="easeInOutCubic",c.easeInQuart="easeInQuart",c.easeOutQuart="easeOutQuart",c.easeInOutQuart="easeInOutQuart",c.easeInSine="easeInSine",c.easeOutSine="easeOutSine",c.easeInOutSine="easeInOutSine",c.easeInExpo="easeInExpo",c.easeOutExpo="easeOutExpo",c.easeInOutExpo="easeInOutExpo",c.easeInCirc="easeInCirc",c.easeOutCirc="easeOutCirc",c.easeInOutCirc="easeInOutCirc",c.easeInBack="easeInBack",c.easeOutBack="easeOutBack",c.easeInOutBack="easeInOutBack",V.prototype={start:function(){this.addEventHandler(),this.renderer.start()},stop:function(){this.renderer.stop()},resize:function(a,b){this.renderer.resize(a,b)},setStroke:function(a,b){this.renderer.hasOwnProperty("stroke")?this.renderer.setStroke(a,b):alert("Sorry this renderer do not suppest stroke method!")},createImageData:function(a){this.renderer instanceof c.PixelRender&&this.renderer.createImageData(a)},setMaxRadius:function(a){this.renderer instanceof c.WebGLRender&&this.renderer.setMaxRadius(a)},blendEquation:function(a){this.renderer instanceof c.WebGLRender&&this.renderer.blendEquation(a)},blendFunc:function(a,b){this.renderer instanceof c.WebGLRender&&this.renderer.blendFunc(a,b)},setType:function(a){this.type=a,this.renderer=this.getRenderer()},getRenderer:function(){switch(this.type){case"dom":return new c.DomRender(this.proton,this.element);case"canvas":return new c.CanvasRender(this.proton,this.element);case"webgl":return new c.WebGLRender(this.proton,this.element);case"easel":return new c.EaselRender(this.proton,this.element);case"easeljs":return new c.EaselRender(this.proton,this.element);case"pixel":return new c.PixelRender(this.proton,this.element);default:return new c.BaseRender(this.proton,this.element)}},render:function(a){this.renderer.render(a)},addEventHandler:function(){this.onProtonUpdate&&(this.renderer.onProtonUpdate=this.onProtonUpdate),this.onParticleCreated&&(this.renderer.onParticleCreated=this.onParticleCreated),this.onParticleUpdate&&(this.renderer.onParticleUpdate=this.onParticleUpdate),this.onParticleDead&&(this.renderer.onParticleDead=this.onParticleDead)}},c.Renderer=V,W.prototype={start:function(){var a=this;this.proton.addEventListener(c.PROTON_UPDATE,function(b){a.onProtonUpdate.call(a)}),this.proton.addEventListener(c.PROTON_UPDATE_AFTER,function(b){a.onProtonUpdateAfter.call(a)}),this.proton.addEventListener(c.EMITTER_ADDED,function(b){a.onEmitterAdded.call(a,b.emitter)}),this.proton.addEventListener(c.EMITTER_REMOVED,function(b){a.onEmitterRemoved.call(a,b.emitter)});var b=this.proton.emitters.length,d;for(d=0;d<b;d++){var e=this.proton.emitters[d];this.addEmitterListener(e)}},resize:function(a,b){},addEmitterListener:function(a){var b=this;a.addEventListener(c.PARTICLE_CREATED,function(a){b.onParticleCreated.call(b,a.particle)}),a.addEventListener(c.PARTICLE_UPDATE,function(a){b.onParticleUpdate.call(b,a.particle)}),a.addEventListener(c.PARTICLE_DEAD,function(a){b.onParticleDead.call(b,a.particle)})},stop:function(){var a=this.proton.emitters.length,b;this.proton.removeAllEventListeners();for(b=0;b<a;b++){var c=this.proton.emitters[b];c.removeAllEventListeners()}},onEmitterAdded:function(a){this.addEmitterListener(a)},onEmitterRemoved:function(a){a.removeAllEventListeners()},onProtonUpdate:function(){},onProtonUpdateAfter:function(){},onParticleCreated:function(a){},onParticleUpdate:function(a){},onParticleDead:function(a){}},c.BaseRender=W,c.Util.inherits(X,c.BaseRender),X.prototype.start=function(){X._super_.prototype.start.call(this)},X.prototype.setStroke=function(a,b){a=c.Util.initValue(a,"#000000"),b=c.Util.initValue(b,1),this.stroke={color:a,thinkness:b}},X.prototype.onProtonUpdate=function(){},X.prototype.onParticleCreated=function(a){if(a.target){var b=this;c.Util.getImage(a.target,a,!1,function(a){b.setImgInDIV.call(b,a)})}else a.transform.canvas=c.DomUtil.createCanvas(a.id+"_canvas",a.radius+1,a.radius+1,"absolute"),a.transform.bakOldRadius=a.radius,this.stroke?(a.transform.canvas.width=2*a.radius+this.stroke.thinkness*2,a.transform.canvas.height=2*a.radius+this.stroke.thinkness*2):(a.transform.canvas.width=2*a.radius+1,a.transform.canvas.height=2*a.radius+1),a.transform.context=a.transform.canvas.getContext("2d"),a.transform.context.fillStyle=a.color,a.transform.context.beginPath(),a.transform.context.arc(a.radius,a.radius,a.radius,0,Math.PI*2,!0),this.stroke&&(a.transform.context.strokeStyle=this.stroke.color,a.transform.context.lineWidth=this.stroke.thinkness,a.transform.context.stroke()),a.transform.context.closePath(),a.transform.context.fill(),this.element.appendChild(a.transform.canvas)},X.prototype.onParticleUpdate=function(a){a.target?a.target instanceof Image&&(a.transform.canvas.style.opacity=a.alpha,c.DomUtil.transformDom(a.transform.canvas,a.p.x-a.target.width/2,a.p.y-a.target.height/2,a.scale,a.rotation)):(a.transform.canvas.style.opacity=a.alpha,a.transform.oldRadius?c.DomUtil.transformDom(a.transform.canvas,a.p.x-a.transform.oldRadius,a.p.y-a.transform.oldRadius,a.scale,a.rotation):c.DomUtil.transformDom(a.transform.canvas,a.p.x-a.transform.bakOldRadius,a.p.y-a.transform.bakOldRadius,a.scale,a.rotation))},X.prototype.onParticleDead=function(a){a.transform.canvas&&this.element.removeChild(a.transform.canvas)},X.prototype.setImgInDIV=function(a){a.transform.canvas=c.DomUtil.createCanvas(a.id+"_canvas",a.target.width+1,a.target.height+1,"absolute",a.p.x-a.radius,a.p.y-a.radius),a.transform.context=a.transform.canvas.getContext("2d"),a.transform.context.drawImage(a.target,0,0,a.target.width,a.target.height),this.element.appendChild(a.transform.canvas)},c.DomRender=X,c.Util.inherits(Y,c.BaseRender),Y.prototype.resize=function(a,b){},Y.prototype.start=function(){Y._super_.prototype.start.call(this)},Y.prototype.onProtonUpdate=function(){},Y.prototype.onParticleCreated=function(a){if(a.target)a.target=a.target.clone(),a.target.parent||(!a.target.image||(a.target.regX=a.target.image.width/2,a.target.regY=a.target.image.height/2),this.element.addChild(a.target));else{var b=new createjs.Graphics;this.stroke&&(this.stroke==!0?b.beginStroke("#000000"):this.stroke instanceof String&&b.beginStroke(this.stroke)),b.beginFill(a.color).drawCircle(0,0,a.radius);var c=new createjs.Shape(b);a.target=c,this.element.addChild(a.target)}},Y.prototype.onParticleUpdate=function(a){a.target&&(a.target.x=a.p.x,a.target.y=a.p.y,a.target.alpha=a.alpha,a.target.scaleX=a.target.scaleY=a.scale,a.target.rotation=a.rotation)},Y.prototype.onParticleDead=function(a){a.target&&a.target.parent&&a.target.parent.removeChild(a.target)},c.EaselRender=Y,c.Util.inherits(Z,c.BaseRender),Z.prototype.resize=function(a,b){this.element.width=a,this.element.height=b},Z.prototype.start=function(){Z._super_.prototype.start.call(this)},Z.prototype.setStroke=function(a,b){a=c.Util.initValue(a,"#000000"),b=c.Util.initValue(b,1),this.stroke={color:a,thinkness:b}},Z.prototype.onProtonUpdate=function(){this.context.clearRect(0,0,this.element.width,this.element.height)},Z.prototype.onParticleCreated=function(a){a.target?c.Util.getImage(a.target,a,!1):a.color=a.color?a.color:"#ff0000"},Z.prototype.onParticleUpdate=function(a){if(a.target){if(a.target instanceof Image){var b=a.target.width*a.scale|0,d=a.target.height*a.scale|0,e=a.p.x-b/2,f=a.p.y-d/2;if(!a.color)this.context.save(),this.context.globalAlpha=a.alpha,this.context.translate(a.p.x,a.p.y),this.context.rotate(c.MathUtils.degreeTransform(a.rotation)),this.context.translate(-a.p.x,-a.p.y),this.context.drawImage(a.target,0,0,a.target.width,a.target.height,e,f,b,d),this.context.globalAlpha=1,this.context.restore();else{a.transform.buffer||(a.transform.buffer=this.getBuffer(a.target));var g=a.transform.buffer.getContext("2d");g.clearRect(0,0,a.transform.buffer.width,a.transform.buffer.height),g.globalAlpha=a.alpha,g.drawImage(a.target,0,0),g.globalCompositeOperation="source-atop",g.fillStyle=c.Util.rgbToHex(a.transform.rgb),g.fillRect(0,0,a.transform.buffer.width,a.transform.buffer.height),g.globalCompositeOperation="source-over",g.globalAlpha=1,this.context.drawImage(a.transform.buffer,0,0,a.transform.buffer.width,a.transform.buffer.height,e,f,b,d)}}}else a.transform.rgb?this.context.fillStyle="rgba("+a.transform.rgb.r+","+a.transform.rgb.g+","+a.transform.rgb.b+","+a.alpha+")":this.context.fillStyle=a.color,this.context.beginPath(),this.context.arc(a.p.x,a.p.y,a.radius,0,Math.PI*2,!0),this.stroke&&(this.context.strokeStyle=this.stroke.color,this.context.lineWidth=this.stroke.thinkness,this.context.stroke()),this.context.closePath(),this.context.fill()},Z.prototype.onParticleDead=function(a){},Z.prototype.getBuffer=function(a){if(a instanceof Image){var b=a.width+"_"+a.height,c=this.bufferCache[b];c||(c=document.createElement("canvas"),c.width=a.width,c.height=a.height,this.bufferCache[b]=c);return c}},c.CanvasRender=Z,c.Util.inherits($,c.BaseRender),$.prototype.resize=function(a,b){this.element.width=a,this.element.height=b},$.prototype.createImageData=function(a){a?this.rectangle=a:this.rectangle=new c.Rectangle(0,0,this.element.width,this.element.height),this.imageData=this.context.createImageData(this.rectangle.width,this.rectangle.height),this.context.putImageData(this.imageData,this.rectangle.x,this.rectangle.y)},$.prototype.start=function(){$._super_.prototype.start.call(this)},$.prototype.onProtonUpdate=function(){this.context.clearRect(this.rectangle.x,this.rectangle.y,this.rectangle.width,this.rectangle.height),this.imageData=this.context.getImageData(this.rectangle.x,this.rectangle.y,this.rectangle.width,this.rectangle.height)},$.prototype.onProtonUpdateAfter=function(){this.context.putImageData(this.imageData,this.rectangle.x,this.rectangle.y)},$.prototype.onParticleCreated=function(a){},$.prototype.onParticleUpdate=function(a){this.imageData&&this.setPixel(this.imageData,Math.floor(a.p.x-this.rectangle.x),Math.floor(a.p.y-this.rectangle.y),a)},$.prototype.setPixel=function(a,b,c,d){var e=d.transform.rgb;if(!(b<0||b>this.element.width||c<0||c>this.elementwidth)){var f=((c>>0)*a.width+(b>>0))*4;a.data[f]=e.r,a.data[f+1]=e.g,a.data[f+2]=e.b,a.data[f+3]=d.alpha*255}},$.prototype.onParticleDead=function(a){},c.PixelRender=$,c.Util.inherits(_,c.BaseRender),_.prototype.resize=function(a,b){this.umat[4]=-2,this.umat[7]=1,this.smat[0]=1/a,this.smat[4]=1/b,this.mstack.set(this.umat,0),this.mstack.set(this.smat,1),this.gl.viewport(0,0,a,b),this.element.width=a,this.element.height=b},_.prototype.setMaxRadius=function(a){this.circleCanvasURL=this.createCircle(a)},_.prototype.getVertexShader=function(){var a=["uniform vec2 viewport;","attribute vec2 aVertexPosition;","attribute vec2 aTextureCoord;","uniform mat3 tMat;","varying vec2 vTextureCoord;","varying float alpha;","void main() {","vec3 v = tMat * vec3(aVertexPosition, 1.0);","gl_Position = vec4(v.x, v.y, 0, 1);","vTextureCoord = aTextureCoord;","alpha = tMat[0][2];","}"].join("\n");return a},_.prototype.getFragmentShader=function(){var a=["precision mediump float;","varying vec2 vTextureCoord;","varying float alpha;","uniform sampler2D uSampler;","uniform vec4 color;","uniform bool useTexture;","uniform vec3 uColor;","void main() {","vec4 textureColor = texture2D(uSampler, vTextureCoord);","gl_FragColor = textureColor * vec4(uColor, 1.0);","gl_FragColor.w *= alpha;","}"].join("\n");return a},_.prototype.initVar=function(){this.mstack=new c.MStack,this.umat=c.Mat3.create([2,0,1,0,-2,0,-1,1,1]),this.smat=c.Mat3.create([.01,0,1,0,.01,0,0,0,1]),this.texturebuffers={}},_.prototype.start=function(){_._super_.prototype.start.call(this),this.resize(this.element.width,this.element.height)},_.prototype.blendEquation=function(a){this.gl.blendEquation(this.gl[a])},_.prototype.blendFunc=function(a,b){this.gl.blendFunc(this.gl[a],this.gl[b])},_.prototype.getShader=function(a,b,c){var d;c?d=a.createShader(a.FRAGMENT_SHADER):d=a.createShader(a.VERTEX_SHADER),a.shaderSource(d,b),a.compileShader(d);if(!a.getShaderParameter(d,a.COMPILE_STATUS)){alert(a.getShaderInfoLog(d));return null}return d},_.prototype.initShaders=function(){var a=this.getShader(this.gl,this.getFragmentShader(),!0),b=this.getShader(this.gl,this.getVertexShader(),!1);this.sprogram=this.gl.createProgram(),this.gl.attachShader(this.sprogram,b),this.gl.attachShader(this.sprogram,a),this.gl.linkProgram(this.sprogram),this.gl.getProgramParameter(this.sprogram,this.gl.LINK_STATUS)||alert("Could not initialise shaders"),this.gl.useProgram(this.sprogram),this.sprogram.vpa=this.gl.getAttribLocation(this.sprogram,"aVertexPosition"),this.sprogram.tca=this.gl.getAttribLocation(this.sprogram,"aTextureCoord"),this.gl.enableVertexAttribArray(this.sprogram.tca),this.gl.enableVertexAttribArray(this.sprogram.vpa),this.sprogram.tMatUniform=this.gl.getUniformLocation(this.sprogram,"tMat"),this.sprogram.samplerUniform=this.gl.getUniformLocation(this.sprogram,"uSampler"),this.sprogram.useTex=this.gl.getUniformLocation(this.sprogram,"useTexture"),this.sprogram.color=this.gl.getUniformLocation(this.sprogram,"uColor"),this.gl.uniform1i(this.sprogram.useTex,1)},_.prototype.initBuffers=function(){this.unitIBuffer=this.gl.createBuffer(),this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER,this.unitIBuffer);var a=[0,3,1,0,2,3];this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(a),this.gl.STATIC_DRAW);var b=[];for(var c=0;c<100;c++)b.push(c);idx=new Uint16Array(b),this.unitI33=this.gl.createBuffer(),this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER,this.unitI33),this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER,idx,this.gl.STATIC_DRAW),b=[];for(c=0;c<100;c++)b.push(c,c+1,c+2);idx=new Uint16Array(b),this.stripBuffer=this.gl.createBuffer(),this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER,this.stripBuffer),this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER,idx,this.gl.STATIC_DRAW)},_.prototype.createCircle=function(a){this.circleCanvasRadius=c.WebGLUtil.nhpot(c.Util.initValue(a,32));var b=c.DomUtil.createCanvas("circle_canvas",this.circleCanvasRadius*2,this.circleCanvasRadius*2),d=b.getContext("2d");d.beginPath(),d.arc(this.circleCanvasRadius,this.circleCanvasRadius,this.circleCanvasRadius,0,Math.PI*2,!0),d.closePath(),d.fillStyle="#FFF",d.fill();return b.toDataURL()},_.prototype.setImgInCanvas=function(a){var b=a.target.width,d=a.target.height,e=c.WebGLUtil.nhpot(a.target.width),f=c.WebGLUtil.nhpot(a.target.height),g=a.target.width/e,h=a.target.height/f;this.texturebuffers[a.transform.src]||(this.texturebuffers[a.transform.src]=[this.gl.createTexture(),this.gl.createBuffer(),this.gl.createBuffer()]),a.transform.texture=this.texturebuffers[a.transform.src][0],a.transform.vcBuffer=this.texturebuffers[a.transform.src][1],a.transform.tcBuffer=this.texturebuffers[a.transform.src][2],this.gl.bindBuffer(this.gl.ARRAY_BUFFER,a.transform.tcBuffer),this.gl.bufferData(this.gl.ARRAY_BUFFER,new Float32Array([0,0,g,0,0,h,h,h]),this.gl.STATIC_DRAW),this.gl.bindBuffer(this.gl.ARRAY_BUFFER,a.transform.vcBuffer),this.gl.bufferData(this.gl.ARRAY_BUFFER,new Float32Array([0,0,b,0,0,d,b,d]),this.gl.STATIC_DRAW);var i=a.transform.canvas.getContext("2d"),j=i.getImageData(0,0,e,f);this.gl.bindTexture(this.gl.TEXTURE_2D,a.transform.texture),this.gl.texImage2D(this.gl.TEXTURE_2D,0,this.gl.RGBA,this.gl.RGBA,this.gl.UNSIGNED_BYTE,j),this.gl.texParameteri(this.gl.TEXTURE_2D,this.gl.TEXTURE_MAG_FILTER,this.gl.LINEAR),this.gl.texParameteri(this.gl.TEXTURE_2D,this.gl.TEXTURE_MIN_FILTER,this.gl.LINEAR_MIPMAP_NEAREST),this.gl.generateMipmap(this.gl.TEXTURE_2D),a.transform.textureLoaded=!0,a.transform.textureWidth=b,a.transform.textureHeight=d},_.prototype.setStroke=function(a,b){},_.prototype.onProtonUpdate=function(){},_.prototype.onParticleCreated=function(a){var b=this;a.transform.textureLoaded=!1,a.transform.tmat=c.Mat3.create(),a.transform.tmat[8]=1,a.transform.imat=c.Mat3.create(),a.transform.imat[8]=1,a.target?c.Util.getImage(a.target,a,!0,function(a){b.setImgInCanvas.call(b,a),a.transform.oldScale=1}):c.Util.getImage(this.circleCanvasURL,a,!0,function(a){b.setImgInCanvas.call(b,a),a.transform.oldScale=a.radius/b.circleCanvasRadius})},_.prototype.onParticleUpdate=function(a){a.transform.textureLoaded&&(this.updateMatrix(a),this.gl.uniform3f(this.sprogram.color,a.transform.rgb.r/255,a.transform.rgb.g/255,a.transform.rgb.b/255),this.gl.uniformMatrix3fv(this.sprogram.tMatUniform,!1,this.mstack.top()),this.gl.bindBuffer(this.gl.ARRAY_BUFFER,a.transform.vcBuffer),this.gl.vertexAttribPointer(this.sprogram.vpa,2,this.gl.FLOAT,!1,0,0),this.gl.bindBuffer(this.gl.ARRAY_BUFFER,a.transform.tcBuffer),this.gl.vertexAttribPointer(this.sprogram.tca,2,this.gl.FLOAT,!1,0,0),this.gl.bindTexture(this.gl.TEXTURE_2D,a.transform.texture),this.gl.uniform1i(this.sprogram.samplerUniform,0),this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER,this.unitIBuffer),this.gl.drawElements(this.gl.TRIANGLES,6,this.gl.UNSIGNED_SHORT,0),this.mstack.pop())},_.prototype.onParticleDead=function(a){},_.prototype.updateMatrix=function(a){var b=c.WebGLUtil.makeTranslation(-a.transform.textureWidth/2,-a.transform.textureHeight/2),d=c.WebGLUtil.makeTranslation(a.p.x,a.p.y),e=a.rotation*(Math.PI/180),f=c.WebGLUtil.makeRotation(e),g=a.scale*a.transform.oldScale,h=c.WebGLUtil.makeScale(g,g),i=c.WebGLUtil.matrixMultiply(b,h);i=c.WebGLUtil.matrixMultiply(i,f),i=c.WebGLUtil.matrixMultiply(i,d),c.Mat3.inverse(i,a.transform.imat),i[2]=a.alpha,this.mstack.push(i)},c.WebGLRender=_,ba.prototype={getPosition:function(){},crossing:function(a){}},c.Zone=ba,c.Util.inherits(bb,c.Zone),bb.prototype.getPosition=function(){this.random=Math.random(),this.vector.x=this.x1+this.random*this.length*Math.cos(this.gradient),this.vector.y=this.y1+this.random*this.length*Math.sin(this.gradient);return this.vector},bb.prototype.getDirection=function(a,b){var c=this.dy,d=-this.dx,e=this.dot,f=d==0?1:d;return(c*a+d*b+e)*f>0?!0:!1},bb.prototype.getDistance=function(a,b){var c=this.dy,d=-this.dx,e=this.dot,f=c*a+d*b+e;return f/Math.sqrt(this.xxyy)},bb.prototype.getSymmetric=function(a){var b=a.getGradient(),c=this.getGradient(),d=2*(c-b),e=a.x,f=a.y;a.x=e*Math.cos(d)-f*Math.sin(d),a.y=e*Math.sin(d)+f*Math.cos(d);return a},bb.prototype.getGradient=function(){return Math.atan2(this.dy,this.dx)},bb.prototype.getRange=function(a,b){var c=Math.abs(this.getGradient());c<=Math.PI/4?a.p.x<this.maxx&&a.p.x>this.minx&&b():a.p.y<this.maxy&&a.p.y>this.miny&&b()},bb.prototype.getLength=function(){return Math.sqrt(this.dx*this.dx+this.dy*this.dy)},bb.prototype.crossing=function(a){var b=this;this.crossType=="dead"?this.direction==">"||this.direction=="R"||this.direction=="right"||this.direction=="down"?this.getRange(a,function(){b.getDirection(a.p.x,a.p.y)&&(a.dead=!0)}):this.getRange(a,function(){b.getDirection(a.p.x,a.p.y)||(a.dead=!0)}):this.crossType=="bound"?this.getRange(a,function(){b.getDistance(a.p.x,a.p.y)<=a.radius&&(b.dx==0?a.v.x*=-1:b.dy==0?a.v.y*=-1:b.getSymmetric(a.v))}):this.crossType=="cross"&&this.alert&&(alert("Sorry lineZone does not support cross method"),this.alert=!1)},c.LineZone=bb,c.Util.inherits(bc,c.Zone),bc.prototype.getPosition=function(){this.random=Math.random(),this.angle=Math.PI*2*Math.random(),this.vector.x=this.x+this.random*this.radius*Math.cos(this.angle),this.vector.y=this.y+this.random*this.radius*Math.sin(this.angle);return this.vector},bc.prototype.setCenter=function(a,b){this.center.x=a,this.center.y=b},bc.prototype.crossing=function(a){var b=a.p.distanceTo(this.center);this.crossType=="dead"?b-a.radius>this.radius&&(a.dead=!0):this.crossType=="bound"?b+a.radius>=this.radius&&this.getSymmetric(a):this.crossType=="cross"&&this.alert&&(alert("Sorry CircleZone does not support cross method"),this.alert=!1)},bc.prototype.getSymmetric=function(a){var b=a.v.getGradient(),c=this.getGradient(a),d=2*(c-b),e=a.v.x,f=a.v.y;a.v.x=e*Math.cos(d)-f*Math.sin(d),a.v.y=e*Math.sin(d)+f*Math.cos(d)},bc.prototype.getGradient=function(a){return-Math.PI/2+Math.atan2(a.p.y-this.center.y,a.p.x-this.center.x)},c.CircleZone=bc,c.Util.inherits(bd,c.Zone),bd.prototype.getPosition=function(){this.vector.x=this.x,this.vector.y=this.y;return this.vector},bd.prototype.crossing=function(a){this.alert&&(alert("Sorry PointZone does not support crossing method"),this.alert=!1)},c.PointZone=bd,c.Util.inherits(be,c.Zone),be.prototype.getPosition=function(){this.vector.x=this.x+Math.random()*this.width,this.vector.y=this.y+Math.random()*this.height;return this.vector},be.prototype.crossing=function(a){this.crossType=="dead"?(a.p.x+a.radius<this.x?a.dead=!0:a.p.x-a.radius>this.x+this.width&&(a.dead=!0),a.p.y+a.radius<this.y?a.dead=!0:a.p.y-a.radius>this.y+this.height&&(a.dead=!0)):this.crossType=="bound"?(a.p.x-a.radius<this.x?(a.p.x=this.x+a.radius,a.v.x*=-1):a.p.x+a.radius>this.x+this.width&&(a.p.x=this.x+this.width-a.radius,a.v.x*=-1),a.p.y-a.radius<this.y?(a.p.y=this.y+a.radius,a.v.y*=-1):a.p.y+a.radius>this.y+this.height&&(a.p.y=this.y+this.height-a.radius,a.v.y*=-1)):this.crossType=="cross"&&(a.p.x+a.radius<this.x&&a.v.x<=0?a.p.x=this.x+this.width+a.radius:a.p.x-a.radius>this.x+this.width&&a.v.x>=0&&(a.p.x=this.x-a.radius),a.p.y+a.radius<this.y&&a.v.y<=0?a.p.y=this.y+this.height+a.radius:a.p.y-a.radius>this.y+this.height&&a.v.y>=0&&(a.p.y=this.y-a.radius))},c.RectZone=be,c.Util.inherits(bf,c.Zone),bf.prototype.reset=function(a,b,d,e){this.imageData=a,this.x=c.Util.initValue(b,0),this.y=c.Util.initValue(d,0),this.d=c.Util.initValue(e,2),this.vectors=[],this.setVectors()},bf.prototype.setVectors=function(){var a,b,c=this.imageData.width,d=this.imageData.height;for(a=0;a<c;a+=this.d)for(b=0;b<d;b+=this.d){var e=((b>>0)*c+(a>>0))*4;this.imageData.data[e+3]>0&&this.vectors.push({x:a+this.x,y:b+this.y})}return this.vector},bf.prototype.getBound=function(a,b){var c=((b>>0)*this.imageData.width+(a>>0))*4;return this.imageData.data[c+3]>0?!0:!1},bf.prototype.getPosition=function(){return this.vector.copy(this.vectors[Math.floor(Math.random()*this.vectors.length)])},bf.prototype.getColor=function(a,b){a-=this.x,b-=this.y;var c=((b>>0)*this.imageData.width+(a>>0))*4;return{r:this.imageData.data[c],g:this.imageData.data[c+1],b:this.imageData.data[c+2],a:this.imageData.data[c+3]}},bf.prototype.crossing=function(a){this.crossType=="dead"?this.getBound(a.p.x-this.x,a.p.y-this.y)?a.dead=!0:a.dead=!1:this.crossType=="bound"&&(this.getBound(a.p.x-this.x,a.p.y-this.y)||a.v.negate())},c.ImageZone=bf;var bg=function(){if(a.console&&a.console.log){var b=arguments;if(typeof arguments[0]=="string")if(arguments[0].indexOf("+")==0){var c=parseInt(arguments[0]);bg.once<c&&(delete b[0],console.log(b),bg.once++)}else console.log(b);else console.log(b)}};bg.once=0,c.log=bg;var bh=bh||{addEventListener:function(a,b){a.addEventListener(c.PROTON_UPDATE,function(a){b()})},setStyle:function(a){var b=a||"#ff0000",d=c.Util.hexToRGB(b),e="rgba("+d.r+","+d.g+","+d.b+","+.5+")";return e},drawZone:function(a,b,d,e){var f=b.getContext("2d"),g=this.setStyle();this.addEventListener(a,function(){e&&f.clearRect(0,0,b.width,b.height),d instanceof c.PointZone?(f.beginPath(),f.fillStyle=g,f.arc(d.x,d.y,10,0,Math.PI*2,!0),f.fill(),f.closePath()):d instanceof c.LineZone?(f.beginPath(),f.strokeStyle=g,f.moveTo(d.x1,d.y1),f.lineTo(d.x2,d.y2),f.stroke(),f.closePath()):d instanceof c.RectZone?(f.beginPath(),f.strokeStyle=g,f.drawRect(d.x,d.y,d.width,d.height),f.stroke(),f.closePath()):d instanceof c.CircleZone&&(f.beginPath(),f.strokeStyle=g,f.arc(d.x,d.y,d.radius,0,Math.PI*2,!0),f.stroke(),f.closePath())})},drawEmitter:function(a,b,c,d){var e=b.getContext("2d"),f=this.setStyle();this.addEventListener(a,function(){d&&e.clearRect(0,0,b.width,b.height),e.beginPath(),e.fillStyle=f,e.arc(c.p.x,c.p.y,10,0,Math.PI*2,!0),e.fill(),e.closePath()})},test:{},setTest:function(a,b){this.test[a]=b},getTest:function(a){return this.test.hasOwnProperty(a)?this.test[a]:!1}};c.Debug=bh})(window),function(){var a=0,b=["ms","moz","webkit","o"];for(var c=0;c<b.length&&!window.requestAnimationFrame;++c)window.requestAnimationFrame=window[b[c]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[b[c]+"CancelAnimationFrame"]||window[b[c]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(b,c){var d=(new Date).getTime(),e=Math.max(0,16-(d-a)),f=window.setTimeout(function(){b(d+e)},e);a=d+e;return f}),window.cancelAnimationFrame||(window.cancelAnimationFrame=function(a){clearTimeout(a)})}()
+!function(e){"object"==typeof exports?module.exports=e():"function"==typeof define&&define.amd?define(e):"undefined"!=typeof window?window.QRCode=e():"undefined"!=typeof global?global.QRCode=e():"undefined"!=typeof self&&(self.QRCode=e())}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var QRMode = require("./QRMode.js");
+
+//---------------------------------------------------------------------
+// ALPHA_NUM
+//---------------------------------------------------------------------
+
+function ALPHA_NUM(data) {
+  this.mode = QRMode.MODE_ALPHA_NUM;
+  this.data = data;
+}
+
+ALPHA_NUM.prototype.getCode = function(code) {
+  var codes = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:";
+  var index = codes.indexOf(code);
+  if (index < 0) {
+    throw new Error("Invalid character: `" + code + "`");
+  }
+  return index;
+};
+
+ALPHA_NUM.prototype.getLength = function(buffer) {
+  return this.data.length;
+};
+
+ALPHA_NUM.prototype.write = function(buffer) {
+  for (var i = 0; i < this.data.length; i++) {
+    if (this.data[i + 1]) {
+      buffer.put((45 * this.getCode(this.data[i])) + this.getCode(this.data[i + 1]), 11);
+    } else {
+      buffer.put(this.getCode(this.data[i]), 6);
+    }
+    i++;
+  }
+};
+
+module.exports = ALPHA_NUM;
+
+},{"./QRMode.js":9}],2:[function(require,module,exports){
+var QRMode = require("./QRMode.js");
+
+//---------------------------------------------------------------------
+// NUMBER
+//---------------------------------------------------------------------
+
+function NUMBER(data) {
+  this.mode = QRMode.MODE_NUMBER;
+  this.data = data;
+}
+
+NUMBER.prototype.getCode = function(chars) {
+  var index = parseInt(chars, 10);
+  if (isNaN(index)) {
+    throw new Error("Invalid character: `" + chars + "`");
+  }
+  return index;
+};
+
+NUMBER.prototype.getBitLen = function(length) {
+  var NUMBER_LENGTH = {
+    3: 10,
+    2: 7,
+    1: 4
+  };
+  return NUMBER_LENGTH[length];
+};
+
+NUMBER.prototype.getLength = function(buffer) {
+  return this.data.length;
+};
+
+NUMBER.prototype.write = function(buffer) {
+  for (var i = 0; i < this.data.length; i++) {
+
+    var chars = this.data[i];
+    if (this.data[i + 1]) {
+      chars += this.data[i + 1];
+    }
+    if (this.data[i + 2]) {
+      chars += this.data[i + 2];
+    }
+
+    var bitLength = this.getBitLen(chars.length);
+    buffer.put(this.getCode(chars), bitLength);
+
+    i++;
+    i++;
+  }
+};
+
+module.exports = NUMBER;
+
+},{"./QRMode.js":9}],3:[function(require,module,exports){
+var QRMode = require("./QRMode.js");
+
+//---------------------------------------------------------------------
+// QR8bitByte
+//---------------------------------------------------------------------
+
+function QR8bitByte(data) {
+  this.mode = QRMode.MODE_8BIT_BYTE;
+  this.data = data;
+}
+
+QR8bitByte.prototype.getCode = function(character) {
+  var index = character.charCodeAt(0);
+  if (index > 255) {
+    throw new Error("Invalid character: `" + character + "`");
+  }
+  return index;
+};
+
+QR8bitByte.prototype.getLength = function(buffer) {
+  return this.data.length;
+};
+
+QR8bitByte.prototype.write = function(buffer) {
+  for (var i = 0; i < this.data.length; i++) {
+    // not JIS ...
+    buffer.put(this.getCode(this.data[i]), 8);
+  }
+};
+
+module.exports = QR8bitByte;
+
+},{"./QRMode.js":9}],4:[function(require,module,exports){
+//---------------------------------------------------------------------
+// QRBitBuffer
+//---------------------------------------------------------------------
+
+function QRBitBuffer() {
+  this.buffer = [];
+  this.length = 0;
+}
+
+QRBitBuffer.prototype.get = function(index) {
+  var bufIndex = Math.floor(index / 8);
+  return ((this.buffer[bufIndex] >>> (7 - index % 8)) & 1) === 1;
+};
+
+QRBitBuffer.prototype.put = function(num, length) {
+  for (var i = 0; i < length; i++) {
+    this.putBit(((num >>> (length - i - 1)) & 1) === 1);
+  }
+};
+
+QRBitBuffer.prototype.getLengthInBits = function() {
+  return this.length;
+};
+
+QRBitBuffer.prototype.putBit = function(bit) {
+  var bufIndex = Math.floor(this.length / 8);
+  if (this.buffer.length <= bufIndex) {
+    this.buffer.push(0);
+  }
+
+  if (bit) {
+    this.buffer[bufIndex] |= (0x80 >>> (this.length % 8));
+  }
+
+  this.length++;
+};
+
+module.exports = QRBitBuffer;
+
+},{}],5:[function(require,module,exports){
+//---------------------------------------------------------------------
+// QRCode for JavaScript
+//
+// Copyright (c) 2009 Kazuhiko Arase, URL: http://www.d-project.com/
+// Copyright (c) 2013 Jan Antala, URL: http://www.janantala.com/
+//
+// Licensed under the MIT license:
+//   http://www.opensource.org/licenses/mit-license.php
+//
+// The word "QR Code" is registered trademark of
+// DENSO WAVE INCORPORATED
+//   http://www.denso-wave.com/qrcode/faqpatent-e.html
+//
+//---------------------------------------------------------------------
+
+var NUMBER = require("./NUMBER.js");
+var ALPHA_NUM = require("./ALPHA_NUM.js");
+var QR8bitByte = require("./QR8bitByte.js");
+var QRRSBlock = require("./QRRSBlock.js");
+var QRBitBuffer = require("./QRBitBuffer.js");
+var QRUtil = require("./QRUtil.js");
+var QRPolynomial = require("./QRPolynomial.js");
+
+//---------------------------------------------------------------------
+// QRCode
+//---------------------------------------------------------------------
+
+function QRCode(typeNumber, errorCorrectLevel, inputMode) {
+  this.typeNumber = typeNumber;
+  this.errorCorrectLevel = errorCorrectLevel;
+  this.inputMode = inputMode;
+  this.modules = null;
+  this.moduleCount = 0;
+  this.dataCache = null;
+  this.dataList = [];
+}
+
+QRCode.prototype.addData = function(data) {
+  var newData;
+  if (this.inputMode === "NUMBER") {
+    newData = new NUMBER(data);
+  } else if (this.inputMode === "ALPHA_NUM") {
+    newData = new ALPHA_NUM(data);
+  } else {
+    newData = new QR8bitByte(data);
+  }
+
+  this.dataList.push(newData);
+  this.dataCache = null;
+};
+
+QRCode.prototype.isDark = function(row, col) {
+  if (row < 0 || this.moduleCount <= row || col < 0 || this.moduleCount <= col) {
+    throw new Error(row + "," + col);
+  }
+  return this.modules[row][col];
+};
+
+QRCode.prototype.getModuleCount = function() {
+  return this.moduleCount;
+};
+
+QRCode.prototype.make = function() {
+  var i;
+  // Calculate automatically typeNumber if provided is < 1
+  if (this.typeNumber < 1) {
+    var typeNumber = 1;
+    for (typeNumber = 1; typeNumber < 40; typeNumber++) {
+      var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
+      var buffer = new QRBitBuffer();
+      var totalDataCount = 0;
+      for (i = 0; i < rsBlocks.length; i++) {
+        totalDataCount += rsBlocks[i].dataCount;
+      }
+
+      for (i = 0; i < this.dataList.length; i++) {
+        var data = this.dataList[i];
+        buffer.put(data.mode, 4);
+        buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber));
+        data.write(buffer);
+      }
+      if (buffer.getLengthInBits() <= totalDataCount * 8) {
+        break;
+      }
+    }
+    this.typeNumber = typeNumber;
+  }
+  this.makeImpl(false, this.getBestMaskPattern());
+};
+
+QRCode.prototype.makeImpl = function(test, maskPattern) {
+
+  this.moduleCount = this.typeNumber * 4 + 17;
+  this.modules = new Array(this.moduleCount);
+
+  for (var row = 0; row < this.moduleCount; row++) {
+
+    this.modules[row] = new Array(this.moduleCount);
+
+    for (var col = 0; col < this.moduleCount; col++) {
+      this.modules[row][col] = null; //(col + row) % 3;
+    }
+  }
+
+  this.setupPositionProbePattern(0, 0);
+  this.setupPositionProbePattern(this.moduleCount - 7, 0);
+  this.setupPositionProbePattern(0, this.moduleCount - 7);
+  this.setupPositionAdjustPattern();
+  this.setupTimingPattern();
+  this.setupTypeInfo(test, maskPattern);
+
+  if (this.typeNumber >= 7) {
+    this.setupTypeNumber(test);
+  }
+
+  if (this.dataCache === null) {
+    this.dataCache = QRCode.createData(this.typeNumber, this.errorCorrectLevel, this.dataList);
+  }
+
+  this.mapData(this.dataCache, maskPattern);
+};
+
+QRCode.prototype.setupPositionProbePattern = function(row, col) {
+
+  for (var r = -1; r <= 7; r++) {
+
+    if (row + r <= -1 || this.moduleCount <= row + r) {
+      continue;
+    }
+
+    for (var c = -1; c <= 7; c++) {
+
+      if (col + c <= -1 || this.moduleCount <= col + c) {
+        continue;
+      }
+
+      if ((0 <= r && r <= 6 && (c === 0 || c === 6)) || (0 <= c && c <= 6 && (r === 0 || r === 6)) || (2 <= r && r <= 4 && 2 <= c && c <= 4)) {
+        this.modules[row + r][col + c] = true;
+      } else {
+        this.modules[row + r][col + c] = false;
+      }
+    }
+  }
+};
+
+QRCode.prototype.getBestMaskPattern = function() {
+
+  var minLostPoint = 0;
+  var pattern = 0;
+
+  for (var i = 0; i < 8; i++) {
+
+    this.makeImpl(true, i);
+
+    var lostPoint = QRUtil.getLostPoint(this);
+
+    if (i === 0 || minLostPoint > lostPoint) {
+      minLostPoint = lostPoint;
+      pattern = i;
+    }
+  }
+
+  return pattern;
+};
+
+QRCode.prototype.createMovieClip = function(targetMc, instanceName, depth) {
+
+  var qrMc = targetMc.createEmptyMovieClip(instanceName, depth);
+  var cs = 1;
+
+  this.make();
+
+  for (var row = 0; row < this.modules.length; row++) {
+
+    var y = row * cs;
+
+    for (var col = 0; col < this.modules[row].length; col++) {
+
+      var x = col * cs;
+      var dark = this.modules[row][col];
+
+      if (dark) {
+        qrMc.beginFill(0, 100);
+        qrMc.moveTo(x, y);
+        qrMc.lineTo(x + cs, y);
+        qrMc.lineTo(x + cs, y + cs);
+        qrMc.lineTo(x, y + cs);
+        qrMc.endFill();
+      }
+    }
+  }
+
+  return qrMc;
+};
+
+QRCode.prototype.setupTimingPattern = function() {
+
+  for (var r = 8; r < this.moduleCount - 8; r++) {
+    if (this.modules[r][6] !== null) {
+      continue;
+    }
+    this.modules[r][6] = (r % 2 === 0);
+  }
+
+  for (var c = 8; c < this.moduleCount - 8; c++) {
+    if (this.modules[6][c] !== null) {
+      continue;
+    }
+    this.modules[6][c] = (c % 2 === 0);
+  }
+};
+
+QRCode.prototype.setupPositionAdjustPattern = function() {
+
+  var pos = QRUtil.getPatternPosition(this.typeNumber);
+
+  for (var i = 0; i < pos.length; i++) {
+
+    for (var j = 0; j < pos.length; j++) {
+
+      var row = pos[i];
+      var col = pos[j];
+
+      if (this.modules[row][col] !== null) {
+        continue;
+      }
+
+      for (var r = -2; r <= 2; r++) {
+
+        for (var c = -2; c <= 2; c++) {
+
+          if (r === -2 || r === 2 || c === -2 || c === 2 || (r === 0 && c === 0)) {
+            this.modules[row + r][col + c] = true;
+          } else {
+            this.modules[row + r][col + c] = false;
+          }
+        }
+      }
+    }
+  }
+},
+
+QRCode.prototype.setupTypeNumber = function(test) {
+
+  var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
+  var mod;
+  var i;
+
+  for (i = 0; i < 18; i++) {
+    mod = (!test && ((bits >> i) & 1) === 1);
+    this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod;
+  }
+
+  for (i = 0; i < 18; i++) {
+    mod = (!test && ((bits >> i) & 1) === 1);
+    this.modules[i % 3 + this.moduleCount - 8 - 3][Math.floor(i / 3)] = mod;
+  }
+};
+
+QRCode.prototype.setupTypeInfo = function(test, maskPattern) {
+
+  var data = (this.errorCorrectLevel << 3) | maskPattern;
+  var bits = QRUtil.getBCHTypeInfo(data);
+  var mod;
+  var i;
+
+  // vertical
+  for (i = 0; i < 15; i++) {
+
+    mod = (!test && ((bits >> i) & 1) === 1);
+
+    if (i < 6) {
+      this.modules[i][8] = mod;
+    } else if (i < 8) {
+      this.modules[i + 1][8] = mod;
+    } else {
+      this.modules[this.moduleCount - 15 + i][8] = mod;
+    }
+  }
+
+  // horizontal
+  for (i = 0; i < 15; i++) {
+
+    mod = (!test && ((bits >> i) & 1) === 1);
+
+    if (i < 8) {
+      this.modules[8][this.moduleCount - i - 1] = mod;
+    } else if (i < 9) {
+      this.modules[8][15 - i - 1 + 1] = mod;
+    } else {
+      this.modules[8][15 - i - 1] = mod;
+    }
+  }
+
+  // fixed module
+  this.modules[this.moduleCount - 8][8] = (!test);
+
+};
+
+QRCode.prototype.mapData = function(data, maskPattern) {
+
+  var inc = -1;
+  var row = this.moduleCount - 1;
+  var bitIndex = 7;
+  var byteIndex = 0;
+
+  for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+
+    if (col === 6) {
+      col--;
+    }
+
+    while (true) {
+
+      for (var c = 0; c < 2; c++) {
+
+        if (this.modules[row][col - c] === null) {
+
+          var dark = false;
+
+          if (byteIndex < data.length) {
+            dark = (((data[byteIndex] >>> bitIndex) & 1) === 1);
+          }
+
+          var mask = QRUtil.getMask(maskPattern, row, col - c);
+
+          if (mask) {
+            dark = !dark;
+          }
+
+          this.modules[row][col - c] = dark;
+          bitIndex--;
+
+          if (bitIndex === -1) {
+            byteIndex++;
+            bitIndex = 7;
+          }
+        }
+      }
+
+      row += inc;
+
+      if (row < 0 || this.moduleCount <= row) {
+        row -= inc;
+        inc = -inc;
+        break;
+      }
+    }
+  }
+};
+
+QRCode.PAD0 = 0xEC;
+QRCode.PAD1 = 0x11;
+
+QRCode.createData = function(typeNumber, errorCorrectLevel, dataList) {
+
+  var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
+
+  var buffer = new QRBitBuffer();
+  var i;
+
+  for (i = 0; i < dataList.length; i++) {
+    var data = dataList[i];
+    buffer.put(data.mode, 4);
+    buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber));
+    data.write(buffer);
+  }
+
+  // calc num max data.
+  var totalDataCount = 0;
+  for (i = 0; i < rsBlocks.length; i++) {
+    totalDataCount += rsBlocks[i].dataCount;
+  }
+
+  if (buffer.getLengthInBits() > totalDataCount * 8) {
+    throw new Error("code length overflow. (" + buffer.getLengthInBits() + ">" + totalDataCount * 8 + ")");
+  }
+
+  // end code
+  if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+    buffer.put(0, 4);
+  }
+
+  // padding
+  while (buffer.getLengthInBits() % 8 !== 0) {
+    buffer.putBit(false);
+  }
+
+  // padding
+  while (true) {
+
+    if (buffer.getLengthInBits() >= totalDataCount * 8) {
+      break;
+    }
+    buffer.put(QRCode.PAD0, 8);
+
+    if (buffer.getLengthInBits() >= totalDataCount * 8) {
+      break;
+    }
+    buffer.put(QRCode.PAD1, 8);
+  }
+
+  return QRCode.createBytes(buffer, rsBlocks);
+};
+
+QRCode.createBytes = function(buffer, rsBlocks) {
+
+  var offset = 0;
+
+  var maxDcCount = 0;
+  var maxEcCount = 0;
+
+  var dcdata = new Array(rsBlocks.length);
+  var ecdata = new Array(rsBlocks.length);
+
+  var i;
+  var r;
+
+  for (r = 0; r < rsBlocks.length; r++) {
+
+    var dcCount = rsBlocks[r].dataCount;
+    var ecCount = rsBlocks[r].totalCount - dcCount;
+
+    maxDcCount = Math.max(maxDcCount, dcCount);
+    maxEcCount = Math.max(maxEcCount, ecCount);
+
+    dcdata[r] = new Array(dcCount);
+
+    for (i = 0; i < dcdata[r].length; i++) {
+      dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+    }
+    offset += dcCount;
+
+    var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+    var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+
+    var modPoly = rawPoly.mod(rsPoly);
+    ecdata[r] = new Array(rsPoly.getLength() - 1);
+    for (i = 0; i < ecdata[r].length; i++) {
+      var modIndex = i + modPoly.getLength() - ecdata[r].length;
+      ecdata[r][i] = (modIndex >= 0) ? modPoly.get(modIndex) : 0;
+    }
+
+  }
+
+  var totalCodeCount = 0;
+  for (i = 0; i < rsBlocks.length; i++) {
+    totalCodeCount += rsBlocks[i].totalCount;
+  }
+
+  var data = new Array(totalCodeCount);
+  var index = 0;
+
+  for (i = 0; i < maxDcCount; i++) {
+    for (r = 0; r < rsBlocks.length; r++) {
+      if (i < dcdata[r].length) {
+        data[index++] = dcdata[r][i];
+      }
+    }
+  }
+
+  for (i = 0; i < maxEcCount; i++) {
+    for (r = 0; r < rsBlocks.length; r++) {
+      if (i < ecdata[r].length) {
+        data[index++] = ecdata[r][i];
+      }
+    }
+  }
+
+  return data;
+
+};
+
+module.exports = QRCode;
+
+},{"./ALPHA_NUM.js":1,"./NUMBER.js":2,"./QR8bitByte.js":3,"./QRBitBuffer.js":4,"./QRPolynomial.js":10,"./QRRSBlock.js":11,"./QRUtil.js":12}],6:[function(require,module,exports){
+//---------------------------------------------------------------------
+// QRErrorCorrectLevel
+//---------------------------------------------------------------------
+
+var QRErrorCorrectLevel = {
+  L: 1,
+  M: 0,
+  Q: 3,
+  H: 2
+};
+
+module.exports = QRErrorCorrectLevel;
+
+},{}],7:[function(require,module,exports){
+//---------------------------------------------------------------------
+// QRMaskPattern
+//---------------------------------------------------------------------
+
+var QRMaskPattern = {
+  PATTERN000: 0,
+  PATTERN001: 1,
+  PATTERN010: 2,
+  PATTERN011: 3,
+  PATTERN100: 4,
+  PATTERN101: 5,
+  PATTERN110: 6,
+  PATTERN111: 7
+};
+
+module.exports = QRMaskPattern;
+
+},{}],8:[function(require,module,exports){
+//---------------------------------------------------------------------
+// QRMath
+//---------------------------------------------------------------------
+
+var QRMath = {
+
+  glog: function(n) {
+
+    if (n < 1) {
+      throw new Error("glog(" + n + ")");
+    }
+
+    return QRMath.LOG_TABLE[n];
+  },
+
+  gexp: function(n) {
+
+    while (n < 0) {
+      n += 255;
+    }
+
+    while (n >= 256) {
+      n -= 255;
+    }
+
+    return QRMath.EXP_TABLE[n];
+  },
+
+  EXP_TABLE: new Array(256),
+
+  LOG_TABLE: new Array(256)
+
+};
+
+for (var i = 0; i < 8; i++) {
+  QRMath.EXP_TABLE[i] = 1 << i;
+}
+for (var i = 8; i < 256; i++) {
+  QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];
+}
+for (var i = 0; i < 255; i++) {
+  QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i;
+}
+
+module.exports = QRMath;
+
+},{}],9:[function(require,module,exports){
+//---------------------------------------------------------------------
+// QRMode
+//---------------------------------------------------------------------
+
+var QRMode = {
+  MODE_NUMBER: 1 << 0,
+  MODE_ALPHA_NUM: 1 << 1,
+  MODE_8BIT_BYTE: 1 << 2,
+  MODE_KANJI: 1 << 3
+};
+
+module.exports = QRMode;
+
+},{}],10:[function(require,module,exports){
+var QRMath = require("./QRMath.js");
+
+//---------------------------------------------------------------------
+// QRPolynomial
+//---------------------------------------------------------------------
+
+function QRPolynomial(num, shift) {
+
+  if (num.length === undefined) {
+    throw new Error(num.length + "/" + shift);
+  }
+
+  var offset = 0;
+
+  while (offset < num.length && num[offset] === 0) {
+    offset++;
+  }
+
+  this.num = new Array(num.length - offset + shift);
+  for (var i = 0; i < num.length - offset; i++) {
+    this.num[i] = num[i + offset];
+  }
+}
+
+QRPolynomial.prototype.get = function(index) {
+  return this.num[index];
+};
+
+QRPolynomial.prototype.getLength = function() {
+  return this.num.length;
+};
+
+QRPolynomial.prototype.multiply = function(e) {
+
+  var num = new Array(this.getLength() + e.getLength() - 1);
+
+  for (var i = 0; i < this.getLength(); i++) {
+    for (var j = 0; j < e.getLength(); j++) {
+      num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i)) + QRMath.glog(e.get(j)));
+    }
+  }
+
+  return new QRPolynomial(num, 0);
+};
+
+QRPolynomial.prototype.mod = function(e) {
+
+  if (this.getLength() - e.getLength() < 0) {
+    return this;
+  }
+
+  var ratio = QRMath.glog(this.get(0)) - QRMath.glog(e.get(0));
+
+  var num = new Array(this.getLength());
+
+  var i;
+
+  for (i = 0; i < this.getLength(); i++) {
+    num[i] = this.get(i);
+  }
+
+  for (i = 0; i < e.getLength(); i++) {
+    num[i] ^= QRMath.gexp(QRMath.glog(e.get(i)) + ratio);
+  }
+
+  // recursive call
+  return new QRPolynomial(num, 0).mod(e);
+};
+
+module.exports = QRPolynomial;
+
+},{"./QRMath.js":8}],11:[function(require,module,exports){
+var QRErrorCorrectLevel = require("./QRErrorCorrectLevel.js");
+
+//---------------------------------------------------------------------
+// QRRSBlock
+//---------------------------------------------------------------------
+
+function QRRSBlock(totalCount, dataCount) {
+  this.totalCount = totalCount;
+  this.dataCount = dataCount;
+}
+
+QRRSBlock.RS_BLOCK_TABLE = [
+
+  // L
+  // M
+  // Q
+  // H
+
+  // 1
+  [1, 26, 19],
+  [1, 26, 16],
+  [1, 26, 13],
+  [1, 26, 9],
+
+  // 2
+  [1, 44, 34],
+  [1, 44, 28],
+  [1, 44, 22],
+  [1, 44, 16],
+
+  // 3
+  [1, 70, 55],
+  [1, 70, 44],
+  [2, 35, 17],
+  [2, 35, 13],
+
+  // 4
+  [1, 100, 80],
+  [2, 50, 32],
+  [2, 50, 24],
+  [4, 25, 9],
+
+  // 5
+  [1, 134, 108],
+  [2, 67, 43],
+  [2, 33, 15, 2, 34, 16],
+  [2, 33, 11, 2, 34, 12],
+
+  // 6
+  [2, 86, 68],
+  [4, 43, 27],
+  [4, 43, 19],
+  [4, 43, 15],
+
+  // 7
+  [2, 98, 78],
+  [4, 49, 31],
+  [2, 32, 14, 4, 33, 15],
+  [4, 39, 13, 1, 40, 14],
+
+  // 8
+  [2, 121, 97],
+  [2, 60, 38, 2, 61, 39],
+  [4, 40, 18, 2, 41, 19],
+  [4, 40, 14, 2, 41, 15],
+
+  // 9
+  [2, 146, 116],
+  [3, 58, 36, 2, 59, 37],
+  [4, 36, 16, 4, 37, 17],
+  [4, 36, 12, 4, 37, 13],
+
+  // 10
+  [2, 86, 68, 2, 87, 69],
+  [4, 69, 43, 1, 70, 44],
+  [6, 43, 19, 2, 44, 20],
+  [6, 43, 15, 2, 44, 16],
+
+  // 11
+  [4, 101, 81],
+  [1, 80, 50, 4, 81, 51],
+  [4, 50, 22, 4, 51, 23],
+  [3, 36, 12, 8, 37, 13],
+
+  // 12
+  [2, 116, 92, 2, 117, 93],
+  [6, 58, 36, 2, 59, 37],
+  [4, 46, 20, 6, 47, 21],
+  [7, 42, 14, 4, 43, 15],
+
+  // 13
+  [4, 133, 107],
+  [8, 59, 37, 1, 60, 38],
+  [8, 44, 20, 4, 45, 21],
+  [12, 33, 11, 4, 34, 12],
+
+  // 14
+  [3, 145, 115, 1, 146, 116],
+  [4, 64, 40, 5, 65, 41],
+  [11, 36, 16, 5, 37, 17],
+  [11, 36, 12, 5, 37, 13],
+
+  // 15
+  [5, 109, 87, 1, 110, 88],
+  [5, 65, 41, 5, 66, 42],
+  [5, 54, 24, 7, 55, 25],
+  [11, 36, 12],
+
+  // 16
+  [5, 122, 98, 1, 123, 99],
+  [7, 73, 45, 3, 74, 46],
+  [15, 43, 19, 2, 44, 20],
+  [3, 45, 15, 13, 46, 16],
+
+  // 17
+  [1, 135, 107, 5, 136, 108],
+  [10, 74, 46, 1, 75, 47],
+  [1, 50, 22, 15, 51, 23],
+  [2, 42, 14, 17, 43, 15],
+
+  // 18
+  [5, 150, 120, 1, 151, 121],
+  [9, 69, 43, 4, 70, 44],
+  [17, 50, 22, 1, 51, 23],
+  [2, 42, 14, 19, 43, 15],
+
+  // 19
+  [3, 141, 113, 4, 142, 114],
+  [3, 70, 44, 11, 71, 45],
+  [17, 47, 21, 4, 48, 22],
+  [9, 39, 13, 16, 40, 14],
+
+  // 20
+  [3, 135, 107, 5, 136, 108],
+  [3, 67, 41, 13, 68, 42],
+  [15, 54, 24, 5, 55, 25],
+  [15, 43, 15, 10, 44, 16],
+
+  // 21
+  [4, 144, 116, 4, 145, 117],
+  [17, 68, 42],
+  [17, 50, 22, 6, 51, 23],
+  [19, 46, 16, 6, 47, 17],
+
+  // 22
+  [2, 139, 111, 7, 140, 112],
+  [17, 74, 46],
+  [7, 54, 24, 16, 55, 25],
+  [34, 37, 13],
+
+  // 23
+  [4, 151, 121, 5, 152, 122],
+  [4, 75, 47, 14, 76, 48],
+  [11, 54, 24, 14, 55, 25],
+  [16, 45, 15, 14, 46, 16],
+
+  // 24
+  [6, 147, 117, 4, 148, 118],
+  [6, 73, 45, 14, 74, 46],
+  [11, 54, 24, 16, 55, 25],
+  [30, 46, 16, 2, 47, 17],
+
+  // 25
+  [8, 132, 106, 4, 133, 107],
+  [8, 75, 47, 13, 76, 48],
+  [7, 54, 24, 22, 55, 25],
+  [22, 45, 15, 13, 46, 16],
+
+  // 26
+  [10, 142, 114, 2, 143, 115],
+  [19, 74, 46, 4, 75, 47],
+  [28, 50, 22, 6, 51, 23],
+  [33, 46, 16, 4, 47, 17],
+
+  // 27
+  [8, 152, 122, 4, 153, 123],
+  [22, 73, 45, 3, 74, 46],
+  [8, 53, 23, 26, 54, 24],
+  [12, 45, 15, 28, 46, 16],
+
+  // 28
+  [3, 147, 117, 10, 148, 118],
+  [3, 73, 45, 23, 74, 46],
+  [4, 54, 24, 31, 55, 25],
+  [11, 45, 15, 31, 46, 16],
+
+  // 29
+  [7, 146, 116, 7, 147, 117],
+  [21, 73, 45, 7, 74, 46],
+  [1, 53, 23, 37, 54, 24],
+  [19, 45, 15, 26, 46, 16],
+
+  // 30
+  [5, 145, 115, 10, 146, 116],
+  [19, 75, 47, 10, 76, 48],
+  [15, 54, 24, 25, 55, 25],
+  [23, 45, 15, 25, 46, 16],
+
+  // 31
+  [13, 145, 115, 3, 146, 116],
+  [2, 74, 46, 29, 75, 47],
+  [42, 54, 24, 1, 55, 25],
+  [23, 45, 15, 28, 46, 16],
+
+  // 32
+  [17, 145, 115],
+  [10, 74, 46, 23, 75, 47],
+  [10, 54, 24, 35, 55, 25],
+  [19, 45, 15, 35, 46, 16],
+
+  // 33
+  [17, 145, 115, 1, 146, 116],
+  [14, 74, 46, 21, 75, 47],
+  [29, 54, 24, 19, 55, 25],
+  [11, 45, 15, 46, 46, 16],
+
+  // 34
+  [13, 145, 115, 6, 146, 116],
+  [14, 74, 46, 23, 75, 47],
+  [44, 54, 24, 7, 55, 25],
+  [59, 46, 16, 1, 47, 17],
+
+  // 35
+  [12, 151, 121, 7, 152, 122],
+  [12, 75, 47, 26, 76, 48],
+  [39, 54, 24, 14, 55, 25],
+  [22, 45, 15, 41, 46, 16],
+
+  // 36
+  [6, 151, 121, 14, 152, 122],
+  [6, 75, 47, 34, 76, 48],
+  [46, 54, 24, 10, 55, 25],
+  [2, 45, 15, 64, 46, 16],
+
+  // 37
+  [17, 152, 122, 4, 153, 123],
+  [29, 74, 46, 14, 75, 47],
+  [49, 54, 24, 10, 55, 25],
+  [24, 45, 15, 46, 46, 16],
+
+  // 38
+  [4, 152, 122, 18, 153, 123],
+  [13, 74, 46, 32, 75, 47],
+  [48, 54, 24, 14, 55, 25],
+  [42, 45, 15, 32, 46, 16],
+
+  // 39
+  [20, 147, 117, 4, 148, 118],
+  [40, 75, 47, 7, 76, 48],
+  [43, 54, 24, 22, 55, 25],
+  [10, 45, 15, 67, 46, 16],
+
+  // 40
+  [19, 148, 118, 6, 149, 119],
+  [18, 75, 47, 31, 76, 48],
+  [34, 54, 24, 34, 55, 25],
+  [20, 45, 15, 61, 46, 16]
+];
+
+QRRSBlock.getRSBlocks = function(typeNumber, errorCorrectLevel) {
+
+  var rsBlock = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectLevel);
+
+  if (rsBlock === undefined) {
+    throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectLevel:" + errorCorrectLevel);
+  }
+
+  var length = rsBlock.length / 3;
+
+  var list = [];
+
+  for (var i = 0; i < length; i++) {
+
+    var count = rsBlock[i * 3 + 0];
+    var totalCount = rsBlock[i * 3 + 1];
+    var dataCount = rsBlock[i * 3 + 2];
+
+    for (var j = 0; j < count; j++) {
+      list.push(new QRRSBlock(totalCount, dataCount));
+    }
+  }
+
+  return list;
+};
+
+QRRSBlock.getRsBlockTable = function(typeNumber, errorCorrectLevel) {
+
+  switch (errorCorrectLevel) {
+    case QRErrorCorrectLevel.L:
+      return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+    case QRErrorCorrectLevel.M:
+      return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+    case QRErrorCorrectLevel.Q:
+      return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+    case QRErrorCorrectLevel.H:
+      return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+    default:
+      return undefined;
+  }
+};
+
+module.exports = QRRSBlock;
+
+},{"./QRErrorCorrectLevel.js":6}],12:[function(require,module,exports){
+var QRMaskPattern = require("./QRMaskPattern.js");
+var QRPolynomial = require("./QRPolynomial.js");
+var QRMath = require("./QRMath.js");
+var QRMode = require("./QRMode.js");
+
+//---------------------------------------------------------------------
+// QRUtil
+//---------------------------------------------------------------------
+
+var QRUtil = {};
+
+QRUtil.PATTERN_POSITION_TABLE = [
+  [],
+  [6, 18],
+  [6, 22],
+  [6, 26],
+  [6, 30],
+  [6, 34],
+  [6, 22, 38],
+  [6, 24, 42],
+  [6, 26, 46],
+  [6, 28, 50],
+  [6, 30, 54],
+  [6, 32, 58],
+  [6, 34, 62],
+  [6, 26, 46, 66],
+  [6, 26, 48, 70],
+  [6, 26, 50, 74],
+  [6, 30, 54, 78],
+  [6, 30, 56, 82],
+  [6, 30, 58, 86],
+  [6, 34, 62, 90],
+  [6, 28, 50, 72, 94],
+  [6, 26, 50, 74, 98],
+  [6, 30, 54, 78, 102],
+  [6, 28, 54, 80, 106],
+  [6, 32, 58, 84, 110],
+  [6, 30, 58, 86, 114],
+  [6, 34, 62, 90, 118],
+  [6, 26, 50, 74, 98, 122],
+  [6, 30, 54, 78, 102, 126],
+  [6, 26, 52, 78, 104, 130],
+  [6, 30, 56, 82, 108, 134],
+  [6, 34, 60, 86, 112, 138],
+  [6, 30, 58, 86, 114, 142],
+  [6, 34, 62, 90, 118, 146],
+  [6, 30, 54, 78, 102, 126, 150],
+  [6, 24, 50, 76, 102, 128, 154],
+  [6, 28, 54, 80, 106, 132, 158],
+  [6, 32, 58, 84, 110, 136, 162],
+  [6, 26, 54, 82, 110, 138, 166],
+  [6, 30, 58, 86, 114, 142, 170]
+];
+
+QRUtil.G15 = (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0);
+QRUtil.G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0);
+QRUtil.G15_MASK = (1 << 14) | (1 << 12) | (1 << 10) | (1 << 4) | (1 << 1);
+
+QRUtil.getBCHTypeInfo = function(data) {
+  var d = data << 10;
+  while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) >= 0) {
+    d ^= (QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15)));
+  }
+  return ((data << 10) | d) ^ QRUtil.G15_MASK;
+};
+
+QRUtil.getBCHTypeNumber = function(data) {
+  var d = data << 12;
+  while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) >= 0) {
+    d ^= (QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18)));
+  }
+  return (data << 12) | d;
+};
+
+QRUtil.getBCHDigit = function(data) {
+
+  var digit = 0;
+
+  while (data !== 0) {
+    digit++;
+    data >>>= 1;
+  }
+
+  return digit;
+};
+
+QRUtil.getPatternPosition = function(typeNumber) {
+  return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1];
+};
+
+QRUtil.getMask = function(maskPattern, i, j) {
+
+  switch (maskPattern) {
+
+    case QRMaskPattern.PATTERN000:
+      return (i + j) % 2 === 0;
+    case QRMaskPattern.PATTERN001:
+      return i % 2 === 0;
+    case QRMaskPattern.PATTERN010:
+      return j % 3 === 0;
+    case QRMaskPattern.PATTERN011:
+      return (i + j) % 3 === 0;
+    case QRMaskPattern.PATTERN100:
+      return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 === 0;
+    case QRMaskPattern.PATTERN101:
+      return (i * j) % 2 + (i * j) % 3 === 0;
+    case QRMaskPattern.PATTERN110:
+      return ((i * j) % 2 + (i * j) % 3) % 2 === 0;
+    case QRMaskPattern.PATTERN111:
+      return ((i * j) % 3 + (i + j) % 2) % 2 === 0;
+
+    default:
+      throw new Error("bad maskPattern:" + maskPattern);
+  }
+};
+
+QRUtil.getErrorCorrectPolynomial = function(errorCorrectLength) {
+
+  var a = new QRPolynomial([1], 0);
+
+  for (var i = 0; i < errorCorrectLength; i++) {
+    a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0));
+  }
+
+  return a;
+};
+
+QRUtil.getLengthInBits = function(mode, type) {
+
+  if (1 <= type && type < 10) {
+
+    // 1 - 9
+
+    switch (mode) {
+      case QRMode.MODE_NUMBER:
+        return 10;
+      case QRMode.MODE_ALPHA_NUM:
+        return 9;
+      case QRMode.MODE_8BIT_BYTE:
+        return 8;
+      case QRMode.MODE_KANJI:
+        return 8;
+      default:
+        throw new Error("mode:" + mode);
+    }
+
+  } else if (type < 27) {
+
+    // 10 - 26
+
+    switch (mode) {
+      case QRMode.MODE_NUMBER:
+        return 12;
+      case QRMode.MODE_ALPHA_NUM:
+        return 11;
+      case QRMode.MODE_8BIT_BYTE:
+        return 16;
+      case QRMode.MODE_KANJI:
+        return 10;
+      default:
+        throw new Error("mode:" + mode);
+    }
+
+  } else if (type < 41) {
+
+    // 27 - 40
+
+    switch (mode) {
+      case QRMode.MODE_NUMBER:
+        return 14;
+      case QRMode.MODE_ALPHA_NUM:
+        return 13;
+      case QRMode.MODE_8BIT_BYTE:
+        return 16;
+      case QRMode.MODE_KANJI:
+        return 12;
+      default:
+        throw new Error("mode:" + mode);
+    }
+
+  } else {
+    throw new Error("type:" + type);
+  }
+};
+
+QRUtil.getLostPoint = function(qrCode) {
+
+  var moduleCount = qrCode.getModuleCount();
+
+  var lostPoint = 0;
+
+  var row;
+  var col;
+
+  // LEVEL1
+
+  for (row = 0; row < moduleCount; row++) {
+
+    for (col = 0; col < moduleCount; col++) {
+
+      var sameCount = 0;
+      var dark = qrCode.isDark(row, col);
+
+      for (var r = -1; r <= 1; r++) {
+
+        if (row + r < 0 || moduleCount <= row + r) {
+          continue;
+        }
+
+        for (var c = -1; c <= 1; c++) {
+
+          if (col + c < 0 || moduleCount <= col + c) {
+            continue;
+          }
+
+          if (r === 0 && c === 0) {
+            continue;
+          }
+
+          if (dark === qrCode.isDark(row + r, col + c)) {
+            sameCount++;
+          }
+        }
+      }
+
+      if (sameCount > 5) {
+        lostPoint += (3 + sameCount - 5);
+      }
+    }
+  }
+
+  // LEVEL2
+
+  for (row = 0; row < moduleCount - 1; row++) {
+    for (col = 0; col < moduleCount - 1; col++) {
+      var count = 0;
+      if (qrCode.isDark(row, col)) {
+        count++;
+      }
+      if (qrCode.isDark(row + 1, col)) {
+        count++;
+      }
+      if (qrCode.isDark(row, col + 1)) {
+        count++;
+      }
+      if (qrCode.isDark(row + 1, col + 1)) {
+        count++;
+      }
+      if (count === 0 || count === 4) {
+        lostPoint += 3;
+      }
+    }
+  }
+
+  // LEVEL3
+
+  for (row = 0; row < moduleCount; row++) {
+    for (col = 0; col < moduleCount - 6; col++) {
+      if (qrCode.isDark(row, col) && !qrCode.isDark(row, col + 1) && qrCode.isDark(row, col + 2) && qrCode.isDark(row, col + 3) && qrCode.isDark(row, col + 4) && !qrCode.isDark(row, col + 5) && qrCode.isDark(row, col + 6)) {
+        lostPoint += 40;
+      }
+    }
+  }
+
+  for (col = 0; col < moduleCount; col++) {
+    for (row = 0; row < moduleCount - 6; row++) {
+      if (qrCode.isDark(row, col) && !qrCode.isDark(row + 1, col) && qrCode.isDark(row + 2, col) && qrCode.isDark(row + 3, col) && qrCode.isDark(row + 4, col) && !qrCode.isDark(row + 5, col) && qrCode.isDark(row + 6, col)) {
+        lostPoint += 40;
+      }
+    }
+  }
+
+  // LEVEL4
+
+  var darkCount = 0;
+
+  for (col = 0; col < moduleCount; col++) {
+    for (row = 0; row < moduleCount; row++) {
+      if (qrCode.isDark(row, col)) {
+        darkCount++;
+      }
+    }
+  }
+
+  var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+  lostPoint += ratio * 10;
+
+  return lostPoint;
+};
+
+module.exports = QRUtil;
+
+},{"./QRMaskPattern.js":7,"./QRMath.js":8,"./QRMode.js":9,"./QRPolynomial.js":10}]},{},[5])
+(5)
+});
+;
 var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){var f=this.data.charCodeAt(d);f>65536?(b[0]=240|(1835008&f)>>>18,b[1]=128|(258048&f)>>>12,b[2]=128|(4032&f)>>>6,b[3]=128|63&f):f>2048?(b[0]=224|(61440&f)>>>12,b[1]=128|(4032&f)>>>6,b[2]=128|63&f):f>128?(b[0]=192|(1984&f)>>>6,b[1]=128|63&f):b[0]=f,this.parsedData=this.parsedData.concat(b)}this.parsedData.length!=this.data.length&&(this.parsedData.unshift(191),this.parsedData.unshift(187),this.parsedData.unshift(239))}function b(a,b){this.typeNumber=a,this.errorCorrectLevel=b,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}function i(a,b){if(void 0==a.length)throw new Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=new Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]}function j(a,b){this.totalCount=a,this.dataCount=b}function k(){this.buffer=[],this.length=0}function m(){return"undefined"!=typeof CanvasRenderingContext2D}function n(){var a=!1,b=navigator.userAgent;return/android/i.test(b)&&(a=!0,aMat=b.toString().match(/android ([0-9]\.[0-9])/i),aMat&&aMat[1]&&(a=parseFloat(aMat[1]))),a}function r(a,b){for(var c=1,e=s(a),f=0,g=l.length;g>=f;f++){var h=0;switch(b){case d.L:h=l[f][0];break;case d.M:h=l[f][1];break;case d.Q:h=l[f][2];break;case d.H:h=l[f][3]}if(h>=e)break;c++}if(c>l.length)throw new Error("Too long data");return c}function s(a){var b=encodeURI(a).toString().replace(/\%[0-9a-fA-F]{2}/g,"a");return b.length+(b.length!=a?3:0)}a.prototype={getLength:function(){return this.parsedData.length},write:function(a){for(var b=0,c=this.parsedData.length;c>b;b++)a.put(this.parsedData[b],8)}},b.prototype={addData:function(b){var c=new a(b);this.dataList.push(c),this.dataCache=null},isDark:function(a,b){if(0>a||this.moduleCount<=a||0>b||this.moduleCount<=b)throw new Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,c){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++){this.modules[d]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[d][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(a,c),this.typeNumber>=7&&this.setupTypeNumber(a),null==this.dataCache&&(this.dataCache=b.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache,c)},setupPositionProbePattern:function(a,b){for(var c=-1;7>=c;c++)if(!(-1>=a+c||this.moduleCount<=a+c))for(var d=-1;7>=d;d++)-1>=b+d||this.moduleCount<=b+d||(this.modules[a+c][b+d]=c>=0&&6>=c&&(0==d||6==d)||d>=0&&6>=d&&(0==c||6==c)||c>=2&&4>=c&&d>=2&&4>=d?!0:!1)},getBestMaskPattern:function(){for(var a=0,b=0,c=0;8>c;c++){this.makeImpl(!0,c);var d=f.getLostPoint(this);(0==c||a>d)&&(a=d,b=c)}return b},createMovieClip:function(a,b,c){var d=a.createEmptyMovieClip(b,c),e=1;this.make();for(var f=0;f<this.modules.length;f++)for(var g=f*e,h=0;h<this.modules[f].length;h++){var i=h*e,j=this.modules[f][h];j&&(d.beginFill(0,100),d.moveTo(i,g),d.lineTo(i+e,g),d.lineTo(i+e,g+e),d.lineTo(i,g+e),d.endFill())}return d},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=0==a%2);for(var b=8;b<this.moduleCount-8;b++)null==this.modules[6][b]&&(this.modules[6][b]=0==b%2)},setupPositionAdjustPattern:function(){for(var a=f.getPatternPosition(this.typeNumber),b=0;b<a.length;b++)for(var c=0;c<a.length;c++){var d=a[b],e=a[c];if(null==this.modules[d][e])for(var g=-2;2>=g;g++)for(var h=-2;2>=h;h++)this.modules[d+g][e+h]=-2==g||2==g||-2==h||2==h||0==g&&0==h?!0:!1}},setupTypeNumber:function(a){for(var b=f.getBCHTypeNumber(this.typeNumber),c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(var c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[c%3+this.moduleCount-8-3][Math.floor(c/3)]=d}},setupTypeInfo:function(a,b){for(var c=this.errorCorrectLevel<<3|b,d=f.getBCHTypeInfo(c),e=0;15>e;e++){var g=!a&&1==(1&d>>e);6>e?this.modules[e][8]=g:8>e?this.modules[e+1][8]=g:this.modules[this.moduleCount-15+e][8]=g}for(var e=0;15>e;e++){var g=!a&&1==(1&d>>e);8>e?this.modules[8][this.moduleCount-e-1]=g:9>e?this.modules[8][15-e-1+1]=g:this.modules[8][15-e-1]=g}this.modules[this.moduleCount-8][8]=!a},mapData:function(a,b){for(var c=-1,d=this.moduleCount-1,e=7,g=0,h=this.moduleCount-1;h>0;h-=2)for(6==h&&h--;;){for(var i=0;2>i;i++)if(null==this.modules[d][h-i]){var j=!1;g<a.length&&(j=1==(1&a[g]>>>e));var k=f.getMask(b,d,h-i);k&&(j=!j),this.modules[d][h-i]=j,e--,-1==e&&(g++,e=7)}if(d+=c,0>d||this.moduleCount<=d){d-=c,c=-c;break}}}},b.PAD0=236,b.PAD1=17,b.createData=function(a,c,d){for(var e=j.getRSBlocks(a,c),g=new k,h=0;h<d.length;h++){var i=d[h];g.put(i.mode,4),g.put(i.getLength(),f.getLengthInBits(i.mode,a)),i.write(g)}for(var l=0,h=0;h<e.length;h++)l+=e[h].dataCount;if(g.getLengthInBits()>8*l)throw new Error("code length overflow. ("+g.getLengthInBits()+">"+8*l+")");for(g.getLengthInBits()+4<=8*l&&g.put(0,4);0!=g.getLengthInBits()%8;)g.putBit(!1);for(;;){if(g.getLengthInBits()>=8*l)break;if(g.put(b.PAD0,8),g.getLengthInBits()>=8*l)break;g.put(b.PAD1,8)}return b.createBytes(g,e)},b.createBytes=function(a,b){for(var c=0,d=0,e=0,g=new Array(b.length),h=new Array(b.length),j=0;j<b.length;j++){var k=b[j].dataCount,l=b[j].totalCount-k;d=Math.max(d,k),e=Math.max(e,l),g[j]=new Array(k);for(var m=0;m<g[j].length;m++)g[j][m]=255&a.buffer[m+c];c+=k;var n=f.getErrorCorrectPolynomial(l),o=new i(g[j],n.getLength()-1),p=o.mod(n);h[j]=new Array(n.getLength()-1);for(var m=0;m<h[j].length;m++){var q=m+p.getLength()-h[j].length;h[j][m]=q>=0?p.get(q):0}}for(var r=0,m=0;m<b.length;m++)r+=b[m].totalCount;for(var s=new Array(r),t=0,m=0;d>m;m++)for(var j=0;j<b.length;j++)m<g[j].length&&(s[t++]=g[j][m]);for(var m=0;e>m;m++)for(var j=0;j<b.length;j++)m<h[j].length&&(s[t++]=h[j][m]);return s};for(var c={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8},d={L:1,M:0,Q:3,H:2},e={PATTERN000:0,PATTERN001:1,PATTERN010:2,PATTERN011:3,PATTERN100:4,PATTERN101:5,PATTERN110:6,PATTERN111:7},f={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],G15:1335,G18:7973,G15_MASK:21522,getBCHTypeInfo:function(a){for(var b=a<<10;f.getBCHDigit(b)-f.getBCHDigit(f.G15)>=0;)b^=f.G15<<f.getBCHDigit(b)-f.getBCHDigit(f.G15);return(a<<10|b)^f.G15_MASK},getBCHTypeNumber:function(a){for(var b=a<<12;f.getBCHDigit(b)-f.getBCHDigit(f.G18)>=0;)b^=f.G18<<f.getBCHDigit(b)-f.getBCHDigit(f.G18);return a<<12|b},getBCHDigit:function(a){for(var b=0;0!=a;)b++,a>>>=1;return b},getPatternPosition:function(a){return f.PATTERN_POSITION_TABLE[a-1]},getMask:function(a,b,c){switch(a){case e.PATTERN000:return 0==(b+c)%2;case e.PATTERN001:return 0==b%2;case e.PATTERN010:return 0==c%3;case e.PATTERN011:return 0==(b+c)%3;case e.PATTERN100:return 0==(Math.floor(b/2)+Math.floor(c/3))%2;case e.PATTERN101:return 0==b*c%2+b*c%3;case e.PATTERN110:return 0==(b*c%2+b*c%3)%2;case e.PATTERN111:return 0==(b*c%3+(b+c)%2)%2;default:throw new Error("bad maskPattern:"+a)}},getErrorCorrectPolynomial:function(a){for(var b=new i([1],0),c=0;a>c;c++)b=b.multiply(new i([1,g.gexp(c)],0));return b},getLengthInBits:function(a,b){if(b>=1&&10>b)switch(a){case c.MODE_NUMBER:return 10;case c.MODE_ALPHA_NUM:return 9;case c.MODE_8BIT_BYTE:return 8;case c.MODE_KANJI:return 8;default:throw new Error("mode:"+a)}else if(27>b)switch(a){case c.MODE_NUMBER:return 12;case c.MODE_ALPHA_NUM:return 11;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 10;default:throw new Error("mode:"+a)}else{if(!(41>b))throw new Error("type:"+b);switch(a){case c.MODE_NUMBER:return 14;case c.MODE_ALPHA_NUM:return 13;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 12;default:throw new Error("mode:"+a)}}},getLostPoint:function(a){for(var b=a.getModuleCount(),c=0,d=0;b>d;d++)for(var e=0;b>e;e++){for(var f=0,g=a.isDark(d,e),h=-1;1>=h;h++)if(!(0>d+h||d+h>=b))for(var i=-1;1>=i;i++)0>e+i||e+i>=b||(0!=h||0!=i)&&g==a.isDark(d+h,e+i)&&f++;f>5&&(c+=3+f-5)}for(var d=0;b-1>d;d++)for(var e=0;b-1>e;e++){var j=0;a.isDark(d,e)&&j++,a.isDark(d+1,e)&&j++,a.isDark(d,e+1)&&j++,a.isDark(d+1,e+1)&&j++,(0==j||4==j)&&(c+=3)}for(var d=0;b>d;d++)for(var e=0;b-6>e;e++)a.isDark(d,e)&&!a.isDark(d,e+1)&&a.isDark(d,e+2)&&a.isDark(d,e+3)&&a.isDark(d,e+4)&&!a.isDark(d,e+5)&&a.isDark(d,e+6)&&(c+=40);for(var e=0;b>e;e++)for(var d=0;b-6>d;d++)a.isDark(d,e)&&!a.isDark(d+1,e)&&a.isDark(d+2,e)&&a.isDark(d+3,e)&&a.isDark(d+4,e)&&!a.isDark(d+5,e)&&a.isDark(d+6,e)&&(c+=40);for(var k=0,e=0;b>e;e++)for(var d=0;b>d;d++)a.isDark(d,e)&&k++;var l=Math.abs(100*k/b/b-50)/5;return c+=10*l}},g={glog:function(a){if(1>a)throw new Error("glog("+a+")");return g.LOG_TABLE[a]},gexp:function(a){for(;0>a;)a+=255;for(;a>=256;)a-=255;return g.EXP_TABLE[a]},EXP_TABLE:new Array(256),LOG_TABLE:new Array(256)},h=0;8>h;h++)g.EXP_TABLE[h]=1<<h;for(var h=8;256>h;h++)g.EXP_TABLE[h]=g.EXP_TABLE[h-4]^g.EXP_TABLE[h-5]^g.EXP_TABLE[h-6]^g.EXP_TABLE[h-8];for(var h=0;255>h;h++)g.LOG_TABLE[g.EXP_TABLE[h]]=h;i.prototype={get:function(a){return this.num[a]},getLength:function(){return this.num.length},multiply:function(a){for(var b=new Array(this.getLength()+a.getLength()-1),c=0;c<this.getLength();c++)for(var d=0;d<a.getLength();d++)b[c+d]^=g.gexp(g.glog(this.get(c))+g.glog(a.get(d)));return new i(b,0)},mod:function(a){if(this.getLength()-a.getLength()<0)return this;for(var b=g.glog(this.get(0))-g.glog(a.get(0)),c=new Array(this.getLength()),d=0;d<this.getLength();d++)c[d]=this.get(d);for(var d=0;d<a.getLength();d++)c[d]^=g.gexp(g.glog(a.get(d))+b);return new i(c,0).mod(a)}},j.RS_BLOCK_TABLE=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],j.getRSBlocks=function(a,b){var c=j.getRsBlockTable(a,b);if(void 0==c)throw new Error("bad rs block @ typeNumber:"+a+"/errorCorrectLevel:"+b);for(var d=c.length/3,e=[],f=0;d>f;f++)for(var g=c[3*f+0],h=c[3*f+1],i=c[3*f+2],k=0;g>k;k++)e.push(new j(h,i));return e},j.getRsBlockTable=function(a,b){switch(b){case d.L:return j.RS_BLOCK_TABLE[4*(a-1)+0];case d.M:return j.RS_BLOCK_TABLE[4*(a-1)+1];case d.Q:return j.RS_BLOCK_TABLE[4*(a-1)+2];case d.H:return j.RS_BLOCK_TABLE[4*(a-1)+3];default:return void 0}},k.prototype={get:function(a){var b=Math.floor(a/8);return 1==(1&this.buffer[b]>>>7-a%8)},put:function(a,b){for(var c=0;b>c;c++)this.putBit(1==(1&a>>>b-c-1))},getLengthInBits:function(){return this.length},putBit:function(a){var b=Math.floor(this.length/8);this.buffer.length<=b&&this.buffer.push(0),a&&(this.buffer[b]|=128>>>this.length%8),this.length++}};var l=[[17,14,11,7],[32,26,20,14],[53,42,32,24],[78,62,46,34],[106,84,60,44],[134,106,74,58],[154,122,86,64],[192,152,108,84],[230,180,130,98],[271,213,151,119],[321,251,177,137],[367,287,203,155],[425,331,241,177],[458,362,258,194],[520,412,292,220],[586,450,322,250],[644,504,364,280],[718,560,394,310],[792,624,442,338],[858,666,482,382],[929,711,509,403],[1003,779,565,439],[1091,857,611,461],[1171,911,661,511],[1273,997,715,535],[1367,1059,751,593],[1465,1125,805,625],[1528,1190,868,658],[1628,1264,908,698],[1732,1370,982,742],[1840,1452,1030,790],[1952,1538,1112,842],[2068,1628,1168,898],[2188,1722,1228,958],[2303,1809,1283,983],[2431,1911,1351,1051],[2563,1989,1423,1093],[2699,2099,1499,1139],[2809,2213,1579,1219],[2953,2331,1663,1273]],o=function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){function g(a,b){var c=document.createElementNS("http://www.w3.org/2000/svg",a);for(var d in b)b.hasOwnProperty(d)&&c.setAttribute(d,b[d]);return c}var b=this._htOption,c=this._el,d=a.getModuleCount();Math.floor(b.width/d),Math.floor(b.height/d),this.clear();var h=g("svg",{viewBox:"0 0 "+String(d)+" "+String(d),width:"100%",height:"100%",fill:b.colorLight});h.setAttributeNS("http://www.w3.org/2000/xmlns/","xmlns:xlink","http://www.w3.org/1999/xlink"),c.appendChild(h),h.appendChild(g("rect",{fill:b.colorDark,width:"1",height:"1",id:"template"}));for(var i=0;d>i;i++)for(var j=0;d>j;j++)if(a.isDark(i,j)){var k=g("use",{x:String(i),y:String(j)});k.setAttributeNS("http://www.w3.org/1999/xlink","href","#template"),h.appendChild(k)}},a.prototype.clear=function(){for(;this._el.hasChildNodes();)this._el.removeChild(this._el.lastChild)},a}(),p="svg"===document.documentElement.tagName.toLowerCase(),q=p?o:m()?function(){function a(){this._elImage.src=this._elCanvas.toDataURL("image/png"),this._elImage.style.display="block",this._elCanvas.style.display="none"}function d(a,b){var c=this;if(c._fFail=b,c._fSuccess=a,null===c._bSupportDataURI){var d=document.createElement("img"),e=function(){c._bSupportDataURI=!1,c._fFail&&_fFail.call(c)},f=function(){c._bSupportDataURI=!0,c._fSuccess&&c._fSuccess.call(c)};return d.onabort=e,d.onerror=e,d.onload=f,d.src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",void 0}c._bSupportDataURI===!0&&c._fSuccess?c._fSuccess.call(c):c._bSupportDataURI===!1&&c._fFail&&c._fFail.call(c)}if(this._android&&this._android<=2.1){var b=1/window.devicePixelRatio,c=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(a,d,e,f,g,h,i,j){if("nodeName"in a&&/img/i.test(a.nodeName))for(var l=arguments.length-1;l>=1;l--)arguments[l]=arguments[l]*b;else"undefined"==typeof j&&(arguments[1]*=b,arguments[2]*=b,arguments[3]*=b,arguments[4]*=b);c.apply(this,arguments)}}var e=function(a,b){this._bIsPainted=!1,this._android=n(),this._htOption=b,this._elCanvas=document.createElement("canvas"),this._elCanvas.width=b.width,this._elCanvas.height=b.height,a.appendChild(this._elCanvas),this._el=a,this._oContext=this._elCanvas.getContext("2d"),this._bIsPainted=!1,this._elImage=document.createElement("img"),this._elImage.style.display="none",this._el.appendChild(this._elImage),this._bSupportDataURI=null};return e.prototype.draw=function(a){var b=this._elImage,c=this._oContext,d=this._htOption,e=a.getModuleCount(),f=d.width/e,g=d.height/e,h=Math.round(f),i=Math.round(g);b.style.display="none",this.clear();for(var j=0;e>j;j++)for(var k=0;e>k;k++){var l=a.isDark(j,k),m=k*f,n=j*g;c.strokeStyle=l?d.colorDark:d.colorLight,c.lineWidth=1,c.fillStyle=l?d.colorDark:d.colorLight,c.fillRect(m,n,f,g),c.strokeRect(Math.floor(m)+.5,Math.floor(n)+.5,h,i),c.strokeRect(Math.ceil(m)-.5,Math.ceil(n)-.5,h,i)}this._bIsPainted=!0},e.prototype.makeImage=function(){this._bIsPainted&&d.call(this,a)},e.prototype.isPainted=function(){return this._bIsPainted},e.prototype.clear=function(){this._oContext.clearRect(0,0,this._elCanvas.width,this._elCanvas.height),this._bIsPainted=!1},e.prototype.round=function(a){return a?Math.floor(1e3*a)/1e3:a},e}():function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){for(var b=this._htOption,c=this._el,d=a.getModuleCount(),e=Math.floor(b.width/d),f=Math.floor(b.height/d),g=['<table style="border:0;border-collapse:collapse;">'],h=0;d>h;h++){g.push("<tr>");for(var i=0;d>i;i++)g.push('<td style="border:0;border-collapse:collapse;padding:0;margin:0;width:'+e+"px;height:"+f+"px;background-color:"+(a.isDark(h,i)?b.colorDark:b.colorLight)+';"></td>');g.push("</tr>")}g.push("</table>"),c.innerHTML=g.join("");var j=c.childNodes[0],k=(b.width-j.offsetWidth)/2,l=(b.height-j.offsetHeight)/2;k>0&&l>0&&(j.style.margin=l+"px "+k+"px")},a.prototype.clear=function(){this._el.innerHTML=""},a}();QRCode=function(a,b){if(this._htOption={width:256,height:256,typeNumber:4,colorDark:"#000000",colorLight:"#ffffff",correctLevel:d.H},"string"==typeof b&&(b={text:b}),b)for(var c in b)this._htOption[c]=b[c];"string"==typeof a&&(a=document.getElementById(a)),this._android=n(),this._el=a,this._oQRCode=null,this._oDrawing=new q(this._el,this._htOption),this._htOption.text&&this.makeCode(this._htOption.text)},QRCode.prototype.makeCode=function(a){this._oQRCode=new b(r(a,this._htOption.correctLevel),this._htOption.correctLevel),this._oQRCode.addData(a),this._oQRCode.make(),this._el.title=a,this._oDrawing.draw(this._oQRCode),this.makeImage()},QRCode.prototype.makeImage=function(){"function"==typeof this._oDrawing.makeImage&&(!this._android||this._android>=3)&&this._oDrawing.makeImage()},QRCode.prototype.clear=function(){this._oDrawing.clear()},QRCode.CorrectLevel=d}();
 
 // stats.js - http://github.com/mrdoob/stats.js
@@ -55502,9 +56909,9 @@ this.G = this.G || {};
 	 * We use a signalDispatcher object passed into GameComponents to handle communication between different components.
 	 *
 	 * GameComponents: The app contains a number of gameComponents.  A GameComponent is a createjs.Container, a DisplayObject which may be added to the canvas.
-	 * They may also contains some game logic, for example: the reels must be displayed according the margin values passed in via the setup.json.
+	 * They also contain some game logic, for example: the reels must be displayed according the margin values passed in via the setup.json.
 	 * Also, a reel may animate and dispatch an event(signal) when completed.
-	 * For this reason all GameComponents are passed references to the setup.j	son and a SignalDispatcher.
+	 * For this reason all GameComponents are passed references to the setup.json and a SignalDispatcher.
 	 * All GameComponents are also added to the static G.Utils.gameComponents array, which gives the application the freedom to call up gameComponents at any time when
 	 * required without necessarily having to use the signalDispatcher.
 	 *
@@ -56064,6 +57471,7 @@ this.G = this.G || {};
 		this.signalDispatcher.init(this.setup, this.commandQueue);
 		this.spinEvaluator.init(this.setup, this.signalDispatcher, this.commandQueue, this.gameData.slotInitResponseData);
 		this.initComplete = true;
+		console.log('App Initialised');
 	};
 
 	/**
@@ -56137,15 +57545,21 @@ this.G = this.G || {};
 			}
 		});
 
+		/**
+		 * Enables touch events on the canvas if Touch capabilities are available
+		 *
+		 * @method Touch.enable
+		 */
 		createjs.Touch.enable(this.stage);
 
 		/**
+		 * Browser window requires focus to call these handlers
 		 * 32|0 = ENTER/SPACE - SPIN REELS
 		 * 71   = G           - GAFFEE MENU
 		 * 70   = F
 		 *
-		 * @method window.document.onKeydown
-		 * @param e
+		 * @method onKeydown GlobalEventHandler
+		 * @param e {Event} HTML5 onkeydown Event
 		 */
 		window.document.onkeydown = function(e) {
 
@@ -56166,28 +57580,19 @@ this.G = this.G || {};
 			}
 		};
 
+		/**
+		 * Hammerjs - get the canvas app and set gesture actions
+		 */
 		var myElement = document.querySelector('#app');
 		var mc = new Hammer(myElement);
 		mc.get('swipe').set({
 			direction: Hammer.DIRECTION_DOWN,
 			threshold: 1
 		});
-
-		mc.get('pinch').set({
-			enable: true
-		});
-
-		mc.on('swipe', function() {
-			self.reelsComponent.requestSpin();
-		});
-
-		mc.on('pinchin', function() {
-			self.gaffeMenu.hide();
-		});
-
-		mc.on('pinchout', function() {
-			self.gaffeMenu.show();
-		});
+		mc.get('pinch').set({ enable: true });
+		mc.on('swipe', function() { self.reelsComponent.requestSpin(); });
+		mc.on('pinchin', function() { self.gaffeMenu.hide(); });
+		mc.on('pinchout', function() { self.gaffeMenu.show(); });
 	};
 
 	/**
@@ -57076,6 +58481,9 @@ var G = G || {};
 		command.init(this.setup, numSymbols, winningFrameLabel + "intro__001");
 		command.callNextDelay = 2000;
 		commands.unshift(command);
+
+		command = new G.RemoveBigWinCommand();
+		commands.push(command);
 
 		command = new G.SymbolAnimCommand();
 		command.init(this.setup, [0,1,2], numSymbols, winningFrameLabel, true, useCombinedSpritesheet);
@@ -58253,15 +59661,6 @@ var G = G || {};
         this.signalDispatcher.playSound.add(this.playSound, this);
         this.signalDispatcher.stopSound.add(this.stopSound, this);
 		this.isMuted = !setup.loadSounds;
-    };
-
-	/**
-	 * @deprecated
-	 * @method nameDrop
-	 * @param name
-	 */
-    p.nameDrop = function(name) {
-        console.log("my homie " + name);
     };
 
 	/**
@@ -60315,19 +61714,15 @@ var G = G || {};
 	 */
 	p.slamSpin = function() {
 		console.warn('slammingSpin now');
-		var self = this;
 		var reel, len = this.reels.length, i;
 
 		for (i = 0; i < len; i++)
 		{
 			reel = this.reels[i];
 			reel.scheduleFastStop();
-		}
 
-		setTimeout(function() {
-				self.signalDispatcher.stopSound.dispatch("spin1");
-			}, 200
-		);
+		}
+		this.signalDispatcher.stopSound.dispatch("spin1");
 
 	};
 
@@ -60342,6 +61737,7 @@ var G = G || {};
 		{
 			this.spinRequested = false;
 			this.signalDispatcher.reelSpinCompleted.dispatch();
+			//
 		}
 	};
 
