@@ -194,14 +194,20 @@ var G = G || {};
 		var sprite;
 		var label;
 
+		console.log("Play a big win animation: type,frameLabel", type, frameLabel)
+
+
 		if (type === 5 && frameLabel === "m1intro__001") {
+			//THIS IS A M1 BIG WIN 3x5
+			console.log("PLAY_M1_BIG");
 			sprite = this.sprite3x5_m1;
 			label = "celebration1__000";
 		} else {
+			//THIS IS ANY OTHER BIG WIN
 			label = frameLabel;
 			switch(type) {
 				case 5:
-					sprite = this.sprite3x5_m1;
+					sprite = this.sprite3x5;
 					
 					// MattTemp
 					createjs.Sound.stop("spin1");

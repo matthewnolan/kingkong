@@ -102,6 +102,9 @@ var G = G || {};
 
 				break;
 			case "client_Line_M1" :
+
+				console.log("SETUP CLIENT_LINE_M1");
+
 				var numSymbolsPerReel = this.setup.reelAnimation.symbols.cutLength;
 				var modifySymbols = [];
 				for (i = 0; i < numSymbolsPerReel; i++)
@@ -131,7 +134,7 @@ var G = G || {};
 
 
 				command = new G.BigWinCommand();
-				command.init(this.setup, 5);
+				command.init(this.setup, 5, "m1intro__001");
 				command.callNextDelay = 1200;
 				queue.push(command);
 
