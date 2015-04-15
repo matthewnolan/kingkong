@@ -125,6 +125,8 @@ var G = G || {};
 			}, ms);
 		}
 		console.log('smoke on');
+		// MattTemp
+		createjs.Sound.play("Rollup11");
 		self.launchFirework(0.2);
 		self.launchFirework(0.3);
 		self.launchFirework(0.5);
@@ -147,6 +149,7 @@ var G = G || {};
 	p.smokeOff = function() {
 
 		console.log('smoke off', this);
+		createjs.Sound.play("Rollup11Term");
 
 		clearTimeout(this.animationDurationTimeout);
 		clearInterval(this.fireworkInterval);

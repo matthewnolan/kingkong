@@ -59,7 +59,7 @@ var G = G || {};
 	 */
 	p.execute = function() {
 		var bigWinComponent = G.Utils.getGameComponentByClass(G.BigWinComponent);
-		bigWinComponent.playAnimation(this.animationType, this.animationFrameLabel);
+		bigWinComponent.playAnimation(this.animationType, this.animationFrameLabel, "m1intro__001");
 	};
 
 	G.BigWinCommand = createjs.promote(BigWinCommand, "Command");

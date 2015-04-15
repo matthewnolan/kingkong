@@ -348,6 +348,7 @@ this.G = this.G || {};
 				});
 			}
 		}
+
 		if (!setup.failSafeInitisalisation) {
 			this.initailisedNum = 1;
 		}

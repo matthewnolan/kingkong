@@ -158,3 +158,23 @@ button.small {
     width: 80px;
     height: 20px;
 }
+
+
+
+
+
+    .bigModal {
+        position: fixed;
+        z-index: 33;
+        width: inherit;
+        height: inherit;
+        color: #fff;
+        background: rgba(0, 0, 0, .7);
+    }
+    .bigModal .bigModalText {
+        width: 100%;
+        position: absolute;
+        text-align: center;
+        font-size: 2em;
+        top: 30%;
+    }

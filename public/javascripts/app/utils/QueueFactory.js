@@ -129,11 +129,13 @@ var G = G || {};
 
 				// command = new G.RemoveBigWinCommand();
 
+
 				command = new G.BigWinCommand();
 				command.init(this.setup, 5);
 				command.callNextDelay = 1200;
-
 				queue.push(command);
+
+
 				command = new G.RemoveBigWinCommand();
 				command.callNextDelay = 0;
 				command.init(this.setup);

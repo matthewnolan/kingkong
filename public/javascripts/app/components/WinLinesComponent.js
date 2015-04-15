@@ -67,6 +67,8 @@ var G = G || {};
 	 * @param {G.SignalDispatcher} signalDispatcher
 	 */
 	p.init = function(setup, signalDispatcher) {
+		console.log("WWWINLINE");
+		
 		this.GameComponent_init(setup, signalDispatcher);
 	};
 

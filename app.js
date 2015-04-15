@@ -48,7 +48,7 @@ app.get('/test', renderTests);
 app.get('/tests', renderTests);
 
 
-app.get('/', auth, function(req, res) {
+app.get('/', function(req, res) {
 	res.render('index', {
 		prod: true
 	});

@@ -100,7 +100,7 @@ var G = G || {};
 		if (payLineIndexes.length === 1) {
 			this.frameLabels = frameLabels || this.frameLabels;
 		}
-		this.autoAppendSuffix = autoAppendSuffix || this.autoAppendSuffix;
+		this.autoAppendSuffix = autoAppendSuffix || this.autoAppendSuffix;		
 	};
 
 	/**

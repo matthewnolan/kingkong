@@ -39,6 +39,28 @@ var G = G || {};
         this.signalDispatcher.playSound.add(this.playSound, this);
         this.signalDispatcher.stopSound.add(this.stopSound, this);
 		this.isMuted = !setup.loadSounds;
+
+
+		// var txt;
+		// var r = confirm("Press a button!");
+		// if (r == true) {
+		//     txt = "You pressed OK!";
+		//     createjs.Sound.play("reelstop1");
+		// } else {
+		//     txt = "You pressed Cancel!";
+		// }
+		// console.log(txt);
+
+        var mainModal = document.getElementById('mainModal');
+        var mainText = document.getElementById('mainText');
+        mainModal.style.display = 'block';
+        var modalEvent = new Hammer(mainModal);
+        modalEvent.on("tap", function(ev) {
+            createjs.Sound.play("reelstop1");
+            mainModal.style.display = 'none';
+        });
+        mainText.innerHTML = "Just Swipe to spin ok??";		
+
     };
 
 	/**

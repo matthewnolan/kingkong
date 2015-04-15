@@ -201,7 +201,12 @@ var G = G || {};
 			label = frameLabel;
 			switch(type) {
 				case 5:
-					sprite = this.sprite3x5;
+					sprite = this.sprite3x5_m1;
+					
+					// MattTemp
+					createjs.Sound.stop("spin1");
+					createjs.Sound.play("M1_SUPERSTACK");
+
 					break;
 				case 4:
 					sprite = this.sprite3x4;
