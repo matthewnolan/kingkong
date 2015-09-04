@@ -495,7 +495,11 @@ this.G = this.G || {};
 		var spriteSheet = this.assets.spriteSheetStatics;
 		var sprite = new createjs.Sprite(spriteSheet, 'ui-bezel');
 		// console.log(this.setup.bezelW, this.setup.bezelH);
-		this.stage.addChild(sprite);
+
+		var container = new createjs.Container();
+		this.stage.addChild(container);
+
+		container.addChild(sprite);
 
 		//stats
 		this.stats.setMode(0); // 0: fps, 1: ms
@@ -510,7 +514,7 @@ this.G = this.G || {};
 		reelsComponent.drawReels();
 		reelsComponent.x = bezelMarginL;
 		reelsComponent.y = bezelMarginT;
-		this.stage.addChild(reelsComponent);
+		container.addChild(reelsComponent);
 		this.reelsComponent = reelsComponent;
 
 		//init mask
@@ -518,7 +522,7 @@ this.G = this.G || {};
 		sceneMask.graphics.setStrokeStyle(0)
 			.drawRect(bezelMarginL, bezelMarginT, bezelW, bezelH)
 			.closePath();
-		this.stage.addChild(sceneMask);
+		container.addChild(sceneMask);
 
 		//init symbolWins
 		var symbolWinsComponent = new G.SymbolWinsComponent();
@@ -526,7 +530,7 @@ this.G = this.G || {};
 		symbolWinsComponent.cacheCompleted.add(this.checkCacheInitialised, this);
 		symbolWinsComponent.x = bezelMarginL;
 		symbolWinsComponent.y = bezelMarginT;
-		this.stage.addChild(symbolWinsComponent);
+		container.addChild(symbolWinsComponent);
 		symbolWinsComponent.drawSprites();
 
 		var bigWinComponent = new G.BigWinComponent();
@@ -534,15 +538,24 @@ this.G = this.G || {};
 		bigWinComponent.cacheCompleted.add(this.checkCacheInitialised, this);
 		bigWinComponent.x = bezelMarginL;
 		bigWinComponent.y = bezelMarginT;
-		this.stage.addChild(bigWinComponent);
+		container.addChild(bigWinComponent);
 		bigWinComponent.drawSprites();
 
 		//init winLines
 		var winLinesComponent = new G.WinLinesComponent();
 		winLinesComponent.init(this.setup, this.signalDispatcher);
 		winLinesComponent.cacheCompleted.add(this.checkCacheInitialised, this);
-		this.stage.addChild(winLinesComponent);
+		container.addChild(winLinesComponent);
 		winLinesComponent.drawComponent();
+
+		container.scaleX = container.scaleY = 0.85;
+
+		this.signalDispatcher.sidebarOffRequested.add(function() {
+			container.scaleX = container.scaleY = 1;
+		});
+		this.signalDispatcher.sidebarOnRequested.add(function() {
+			container.scaleX = container.scaleY = 0.85;
+		});
 
 		var meterComponent = new G.MeterComponent();
 		meterComponent.init(this.setup, this.signalDispatcher);
@@ -690,6 +703,9 @@ this.G = this.G || {};
 					break;
 				case 70 :
 					self.signalDispatcher.fireworkLaunched.dispatch();
+					break;
+				case 77:
+					self.signalDispatcher.sidebarToggled.dispatch();
 					break;
 			}
 		};

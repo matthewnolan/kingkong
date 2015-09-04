@@ -1,503 +1,687 @@
 {
-    "gameTitle": "Shadow of the Panther",
-    "env": "prod",
-    "devMode": 0,
-    "htmlDebug": 0,
-    "enableTabPausing": 1,
-    "scale": "NONE",
-    "failSafeInitisalisation": 0,
-    "enableDesktopView": 1,
-    "loadSounds": 1,
-    "enableWinLineShadows": 0,
-    "cheaperWinLineShadows": 0,
-    "winAnimDelay": 3000,
-    "stageW": 667,
-    "stageH": 375,
-    "stageScale": 1,
-    "numberOfReels": 5,
-    "bezelH": 309,
-    "bezelW": 602,
-    "bezelMarginL": 32,
-    "bezelMarginT": 49,
-    "symbolsPerReel": 3,
-    "symbolsPerReelPadding": 1,
-    "howManyReelsTallIsReel": 9,
-    "symbolW": 116,
-    "symbolH": 103,
-    "symbolMarginBottom": 0,
-    "reelMarginRight": 5,
-    "defaultBet": 50,
-    "defaultBigWin": 140000,
-    "defaultCredits": 10340,
-    "currencySymbol": ["$", "€", "£"],
-    "reels": {
-        "symbols": {
-            "data": [{
-                "frameLabel": "ww",
-                "doubleType": 1,
-                "winType": 0,
-                "unknown": "0"
-            }, {
-                "frameLabel": "m1",
-                "doubleType": 1,
-                "winType": 1,
-                "unknown": "2"
-            }, {
-                "frameLabel": "m2",
-                "doubleType": 1,
-                "winType": 2,
-                "unknown": "2"
-            }, {
-                "frameLabel": "m3",
-                "doubleType": 1,
-                "winType": 3,
-                "unknown": "2"
-            }, {
-                "frameLabel": "m4",
-                "doubleType": 1,
-                "winType": 4,
-                "unknown": "2"
-            }, {
-                "frameLabel": "f5",
-                "doubleType": 1,
-                "winType": 5,
-                "unknown": "1"
-            }, {
-                "frameLabel": "f6",
-                "doubleType": 1,
-                "winType": 6,
-                "unknown": "1"
-            }, {
-                "frameLabel": "f7",
-                "doubleType": 1,
-                "winType": 7,
-                "unknown": "1"
-            }, {
-                "frameLabel": "f8",
-                "doubleType": 1,
-                "winType": 8,
-                "unknown": "1"
-            }, {
-                "frameLabel": "f9",
-                "doubleType": 1,
-                "winType": 9,
-                "unknown": "1"
-            }, {
-                "frameLabel": "f0",
-                "doubleType": 1,
-                "winType": 10,
-                "unknown": "1"
-            }, {
-                "frameLabel": "d1",
-                "doubleType": 1,
-                "winType": 1,
-                "unknown": "0"
-            }, {
-                "frameLabel": "d2",
-                "doubleType": 2,
-                "winType": 2,
-                "unknown": "0"
-            }, {
-                "frameLabel": "d3",
-                "doubleType": 2,
-                "winType": 3,
-                "unknown": "0"
-            }, {
-                "frameLabel": "d4",
-                "doubleType": 2,
-                "winType": 4,
-                "unknown": "0"
-            }, {
-                "frameLabel": "b1",
-                "doubleType": 2,
-                "winType": 15,
-                "unknown": "0"
-            }, {
-                "frameLabel": "b2",
-                "doubleType": 2,
-                "winType": 15,
-                "unknown": "0"
-            }, {
-                "frameLabel": "r1",
-                "doubleType": 1,
-                "winType": 1,
-                "unknown": "0"
-            }],
-            "replacement": {
-                "index": 17,
-                "frameLabel": "r1",
-                "defaultLabel": "m1"
-            }
-        },
-        "animation": {
-            "duration": 2000,
-            "delay": {
-                "max": 500,
-                "sequenced": true,
-                "random": false
-            },
-            "cutLength": 10,
-            "stopVal": 0
+  "gameTitle": "Shadow of the Panther",
+  "env": "prod",
+  "devMode": 0,
+  "htmlDebug": 0,
+  "enableTabPausing": 1,
+  "scale": "NONE",
+  "failSafeInitisalisation": 0,
+  "enableDesktopView": 1,
+  "loadSounds": 1,
+  "enableWinLineShadows": 0,
+  "cheaperWinLineShadows": 0,
+  "winAnimDelay": 3000,
+  "stageW": 667,
+  "stageH": 375,
+  "stageScale": 1,
+  "numberOfReels": 5,
+  "bezelH": 309,
+  "bezelW": 602,
+  "bezelMarginL": 32,
+  "bezelMarginT": 49,
+  "symbolsPerReel": 3,
+  "symbolsPerReelPadding": 1,
+  "howManyReelsTallIsReel": 9,
+  "symbolW": 116,
+  "symbolH": 103,
+  "symbolMarginBottom": 0,
+  "reelMarginRight": 5,
+  "defaultBet": 50,
+  "defaultBigWin": 140000,
+  "defaultCredits": 6000,
+  "currencySymbol": ["$", "€", "£"],
+  "lineValues": [1, 5, 9, 15, 30],
+  "perLineValues": [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1],
+  "reels": {
+    "symbols": {
+      "data": [
+        {
+          "frameLabel": "ww",
+          "doubleType": 1,
+          "winType": 0,
+          "unknown": "0"
+        }, {
+          "frameLabel": "m1",
+          "doubleType": 1,
+          "winType": 1,
+          "unknown": "2"
+        }, {
+          "frameLabel": "m2",
+          "doubleType": 1,
+          "winType": 2,
+          "unknown": "2"
+        }, {
+          "frameLabel": "m3",
+          "doubleType": 1,
+          "winType": 3,
+          "unknown": "2"
+        }, {
+          "frameLabel": "m4",
+          "doubleType": 1,
+          "winType": 4,
+          "unknown": "2"
+        }, {
+          "frameLabel": "f5",
+          "doubleType": 1,
+          "winType": 5,
+          "unknown": "1"
+        }, {
+          "frameLabel": "f6",
+          "doubleType": 1,
+          "winType": 6,
+          "unknown": "1"
+        }, {
+          "frameLabel": "f7",
+          "doubleType": 1,
+          "winType": 7,
+          "unknown": "1"
+        }, {
+          "frameLabel": "f8",
+          "doubleType": 1,
+          "winType": 8,
+          "unknown": "1"
+        }, {
+          "frameLabel": "f9",
+          "doubleType": 1,
+          "winType": 9,
+          "unknown": "1"
+        }, {
+          "frameLabel": "f0",
+          "doubleType": 1,
+          "winType": 10,
+          "unknown": "1"
+        }, {
+          "frameLabel": "d1",
+          "doubleType": 1,
+          "winType": 1,
+          "unknown": "0"
+        }, {
+          "frameLabel": "d2",
+          "doubleType": 2,
+          "winType": 2,
+          "unknown": "0"
+        }, {
+          "frameLabel": "d3",
+          "doubleType": 2,
+          "winType": 3,
+          "unknown": "0"
+        }, {
+          "frameLabel": "d4",
+          "doubleType": 2,
+          "winType": 4,
+          "unknown": "0"
+        }, {
+          "frameLabel": "b1",
+          "doubleType": 2,
+          "winType": 15,
+          "unknown": "0"
+        }, {
+          "frameLabel": "b2",
+          "doubleType": 2,
+          "winType": 15,
+          "unknown": "0"
+        }, {
+          "frameLabel": "r1",
+          "doubleType": 1,
+          "winType": 1,
+          "unknown": "0"
         }
+      ],
+      "replacement": {
+        "index": 17,
+        "frameLabel": "r1",
+        "defaultLabel": "m1"
+      }
     },
-    "reelAnimation": {
-        "duration": 2000,
-        "delay": {
-            "max": 500,
-            "sequenced": true,
-            "random": false
-        },
-        "symbols": {
-            "data": [{
-                "frameLabel": "ww",
-                "doubleType": 1,
-                "winType": 0,
-                "unknown": "0"
-            }, {
-                "frameLabel": "m1",
-                "doubleType": 1,
-                "winType": 1,
-                "unknown": "2"
-            }, {
-                "frameLabel": "m2",
-                "doubleType": 1,
-                "winType": 2,
-                "unknown": "2"
-            }, {
-                "frameLabel": "m3",
-                "doubleType": 1,
-                "winType": 3,
-                "unknown": "2"
-            }, {
-                "frameLabel": "m4",
-                "doubleType": 1,
-                "winType": 4,
-                "unknown": "2"
-            }, {
-                "frameLabel": "f5",
-                "doubleType": 1,
-                "winType": 5,
-                "unknown": "1"
-            }, {
-                "frameLabel": "f6",
-                "doubleType": 1,
-                "winType": 6,
-                "unknown": "1"
-            }, {
-                "frameLabel": "f7",
-                "doubleType": 1,
-                "winType": 7,
-                "unknown": "1"
-            }, {
-                "frameLabel": "f8",
-                "doubleType": 1,
-                "winType": 8,
-                "unknown": "1"
-            }, {
-                "frameLabel": "f9",
-                "doubleType": 1,
-                "winType": 9,
-                "unknown": "1"
-            }, {
-                "frameLabel": "f0",
-                "doubleType": 1,
-                "winType": 10,
-                "unknown": "1"
-            }, {
-                "frameLabel": "d1",
-                "doubleType": 1,
-                "winType": 1,
-                "unknown": "0"
-            }, {
-                "frameLabel": "d2",
-                "doubleType": 2,
-                "winType": 2,
-                "unknown": "0"
-            }, {
-                "frameLabel": "d3",
-                "doubleType": 2,
-                "winType": 3,
-                "unknown": "0"
-            }, {
-                "frameLabel": "d4",
-                "doubleType": 2,
-                "winType": 4,
-                "unknown": "0"
-            }, {
-                "frameLabel": "b1",
-                "doubleType": 2,
-                "winType": 15,
-                "unknown": "0"
-            }, {
-                "frameLabel": "b2",
-                "doubleType": 2,
-                "winType": 15,
-                "unknown": "0"
-            }, {
-                "frameLabel": "r1",
-                "doubleType": 1,
-                "winType": 1,
-                "unknown": "0"
-            }],
-            "spriteMap": ["ww", "m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2", "r1"],
-            "replacement": {
-                "index": 17,
-                "frameLabel": "r1",
-                "defaultLabel": "m1"
-            },
-            "cutLength": 10,
-            "stopVal": 0
+    "animation": {
+      "duration": 2000,
+      "delay": {
+        "max": 500,
+        "sequenced": true,
+        "random": false
+      },
+      "cutLength": 10,
+      "stopVal": 0
+    }
+  },
+  "reelAnimation": {
+    "duration": 2000,
+    "delay": {
+      "max": 500,
+      "sequenced": true,
+      "random": false
+    },
+    "symbols": {
+      "data": [
+        {
+          "frameLabel": "ww",
+          "doubleType": 1,
+          "winType": 0,
+          "unknown": "0"
+        }, {
+          "frameLabel": "m1",
+          "doubleType": 1,
+          "winType": 1,
+          "unknown": "2"
+        }, {
+          "frameLabel": "m2",
+          "doubleType": 1,
+          "winType": 2,
+          "unknown": "2"
+        }, {
+          "frameLabel": "m3",
+          "doubleType": 1,
+          "winType": 3,
+          "unknown": "2"
+        }, {
+          "frameLabel": "m4",
+          "doubleType": 1,
+          "winType": 4,
+          "unknown": "2"
+        }, {
+          "frameLabel": "f5",
+          "doubleType": 1,
+          "winType": 5,
+          "unknown": "1"
+        }, {
+          "frameLabel": "f6",
+          "doubleType": 1,
+          "winType": 6,
+          "unknown": "1"
+        }, {
+          "frameLabel": "f7",
+          "doubleType": 1,
+          "winType": 7,
+          "unknown": "1"
+        }, {
+          "frameLabel": "f8",
+          "doubleType": 1,
+          "winType": 8,
+          "unknown": "1"
+        }, {
+          "frameLabel": "f9",
+          "doubleType": 1,
+          "winType": 9,
+          "unknown": "1"
+        }, {
+          "frameLabel": "f0",
+          "doubleType": 1,
+          "winType": 10,
+          "unknown": "1"
+        }, {
+          "frameLabel": "d1",
+          "doubleType": 1,
+          "winType": 1,
+          "unknown": "0"
+        }, {
+          "frameLabel": "d2",
+          "doubleType": 2,
+          "winType": 2,
+          "unknown": "0"
+        }, {
+          "frameLabel": "d3",
+          "doubleType": 2,
+          "winType": 3,
+          "unknown": "0"
+        }, {
+          "frameLabel": "d4",
+          "doubleType": 2,
+          "winType": 4,
+          "unknown": "0"
+        }, {
+          "frameLabel": "b1",
+          "doubleType": 2,
+          "winType": 15,
+          "unknown": "0"
+        }, {
+          "frameLabel": "b2",
+          "doubleType": 2,
+          "winType": 15,
+          "unknown": "0"
+        }, {
+          "frameLabel": "r1",
+          "doubleType": 1,
+          "winType": 1,
+          "unknown": "0"
         }
-    },
-    "spritesManifest": [{
-        "src": "assets/sprites/bigwin_1_symbol.json",
-        "id": "bigWinAnimSymbol",
-        "type": "spritesheet"
+      ],
+      "spriteMap": ["ww", "m1", "m2", "m3", "m4", "f5", "f6", "f7", "f8", "f9", "f0", "d1", "d2", "d3", "d4", "b1", "b2", "r1"],
+      "replacement": {
+        "index": 17,
+        "frameLabel": "r1",
+        "defaultLabel": "m1"
+      },
+      "cutLength": 10,
+      "stopVal": 0
+    }
+  },
+  "spritesManifest": [
+    {
+      "src": "assets/sprites/bigwin_1_symbol.json",
+      "id": "bigWinAnimSymbol",
+      "type": "spritesheet"
+    }, {
+      "src": "assets/sprites/static-images.json",
+      "id": "staticImages",
+      "type": "spritesheet"
+    }, {
+      "src": "assets/sprites/testingNew.json",
+      "id": "symbolAnims",
+      "type": "spritesheet"
+    }
+  ],
+  "spritesManifestTempLoadJpgSymbolAnims": [
+    {
+      "src": "assets/sprites/bigwin_1_symbol.json",
+      "id": "bigWinAnimSymbol",
+      "type": "spritesheet"
+    }, {
+      "src": "assets/sprites/static-images.json",
+      "id": "staticImages",
+      "type": "spritesheet"
+    }, {
+      "src": "assets/sprites/testingNewJpg.json",
+      "id": "symbolAnims",
+      "type": "spritesheet"
+    }
+  ],
+  "spritesScaleFactor": {
+    "bigWinAnimSymbol": 0.7,
+    "staticImages": 1,
+    "symbolAnims": 0.83333
+  },
+  "winLines": [
+    {
+      "color": "#ff0303",
+      "data": [1, 1, 1, 1, 1]
+    }, {
+      "color": "#1c1cfd",
+      "data": [0, 0, 0, 0, 0]
+    }, {
+      "color": "#034b84",
+      "data": [2, 2, 2, 2, 2]
+    }, {
+      "color": "#fc9999",
+      "data": [0, 1, 2, 1, 0]
+    }, {
+      "color": "#fe03fe",
+      "data": [2, 1, 0, 1, 2]
+    }, {
+      "color": "#fba505",
+      "data": [0, 0, 1, 2, 2]
+    }, {
+      "color": "#80035f",
+      "data": [2, 2, 1, 0, 0]
     }, {
-        "src": "assets/sprites/static-images.json",
-        "id": "staticImages",
-        "type": "spritesheet"
+      "color": "#03aa03",
+      "data": [1, 0, 1, 2, 1]
     }, {
-        "src": "assets/sprites/testingNew.json",
-        "id": "symbolAnims",
-        "type": "spritesheet"
-    }],
-    "spritesManifestTempLoadJpgSymbolAnims": [{
-        "src": "assets/sprites/bigwin_1_symbol.json",
-        "id": "bigWinAnimSymbol",
-        "type": "spritesheet"
+      "color": "#f5e128",
+      "data": [1, 2, 1, 0, 1]
     }, {
-        "src": "assets/sprites/static-images.json",
-        "id": "staticImages",
-        "type": "spritesheet"
+      "color": "#aa0303",
+      "data": [0, 1, 1, 1, 2]
     }, {
-        "src": "assets/sprites/testingNewJpg.json",
-        "id": "symbolAnims",
-        "type": "spritesheet"
-    }],
-    "spritesScaleFactor": {
-        "bigWinAnimSymbol": 0.7,
-        "staticImages": 1,
-        "symbolAnims": 0.83333
-    },
-    "winLines": [{
-        "color": "#ff0303",
-        "data": [1, 1, 1, 1, 1]
+      "color": "#03ffff",
+      "data": [2, 1, 1, 1, 0]
     }, {
-        "color": "#1c1cfd",
-        "data": [0, 0, 0, 0, 0]
+      "color": "#aaaa03",
+      "data": [1, 0, 0, 1, 2]
     }, {
-        "color": "#034b84",
-        "data": [2, 2, 2, 2, 2]
+      "color": "#03b2eb",
+      "data": [1, 2, 2, 1, 0]
     }, {
-        "color": "#fc9999",
-        "data": [0, 1, 2, 1, 0]
+      "color": "#03ff03",
+      "data": [1, 1, 0, 1, 2]
     }, {
-        "color": "#fe03fe",
-        "data": [2, 1, 0, 1, 2]
+      "color": "#0000ff",
+      "data": [1, 1, 2, 1, 0]
     }, {
-        "color": "#fba505",
-        "data": [0, 0, 1, 2, 2]
+      "color": "#5ba490",
+      "data": [0, 0, 1, 2, 1]
     }, {
-        "color": "#80035f",
-        "data": [2, 2, 1, 0, 0]
+      "color": "#f5035d",
+      "data": [2, 2, 1, 0, 1]
     }, {
-        "color": "#03aa03",
-        "data": [1, 0, 1, 2, 1]
+      "color": "#0383d2",
+      "data": [1, 0, 1, 2, 2]
     }, {
-        "color": "#f5e128",
-        "data": [1, 2, 1, 0, 1]
+      "color": "#03d96d",
+      "data": [1, 2, 1, 0, 0]
     }, {
-        "color": "#aa0303",
-        "data": [0, 1, 1, 1, 2]
+      "color": "#fcffa7",
+      "data": [0, 0, 0, 1, 2]
     }, {
-        "color": "#03ffff",
-        "data": [2, 1, 1, 1, 0]
+      "color": "#80035f",
+      "data": [2, 2, 2, 1, 0]
     }, {
-        "color": "#aaaa03",
-        "data": [1, 0, 0, 1, 2]
+      "color": "#ffbb72",
+      "data": [0, 1, 2, 2, 2]
     }, {
-        "color": "#03b2eb",
-        "data": [1, 2, 2, 1, 0]
+      "color": "#b23fff",
+      "data": [2, 1, 0, 0, 0]
     }, {
-        "color": "#03ff03",
-        "data": [1, 1, 0, 1, 2]
+      "color": "#a5a2d9",
+      "data": [0, 1, 0, 1, 0]
     }, {
-        "color": "#0000ff",
-        "data": [1, 1, 2, 1, 0]
+      "color": "#bdff03",
+      "data": [2, 1, 2, 1, 2]
     }, {
-        "color": "#5ba490",
-        "data": [0, 0, 1, 2, 1]
+      "color": "#ce77f7",
+      "data": [0, 1, 1, 1, 0]
     }, {
-        "color": "#f5035d",
-        "data": [2, 2, 1, 0, 1]
+      "color": "#a39005",
+      "data": [2, 1, 1, 1, 2]
     }, {
-        "color": "#0383d2",
-        "data": [1, 0, 1, 2, 2]
+      "color": "#878eb9",
+      "data": [1, 0, 0, 0, 1]
     }, {
-        "color": "#03d96d",
-        "data": [1, 2, 1, 0, 0]
+      "color": "#7ca0e9",
+      "data": [1, 2, 2, 2, 1]
     }, {
-        "color": "#fcffa7",
-        "data": [0, 0, 0, 1, 2]
+      "color": "#6c1d91",
+      "data": [0, 1, 0, 1, 2]
+    }
+  ],
+  "soundsManifest": [
+    {
+      "src": "assets/sounds/GameMain/Sounds/ReelSpins/JLspin01.mp3",
+      "id": "JLspin01"
     }, {
-        "color": "#80035f",
-        "data": [2, 2, 2, 1, 0]
+      "src": "assets/sounds/GameMain/Sounds/ReelSpins/JLspin02.mp3",
+      "id": "JLspin02"
     }, {
-        "color": "#ffbb72",
-        "data": [0, 1, 2, 2, 2]
+      "src": "assets/sounds/GameMain/Sounds/ReelSpins/JLspin03.mp3",
+      "id": "JLspin03"
     }, {
-        "color": "#b23fff",
-        "data": [2, 1, 0, 0, 0]
+      "src": "assets/sounds/GameMain/Sounds/ReelSpins/JLspin04.mp3",
+      "id": "JLspin04"
     }, {
-        "color": "#a5a2d9",
-        "data": [0, 1, 0, 1, 0]
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup1.mp3",
+      "id": "Rollup1"
     }, {
-        "color": "#bdff03",
-        "data": [2, 1, 2, 1, 2]
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup10.mp3",
+      "id": "Rollup10"
     }, {
-        "color": "#ce77f7",
-        "data": [0, 1, 1, 1, 0]
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup10Term.mp3",
+      "id": "Rollup10Term"
     }, {
-        "color": "#a39005",
-        "data": [2, 1, 1, 1, 2]
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup11.mp3",
+      "id": "Rollup11"
     }, {
-        "color": "#878eb9",
-        "data": [1, 0, 0, 0, 1]
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup11Term.mp3",
+      "id": "Rollup11Term"
     }, {
-        "color": "#7ca0e9",
-        "data": [1, 2, 2, 2, 1]
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup12Loop.mp3",
+      "id": "Rollup12Loop"
     }, {
-        "color": "#6c1d91",
-        "data": [0, 1, 0, 1, 2]
-    }],
-    "soundsManifest": [{
-        "src": "assets/sounds/JLspin01.mp3",
-        "id": "spin1"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup12LoopTerminator.mp3",
+      "id": "Rollup12LoopTerminator"
     }, {
-        "src": "assets/sounds/reelspin1.mp3",
-        "id": "reelspin1"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup2.mp3",
+      "id": "Rollup2"
     }, {
-        "src": "assets/sounds/bonus_stop1.mp3",
-        "id": "bonusStop1"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup2Term.mp3",
+      "id": "Rollup2Term"
     }, {
-        "src": "assets/sounds/reelstop1.mp3",
-        "id": "reelstop1"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup3.mp3",
+      "id": "Rollup3"
     }, {
-        "src": "assets/sounds/GameMain/Sounds/Stacks/M1_SUPERSTACK.mp3",
-        "id": "M1_SUPERSTACK"   
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup3Term.mp3",
+      "id": "Rollup3Term"
     }, {
-        "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup11.mp3",
-        "id": "Rollup11"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup4.mp3",
+      "id": "Rollup4"
     }, {
-        "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup11Term.mp3",
-        "id": "Rollup11Term"    
-    }],
-    "gaffeMenu": [{
-        "type": "client_lotsOfWin"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup4Term.mp3",
+      "id": "Rollup4Term"
     }, {
-        "type": "client_Line_M1"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup5.mp3",
+      "id": "Rollup5"
     }, {
-        "type": "gaffe_Line_M1",
-        "link": "/api/gaffe_line_m1"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup5Term.mp3",
+      "id": "Rollup5Term"
     }, {
-        "type": "gaffe_Line_M2",
-        "link": "/api/gaffe_line_m2"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup6.mp3",
+      "id": "Rollup6"
     }, {
-        "type": "gaffe_Line_M3",
-        "link": "/api/gaffe_line_m3"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup6Term.mp3",
+      "id": "Rollup6Term"
     }, {
-        "type": "gaffe_Line_M4",
-        "link": "/api/gaffe_line_m4"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup7.mp3",
+      "id": "Rollup7"
     }, {
-        "type": "gaffe_F5",
-        "link": "/api/gaffe_f5"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup7Term.mp3",
+      "id": "Rollup7Term"
     }, {
-        "type": "gaffe_F6",
-        "link": "/api/gaffe_f6"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup8.mp3",
+      "id": "Rollup8"
     }, {
-        "type": "gaffe_F7",
-        "link": "/api/gaffe_f7"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup8Term.mp3",
+      "id": "Rollup8Term"
     }, {
-        "type": "gaffe_F8",
-        "link": "/api/gaffe_f8"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup9.mp3",
+      "id": "Rollup9"
     }, {
-        "type": "gaffe_F9",
-        "link": "/api/gaffe_f9"
+      "src": "assets/sounds/GameMain/Sounds/Rollup/Rollup9Term.mp3",
+      "id": "Rollup9Term"
     }, {
-        "type": "gaffe_F0",
-        "link": "/api/gaffe_f0"
+      "src": "assets/sounds/GameMain/Sounds/Stacks/F5_SUPERSTACK.mp3",
+      "id": "F5_SUPERSTACK"
     }, {
-        "type": "gaffe_m1_3x3",
-        "link": "/api/gaffe_m1_3x3"
+      "src": "assets/sounds/GameMain/Sounds/Stacks/F6_SUPERSTACK.mp3",
+      "id": "F6_SUPERSTACK"
     }, {
-        "type": "gaffe_m1_3x4",
-        "link": "/api/gaffe_m1_3x4"
+      "src": "assets/sounds/GameMain/Sounds/Stacks/F7_SUPERSTACK.mp3",
+      "id": "F7_SUPERSTACK"
     }, {
-        "type": "gaffe_m1_3x5",
-        "link": "/api/gaffe_m1_3x5"
+      "src": "assets/sounds/GameMain/Sounds/Stacks/M1_SUPERSTACK.mp3",
+      "id": "M1_SUPERSTACK"
     }, {
-        "type": "gaffe_m2_3x3",
-        "link": "/api/gaffe_m2_3x3"
+      "src": "assets/sounds/GameMain/Sounds/Stacks/M1_SUPERSTACK.mp3",
+      "id": "M1_SUPERSTACK"
     }, {
-        "type": "gaffe_m2_3x4",
-        "link": "/api/gaffe_m2_3x4"
+      "src": "assets/sounds/GameMain/Sounds/Stacks/M3_SUPERSTACK.mp3",
+      "id": "M3_SUPERSTACK"
     }, {
-        "type": "gaffe_m2_3x5",
-        "link": "/api/gaffe_m2_3x5"
+      "src": "assets/sounds/GameMain/Sounds/Stacks/M4_SUPERSTACK.mp3",
+      "id": "M4_SUPERSTACK"
     }, {
-        "type": "gaffe_m3_3x3",
-        "link": "/api/gaffe_m3_3x3"
+      "src": "assets/sounds/GameMain/Sounds/Stacks/WW_SUPERSTACK.mp3",
+      "id": "WW_SUPERSTACK"
     }, {
-        "type": "gaffe_m3_3x4",
-        "link": "/api/gaffe_m3_3x4"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/B1.mp3",
+      "id": "B1"
     }, {
-        "type": "gaffe_m3_3x5",
-        "link": "/api/gaffe_m3_3x5"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/D1.mp3",
+      "id": "D1"
     }, {
-        "type": "gaffe_m4_3x3",
-        "link": "/api/gaffe_m4_3x3"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/D2.mp3",
+      "id": "D2"
     }, {
-        "type": "gaffe_m4_3x4",
-        "link": "/api/gaffe_m4_3x4"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/D3.mp3",
+      "id": "D3"
     }, {
-        "type": "gaffe_m4_3x5",
-        "link": "/api/gaffe_m4_3x5"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/D4.mp3",
+      "id": "D4"
     }, {
-        "type": "gaffe_f5_3x3",
-        "link": "/api/gaffe_f5_3x3"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/F5.mp3",
+      "id": "F5"
     }, {
-        "type": "gaffe_f5_3x4",
-        "link": "/api/gaffe_f5_3x4"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/F6.mp3",
+      "id": "F6"
     }, {
-        "type": "gaffe_f5_3x5",
-        "link": "/api/gaffe_f5_3x5"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/F7.mp3",
+      "id": "F7"
     }, {
-        "type": "gaffe_f6_3x3",
-        "link": "/api/gaffe_f6_3x3"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/M1.mp3",
+      "id": "M1"
     }, {
-        "type": "gaffe_f6_3x4",
-        "link": "/api/gaffe_f6_3x4"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/M2.mp3",
+      "id": "M2"
     }, {
-        "type": "gaffe_f6_3x5",
-        "link": "/api/gaffe_f5_3x5"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/M3.mp3",
+      "id": "M3"
     }, {
-        "type": "gaffe_f7_3x3",
-        "link": "/api/gaffe_f7_3x3"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/M4.mp3",
+      "id": "M4"
     }, {
-        "type": "gaffe_f7_3x4",
-        "link": "/api/gaffe_f7_3x4"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/M5.mp3",
+      "id": "M5"
     }, {
-        "type": "gaffe_f7_3x5",
-        "link": "/api/gaffe_f7_3x5"
+      "src": "assets/sounds/GameMain/Sounds/Symbols/WW.mp3",
+      "id": "WW"
     }, {
-        "type": "gaffe_ww_3x3",
-        "link": "/api/gaffe_ww_3x3"
+      "src": "assets/sounds/GameShared/Sounds/fireworks01.mp3",
+      "id": "fireworks01"
     }, {
-        "type": "gaffe_ww_3x4",
-        "link": "/api/gaffe_ww_3x4"
+      "src": "assets/sounds/GameShared/Sounds/SmartSounds/Anticipation.mp3",
+      "id": "Anticipation"
     }, {
-        "type": "gaffe_ww_3x5",
-        "link": "/api/gaffe_ww_3x5"
-    }]
+      "src": "assets/sounds/GameShared/Sounds/SmartSounds/BonusStop01.mp3",
+      "id": "BonusStop01"
+    }, {
+      "src": "assets/sounds/GameShared/Sounds/SmartSounds/BonusStop02.mp3",
+      "id": "BonusStop02"
+    }, {
+      "src": "assets/sounds/GameShared/Sounds/SmartSounds/BonusStop03.mp3",
+      "id": "BonusStop03"
+    }, {
+      "src": "assets/sounds/GameShared/Sounds/SmartSounds/BonusStop04.mp3",
+      "id": "BonusStop04"
+    }, {
+      "src": "assets/sounds/GameShared/Sounds/SmartSounds/BonusStop05.mp3",
+      "id": "BonusStop05"
+    }, {
+      "src": "assets/sounds/GameTransition/Sounds/FreeGamesComplete.mp3",
+      "id": "FreeGamesComplete"
+    }, {
+      "src": "assets/sounds/GameTransition/Sounds/TotalWin.mp3",
+      "id": "TotalWin"
+    }, {
+      "src": "assets/sounds/GameTransition/Sounds/TranInterBonus.mp3",
+      "id": "TranInterBonus"
+    }, {
+      "src": "assets/sounds/JLspin01.mp3",
+      "id": "spin1"
+    }, {
+      "src": "assets/sounds/reelspin1.mp3",
+      "id": "reelspin1"
+    }, {
+      "src": "assets/sounds/bonus_stop1.mp3",
+      "id": "bonusStop1"
+    }, {
+      "src": "assets/sounds/reelstop1.mp3",
+      "id": "reelstop1"
+    }
+  ],
+  "gaffeMenu": [
+    {
+      "type": "client_lotsOfWin"
+    }, {
+      "type": "client_Line_M1"
+    }, {
+      "type": "gaffe_Line_M1",
+      "link": "/api/gaffe_line_m1"
+    }, {
+      "type": "gaffe_Line_M2",
+      "link": "/api/gaffe_line_m2"
+    }, {
+      "type": "gaffe_Line_M3",
+      "link": "/api/gaffe_line_m3"
+    }, {
+      "type": "gaffe_Line_M4",
+      "link": "/api/gaffe_line_m4"
+    }, {
+      "type": "gaffe_F5",
+      "link": "/api/gaffe_f5"
+    }, {
+      "type": "gaffe_F6",
+      "link": "/api/gaffe_f6"
+    }, {
+      "type": "gaffe_F7",
+      "link": "/api/gaffe_f7"
+    }, {
+      "type": "gaffe_F8",
+      "link": "/api/gaffe_f8"
+    }, {
+      "type": "gaffe_F9",
+      "link": "/api/gaffe_f9"
+    }, {
+      "type": "gaffe_F0",
+      "link": "/api/gaffe_f0"
+    }, {
+      "type": "gaffe_m1_3x3",
+      "link": "/api/gaffe_m1_3x3"
+    }, {
+      "type": "gaffe_m1_3x4",
+      "link": "/api/gaffe_m1_3x4"
+    }, {
+      "type": "gaffe_m1_3x5",
+      "link": "/api/gaffe_m1_3x5"
+    }, {
+      "type": "gaffe_m2_3x3",
+      "link": "/api/gaffe_m2_3x3"
+    }, {
+      "type": "gaffe_m2_3x4",
+      "link": "/api/gaffe_m2_3x4"
+    }, {
+      "type": "gaffe_m2_3x5",
+      "link": "/api/gaffe_m2_3x5"
+    }, {
+      "type": "gaffe_m3_3x3",
+      "link": "/api/gaffe_m3_3x3"
+    }, {
+      "type": "gaffe_m3_3x4",
+      "link": "/api/gaffe_m3_3x4"
+    }, {
+      "type": "gaffe_m3_3x5",
+      "link": "/api/gaffe_m3_3x5"
+    }, {
+      "type": "gaffe_m4_3x3",
+      "link": "/api/gaffe_m4_3x3"
+    }, {
+      "type": "gaffe_m4_3x4",
+      "link": "/api/gaffe_m4_3x4"
+    }, {
+      "type": "gaffe_m4_3x5",
+      "link": "/api/gaffe_m4_3x5"
+    }, {
+      "type": "gaffe_f5_3x3",
+      "link": "/api/gaffe_f5_3x3"
+    }, {
+      "type": "gaffe_f5_3x4",
+      "link": "/api/gaffe_f5_3x4"
+    }, {
+      "type": "gaffe_f5_3x5",
+      "link": "/api/gaffe_f5_3x5"
+    }, {
+      "type": "gaffe_f6_3x3",
+      "link": "/api/gaffe_f6_3x3"
+    }, {
+      "type": "gaffe_f6_3x4",
+      "link": "/api/gaffe_f6_3x4"
+    }, {
+      "type": "gaffe_f6_3x5",
+      "link": "/api/gaffe_f5_3x5"
+    }, {
+      "type": "gaffe_f7_3x3",
+      "link": "/api/gaffe_f7_3x3"
+    }, {
+      "type": "gaffe_f7_3x4",
+      "link": "/api/gaffe_f7_3x4"
+    }, {
+      "type": "gaffe_f7_3x5",
+      "link": "/api/gaffe_f7_3x5"
+    }, {
+      "type": "gaffe_ww_3x3",
+      "link": "/api/gaffe_ww_3x3"
+    }, {
+      "type": "gaffe_ww_3x4",
+      "link": "/api/gaffe_ww_3x4"
+    }, {
+      "type": "gaffe_ww_3x5",
+      "link": "/api/gaffe_ww_3x5"
+    }
+  ]
 }

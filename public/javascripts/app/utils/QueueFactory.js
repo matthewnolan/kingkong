@@ -160,12 +160,14 @@ var G = G || {};
 				command = new G.FireworksCommand();
 				command.init(this.setup, false, 10000);
 				command.shouldLoop = true;
+				command.callNextDelay = 1000;
 				queue.push(command);
 
 				for (i = 0; i < winningLines.length; i++) {
 					if (i > 0 && i % 10 === 0) {
 						command = new G.FireworksCommand();
 						command.init(this.setup, false, 10000);
+						command.callNextDelay = 1000;
 						queue.push(command);
 					}
 

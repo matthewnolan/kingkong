@@ -81,6 +81,9 @@ var G = G || {};
 
 	p.currencySymbol = "$";
 
+
+	p.meterPanel = null;
+
 	/**
 	 * @method init
 	 * @param setup
@@ -88,8 +91,13 @@ var G = G || {};
 	 */
 	p.init = function(setup, signalDispatcher) {
 		this.GameComponent_init(setup, signalDispatcher);
+
 		this.signalDispatcher.balanceChanged.add(this.handleBalanceUpdate, this);
 		this.signalDispatcher.reelSpinStart.add(this.handleReelSpinStarted, this);
+		this.signalDispatcher.sidebarToggled.add(this.handleSidebarToggled, this);
+		this.signalDispatcher.meterShelfOpened.add(this.handleMeterShelfOpened, this);
+		this.signalDispatcher.meterShelfClosed.add(this.handleMeterShelfClosed, this);
+
 		this.currentBalance = this.setup.defaultCredits;
 	};
 
@@ -118,15 +126,35 @@ var G = G || {};
 	 * @method drawComponent
 	 */
 	p.drawComponent = function() {
-		this.winText = new createjs.Text(this.setup.currencySymbol[0] + "0", "19px Arial", "#FFCC00");
+		this.meterPanel = new G.MeterPanel();
+		this.meterPanel.init(this.setup, this.signalDispatcher);
+		this.meterPanel.drawPanel();
+
+		this.meterPanel.x = this.setup.stageW - 110;
+		this.meterPanel.y = this.setup.stageH * 0.5 - 256 * 0.5;
+
+		this.screenOverlay = new createjs.Shape();
+		this.screenOverlay.graphics.beginFill('#000000').drawRect(0, 0, this.setup.stageW, this.setup.stageH);
+		this.screenOverlay.alpha = 0.8;
+		this.screenOverlay.visible = false;
+
+		this.screenOverlay.on('click', function() {
+			this.meterPanel.toggleShelf();
+		}, this);
+
+		this.winText = this.meterPanel.winValueTxt;
+		/* new createjs.Text(this.setup.currencySymbol[0] + "0", "19px Arial", "#FFCC00");
 		this.winText.textAlign = "right";
 		this.winText.x = this.setup.stageW - this.setup.bezelMarginL + 9;
 		this.winText.y = 6;
-		this.addChild(this.winText);
+		this.addChild(this.winText);*/
 
-		this.creditText = new createjs.Text("Credits: " + this.currentBalance, "19px Arial", "#FFCC00");
+		this.creditText = new createjs.Text("Credits: " + this.currentBalance.toFixed(2), "19px Arial", "#FFCC00");
 		this.creditText.x = this.setup.bezelMarginL - 10;
 		this.creditText.y = 6;
+
+		this.addChild(this.screenOverlay);
+		this.addChild(this.meterPanel);
 		this.addChild(this.creditText);
 	};
 
@@ -152,12 +180,15 @@ var G = G || {};
 	 */
 	p.mockSpinPayment = function() {
 		var oldBalance = this.currentBalance;
-		var newBalance = oldBalance - this.setup.defaultBet;
+		var newBalance = oldBalance - this.getBetValue();
 		this.tempBalance = oldBalance;
 		this.currentBalance = newBalance;
 		this.rollUp(this.currentBalance);
 	};
 
+	p.getBetValue = function() {
+		return this.meterPanel.getBetValue() || this.setup.defaultBet;
+	};
 	/**
 	 * todo Replace with Server Integration
 	 * @method prepareMockWin
@@ -203,7 +234,7 @@ var G = G || {};
 	 * @method handleRollUpChange
 	 */
 	p.handleRollUpChange = function() {
-		var updateBalance = Math.floor(this.tempBalance);
+		var updateBalance = (this.tempBalance).toFixed(2);
 		this.creditText.text = "Credits: " + updateBalance.toString();
 	};
 
@@ -233,6 +264,22 @@ var G = G || {};
 		this.winText.text = this.currencySymbol + "0";
 	};
 
+	p.handleSidebarToggled = function() {
+		this.meterPanel.visible = !this.meterPanel.visible;
+		if(this.meterPanel.visible) {
+			this.signalDispatcher.sidebarOnRequested.dispatch();
+		} else {
+			this.signalDispatcher.sidebarOffRequested.dispatch();
+		}
+	};
+
+	p.handleMeterShelfOpened = function() {
+		this.screenOverlay.visible = true;
+	};
+
+	p.handleMeterShelfClosed = function() {
+		this.screenOverlay.visible = false;
+	};
 
 	G.MeterComponent = createjs.promote(MeterComponent, "GameComponent");
 

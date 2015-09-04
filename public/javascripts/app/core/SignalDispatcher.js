@@ -116,6 +116,31 @@ var G = G || {};
 	p.gaffeSpinRequested = new signals.Signal();
 
 	/**
+	 *
+	 * Signal when the lines / per line selector has changed in value
+	 * @type {Signal}
+	 */
+	p.linesPerLineChanged = new signals.Signal();
+
+	/**
+	 *
+	 * Signal when the meter shelf has started opening - deactivate other components
+	 * @type {Signal}
+	 */
+	p.meterShelfOpened = new signals.Signal();
+
+	/**
+	 *
+	 * Signal when the meter shelf has finished closing - reactivate other components
+	 * @type {Signal}
+	 */
+	p.meterShelfClosed = new signals.Signal();
+
+	p.sidebarToggled = new signals.Signal();
+	p.sidebarOnRequested = new signals.Signal();
+	p.sidebarOffRequested = new signals.Signal();
+
+	/**
 	 * Initialise the SignalDispatcher with setup object and gameComponents.
 	 * Initialise signal handlers
 	 *

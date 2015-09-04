@@ -194,7 +194,7 @@ var G = G || {};
 		var sprite;
 		var label;
 
-		console.log("Play a big win animation: type,frameLabel", type, frameLabel)
+		console.log("Play a big win animation: type,frameLabel", type, frameLabel);
 
 
 		if (type === 5 && frameLabel === "m1intro__001") {

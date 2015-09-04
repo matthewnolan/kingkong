@@ -104,6 +104,12 @@ var G = G || {};
 	p.slotInitResponse = null;
 
 	/**
+	 * Prevent or allow spinning depending on if the Meter bet selector is showing
+	 * @type {boolean}
+	 */
+	p.spinAllowed = true;
+
+	/**
 	 * initialises the reelsComponent with required game data and assets
 	 *
 	 * @method init
@@ -116,6 +122,8 @@ var G = G || {};
 	p.init = function(setup, signalDispatcher, serverInterface, symbolSprites, slotInitResponse) {
 		this.GameComponent_init(setup, signalDispatcher);
 		this.signalDispatcher.gaffeSpinRequested.add(this.handleGaffeSpinRequest, this);
+		this.signalDispatcher.meterShelfOpened.add(this.handleMeterShelfOpened, this);
+		this.signalDispatcher.meterShelfClosed.add(this.handleMeterShelfClosed, this);
 		this.serverInterface = serverInterface;
 		this.symbolSprites = symbolSprites;
 		this.slotInitResponse = slotInitResponse;
@@ -196,6 +204,13 @@ var G = G || {};
 		this.serverInterface.requestGaffeSpin(requestUrl);
 	};
 
+	p.handleMeterShelfOpened = function() {
+		this.spinAllowed = false;
+	};
+
+	p.handleMeterShelfClosed = function() {
+		this.spinAllowed = true;
+	};
 	/**
 	 * requestSpin is called every time the user initiates a spin (either via the keyboard or swipe to spin gesture on touch devices)
 	 * If spinRequest has not yet been made (ie the reels are stopped) then this makes a serverInterface.requestSpin call, and the spinRequest flag
@@ -206,6 +221,7 @@ var G = G || {};
 	 * @method requestSpin
 	 */
 	p.requestSpin = function() {
+		if(!this.spinAllowed) { return; }
 		if (this.spinRequested) {
 			console.log('requesting slam');
 			this.slamSpin();
